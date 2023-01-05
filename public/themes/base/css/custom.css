@@ -1,0 +1,74 @@
+/* Navigation */
+.navbar-expand-lg{
+   /*position: sticky!important;
+   top: 0;*/
+   z-index: 900!important;
+}
+
+/**
+******** Home Banner
+*/
+.bg-image {
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.btn-padding {
+   padding: 9px 20px;
+}
+
+@media(min-width:767px) {
+   .bg-image {
+      background-position-y: -200px;
+   }
+}
+
+.bg-image .caption {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: linear-gradient(transparent, black);
+   z-index: 0;
+}
+
+.bg-image .container {
+   z-index: 2;
+   color: white;
+   position: inherit;
+}
+
+/*
+***********************************
+**** Panier Count service
+*/
+.count-cart {
+   display: inline-block;
+   width: 22px;
+   background: #82a0bc;
+   color: #fff;
+   position: relative;
+   top: -10px;
+   left: -5px;
+   text-align: center;
+   height: 22px;
+   line-height: 22px;
+   border-radius: 50%;
+}
+.bg-siteprimary{
+   background: #82a0bc!important;
+}
+.dropdown-item.bg-primary{
+   background: #ced4da!important;
+}
+.vich-image img{
+   display: block;
+   border-radius: 10px;
+   margin: 15px 0;
+}
+.input-group-prepend {
+   margin-right: -1px;
+   height: 34px;
+}

@@ -1,0 +1,21 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Nouveau service{% endblock %}
+
+{% block body %}
+
+	<div class="p-3 border-bottom text-right">
+		<h6 class="mb-0">Nouveau service
+		</h6>
+	</div>
+	{{ include('vendeur/microservices/_form.html.twig') }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+{% include "vendeur/microservices/composants/_tarif_script.html.twig" %}
+
+{% endblock %}

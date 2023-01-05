@@ -1,0 +1,20 @@
+<div class="slider mt-4">
+	<div id="aniimated-thumbnials" class="slider-for slick-slider-single">
+		{% for media in microservice.medias %}
+
+			<a href="{{ media.imageName ? vich_uploader_asset(media, 'imageFile') : asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}">
+				<img class="img-fluid" src="{{ media.imageName ? vich_uploader_asset(media, 'imageFile') : asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" alt="{{ media.name }}"/>
+			</a>
+
+		{% endfor %}
+	</div>
+	<div class="slider-nav slick-slider-single">
+		{% for media in microservice.medias %}
+
+			<div class="item-slick">
+				<img class="img-fluid" src="{{ media.imageName ? vich_uploader_asset(media, 'imageFile') : asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" alt="{{ media.name }}">
+			</div>
+
+		{% endfor %}
+	</div>
+</div>

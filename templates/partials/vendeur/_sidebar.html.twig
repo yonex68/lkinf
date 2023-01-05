@@ -1,0 +1,52 @@
+<div class="box shadow-sm  rounded bg-white mb-3">
+	<div class="box-title border-bottom p-3">
+		<h6 class="m-0">Tableau de Bord</h6>
+	</div>
+	<div class="box-body">
+		<div class="bg-white rounded shadow-sm">
+			<div class="dropdown-menu-show">
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_dashboard' ? 'active' : '' }}"
+					href="{{ path('vendeur_dashboard') }}">
+					<i class="fa fa-dashboard"></i> Tableau de bord
+				</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_index' ? 'active' : '' }}"
+					href="{{ path('vendeur_microservices_index') }}">
+					<i class="fa fa-tags"></i> Mes services
+				</a>
+				<a class="dropdown-item py-2" href=""><i class="fa fa-shopping-bag"></i> Mes commandes</a>
+				<a class="dropdown-item py-2" href=""><i class="fa fa-credit-card"></i> Mon portefeuille</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="box shadow-sm  rounded bg-white mb-3">
+	<div class="box-title border-bottom p-3">
+		<h6 class="m-0">Paramètres de vente</h6>
+	</div>
+	<div class="box-body">
+		<div class="bg-white rounded shadow-sm">
+			<div class="dropdown-menu-show">
+				<a class="dropdown-item py-2" href=""><i class="fa fa-user"></i> Mon compte vendeur</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
+					href="{{ path('user_profil') }}"><i class="fa fa-user-circle"></i> Mon profil publique</a>
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
+						href="{{ path('edit_password') }}"><i class="fa fa-key"></i> Mes accès</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="box shadow-sm  rounded bg-white mb-3">
+	<div class="box-title border-bottom p-3">
+		<h6 class="m-0">{{ appName }} abonnement</h6>
+	</div>
+	<div class="box-body">
+		<div class="bg-white rounded shadow-sm">
+			<div class="dropdown-menu-show">
+				<a class="dropdown-item py-2" href=""><i class="fa fa-bookmark"></i> Gérer mon offre</a>
+				<a class="dropdown-item py-2" href=""><i class="fa fa-cc-visa"></i> Méthode de paiement</a>
+			</div>
+		</div>
+	</div>
+</div>

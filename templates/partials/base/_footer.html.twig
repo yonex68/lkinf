@@ -2,36 +2,41 @@
 	<div class="container">
 		<div class="d-flex justify-content-between">
 			<div class="footer-list">
-				<h2>Categories</h2>
-				<ul class="list">
-					<li>
-						<a href="#">Graphics &amp; Design</a>
-					</li>
-					<li>
-						<a href="#">Digital Marketing</a>
-					</li>
-					<li>
-						<a href="#">Writing &amp; Translation</a>
-					</li>
-					<li>
-						<a href="#">Video &amp; Animation</a>
-					</li>
-					<li>
-						<a href="#">Music &amp; Audio</a>
-					</li>
-					<li>
-						<a href="#">Programming &amp; Tech</a>
-					</li>
-					<li>
-						<a href="#">Business</a>
-					</li>
-					<li>
-						<a href="#">Lifestyle</a>
-					</li>
-					<li>
-						<a href="#">Sitemap</a>
-					</li>
-				</ul>
+				<h2>
+					<a href="{{ path('accueil') }}">
+						<img src="{{ asset('img/logo.png') }}" class="img-fluid w-50">
+					</a>
+				</h2>
+				<p class="text-muted pr-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, deleniti! Nihil, beatae. Nam, reiciendis ad.</p>
+				<div class="copyright">
+					<ul class="social">
+						<li>
+							<a href="#">
+								<i class="fa fa-facebook" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-twitter" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-linkedin" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-pinterest-p" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-instagram" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div class="footer-list">
 				<h2>About</h2>
@@ -47,15 +52,6 @@
 					</li>
 					<li>
 						<a href="#">Privacy Policy</a>
-					</li>
-					<li>
-						<a href="#">Terms of Service</a>
-					</li>
-					<li>
-						<a href="#">Intellectual Property Claims</a>
-					</li>
-					<li>
-						<a href="#" target="_blank">Investor Relations</a>
 					</li>
 				</ul>
 			</div>
@@ -93,22 +89,6 @@
 					<li>
 						<a href="#">Community Standards</a>
 					</li>
-					<li>
-						<a href="#">Podcast</a>
-					</li>
-					<li>
-						<a href="#">Affiliates</a>
-					</li>
-					<li>
-						<a href="#">Invite a Friend</a>
-					</li>
-					<li>
-						<a href="#">Become a Seller</a>
-					</li>
-					<li>
-						<a href="#">Miver Elevate<small>Exclusive Benefits</small>
-						</a>
-					</li>
 				</ul>
 			</div>
 			<div class="footer-list">
@@ -126,56 +106,12 @@
 					<li>
 						<a href="#">Get Inspired</a>
 					</li>
-					<li>
-						<a href="#">ClearVoice<small>Content Marketing</small>
-						</a>
-					</li>
-					<li>
-						<a href="#">AND CO<small>Invoice Software</small>
-						</a>
-					</li>
-					<li>
-						<a href="#">Learn<small>Online Courses</small>
-						</a>
-					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="copyright">
-			<div class="logo">
-				<a href="index.html">
-					<img src="images/logo.svg">
-				</a>
-			</div>
-			<p>© Copyright 2022 Miver. All Rights Reserved
-			</p>
-			<ul class="social">
-				<li>
-					<a href="#">
-						<i class="fa fa-facebook" aria-hidden="true"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="fa fa-twitter" aria-hidden="true"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="fa fa-linkedin" aria-hidden="true"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="fa fa-pinterest-p" aria-hidden="true"></i>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="fa fa-instagram" aria-hidden="true"></i>
-					</a>
-				</li>
-			</ul>
-		</div>
+	</div>
+	<div class="text-center py-4 text-muted border-top">
+		<p class="p-0 m-0">© Copyright 2022 Miver. All Rights Reserved
+		</p>
 	</div>
 </footer>

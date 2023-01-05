@@ -1,0 +1,22 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Compte
+{% endblock %}
+
+{% block bg %}{% endblock %}
+
+{% block colleft %}4
+{% endblock %}
+
+{% block colright %}8
+{% endblock %}
+
+{% block sidebar %}
+	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
+{% endblock %}
+
+{% block body %}
+
+{{ include('espace_utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+{% endblock %}

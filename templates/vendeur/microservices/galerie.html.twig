@@ -1,0 +1,95 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Galérie{% endblock %}
+
+{% block body %}
+
+<div class="p-3 border-bottom text-right">
+    <h6 class="mb-0">Galérie du service <strong>{{ microservice.name }}</strong>
+    </h6>
+</div>
+
+<div class="p-3 border-bottom">
+    {{ form_start(form) }}
+    <div class="row d-flex align-items-center form-group">
+        <div class="col-md-4">
+            <p class="text-muted font-weight-bold mb-0">MEDIA</p>
+            <p class="text-muted">
+                Suggérez à notre équipe de modération les images les plus adaptée à votre service.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <div id="media" data-prototype="{{ form_row(form.medias.vars.prototype)|e('html_attr') }}">
+                {{ form_row(form.medias) }}
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 offset-sm-4">
+            <button class="btn btn-success">{{ button_label|default('Enregistrer les modifications') }}</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script>
+    let collection,
+        boutonAjout,
+        span;
+    window.onload = () => {
+        collection = document.querySelector("#media");
+        span = collection.querySelector("span");
+
+        boutonAjout = document.createElement("button");
+        boutonAjout.className = "ajout-media btn btn-light border border-secondary my-3 text-uppercase";
+        boutonAjout.innerText = "Ajouter plus";
+
+        let nouveauBouton = span.append(boutonAjout);
+
+        collection.dataset.index = collection.querySelectorAll("input").length;
+
+        boutonAjout.addEventListener("click", function () {
+            addButton(collection, nouveauBouton);
+        });
+    }
+
+    function addButton(collection, nouveauBouton) {
+        let prototype = collection.dataset.prototype;
+
+        let index = collection.dataset.index;
+
+        prototype = prototype.replace(/__name__/g, index);
+
+        let content = document.createElement("html");
+        content.innerHTML = prototype;
+        let newForm = content.querySelector("div");
+
+        let boutonSuppr = document.createElement("button");
+        boutonSuppr.type = "button";
+        boutonSuppr.className = "btn btn-danger";
+        boutonSuppr.id = "delete-media-" + index;
+        boutonSuppr.innerText = "Supprimer";
+
+        newForm.append(boutonSuppr);
+
+        collection.dataset.index++;
+
+        let boutonAjout = collection.querySelector(".ajout-media");
+
+        span.insertBefore(newForm, boutonAjout);
+
+        boutonSuppr.addEventListener("click", function () {
+            this.previousElementSibling.parentElement.remove();
+        })
+    }
+</script>
+
+{% endblock %}

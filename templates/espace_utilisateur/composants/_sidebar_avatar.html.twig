@@ -1,0 +1,77 @@
+<div class="profile_info">
+	<div class="seller-card">
+		<div>
+			<div class="user-online-indicator is-online " data-user-id="1152855">
+				<i class="fa fa-circle"></i>En ligne
+			</div>
+		</div>
+		<div>
+			<a href="#" class="ambassadors-badge">{{ app.user.compte }}</a>
+		</div>
+		<div class="user-profile-info">
+			<div>
+				<div class="user-profile-image">
+					<label class="user-pict">
+						<img src="{{ app.user.avatar ? vich_uploader_asset(app.user, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_size') }}" class="user-pict-img" width="100" height="100" alt="Askbootstrap">
+						<a href="#" class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
+					</label>
+				</div>
+			</div>
+			<div class="user-profile-label">
+				<div class="username-line">
+					<a href="#" class="seller-link">{{ app.user.nom ~ ' ' ~ app.user.prenom }}</a>
+				</div>
+				<div class="oneliner-wrapper">
+					<small class="oneliner">{{ app.user.email }}</small>
+					<div class="ratings-wrapper">
+						<p class="rating-text">
+							<strong>5.0</strong>
+							(1k+ reviews)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-top border-bottom py-3">
+			<div class="d-flex align-items-center py-1">
+				Response Rate
+				<div class="font-weight-bold ml-auto d-flex align-items-center">
+					<span class="btn btn-success border-0 py-1 px-4 mr-2"></span>
+					100%
+				</div>
+			</div>
+			<div class="d-flex align-items-center py-1">
+				Delivered on Time
+				<div class="font-weight-bold ml-auto d-flex align-items-center">
+					<span class="btn btn-success border-0 py-1 px-4 mr-2"></span>
+					100%
+				</div>
+			</div>
+			<div class="d-flex align-items-center py-1">
+				Order Completion
+				<div class="font-weight-bold ml-auto d-flex align-items-center">
+					<span class="btn btn-success border-0 py-1 px-4 mr-2"></span>
+					100%
+				</div>
+			</div>
+		</div>
+		<div class="pt-3">
+			<div class="d-flex align-items-center py-1 h6">
+				Earned in March
+				<div class="font-weight-bold ml-auto d-flex align-items-center">
+					$2334
+				</div>
+			</div>
+			<div class="d-flex align-items-center py-1 h6">
+				Response Time
+				<div class="font-weight-bold ml-auto d-flex align-items-center">
+					N/A
+				</div>
+			</div>
+		</div>
+		<div class="text-left">
+			<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-success pl-4 pr-4">
+				Mettre à jour mon profil
+			</a>
+		</div>
+	</div>
+</div>
