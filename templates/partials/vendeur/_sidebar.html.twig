@@ -7,14 +7,15 @@
 			<div class="dropdown-menu-show">
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_dashboard' ? 'active' : '' }}"
 					href="{{ path('vendeur_dashboard') }}">
-					<i class="fa fa-dashboard"></i>&nbsp;Tableau de bord
+					<i class="text-muted fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord
 				</a>
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_index' ? 'active' : '' }}"
 					href="{{ path('vendeur_microservices_index') }}">
-					<i class="fa fa-tags"></i>&nbsp;Mes services
+					<i class="text-muted fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;Mes services
 				</a>
-				<a class="dropdown-item py-2" href=""><i class="fa fa-shopping-bag"></i>&nbsp;Mes commandes</a>
-				<a class="dropdown-item py-2" href=""><i class="fa fa-credit-card"></i>&nbsp;Mon portefeuille</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'active' : '' }}" href="{{ path('vendeur_commandes_index') }}"><i class="text-muted fa fa-shopping-bag"></i>&nbsp;&nbsp;&nbsp;Mes commandes</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}" href="{{ path('vendeur_achats_index') }}"><i class="text-muted fa fa-shopping-bag"></i>&nbsp;&nbsp;&nbsp;Mes achats</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_portefeuille' ? 'active' : '' }}" href="{{ path('vendeur_portefeuille') }}"><i class="text-muted fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Mon portefeuille</a>
 			</div>
 		</div>
 	</div>
@@ -27,11 +28,11 @@
 	<div class="box-body">
 		<div class="bg-white rounded shadow-sm">
 			<div class="dropdown-menu-show">
-				<a class="dropdown-item py-2" href=""><i class="fa fa-user"></i>&nbsp;Mon compte vendeur</a>
+				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-user"></i>&nbsp;&nbsp;&nbsp;Mon compte vendeur</a>
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
-					href="{{ path('user_profil') }}"><i class="fa fa-user-circle"></i>&nbsp;Mon profil publique</a>
+					href="{{ path('user_profil') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon profil publique</a>
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
-						href="{{ path('edit_password') }}"><i class="fa fa-key"></i>&nbsp;Mes accès</a>
+						href="{{ path('edit_password') }}"><i class="text-muted fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
 			</div>
 		</div>
 	</div>
@@ -44,8 +45,8 @@
 	<div class="box-body">
 		<div class="bg-white rounded shadow-sm">
 			<div class="dropdown-menu-show">
-				<a class="dropdown-item py-2" href=""><i class="fa fa-bookmark"></i>&nbsp;Gérer mon offre</a>
-				<a class="dropdown-item py-2" href=""><i class="fa fa-cc-visa"></i>&nbsp;Méthode de paiement</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_abonnement' ? 'active' : '' }}" href="{{ path('vendeur_abonnement') }}"><i class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
+				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-cc-visa"></i>&nbsp;&nbsp;&nbsp;Méthode de paiement</a>
 			</div>
 		</div>
 	</div>

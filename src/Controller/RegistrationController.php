@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Portefeuille;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -59,12 +61,12 @@ class RegistrationController extends AbstractController
                 $user->setCompte('vendeur');
 
                 // Création du portefeuille si l'utilisateur choisis le compte vendeur
-                /*$portefeuille = new Portefeuille();
+                $portefeuille = new Portefeuille();
                 $portefeuille->setSoldeDisponible(0);
                 $portefeuille->setSoldeEncours(0);
-                $portefeuille->setUser($user);
+                $portefeuille->setVendeur($user);
 
-                $entityManager->persist($portefeuille);*/
+                $entityManager->persist($portefeuille);
 
                 $route = 'register_mail_send';
 
@@ -87,14 +89,35 @@ class RegistrationController extends AbstractController
                     ->subject('Veuillez confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
+
             // do anything else you need here, like send an email
             $this->addFlash('success', "Mail d'activation de compte envoyer, consulter votre e-mail à tout moment pour activer votre compte");
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_register_mail_send', [
+                'name_url' => $user->getNameUrl()
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/mail-envoye/{name_url}', name: 'app_register_mail_send')]
+    public function mailEnvoyer(UserRepository $userRepository, $name_url): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('accueil');
+        }
+
+        $user = $userRepository->findOneBy(['nameUrl' => $name_url]);
+
+        if (!$user) {
+            return $this->redirectToRoute('accueil');
+        }
+
+        return $this->render('registration/mail_send.html.twig', [
+            'user' => $user
         ]);
     }
 
@@ -108,12 +131,12 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
-
+            
             return $this->redirectToRoute('app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Compte activé, votre adresse email a bien été vérifiée.');
 
         return $this->redirectToRoute('app_register');
     }

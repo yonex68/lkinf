@@ -16,7 +16,7 @@
 	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
 
 	{{ parent() }}
-	
+
 {% endblock %}
 
 {% block body %}
@@ -29,15 +29,16 @@
 			<div class="box-body p-3 border-bottom">
 				<div class="d-flex align-items-top job-item-header pb-2">
 					<div class="mr-2">
-						<div class="text-truncate text-primary">Nom(s) et prénom</div>
-						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.nom }} {{ app.user.prenom }}</h6>
+						<div class="text-truncate text-muted">Nom(s) et prénom</div>
+						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.nom }}
+							{{ app.user.prenom }}</h6>
 					</div>
 				</div>
 			</div>
 			<div class="box-body p-3 border-bottom">
 				<div class="d-flex align-items-top job-item-header pb-2">
 					<div class="mr-2">
-						<div class="text-truncate text-primary">Genre</div>
+						<div class="text-truncate text-muted">Genre</div>
 						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.genre ?? 'Non spécifier' }}</h6>
 					</div>
 				</div>
@@ -45,13 +46,13 @@
 			<div class="box-body p-3 border-bottom">
 				<div class="d-flex align-items-top job-item-header pb-2">
 					<div class="mr-2">
-						<div class="text-truncate text-primary">Email</div>
+						<div class="text-truncate text-muted">Email</div>
 						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.email }}</h6>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="box shadow-sm rounded bg-white mb-3">
 			<div class="box-title border-bottom p-3">
 				<h6 class="m-0">Coordonnées</h6>
@@ -61,19 +62,19 @@
 					<div class="mr-2">
 						<div class="row">
 							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-primary">Pays</div>
+								<div class="text-truncate text-muted">Pays</div>
 								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.pays }}</h6>
 							</div>
 							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-primary">Ville</div>
+								<div class="text-truncate text-muted">Ville</div>
 								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.ville }}</h6>
 							</div>
 							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-primary">Adresse</div>
+								<div class="text-truncate text-muted">Adresse</div>
 								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.adresse }}</h6>
 							</div>
 							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-primary">Téléphone</div>
+								<div class="text-truncate text-muted">Téléphone</div>
 								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.telephone }}</h6>
 							</div>
 						</div>
@@ -81,7 +82,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="box shadow-sm rounded bg-white mb-3">
 			<div class="box-title border-bottom p-3">
 				<h6 class="m-0">Mes accès</h6>
@@ -89,8 +90,9 @@
 			<div class="box-body p-3 border-bottom">
 				<div class="d-flex align-items-top job-item-header pb-2">
 					<div class="mr-2">
-						<div class="text-truncate text-primary">Mot de passe</div>
-						<h6 class="font-weight-bold text-dark mb-0"><i class="fa fa-key"></i>****</h6>
+						<div class="text-truncate text-muted">Mot de passe</div>
+						<h6 class="font-weight-bold text-dark mb-0">
+							<i class="fa fa-key"></i>****</h6>
 					</div>
 				</div>
 
@@ -99,7 +101,7 @@
 				</a>
 			</div>
 		</div>
-		
+
 		<div class="box shadow-sm rounded bg-white mb-3">
 			<div class="box-title border-bottom p-3">
 				<h6 class="m-0">A propos de vous</h6>
@@ -108,12 +110,12 @@
 				<p>{{ app.user.apropos|raw }}
 				</p>
 			</div>
-		</div>
 
-		<div>
-			<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-success pl-4 pr-4">
-				Mettre à jour mon profil
-			</a>
+			<div class="p-3">
+				<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-success pl-4 pr-4">
+					Mettre à jour mon profil
+				</a>
+			</div>
 		</div>
 	</div>
 

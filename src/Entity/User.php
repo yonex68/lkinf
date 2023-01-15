@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 /**
-* @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+* @UniqueEntity(fields={"email"}, message="Cette adresse email est déjà utilisée pour un autre compte")
 * @Vich\Uploadable
 */
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
@@ -89,9 +89,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $telephone;
 
+    #[ORM\OneToOne(mappedBy: 'vendeur', targetEntity: Portefeuille::class, cascade: ['persist', 'remove'])]
+    private $portefeuille;
+
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Abonnement::class, cascade: ['persist', 'remove'])]
+    private $abonnement;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
+    private $commandes;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -372,6 +382,80 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getPortefeuille(): ?Portefeuille
+    {
+        return $this->portefeuille;
+    }
+
+    public function setPortefeuille(?Portefeuille $portefeuille): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($portefeuille === null && $this->portefeuille !== null) {
+            $this->portefeuille->setVendeur(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($portefeuille !== null && $portefeuille->getVendeur() !== $this) {
+            $portefeuille->setVendeur($this);
+        }
+
+        $this->portefeuille = $portefeuille;
+
+        return $this;
+    }
+
+    public function getAbonnement(): ?Abonnement
+    {
+        return $this->abonnement;
+    }
+
+    public function setAbonnement(?Abonnement $abonnement): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($abonnement === null && $this->abonnement !== null) {
+            $this->abonnement->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($abonnement !== null && $abonnement->getUser() !== $this) {
+            $abonnement->setUser($this);
+        }
+
+        $this->abonnement = $abonnement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getClient() === $this) {
+                $commande->setClient(null);
+            }
+        }
 
         return $this;
     }

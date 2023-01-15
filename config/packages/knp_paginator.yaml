@@ -9,6 +9,6 @@ knp_paginator:
         filter_value_name: filterValue  # filter value query parameter name bootstrap_v5_pagination.html.twig
     template:
         #pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template
-        pagination: '@KnpPaginator/Pagination/bootstrap_v4_pagination.html.twig'
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template

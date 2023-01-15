@@ -34,7 +34,6 @@
 	<body data-turbo="false">
 
 		{{ include('partials/base/_navbars.html.twig') }}
-		<div class="py-5"></div>
 
 		{% block filters %}{% endblock %}
 
@@ -51,6 +50,8 @@
                <div class="col-lg-{% block colright %}9{% endblock %}">
                   <div class="bg-{% block bg %}white shadow-sm{% endblock %} rounded sidebar-page-right">
                      <div>
+
+								{{ include('partials/_flash_message.html.twig') }}
 
 								{% block body %}{% endblock %}
                         

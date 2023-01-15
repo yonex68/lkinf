@@ -1,0 +1,68 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Nouvelle commande{% endblock %}
+
+{% block titre %}Nouvelle commande{% endblock %}
+
+{% block col %}5{% endblock %}
+
+{% block body %}
+
+<section>
+   <div class="container">
+      <div class="row">
+
+         <div class="col-sm-12">
+
+            {% include "commande/composants/_stripe.html.twig" %}
+
+         </div>
+
+      </div>
+
+      <h4 class="py-3 h5">Service commandé</h4>
+      <div class="list-group">
+         <div class="list-group-item">
+            <div class="d-flex">
+               <div>
+                  {% if microservice.medias|length > 0 %}
+
+                  <img class="rounded"
+                     src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('large_avatar') }}" />
+
+                  {% else %}<img class="rounded"
+                     src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('large_avatar') }}" />
+
+                  {% endif %}
+               </div>
+               <div class="pl-3">
+                  <strong class="d-block">{{ microservice.name }}</strong>
+                  <span class="badge badge-warning">{{ microservice.categorie.name }}</span>
+               </div>
+            </div>
+         </div>
+         <div class="list-group-item">
+            <div class="d-flex">
+               <div class="seller-image">
+                  <img class="rounded-circle" width="60" height="60"
+                     src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_avatar') }}"
+                     alt='' />
+               </div>
+               <div class="pl-2">
+
+                  <span class="level hint--top level-one-seller">
+                     Vendeur
+                  </span> <br>
+
+                  <a href="">{{ microservice.vendeur.nom ~ ' ' ~
+                     microservice.vendeur.prenom }}</a>
+                     
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</section>
+
+{% endblock %}

@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="row justify-content-center align-items-center d-flex ">
-				<div class="col-lg-4 mx-auto">
+				<div class="col-lg-{% block col %}4{% endblock %} mx-auto">
 					<div class="osahan-login py-4">
 						<div class="text-center mb-4">
 							<a href="{{ path('accueil') }}"><img src="{{ asset('img/logo.png') }}" style="width: 80%;"

@@ -1,0 +1,33 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Félicitation
+{% endblock %}
+
+{% block titre %}Félicitation
+	{{ app.user.prenom }}
+{% endblock %}
+
+{% block text %}Vous venez de souscrire à l'offre
+	<strong>{{ abonnement.name }}</strong> 
+   
+   <div>Vous serez facturez à
+      <span class="h4 font-weight-bold">{{ abonnement.tarif }}</span> <span>{{ currency }}/mois</span>
+   </div>
+
+{% endblock %}
+
+{% block body %}
+
+	<div class="alert alert-success">
+		<h5 class="my-0 text-success">
+			<i class="fa fa-check"></i>
+			Abonnement actif
+		</h5>
+		<div class="d-flex justify-content-between lh-condensed">
+			<span class="span text-muted ">Pour des reclamations nous contacter:
+				<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
+			</span>
+		</div>
+	</div>
+
+{% endblock %}

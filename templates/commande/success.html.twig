@@ -1,0 +1,28 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Commande succès
+{% endblock %}
+
+{% block titre %}Félicitation {{ app.user.nom }}
+{% endblock %}
+
+{% block body %}
+
+	<section class="pt-5">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="alert alert-success">
+						<p>Votre commande à bien été enregistrer</p>
+						<span class="span text-muted ">Pour des reclamations nous contacter:
+							<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
+						</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

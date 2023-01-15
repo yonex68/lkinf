@@ -1,25 +1,24 @@
 {% extends 'vendeur.html.twig' %}
 
-{% block title %}Mettre à jour {{ microservice.name }}{% endblock %}
+{% block title %}Mettre à jour
+	{{ microservice.name }}
+{% endblock %}
 
 {% block body %}
-    <div class="p-3 border-bottom text-right">
-		<h6 class="mb-0">Mettre à jour {{ microservice.name }}
+	<div class="p-3 border-bottom text-right">
+		<h6 class="mb-0">Mettre à jour
+			{{ microservice.name }}
 		</h6>
 	</div>
 
-    {{ include('vendeur/microservices/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-
-    <div class="p-3 border-bottom text-right">
-		{{ include('vendeur/microservices/_delete_form.html.twig') }}
-	</div>    
+	{{ include('vendeur/microservices/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
 {% endblock %}
 
 {% block javascripts %}
 
-{{ parent() }}
+	{{ parent() }}
 
-{% include "vendeur/microservices/composants/_tarif_script.html.twig" %}
+	{% include "vendeur/microservices/composants/_tarif_script.html.twig" %}
 
 {% endblock %}

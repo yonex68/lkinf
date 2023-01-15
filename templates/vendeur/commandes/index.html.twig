@@ -1,0 +1,56 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Mes commandes
+{% endblock %}
+
+{% block bg %}{% endblock %}
+
+{% block body %}
+
+<h1 class="h5 mb-3">Mes commandes</h1>
+
+<table class="table bg-white shadow-sm">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th></th>
+            <th>Offre</th>
+            <th>Montant</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for commande in commandes %}
+        <tr>
+            <td>
+                {% if commande.microservice.medias|length > 0 %}
+
+                <img class="rounded"
+                    src="{{ vich_uploader_asset(commande.microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}">
+
+                {% endif %}
+            </td>
+            <td><strong class="">{{ commande.microservice.name|u.truncate(30, '...') }}</strong></td>
+            <td>{{ commande.offre }}</td>
+            <td><strong>{{ commande.montant ~ currency }}</strong></td>
+            <td>
+                <span class="badge badge-pill badge-{% if commande.statut == 'Annuler' %}danger{% elseif commande.statut == 'Livrer' %}success{% elseif commande.statut == 'Valider' %}warning{% endif %}">
+                    {{ commande.statut }}
+                </span>
+            </td>
+            <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
+            <td>
+                <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-light" target="_blank">Détails</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" class="text-center">Aucune commande</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

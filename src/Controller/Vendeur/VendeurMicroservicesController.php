@@ -49,7 +49,9 @@ class VendeurMicroservicesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $microservice->setSlug(strtolower($this->sluger->slug($microservice->getName())));
+            $slug = $microservice->getName() . '-' . $microservice->getId();
+
+            $microservice->setSlug(strtolower($this->sluger->slug($slug)));
             $microservice->setVendeur($this->getUser());
             $entityManager->persist($microservice);
             $entityManager->flush();
@@ -70,13 +72,13 @@ class VendeurMicroservicesController extends AbstractController
     #[Route('/{id}/galerie', name: 'vendeur_microservices_galerie', methods: ['GET', 'POST'])]
     public function galeries(Request $request, EntityManagerInterface $entityManager, Microservice $microservice): Response
     {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
         $form = $this->createForm(MicroserviceGalerieType::class, $microservice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $microservice->setSlug(strtolower($this->sluger->slug($microservice->getName())));
-            $microservice->setVendeur($this->getUser());
+            
             $entityManager->persist($microservice);
             $entityManager->flush();
 
@@ -104,18 +106,18 @@ class VendeurMicroservicesController extends AbstractController
     #[Route('/{id}/edit', name: 'vendeur_microservices_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Microservice $microservice, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+        
         $form = $this->createForm(MicroserviceType::class, $microservice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $microservice->setSlug(strtolower($this->sluger->slug($form->get('name')->getData())));
+            $slug = $form->get('name')->getData() . '-' . $microservice->getId();
+
+            $microservice->setSlug(strtolower($this->sluger->slug($slug)));
 
             $entityManager->persist($microservice);
-            $entityManager->flush();
-
-            $microservice->setSlug($microservice->getSlug() . '-' . $microservice->getId());
-
             $entityManager->flush();
 
             $this->addFlash('success', 'Le contenu a bien été modifier!');
@@ -132,6 +134,8 @@ class VendeurMicroservicesController extends AbstractController
     #[Route('/{id}', name: 'vendeur_microservices_delete', methods: ['POST'])]
     public function delete(Request $request, Microservice $microservice, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+        
         if ($this->isCsrfTokenValid('delete'.$microservice->getId(), $request->request->get('_token'))) {
             $entityManager->remove($microservice);
             $entityManager->flush();

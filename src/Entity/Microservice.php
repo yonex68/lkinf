@@ -43,10 +43,14 @@ class Microservice
     #[ORM\ManyToMany(targetEntity: Prix::class, inversedBy: 'microservices', cascade: ["persist"])]
     private $prix;
 
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Commande::class)]
+    private $commandes;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
         $this->prix = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +179,36 @@ class Microservice
     public function removePrix(Prix $prix): self
     {
         $this->prix->removeElement($prix);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getMicroservice() === $this) {
+                $commande->setMicroservice(null);
+            }
+        }
 
         return $this;
     }

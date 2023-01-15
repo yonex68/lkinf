@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\ChangePasswordFormType;
 use App\Form\EditProfilType;
+use App\Repository\AbonnementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

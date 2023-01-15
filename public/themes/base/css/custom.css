@@ -1,11 +1,17 @@
 /* Navigation */
 .navbar-expand-lg {
    z-index: 900!important;
-   background: transparent!important;
-   position: absolute;
+   background: #fff!important;
+   /*background-color: transparent!important;
+   background-image: linear-gradient(160deg, #FDBAF8 0%, #B0EFEB 100%)!important;*/
+}
+.navtop-absolute{
+   /*position: absolute!important;
+   background-color: transparent!important;
+   background-image: inherit!important;
    top: 0;
-   left: 0;
    right: 0;
+   left: 0;*/
 }
 
 /**

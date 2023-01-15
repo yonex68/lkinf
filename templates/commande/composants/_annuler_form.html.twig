@@ -1,0 +1,5 @@
+<form method="post" class="d-inline" action="{{ path('vendeur_annuler_commande', {'id': commande.id}) }}" 
+onsubmit="return confirm('Voulez-vous annuler cette commande?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('annuler' ~ commande.id) }}">
+    <button class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> {% trans %}annulercommande{% endtrans %}</button>
+</form>

@@ -5,101 +5,102 @@
 
 {% block body %}
 
-	<div class="third-menu border-top">
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-between">
-				<div class="col-lg-9 left">
-					<ul>
-						<li class="nav-overview selected">
-							<a href="#overview">Overview</a>
-						</li>
-						<li class="nav-description">
-							<a href="#description">Description</a>
-						</li>
-						<li class="nav-aboutSeller">
-							<a href="#aboutSeller">About The Seller</a>
-						</li>
-						<li class="nav-packagesTable">
-							<a href="#packagesTable">Compare Packages</a>
-						</li>
-						<li class="nav-recommendations">
-							<a href="#recommendations">Recommendations</a>
-						</li>
-						<li class="nav-faq">
-							<a href="#faq">FAQ</a>
-						</li>
-						<li class="nav-reviews">
-							<a href="#reviews">Reviews</a>
-						</li>
-					</ul>
-				</div>
-				<div class="col-lg-3 right">
-					<ul class="d-flex align-items-center justify-content-end">
-						<li>
-							<button>
-								<i class="fa fa-heart" aria-hidden="true"></i>
-								Save
-							</button>
-						</li>
-						<li>
-							<span class="collect-count">138</span>
-						</li>
-						<li class="ml-2">
-							<button>
-								<i class="fa fa-share-alt" aria-hidden="true"></i>
-								Share
-							</button>
-						</li>
-					</ul>
-				</div>
+<div class="third-menu border-top">
+	<div class="container">
+		<div class="row d-flex align-items-center justify-content-between">
+			<div class="col-lg-9 left">
+				<ul>
+					<li class="nav-overview selected">
+						<a href="#overview">Aperçu</a>
+					</li>
+					<li class="nav-description">
+						<a href="#description">Description</a>
+					</li>
+					<li class="nav-aboutSeller">
+						<a href="#aboutSeller">A propos du vendeur</a>
+					</li>
+					<li class="nav-packagesTable">
+						<a href="#packagesTable">Comparer les forfaits</a>
+					</li>
+					<li class="nav-recommendations">
+						<a href="#recommendations">Recommandations</a>
+					</li>
+					<li class="nav-faq">
+						<a href="#faq">FAQ</a>
+					</li>
+					<li class="nav-reviews">
+						<a href="#reviews">Commentaires</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-lg-3 right">
+				<ul class="d-flex align-items-center justify-content-end">
+					<li>
+						<button>
+							<i class="fa fa-heart" aria-hidden="true"></i>
+							Save
+						</button>
+					</li>
+					<li>
+						<span class="collect-count">138</span>
+					</li>
+					<li class="ml-2">
+						<button>
+							<i class="fa fa-share-alt" aria-hidden="true"></i>
+							Share
+						</button>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="main-page py-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 left">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item">
-								<a href="#">Home</a>
-							</li>
-							<li class="breadcrumb-item active" aria-current="page">Library</li>
-						</ol>
-					</nav>
-					<h2>{{ microservice.name }}</h2>
-					<div id="overview" class="seller-overview d-flex align-items-center">
-						<div class="user-profile-image d-flex">
-							<label class="profile-pict" for="profile_image">
-								<img width="40" height="40" src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_size') }}" class="profile-pict-img img-fluid" alt="">
-							</label>
-							<div class="profile-name">
-								<span class="user-status">
-									<a href="#" class="seller-link">{{ microservice.name }}</a>
-								</span>
-								<div class="seller-level">Level 1 Seller</div>
-							</div>
-						</div>
-						<div class="user-info d-flex">
-							<span class="user-info-rating d-flex">
-								<div class="star-rating-s15-wrapper">
-									<span class="star-rating-s15 rate-10"></span>
-								</div>
-								<span class="total-rating-out-five">5.0</span>
-								<span class="total-rating">(36)</span>
+<div class="main-page py-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 left">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="{{ path('microservices') }}">Microservices</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">Details produit</li>
+					</ol>
+				</nav>
+				<h2>{{ microservice.name }}</h2>
+				<div id="overview" class="seller-overview d-flex align-items-center">
+					<div class="user-profile-image d-flex">
+						<label class="profile-pict" for="profile_image">
+							<img style="width: 40px!important;height:40px!important;"
+								src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_size') }}"
+								class="" alt="">
+						</label>
+						<div class="profile-name">
+							<span class="user-status">
+								<a href="#" class="seller-link">{{ microservice.name }}</a>
 							</span>
-							<span class="orders-in-queue">2 Orders in Queue</span>
 						</div>
 					</div>
-
-					{% include "microservice/composants/_galerie.html.twig" %}
-
-					<div id="description" class="description">
-						<h3>Description</h3>
-						<p>{{ microservice.description|raw }}</p>
+					<div class="user-info d-flex">
+						<span class="user-info-rating d-flex">
+							<div class="star-rating-s15-wrapper">
+								<span class="star-rating-s15 rate-10"></span>
+							</div>
+							<span class="total-rating-out-five">5.0</span>
+							<span class="total-rating">(36)</span>
+						</span>
+						<span class="orders-in-queue">2 Orders in Queue</span>
 					</div>
-					<ul class="metadata">
+				</div>
+
+				{% include "microservice/composants/_galerie.html.twig" %}
+
+				<div id="description" class="description">
+					<h3>Description</h3>
+					<p>{{ microservice.description|raw }}</p>
+				</div>
+				<!--<ul class="metadata">
 						<li class="metadata-attribute">
 							<p>Main Type</p>
 							<ul>
@@ -115,73 +116,65 @@
 								<li>PSD</li>
 							</ul>
 						</li>
-					</ul>
-					<h3 id="aboutSeller">A propos du vendeur</h3>
-					<div class="profile-card">
-						<div class="user-profile-image d-flex">
-							<label class="profile-pict" for="profile_image">
-								<img width="80" height="80" src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_avatar') }}" class="profile-pict-img img-fluid" alt="">
-							</label>
-							<div class="right">
-								<div class="profile-name">
-									<span class="user-status">
-										<a href="#" class="seller-link">{{ microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
-									</span>
-									<div class="seller-level">
-										{{ microservice.vendeur.apropos|raw }}
-									</div>
-								</div>
-								<div class="user-info">
-									<span class="user-info-rating d-flex align-items-center">
-										<div class="star-rating-s15-wrapper">
-											<span class="star-rating-s15 rate-10">
-												<i class="fa fa-star" aria-hidden="true"></i>
-												<i class="fa fa-star" aria-hidden="true"></i>
-												<i class="fa fa-star" aria-hidden="true"></i>
-												<i class="fa fa-star" aria-hidden="true"></i>
-												<i class="fa fa-star" aria-hidden="true"></i>
-											</span>
-										</div>
-										<span class="total-rating-out-five">5.0</span>
-										<span class="total-rating">(36 reviews)</span>
-									</span>
-									<a href="#">Contacter le vendeur</a>
+					</ul>-->
+				<h3 id="aboutSeller">A propos du vendeur</h3>
+				<div class="profile-card">
+					<div class="user-profile-image d-flex">
+						<label class="profile-pict" for="profile_image">
+							<img width="80" height="80"
+								src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_avatar') }}"
+								class="profile-pict-img img-fluid" alt="">
+						</label>
+						<div class="right">
+							<div class="profile-name">
+								<span class="user-status">
+									<a href="#" class="seller-link">{{ microservice.vendeur.nom ~ ' ' ~
+										microservice.vendeur.prenom }}</a>
+								</span>
+								<div class="seller-level">
+									{{ microservice.vendeur.apropos|raw }}
 								</div>
 							</div>
+							<div class="user-info">
+								<span class="user-info-rating d-flex align-items-center">
+									<div class="star-rating-s15-wrapper">
+										<span class="star-rating-s15 rate-10">
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<i class="fa fa-star" aria-hidden="true"></i>
+											<i class="fa fa-star" aria-hidden="true"></i>
+										</span>
+									</div>
+									<span class="total-rating-out-five">5.0</span>
+									<span class="total-rating">(36 reviews)</span>
+								</span>
+								<a href="#">Contacter le vendeur</a>
+							</div>
 						</div>
-						<div class="stats-desc">
-							<ul class="user-stats">
-								<li>From<strong>India</strong>
-								</li>
-								<li>Member since<strong>Sep 2018</strong>
-								</li>
-								<li>Avg. Response Time<strong>1 hour</strong>
-								</li>
-							</ul>
-							<article class="seller-desc">
-								<div class="inner">- Wireframes for mobile apps &amp; Website
-									<br/>
-									- Flowcharts for the whole system
-									<br/>
-									- Mobile app prototypes, interactive UI designs
-									<br/>
-									- UI for social media postings
-									<br/>
-									- Design an app to achieve a business objective (web or mobile).
-									<br/>
-									- Design or re-design a website to grow revenue, close more sales and generate more leads.
-									<br/>
-									- Optimize their existing website with a conversion rate audit and strategy.
-									<br/>
-									- Design a high converting landing page.
-									<br/>
-									<span>Excellent communication and availability.
-																				                              Reach me any time during our project on Whatsapp, Skype, Text or any other
-																				                              messenger.</span>
-								</div>
-							</article>
-						</div>
-						<div id="packagesTable" class="table-package">
+					</div>
+					<div class="stats-desc">
+						<ul class="user-stats">
+							<li>From<strong>India</strong>
+							</li>
+							<li>{{ microservice.vendeur.compte }}<strong>{{ microservice.vendeur.created|date('M, Y')
+									}}</strong>
+							</li>
+							<li>Avg. Response Time<strong>1 hour</strong>
+							</li>
+						</ul>
+						<article class="seller-desc">
+							<div class="inner">- Wireframes for mobile apps &amp; Website
+								<br />
+								- Flowcharts for the whole system
+								<br />
+								- Mobile app prototypes, interactive UI designs
+								<br />
+
+							</div>
+						</article>
+					</div>
+					<!--<div id="packagesTable" class="table-package">
 							<h3>Compare Packages</h3>
 							<table>
 								<colgroup>
@@ -463,9 +456,9 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div id="faq" class="faq">
+						</div>-->
+				</div>
+				<!--<div id="faq" class="faq">
 						<h3>FAQ</h3>
 						<div class="accordion" id="accordionExample">
 							<div class="card">
@@ -529,8 +522,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div id="reviews" class="review-section">
+					</div>-->
+				<!--<div id="reviews" class="review-section">
 						<div class="d-flex align-items-center justify-content-between mb-4">
 							<h4 class="m-0">
 								37 Reviews
@@ -747,261 +740,121 @@
 								<a href="#">Wireframes</a>
 							</li>
 						</ul>
-					</div>
-				</div>
-				{% if prix|length > 0 %}
-
-				<div class="col-lg-4 right">
-					<div class="sticky">
-						<ul class="nav nav-tabs">
-							{% for price in prix %}
-								<li>
-									<a class="{{ price.name == 'Basique' ? 'active' : '' }}"  data-toggle="tab" href="#{{ price.name }}">{{ price.name }}</a>
-								</li>
-							{% endfor %}
-						</ul>
-						<div class="tab-content">
-							{% for price in prix %}
-								<div id="{{ price.name }}" class="tab-pane fade {{ price.name == 'Basique' ? 'show active' : '' }}">
-									<div class="header">
-										<h3>
-											<b class="title">Tarif</b>
-											<span class="price">{{ price.tarif ~ currency }}</span>
-										</h3>
-										<p>
-											{{ price.description|raw }}
-										</p>
-									</div>
-									<button>Continue ({{ price.tarif ~ currency }})</button>
-								</div>
-							{% endfor %}
-						</div>
-						<div class="contact-seller-wrapper">
-							<a class="fit-button" href="#">Contacter le vendeur</a>
-						</div>
-					</div>
-				</div>
-				
-				{% endif %}
+					</div>-->
 			</div>
+			{% if prix|length > 0 %}
+
+			<div class="col-lg-4 right">
+				<div class="sticky">
+					<ul class="nav nav-tabs">
+						{% for price in prix %}
+						<li>
+							<a class="{{ price.name == 'Basique' ? 'active' : '' }}" data-toggle="tab"
+								href="#{{ price.name }}">{{ price.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+					<div class="tab-content">
+						{% for price in prix %}
+						<div id="{{ price.name }}" class="tab-pane fade {{ price.name == 'Basique' ? 'show active' : '' }}">
+							<div class="header">
+								<h3>
+									<b class="title">Tarif</b>
+									<span class="price">{{ price.tarif ~ currency }}</span>
+								</h3>
+								<p>
+									{{ price.description|raw }}
+								</p>
+
+								{% if app.user == microservice.vendeur %}
+
+								{% else %}
+								<a href="{{ path('commander_microservice', {slug: microservice.slug, offre: price.name}) }}" class="btn btn-success btn-block">Continue {{ price.tarif ~ currency }}</a>
+
+								{% endif %}
+
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="contact-seller-wrapper">
+						<a class="fit-button" href="#">Contacter le vendeur</a>
+					</div>
+				</div>
+			</div>
+
+			{% endif %}
 		</div>
-		<div class="container mt-5">
-			<div class="view_slider recommended">
-				<h3>People Who Viewed This Service Also Viewed</h3>
-				<div class="view recommended-slider">
-					<div>
-						<a href="product-detail.html">
-							<img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') }}"/>
-						</a>
-						<div class="inner-slider">
-							<div class="inner-wrapper">
-								<div class="d-flex align-items-center">
-									<span class="seller-image">
-										<img class="img-fluid" src="{{ asset('themes/base/images/user/s1.png') }}" alt=''/>
+	</div>
+	<div class="container mt-5">
+		<div class="view_slider recommended">
+			<h3>Services similaire</h3>
+			<div class="view recommended-slider">
+				{% for similaire in similaires %}
+				<div>
+					<a href="{{ path('microservice_details', {slug: similaire.slug}) }}">
+						{% if similaire.medias|length > 0 %}
+
+						<img class="img-fluid"
+							src="{{ vich_uploader_asset(similaire.medias[0], 'imageFile') | imagine_filter('medium_size') }}" />
+
+						{% else %}
+
+						<img class="img-fluid"
+							src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" />
+
+						{% endif %}
+
+					</a>
+					<div class="inner-slider">
+						<div class="inner-wrapper">
+							<div class="d-flex align-items-center">
+								<span class="seller-image">
+									<img class="img-fluid"
+										src="{{ similaire.vendeur.avatar ? vich_uploader_asset(similaire.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_avatar') }}"
+										alt='' />
+								</span>
+								<span class="seller-name">
+									<a href="profile.html">{{ similaire.vendeur.nom ~ ' ' ~ similaire.vendeur.prenom }}</a>
+									<span class="level hint--top level-one-seller">
+										{{ similaire.vendeur.compte }}
 									</span>
-									<span class="seller-name">
-										<a href="profile.html">Marcin Kowalski</a>
-										<span class="level hint--top level-one-seller">
-											Level 1 Seller
-										</span>
+								</span>
+							</div>
+							<h3>{{ similaire.name }}</h3>
+							<div class="content-info">
+								<div class="rating-wrapper">
+									<span class="gig-rating text-body-2">
+										<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
+											<path fill="currentColor"
+												d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+											</path>
+										</svg>
+										5.0
+										<span>(7)</span>
 									</span>
-								</div>
-								<h3>I will create professional audio ads or radio commercials for your project</h3>
-								<div class="content-info">
-									<div class="rating-wrapper">
-										<span class="gig-rating text-body-2">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
-												<path fill="currentColor" d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>
-											</svg>
-											5.0
-											<span>(7)</span>
-										</span>
-									</div>
-								</div>
-								<div class="footer">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-									<div class="price">
-										<a href="#">
-											Starting At
-											<span>
-												$1,205</span>
-										</a>
-									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div>
-						<a href="product-detail.html">
-							<img class="img-fluid" src="{{ asset('themes/base/images/list/v2.png') }}"/>
-						</a>
-						<div class="inner-slider">
-							<div class="inner-wrapper">
-								<div class="d-flex align-items-center">
-									<span class="seller-image">
-										<img class="img-fluid" src="{{ asset('themes/base/images/user/s2.png') }}" alt=''/>
-									</span>
-									<span class="seller-name">
-										<a href="profile.html">Marcin Kowalski</a>
-										<span class="level hint--top level-one-seller">
-											Level 1 Seller
-										</span>
-									</span>
+							<div class="footer">
+								<i class="fa fa-heart" aria-hidden="true"></i>
+
+								{% if similaire.prix|length > 0 %}
+
+								<div class="price">
+									<a href="#"> <span>{{ similaire.prix[0].tarif ~ currency }}</span></a>
 								</div>
-								<h3>I will create professional audio ads or radio commercials for your project</h3>
-								<div class="content-info">
-									<div class="rating-wrapper">
-										<span class="gig-rating text-body-2">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
-												<path fill="currentColor" d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>
-											</svg>
-											5.0
-											<span>(7)</span>
-										</span>
-									</div>
-								</div>
-								<div class="footer">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-									<div class="price">
-										<a href="#">
-											Starting At
-											<span>
-												$1,205</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<a href="product-detail.html">
-							<img class="img-fluid" src="{{ asset('themes/base/images/list/v3.png') }}"/>
-						</a>
-						<div class="inner-slider">
-							<div class="inner-wrapper">
-								<div class="d-flex align-items-center">
-									<span class="seller-image">
-										<img class="img-fluid" src="{{ asset('themes/base/images/user/s3.png') }}" alt=''/>
-									</span>
-									<span class="seller-name">
-										<a href="profile.html">Marcin Kowalski</a>
-										<span class="level hint--top level-one-seller">
-											Level 1 Seller
-										</span>
-									</span>
-								</div>
-								<h3>I will create professional audio ads or radio commercials for your project</h3>
-								<div class="content-info">
-									<div class="rating-wrapper">
-										<span class="gig-rating text-body-2">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
-												<path fill="currentColor" d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>
-											</svg>
-											5.0
-											<span>(7)</span>
-										</span>
-									</div>
-								</div>
-								<div class="footer">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-									<div class="price">
-										<a href="#">
-											Starting At
-											<span>
-												$1,205</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<a href="product-detail.html">
-							<img class="img-fluid" src="{{ asset('themes/base/images/list/v4.png') }}"/>
-						</a>
-						<div class="inner-slider">
-							<div class="inner-wrapper">
-								<div class="d-flex align-items-center">
-									<span class="seller-image">
-										<img class="img-fluid" src="{{ asset('themes/base/images/user/s4.png') }}" alt=''/>
-									</span>
-									<span class="seller-name">
-										<a href="profile.html">Marcin Kowalski</a>
-										<span class="level hint--top level-one-seller">
-											Level 1 Seller
-										</span>
-									</span>
-								</div>
-								<h3>I will create professional audio ads or radio commercials for your project</h3>
-								<div class="content-info">
-									<div class="rating-wrapper">
-										<span class="gig-rating text-body-2">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
-												<path fill="currentColor" d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>
-											</svg>
-											5.0
-											<span>(7)</span>
-										</span>
-									</div>
-								</div>
-								<div class="footer">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-									<div class="price">
-										<a href="#">
-											Starting At
-											<span>
-												$1,205</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<a href="product-detail.html">
-							<img class="img-fluid" src="{{ asset('themes/base/images/list/v5.png') }}"/>
-						</a>
-						<div class="inner-slider">
-							<div class="inner-wrapper">
-								<div class="d-flex align-items-center">
-									<span class="seller-image">
-										<img class="img-fluid" src="{{ asset('themes/base/images/user/s5.png') }}" alt=''/>
-									</span>
-									<span class="seller-name">
-										<a href="profile.html">Marcin Kowalski</a>
-										<span class="level hint--top level-one-seller">
-											Level 1 Seller
-										</span>
-									</span>
-								</div>
-								<h3>I will create professional audio ads or radio commercials for your project</h3>
-								<div class="content-info">
-									<div class="rating-wrapper">
-										<span class="gig-rating text-body-2">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1792 1792" width="15" height="15">
-												<path fill="currentColor" d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>
-											</svg>
-											5.0
-											<span>(7)</span>
-										</span>
-									</div>
-								</div>
-								<div class="footer">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-									<div class="price">
-										<a href="#">
-											Starting At
-											<span>
-												$1,205</span>
-										</a>
-									</div>
-								</div>
+
+								{% endif %}
+
 							</div>
 						</div>
 					</div>
 				</div>
+
+				{% endfor %}
 			</div>
 		</div>
 	</div>
+</div>
 
 {% endblock %}

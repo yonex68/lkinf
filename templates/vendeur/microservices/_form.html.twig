@@ -84,6 +84,12 @@
 	<div class="row d-flex align-items-center form-group">
 		<div class="col-md-8 offset-sm-4">
 			<button class="btn btn-success">{{ button_label|default('Enregistrer et poursuivre') }}</button>
+
+			{% if app.request.attributes.get('_route') == 'vendeur_microservices_edit' %}
+
+				{{ include('vendeur/microservices/_delete_form.html.twig') }}
+
+			{% endif %}
 		</div>
 	</div>
 </div>

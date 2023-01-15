@@ -41,7 +41,7 @@
                         <a href="{{ path('vendeur_microservices_show', {'id': microservice.id}) }}"
                             class="btn btn-light">Details</a>
                         <a href="{{ path('vendeur_microservices_galerie', {'id': microservice.id}) }}"
-                            class="btn btn-light"><i class="fa fa-image"></i> Galerie</a>
+                            class="btn btn-light"><i class="fa fa-image"></i>&nbsp;Galerie</a>
                         <a href="{{ path('vendeur_microservices_edit', {'id': microservice.id}) }}"
                             class="btn btn-secondary">Modifier</a>
                     </div>
@@ -49,10 +49,13 @@
             </div>
         </div>
         {% else %}
-        <div class="col-md-4">
-            <div class="py-3">
+        <div class="col-md-12">
+            <div class="py-3 text-center bg-white border rounded shadow-sm">
                 <p class="text-muted">Aucun service</p>
-                <a href="{{ path('vendeur_microservices_new') }}">Nouveau service</a>
+                <div class="py-4">
+                    <i class="fa fa-search fa-3x text-muted"></i>
+                </div>
+                <a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">Nouveau service</a>
             </div>
         </div>
         {% endfor %}

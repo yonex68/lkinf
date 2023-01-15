@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Microservice;
+use App\Form\CommandeType;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use PHPUnit\TextUI\Command;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,11 +32,15 @@ class MicroserviceController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{slug}', name: 'microservice_details')]
-    public function details(Microservice $microservice, PrixRepository $prixRepository): Response
+    #[Route('/details/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository): Response
     {
+
+        $similaires = $microserviceRepository->findBy(['categorie' => $microservice->getCategorie()], ['created' => 'DESC'], 12);
+
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,
+            'similaires' => $similaires,
             'prix' => $microservice->getPrix(),
         ]);
     }

@@ -1,11 +1,15 @@
-<h1>Salut! Veuillez confirmer votre email!</h1>
+<h1>Bonjour Mr/Mme,</h1>
 
 <p>
-    Veuillez confirmer votre adresse e-mail en cliquant sur le lien suivant : <br><br>
-    <a href="{{ signedUrl }}">Confirmer mon e-mail</a>.
-    Ce lien expirera dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+
+	Vous venez de créer un compte sur <strong>{{ appName }}</strong>. Avant de pouvoir utiliser votre compte, vous devez vérifier que cette adresse e-mail est bien la vôtre en cliquant ici :
+	<a href="{{ signedUrl }}">Confirmer mon e-mail</a>.
+		
+    Ce lien expirera dans
+	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+
 </p>
 
 <p>
-    Merci!
+	Cordialement, <strong>{{ appName }}</strong>!
 </p>
