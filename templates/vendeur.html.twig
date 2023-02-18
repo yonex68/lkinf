@@ -41,17 +41,18 @@
          <div class="container">
             <div class="row">
                <div class="col-lg-{% block colleft %}3{% endblock %}">
-						<div class=" sidebar-fix">
+						<div class="sidebar-fix">
 						{% block sidebar %}
                   	{% include "partials/vendeur/_sidebar.html.twig" %}
 						{% endblock %}							
 						</div>
                </div>
                <div class="col-lg-{% block colright %}9{% endblock %}">
+
+						{{ include('partials/_flash_message.html.twig') }}
+						
                   <div class="bg-{% block bg %}white shadow-sm{% endblock %} rounded sidebar-page-right">
                      <div>
-
-								{{ include('partials/_flash_message.html.twig') }}
 
 								{% block body %}{% endblock %}
                         

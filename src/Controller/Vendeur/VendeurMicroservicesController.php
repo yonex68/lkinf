@@ -6,6 +6,8 @@ use App\Entity\Microservice;
 use App\Form\Microservice\MicroserviceGalerieType;
 use App\Form\Microservice\MicroserviceType;
 use App\Repository\MicroserviceRepository;
+use App\Repository\SuivisRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +43,7 @@ class VendeurMicroservicesController extends AbstractController
     }
 
     #[Route('/new', name: 'vendeur_microservices_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerService $mailer, SuivisRepository $suivisRepository): Response
     {
         $microservice = new Microservice();
         $form = $this->createForm(MicroserviceType::class, $microservice);
@@ -55,6 +57,22 @@ class VendeurMicroservicesController extends AbstractController
             $microservice->setVendeur($this->getUser());
             $entityManager->persist($microservice);
             $entityManager->flush();
+
+            // Liste des clients qui le suivent
+            $vendeur = $this->getUser();
+            $suivis = $suivisRepository->findBy(['vendeur' => $vendeur]);
+            //dd($clients);
+
+            foreach ($suivis as $suivi) {
+                $mailer->sendMail(
+                    $vendeur->getEmail(),
+                    $suivi->getClient()->getEmail(),
+                    'Nouvelle publication',
+                    $vendeur->getNom() . ' ' . $vendeur->getPrenom(),
+                    'Nouveau message',
+                    $microservice
+                );
+            }
 
             $this->addFlash('success', 'Le contenu a bien été cré');
 

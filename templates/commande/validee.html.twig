@@ -8,100 +8,109 @@
 
 {% block body %}
 
-<section class="container section">
+<section class="container py-5">
    <div class="row">
-      <div class="col-sm-5">
-         <div class="list-group">
+      <div class="col-sm-4">
+         <div class="list-group shadow-sm">
 
-            <div class="list-group-item justify-content-between d-flex">
-               <h5 class="ajax text-dark h6 py-3 subtitle font-weight-bold">Suivis de la commande</h5>
-               <span class="font-weight-bold">{{ commande.id }}</span>
+            <div class="list-group-item d-flex justify-content-between align-items-center border-bottom-0">
+               <h5 class="h5">Suivis de la commande</h5>
+               <span class="badge badge-dark">N° {{ commande.id }}</span>
             </div>
-            
+
             <div class="list-group-item">
 
-               <div>
-                  <h3 class="text-dark h6 pt-3 m-0 subtitle font-weight-bold">1 - Commande payée</h3>
-                  <span class="text-dark">Le {{ commande.created|date('d/m/Y à H:i') }}</span>
-               </div>
+               <ul class="list-group py-3">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                     Offre {{ commande.offre }}
+                     <span class="badge badge-dark badge-pill">{{ commande.montant ~ currency }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                     {{ commande.microservice.description|raw }}
+                  </li>
+               </ul>
 
-               <div>
-                  Montant <strong class="h3">{{ commande.montant }}</strong> {{ currency }}
+               <div class="">
+                  <h3 class="h5 lead">1 - Commande payée</h3>
+                  <span class="text-dark">Le {{ commande.created|date('d/m/Y à H:i') }}</span>
                </div>
 
                {% if commande.validate == 1 %}
 
                <div class="py-3">
-                  <h3 class="text-dark h6 pt-3 m-0 subtitle font-weight-bold">2 - Commande validée</h3>
-                  <span class="badge badge-info badge-pill">Validée</span>
+                  <h3 class="h5 lead">2 - Commande validée</h3>
                   <span class="text-dark">Le {{ commande.validateAt|date('d/m/Y à H:i') }}</span>
                </div>
 
 
                <div class="py-3">
-                  <h3 class="text-dark h6 pt-3 m-0 subtitle font-weight-bold">3 - Commande en cours</h3>
-                  <span class="badge badge-warning badge-pill">En cours</span>
+                  <h3 class="h5 lead">3 - Commande en cours</h3>
                   <span class="text-dark">Depuis le {{ commande.validateAt|date('d/m/Y à H:i') }}</span>
                </div>
 
                {% endif %}
 
-               {{ include('commande/composants/_question_frequentes.html.twig') }}
-
                {% if is_granted('microservice_edit', commande.microservice) %}
 
                {% if commande.deliver == 0 %}
 
-                  {% if commande.cancel == 0 %}
+               {% if commande.cancel == 0 %}
 
-                     <div class="mb-4">
+               <div class="py-3">
 
-                        {% if commande.validate == 0 %}
+                  {% if commande.validate == 0 %}
 
-                        {{ include('commande/composants/_validate_form.html.twig') }}
-
-                        {% endif %}
-
-                        {% if commande.validate == 1 %}
-
-                        {{ include('commande/composants/_livrer_form.html.twig') }}
-
-                        {% endif %}
-
-                        {{ include('commande/composants/_annuler_form.html.twig') }}
-
-                     </div>
+                  {{ include('commande/composants/_validate_form.html.twig') }}
 
                   {% endif %}
 
+                  {% if commande.validate == 1 %}
+
+                  {{ include('commande/composants/_livrer_form.html.twig') }}
+
+                  {% endif %}
+
+                  {{ include('commande/composants/_annuler_form.html.twig') }}
+
+               </div>
+
                {% endif %}
-                  
+
+               {% endif %}
+
                {% endif %}
 
                {% if commande.deliver == 1 %}
 
-               <div>
-                  <h3 class="text-dark h6 pt-3 m-0 subtitle font-weight-bold">4 - Commande livrée</h3>
-                  {% if is_granted('microservice_edit', commande.microservice) %}
-                     <span class="badge badge-success badge-pill">Livrée</span>
-                  {% endif %}
-                  <span class="text-dark">le {{ commande.deliverAt|date('d/m/Y à H:i') }}</span>
+               <div class="py-3">
+                  <h3 class="h5 lead">4 - Commande livrée</h3>
+                  <span class="text-dark">Le {{ commande.deliverAt|date('d/m/Y à H:i') }}</span>
                </div>
 
                {% endif %}
 
                {% if commande.cancel == 1 %}
 
-               <h3 class="text-dark h6 pt-3 m-0 subtitle font-weight-bold">
-                  5 - Commande annuler</h3>
-                  <span class="badge badge-danger badge-pill">Commande annulée</span>
+               <div class="py-3">
+                  <h3 class="h5 lead">5 - Commande annuler</h3>
                   <span class="text-dark">Le {{ commande.cancelAt|date('d/m/Y à H:i') }}</span>
-                  <p>{% trans %}raison{% endtrans %}</p>
+                  <p>Pour une raison ou une autre, la commande à été annulée par le vendeur</p>
+               </div>
 
                {% endif %}
+
+               {{ include('commande/composants/_question_frequentes.html.twig') }}
+
             </div>
 
          </div>
+
+         <div>
+            {% include "commande/composants/_avis_form.html.twig" %}
+         </div>
+      </div>
+      <div class="col-sm-8">
+         {% include "commande/composants/_chat.html.twig" %}
       </div>
    </div>
 </section>

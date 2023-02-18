@@ -16,53 +16,45 @@
 
             {% include "commande/composants/_stripe.html.twig" %}
 
+            <div>
+               {% include "commande/composants/_paypal_button.html.twig" %}
+            </div>
+
          </div>
 
       </div>
 
-      <h4 class="py-3 h5">Service commandé</h4>
-      <div class="list-group">
-         <div class="list-group-item">
-            <div class="d-flex">
-               <div>
-                  {% if microservice.medias|length > 0 %}
+      <h4 class="py-3 h5">Service à commander</h4>
+      <div class="list-group my-3">
+			<div class="list-group-item">
+				<div class="d-flex">
+					<div>
+						{% if microservice.medias|length > 0 %}
 
-                  <img class="rounded"
-                     src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('large_avatar') }}" />
+							<img class="rounded" src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}"/>
 
-                  {% else %}<img class="rounded"
-                     src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('large_avatar') }}" />
+							{% else %}<img class="rounded" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}"/>
 
-                  {% endif %}
-               </div>
-               <div class="pl-3">
-                  <strong class="d-block">{{ microservice.name }}</strong>
-                  <span class="badge badge-warning">{{ microservice.categorie.name }}</span>
-               </div>
-            </div>
-         </div>
-         <div class="list-group-item">
-            <div class="d-flex">
-               <div class="seller-image">
-                  <img class="rounded-circle" width="60" height="60"
-                     src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('medium_avatar') }}"
-                     alt='' />
-               </div>
-               <div class="pl-2">
+						{% endif %}
+					</div>
+					<div class="pl-3">
+						<strong class="d-block">{{ microservice.name }}</strong>
+						<span class="badge badge-warning">#{{ microservice.categorie.name }}</span>
+						{% if microservice.prix|length > 0 %}
 
-                  <span class="level hint--top level-one-seller">
-                     Vendeur
-                  </span> <br>
+							<p class="">
+								<strong>Offre {{ microservice.prix[0].name }} {{ microservice.prix[0].tarif ~ currency }}</strong>
+							</p>
 
-                  <a href="">{{ microservice.vendeur.nom ~ ' ' ~
-                     microservice.vendeur.prenom }}</a>
-                     
-               </div>
-            </div>
-         </div>
-      </div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
 
    </div>
 </section>
 
 {% endblock %}
+
+{% block footer %}{% endblock %}

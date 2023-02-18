@@ -1,0 +1,24 @@
+{{ form_start(form, {'attr': {'class': 'shadow-0'}}) }}
+
+<div class="w-100 border-top border-bottom">
+
+	{{ form_errors(form.contenu) }}
+
+	<div class="form-group">
+
+		{{ form_widget(form.contenu, {'attr': {'rows': 5, 'class': 'shadow-none border-0'}}) }}
+
+	</div>
+
+	<!--<textarea placeholder="Write a message…" class="form-control border-0 p-3 shadow-none" rows="2"></textarea>-->
+</div>
+<div class="p-3 d-flex align-items-center">
+	<span class="ml-auto">
+		<button type="submit" class="btn btn-success btn-sm rounded">
+			<i class="mdi mdi-send"></i>
+			Envoyer
+		</button>
+	</span>
+</div>
+
+{{ form_end(form) }}

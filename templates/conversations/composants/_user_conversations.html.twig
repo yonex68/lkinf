@@ -1,0 +1,173 @@
+<div class="osahan-chat-list">
+	{% if app.request.attributes.get('_route') == 'conversations' %}
+
+		{% for userconversation in conversations %}
+
+			<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+
+				{% if userconversation.user1.id == app.user.id %}
+
+					<div class="dropdown-list-image mr-3">
+
+						<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+							{% if userconversation.user2.avatar %}
+
+								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+
+							{% else %}
+
+								<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+
+							{% endif %}
+
+						</a>
+
+					</div>
+					<div class="font-weight-bold mr-1 overflow-hidden">
+						<div class="text-truncate">
+
+							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+								{{ userconversation.user2.nom }} {{ userconversation.user2.prenom }}
+
+							</a>
+
+						</div>
+						<div class="small text-truncate overflow-hidden text-black-50">
+
+							{{ include('conversations/composants/_last_message.html.twig') }}
+
+						</div>
+					</div>
+            
+            {% elseif userconversation.user2.id == app.user.id %}
+
+					<div class="dropdown-list-image mr-3">
+
+						<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+							{% if userconversation.user1.avatar %}
+
+								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+
+							{% else %}
+
+								<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+
+							{% endif %}
+
+						</a>
+
+					</div>
+					<div class="font-weight-bold mr-1 overflow-hidden">
+						<div class="text-truncate">
+
+							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+								{{ userconversation.user1.nom }} {{ userconversation.user1.prenom }}
+
+							</a>
+
+						</div>
+						<div class="small text-truncate overflow-hidden text-black-50">
+
+							{{ include('conversations/composants/_last_message.html.twig') }}
+
+						</div>
+					</div>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+	{% else %}
+
+		{% for userconversation in conversations %}
+
+			<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+
+				{% if userconversation.user1.id == app.user.id %}
+
+					<div class="dropdown-list-image mr-3">
+
+						<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+							{% if userconversation.user2.avatar %}
+
+								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+
+							{% else %}
+
+								<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+
+							{% endif %}
+
+						</a>
+
+					</div>
+					<div class="font-weight-bold mr-1 overflow-hidden">
+						<div class="text-truncate">
+
+							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+								{{ userconversation.user2.nom }}
+								{{ userconversation.user2.prenom }}
+
+							</a>
+
+						</div>
+						<div class="small text-truncate overflow-hidden text-black-50">
+
+							{{ include('conversations/composants/_last_message.html.twig') }}
+
+						</div>
+					</div>
+
+				{% elseif userconversation.user2.id == app.user.id %}
+
+					<div class="dropdown-list-image mr-3">
+
+						<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+							{% if userconversation.user1.avatar %}
+
+								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+
+							{% else %}
+
+								<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+
+							{% endif %}
+
+						</a>
+
+					</div>
+					<div class="font-weight-bold mr-1 overflow-hidden">
+						<div class="text-truncate">
+
+							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+
+								{{ userconversation.user1.nom }}
+								{{ userconversation.user1.prenom }}
+
+							</a>
+
+						</div>
+						<div class="small text-truncate overflow-hidden text-black-50">
+
+							{{ include('conversations/composants/_last_message.html.twig') }}
+
+						</div>
+					</div>
+
+				{% endif %}
+
+			</div>
+
+		{% endfor %}
+
+	{% endif %}
+</div>

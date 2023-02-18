@@ -26,10 +26,13 @@
 					//alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
 					// When ready to go live, remove the alert and show a success message within this page. For example:
 					const element = document.getElementById('paypal-button-container');
-					element.innerHTML = '<div class="border border-success text-success p-4"><strong>Transaction éffectuée avec succès, Merci pour votre paiement!</strong></div>';
+					element.innerHTML = `
+					<div class="border border-success text-success p-4 rounded">
+						<strong>Transaction éffectuée avec succès, Merci pour votre paiement!</strong>
+					</div>`;
 					// Or go to another URL:  
 					//actions.redirect('');
-					document.location.href = "{{ path('notifier_vendeur_success', {'id': commande.id}) }}"
+					document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre}) }}"
 				});
 			}
 		}).render('#paypal-button-container');

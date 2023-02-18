@@ -1,4 +1,4 @@
 <form method="post" class="d-inline" action="{{ path('vendeur_livrer_commande', {'id': commande.id}) }}" onsubmit="return confirm('Cette commande a bien été livrée?');">
     <input type="hidden" name="_token" value="{{ csrf_token('livrer' ~ commande.id) }}">
-    <button class="btn btn-success">{% trans %}livrercommande{% endtrans %}</button>
+    <button class="btn btn-success">livrer</button>
 </form>

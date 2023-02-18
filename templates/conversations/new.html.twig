@@ -1,0 +1,85 @@
+{% extends "auth.html.twig" %}
+
+{% block title %}Nouvelle message
+{% endblock %}
+
+{% block titre %}Contacter le vendeur
+{% endblock %}
+
+{% block col %}6
+{% endblock %}
+
+{% block body %}
+
+	<div class="text-center">
+		{% if vendeur.avatar %}
+			<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('large_avatar') }}" class="rounded-circle" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+		{% else %}
+
+			{% if vendeur.genre == 'Feminin' %}
+
+				<img class="rounded-circle" src="{{ asset('img/femme.jpg') | imagine_filter('large_avatar') }}" alt='{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}'/>
+
+			{% else %}
+
+				<img class="rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}" alt='{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}'/>
+
+			{% endif %}
+
+		{% endif %}
+
+		<h6 class="py-3">{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</h6>
+	</div>
+
+	{% if microservice %}
+
+		<p class="text-center">Contacter
+			<strong>{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
+			pour ce service</p>
+		<div class="list-group my-3">
+			<div class="list-group-item">
+				<div class="d-flex">
+					<div>
+						{% if microservice.medias|length > 0 %}
+
+							<img class="rounded" src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}"/>
+
+							{% else %}<img class="rounded" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}"/>
+
+						{% endif %}
+					</div>
+					<div class="pl-3">
+						<strong class="d-block">{{ microservice.name }}</strong>
+						<span class="badge badge-warning">#{{ microservice.categorie.name }}</span>
+						{% if microservice.prix|length > 0 %}
+
+							<p class="">
+								<strong>Offre {{ microservice.prix[0].name }} {{ microservice.prix[0].tarif ~ currency }}</strong>
+							</p>
+
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{% endif %}
+
+	{{ form_start(form, {'attr': {'id': ''}}) }}
+
+	{{ form_errors(form.contenu) }}
+
+	<div class="form-group">
+
+		{{ form_widget(form.contenu, {'attr': {'rows': 5}}) }}
+
+	</div>
+
+	<button id="submit" type="submit" class="btn btn-success btn-block align-items-center">
+		<i class="fa fa-paper-plane"></i>
+		Envoyer
+	</button>
+
+	{{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,96 @@
+<table class="table bg-white">
+   <thead>
+      <tr>
+         <th>Service</th>
+         <th>Montant</th>
+         <th>{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' : 'Vendeur' }}</th>
+         <th>Statut</th>
+         <th>Date</th>
+         <th>actions</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for commande in commandes %}
+      <tr>
+         <td>
+            <div class="media">
+               {% if commande.microservice.medias|length > 0 %}
+
+               <img class="rounded"
+                  src="{{ vich_uploader_asset(commande.microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}">
+
+               {% endif %}
+               <div class="media-body pl-3">
+                  <span class="d-block">{{ commande.microservice.name }}</span>
+                  <span class="badge badge-light border badge-pill">Offre {{ commande.offre }}</span>
+               </div>
+            </div>
+         </td>
+         <td><strong>{{ commande.montant ~ currency }}</strong></td>
+         <td>
+
+            {% if app.request.attributes.get('_route') == 'vendeur_commandes_index' %}
+
+            <div class="media">
+               {% if commande.client.avatar %}
+
+               <img class="rounded-circle"
+                  src="{{ vich_uploader_asset(commande.client, 'imageFile') | imagine_filter('small_avatar') }}">
+
+               {% else %}
+
+               <img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="40" height="40"
+                  class="rounded-circle" alt="">
+
+               {% endif %}
+
+               <div class="media-body pl-3">
+                  <strong class="d-block">{{ commande.client.nom }}</strong>
+                  <span class="text-muted small">{{ commande.client.prenom }}</span>
+               </div>
+            </div>
+
+            {% else %}
+
+            <div class="media">
+
+               <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank">
+                  {% if commande.vendeur.avatar %}
+
+                  <img class="rounded-circle"
+                     src="{{ vich_uploader_asset(commande.vendeur, 'imageFile') | imagine_filter('small_avatar') }}">
+
+                  {% else %}
+
+                  <img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="40" height="40"
+                     class="rounded-circle" alt="">
+
+                  {% endif %}
+               </a>
+
+               <div class="media-body pl-3">
+                  <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank" class="d-block font-weight-bold">{{ commande.vendeur.nom }}</a>
+                  <span class="text-muted small">{{ commande.vendeur.prenom }}</span>
+               </div>
+            </div>
+
+            {% endif %}
+
+         </td>
+         <td>
+            <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ?
+               'Livrer' : 'En cours' }}</span>
+         </td>
+         <td>{{ commande.created ? commande.created|date('d/m/Y H:i') : '' }}</td>
+         <td>
+            <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-light"
+               target="_blank">Détails</a>
+         </td>
+      </tr>
+      {% else %}
+      <tr>
+         <td colspan="7" class="text-center">Aucune commande</td>
+      </tr>
+      {% endfor %}
+   </tbody>
+</table>

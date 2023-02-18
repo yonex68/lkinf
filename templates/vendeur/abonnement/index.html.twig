@@ -10,36 +10,6 @@
 
 {% block body %}
 
-<div class="">
-   <div class="box shadow-sm rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-         <h6 class="m-0">Votre abonnement</h6>
-      </div>
-
-      <table class="table table-borderless">
-        <thead>
-            <tr>
-                <th>Offre</th>
-                <th>Tarif</th>
-                <th>Tarification</th>
-                <th>Statut</th>
-                <th>Date</th>
-            </tr>
-            <tr>
-                <td><span class="badge badge-warning badge-pill">{{ abonnement.stripe.name }}</span></td>
-                <td>
-                    <div>
-                        <span class="h2">{{ abonnement.stripe.tarif }}</span>
-                        <span class="lead">{{ currency }}/mois</span>
-                     </div>
-                </td>
-                <td><span>Annuel</span></td>
-                <td><span class="badge badge-success badge-pill">Actif</span></td>
-                <td><span class="text-muted">{{ abonnement.created|date('d/m/Y') }}</span></td>
-            </tr>
-        </thead>
-      </table>
-   </div>
-</div>
+{% include "vendeur/abonnement/composants/_box.html.twig" %}
 
 {% endblock %}

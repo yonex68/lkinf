@@ -98,10 +98,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Avis::class)]
+    private $avis;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Favoris::class)]
+    private $favoris;
+
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Suivis::class)]
+    private $suivis;
+
+    #[ORM\OneToMany(mappedBy: 'user1', targetEntity: Conversation::class)]
+    private $conversations;
+
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Message::class)]
+    private $messages;
+
+    #[ORM\OneToMany(mappedBy: 'sendeur', targetEntity: Conversation::class)]
+    private $senderconversations;
+
+    #[ORM\OneToMany(mappedBy: 'destinataire', targetEntity: Commande::class)]
+    private $destinatairesCommandes;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommandeMessage::class)]
+    private $commandeMessages;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->avis = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
+        $this->suivis = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->senderconversations = new ArrayCollection();
+        $this->destinatairesCommandes = new ArrayCollection();
+        $this->commandeMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -454,6 +486,260 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($commande->getClient() === $this) {
                 $commande->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Avis[]
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis[] = $avi;
+            $avi->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getClient() === $this) {
+                $avi->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favoris[]
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getClient() === $this) {
+                $favori->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Suivis[]
+     */
+    public function getSuivis(): Collection
+    {
+        return $this->suivis;
+    }
+
+    public function addSuivi(Suivis $suivi): self
+    {
+        if (!$this->suivis->contains($suivi)) {
+            $this->suivis[] = $suivi;
+            $suivi->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuivi(Suivis $suivi): self
+    {
+        if ($this->suivis->removeElement($suivi)) {
+            // set the owning side to null (unless already changed)
+            if ($suivi->getVendeur() === $this) {
+                $suivi->setVendeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Permet de savoir si l'utilisateur suis déjà ce vendeur
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isFollowed(User $user){
+        foreach($this->suivis as $suivi){
+            if($suivi->getClient() === $user) return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+            $conversation->setUser1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): self
+    {
+        if ($this->conversations->removeElement($conversation)) {
+            // set the owning side to null (unless already changed)
+            if ($conversation->getUser1() === $this) {
+                $conversation->setUser1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getAuteur() === $this) {
+                $message->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getSenderconversations(): Collection
+    {
+        return $this->senderconversations;
+    }
+
+    public function addSenderconversation(Conversation $senderconversation): self
+    {
+        if (!$this->senderconversations->contains($senderconversation)) {
+            $this->senderconversations[] = $senderconversation;
+            $senderconversation->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSenderconversation(Conversation $senderconversation): self
+    {
+        if ($this->senderconversations->removeElement($senderconversation)) {
+            // set the owning side to null (unless already changed)
+            if ($senderconversation->getSender() === $this) {
+                $senderconversation->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getDestinatairesCommandes(): Collection
+    {
+        return $this->destinatairesCommandes;
+    }
+
+    public function addDestinatairesCommandes(Commande $destinatairesCommandes): self
+    {
+        if (!$this->destinatairesCommandes->contains($destinatairesCommandes)) {
+            $this->destinatairesCommandes[] = $destinatairesCommandes;
+            $destinatairesCommandes->setDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinatairesCommandes(Commande $destinatairesCommandes): self
+    {
+        if ($this->destinatairesCommandes->removeElement($destinatairesCommandes)) {
+            // set the owning side to null (unless already changed)
+            if ($destinatairesCommandes->getDestinataire() === $this) {
+                $destinatairesCommandes->setDestinataire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeMessage[]
+     */
+    public function getCommandeMessages(): Collection
+    {
+        return $this->commandeMessages;
+    }
+
+    public function addCommandeMessage(CommandeMessage $commandeMessage): self
+    {
+        if (!$this->commandeMessages->contains($commandeMessage)) {
+            $this->commandeMessages[] = $commandeMessage;
+            $commandeMessage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeMessage(CommandeMessage $commandeMessage): self
+    {
+        if ($this->commandeMessages->removeElement($commandeMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeMessage->getUser() === $this) {
+                $commandeMessage->setUser(null);
             }
         }
 

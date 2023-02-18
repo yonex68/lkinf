@@ -21,7 +21,7 @@ class UsersFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for($nbUsers = 1; $nbUsers <= 20; $nbUsers++){
+        for($nbUsers = 1; $nbUsers <= 50; $nbUsers++){
             $user = new User();
             if($nbUsers == 1){
                 $user->setEmail('admin@gmail.com');
@@ -34,6 +34,7 @@ class UsersFixtures extends Fixture
             }
             $user->setPrenom($faker->firstName());
             $user->setNom($faker->lastName());
+            $user->setGenre($faker->randomElement(['Masculin', 'Feminin']));
             $user->setNameUrl($faker->firstName().'-'.$faker->lastName());
             $user->setApropos($faker->realText(150));
             $user->setIsVerified(true);

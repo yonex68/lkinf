@@ -2,9 +2,19 @@
 	<div id="aniimated-thumbnials" class="slider-for slick-slider-single">
 		{% for media in microservice.medias %}
 
-			<a href="{{ media.imageName ? vich_uploader_asset(media, 'imageFile') : asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}">
-				<img class="img-fluid" src="{{ media.imageName ? vich_uploader_asset(media, 'imageFile') : asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" alt="{{ media.name }}"/>
-			</a>
+			{% if media.imageName %}
+
+				<a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}">
+					<img class="img-fluid" src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}" alt="{{ media.name }}"/>
+				</a>
+
+			{% else %}
+
+				<a href="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}">
+					<img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" alt="{{ media.name }}"/>
+				</a>
+
+			{% endif %}
 
 		{% endfor %}
 	</div>

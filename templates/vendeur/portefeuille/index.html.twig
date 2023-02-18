@@ -10,48 +10,6 @@
 
 {% block body %}
 
-<div class="">
-    <div class="box shadow-sm rounded bg-white mb-3">
-        <div class="box-title p-3 border-bottom">
-            <h6 class="m-0">Mon protefeuille</h6>
-        </div>
-
-        <div class="p-3 border-bottom">
-            <div class="row py-4">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="font-weight-bold h5">Revenu disponible</span>
-                            <div>
-                                <span class="h2">{{ portefeuille.soldeEnCours }}</span>
-                                <span class="lead">{{ currency }}</span>
-                            </div>
-                            <span>{{ portefeuille.soldeEnCours ~ currency }} au total</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <span class="font-weight-bold h5">Vente en cours</span>
-                            <div>
-                                <span class="h2">{{ portefeuille.soldeDisponible }}</span>
-                                <span class="lead">{{ currency }}</span>
-                            </div>
-                            <span>{{ portefeuille.soldeDisponible ~ currency }} au total</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-    
-                </div>
-            </div>
-        </div>
-
-        <div class="p-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, sit recusandae unde quidem alias nisi cupiditate ipsam vero voluptatem maiores.
-        </div>
-    </div>
-</div>
+{% include "vendeur/portefeuille/composants/_box.html.twig" %}
 
 {% endblock %}

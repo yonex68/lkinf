@@ -46,11 +46,19 @@ class Microservice
     #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Commande::class)]
     private $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Avis::class)]
+    private $avis;
+
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Favoris::class)]
+    private $favoris;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
         $this->prix = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->avis = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,5 +219,79 @@ class Microservice
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Avis[]
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): self
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis[] = $avi;
+            $avi->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): self
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getMicroservice() === $this) {
+                $avi->setMicroservice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favoris[]
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getMicroservice() === $this) {
+                $favori->setMicroservice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Verifi si ce microcervice a déjà ajouter en favoris par un utilisateur
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isAddedByUser(User $user){
+        foreach($this->favoris as $favori){
+            if($favori->getClient() === $user) return true;
+        }
+
+        return false;
     }
 }

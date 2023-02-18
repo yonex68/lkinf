@@ -1,0 +1,25 @@
+{% for message in messages %}
+
+<div class="media w-75 alert bg-white message-box {{ message.auteur == app.user ? 'ml-auto' : '' }}">
+	{% if message.auteur.avatar %}
+	<img src="{{ vich_uploader_asset(message.auteur) | imagine_filter('small_avatar') }}"
+		alt="{{ message.auteur.prenom ?? '' }}" class="rounded-circle border">
+	{% else %}
+	<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+	{% endif %}
+
+	<div class="media-body ml-2">
+		<div class="d-flex text-truncate p-0 m-0 align-items-top">
+			<strong>
+				{{ message.auteur == app.user ? 'Vous' : message.auteur.nom ~ ' ' ~ message.auteur.prenom }}
+			</strong>
+			&nbsp;&nbsp;
+			<span class="ml-auto text-muted small font-italic">
+				{{ message.created|ago(locale='fr') }}
+			</span>
+		</div>
+		<p class="font-italic">{{ message.contenu }}</p>
+	</div>
+</div>
+
+{% endfor %}

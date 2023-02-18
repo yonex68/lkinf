@@ -36,7 +36,7 @@ class MicroserviceController extends AbstractController
     public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository): Response
     {
 
-        $similaires = $microserviceRepository->findBy(['categorie' => $microservice->getCategorie()], ['created' => 'DESC'], 12);
+        $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
 
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,

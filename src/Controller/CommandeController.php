@@ -2,9 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
 use App\Entity\Commande;
+use App\Entity\CommandeMessage;
+use App\Entity\Message;
 use App\Entity\Portefeuille;
+use App\Form\AvisType;
+use App\Form\CommandeMessageType;
+use App\Repository\CommandeMessageRepository;
 use App\Repository\CommandeRepository;
+use App\Repository\ConversationRepository;
+use App\Repository\MessageRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,49 +29,132 @@ class CommandeController extends AbstractController
 {
     private $privateKey;
 
-    //private $paypalkey;
+    private $paypalkey;
 
     public function __construct()
     {
         /**
          * Vérification de l'environnement
          */
-        if($_ENV['APP_ENV'] === 'dev'){
+        if ($_ENV['APP_ENV'] === 'dev') {
 
             $this->privateKey = $_ENV['STRIPE_SECRET_KEY_TEST'];
 
-            //$this->paypalkey = $_ENV['PAYPAL_SECRET_KEY_TEST'];
-
-        }else{
+            $this->paypalkey = $_ENV['PAYPAL_SECRET_KEY_TEST'];
+        } else {
 
             $this->privateKey = $_ENV['STRIPE_SECRET_KEY_LIVE'];
 
-            //$this->paypalkey = $_ENV['PAYPAL_SECRET_KEY_LIVE'];
+            $this->paypalkey = $_ENV['PAYPAL_SECRET_KEY_LIVE'];
         }
     }
-    
-    #[Route('/validee/commande_id={id}', name: 'commande_details')]
-    public function commande(CommandeRepository $commandeRepository, $id): Response
+
+    #[Route('/chat', name: 'commandes_chats')]
+    public function chat(CommandeRepository $commandeRepository): Response
     {
+        $user = $this->getUser();
+
+        $commandes = $commandeRepository->findWhereUserIsClientOrVendeur($user);
+
+        return $this->render('commande/chat.html.twig', [
+            'usercommandes' => $commandes,
+        ]);
+    }
+
+    #[Route('/validee/commande_id={id}', name: 'commande_details')]
+    public function commande(CommandeRepository $commandeRepository, $id, Request $request, EntityManagerInterface $entityManager, CommandeMessageRepository $commandeMessageRepository): Response
+    {
+        $user = $this->getUser();
         $commande = $commandeRepository->find($id);
 
+        $redirect = $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
+
+        if (!$commande) {
+            return $redirect;
+        }
+
+        // Les participants de la conversation
         $particlipants = [$commande->getClient(), $commande->getVendeur()];
 
-        if(!in_array($this->getUser(), $particlipants)){
-            dd('Accès non autorisé');
+        if (!in_array($user, $particlipants)) {
+            return $redirect;
+        }
+
+        if ($commande->getDestinataire()->getId() == $user->getId() && $commande->getLu() == 0) {
+            $commande->setLu(true);
+            $entityManager->flush();
+        }
+
+        // Recupération des commandes de cet utilisateur
+        $usercommandes = $commandeRepository->findWhereUserIsClientOrVendeur($user);
+
+        // Recupération des méssages liés à cette commande
+        $messages = $commandeMessageRepository->findBy([
+            'commande' => $commande
+        ]);
+
+        $avis = new Avis();
+        $avisForm = $this->createForm(AvisType::class, $avis);
+        $avisForm->handleRequest($request);
+
+        if ($avisForm->isSubmitted() && $avisForm->isValid()) {
+
+            $avis->setVendeur($commande->getMicroservice()->getVendeur());
+            $avis->setMicroservice($commande->getMicroservice());
+            $avis->setClient($user);
+            $entityManager->persist($avis);
+            $entityManager->flush();
+
+            $this->addFlash('success', "Votre avis à bien été soumis");
+
+            return $this->redirectToRoute('commande_details', [
+                'id' => $commande->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        // Test de message
+        $message = new CommandeMessage();
+        $form = $this->createForm(CommandeMessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $destinataire = null;
+
+            if ($user->getId() == $commande->getVendeur()->getId()) {
+                $destinataire = $commande->getClient();
+            } else {
+                $destinataire = $commande->getVendeur();
+            }
+
+            $commande->setDestinataire($destinataire);
+            $commande->setLu(false);
+            
+            $message->setCommande($commande);
+            $message->setUser($this->getUser());
+            $message->setLu(false);
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+
+            return $this->redirectToRoute('commande_details', [
+                'id' => $commande->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commande/validee.html.twig', [
-            'commande' => $commande
+            'commande' => $commande,
+            'avisForm' => $avisForm->createView(),
+            'usercommandes' => $usercommandes,
+            'messages' => $messages,
+            'form' => $form->createView(),
         ]);
     }
-    
+
     #[Route('/success', name: 'commande_success')]
     public function success(): Response
     {
-        return $this->render('commande/success.html.twig', [
-            
-        ]);
+        return $this->render('commande/success.html.twig', []);
     }
 
     #[Route('/{slug}/{offre}', name: 'commander_microservice', methods: ['GET', 'POST'])]
@@ -71,11 +162,11 @@ class CommandeController extends AbstractController
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
-        $prix =  $microservice->getPrix(); //$prixRepository->findOneBy(['name' => $offre, 'microservice' => $microservice]);
+        $prix =  $microservice->getPrix();
 
-        foreach($prix as $price){
+        foreach ($prix as $price) {
 
-            if($price->getName() == $offre){
+            if ($price->getName() == $offre) {
                 // Affectation du montant
                 $montant = $price->getTarif();
             }
@@ -83,15 +174,13 @@ class CommandeController extends AbstractController
 
         $directory = $this->redirectToRoute('microservices');
 
-        if(!$microservice){
+        if (!$microservice) {
             return $directory;
         }
 
-        
-
         $portefeuille = $microservice->getVendeur()->getPortefeuille();
 
-        if(!$portefeuille){
+        if (!$portefeuille) {
             $portefeuille = new Portefeuille();
             $portefeuille->setSoldeEncours(0);
             $portefeuille->setSoldeDisponible(0);
@@ -109,7 +198,7 @@ class CommandeController extends AbstractController
 
         $somme = ($montantTva + $montant) * $frais;
 
-        /*$order = [
+        $order = [
             'purchase_units' => [[
                 'description'    => 'Allbeats achats de prestation',
                 'items'   =>  [
@@ -126,38 +215,38 @@ class CommandeController extends AbstractController
                     'value'         =>  $somme * 100,
                 ]
             ]]
-        ];*/
+        ];
 
         // Paypal infos
-        //$userTest = 'sb-rw3oo17429039@personal.example.com';
-        //$sandBoxId = $this->paypalkey;
+        $userTest = 'sb-rw3oo17429039@personal.example.com';
+        $sandBoxId = $this->paypalkey;
 
 
         // Stripe payment
-        if($montant > 0){
+        if ($montant > 0) {
 
             // Instanciation Stripe
             \Stripe\Stripe::setApiKey($this->privateKey);
-            
+
             $intent = \Stripe\PaymentIntent::create([
                 'amount'    =>  $montant * 100,
                 'currency'  =>  'eur',
                 'payment_method_types'  =>  ['card']
             ]);
-            
+
             // Traitement du formulaire Stripe
 
-            if($request->getMethod() === "POST"){
+            if ($request->getMethod() === "POST") {
 
-                if($intent['status'] === "requires_payment_method"){
+                if ($intent['status'] === "requires_payment_method") {
                     // TODO
 
                 }
             }
-            
+
             //dd($intent);
-            
-        }else{
+
+        } else {
             //dd('aucun prix');
         }
 
@@ -167,9 +256,9 @@ class CommandeController extends AbstractController
 
             'microservice' => $microservice,
             'type_offre' => $offre,
-            //'form' => $form,
+            //'form' => $avisForm,
             'montant' => $montant,
-            //'clientId' => $sandBoxId,
+            'clientId' => $sandBoxId,
         ]);
     }
 
@@ -180,9 +269,9 @@ class CommandeController extends AbstractController
 
         $prix =  $microservice->getPrix(); //$prixRepository->findOneBy(['name' => $offre, 'microservice' => $microservice]);
 
-        foreach($prix as $price){
+        foreach ($prix as $price) {
 
-            if($price->getName() == $offre){
+            if ($price->getName() == $offre) {
                 // Affectation du montant
                 $montant = $price->getTarif();
             }
@@ -192,6 +281,9 @@ class CommandeController extends AbstractController
         $commande->setMicroservice($microservice);
         $commande->setClient($this->getUser());
         $commande->setVendeur($microservice->getVendeur());
+        $commande->setDestinataire($microservice->getVendeur());
+        $commande->setConfirmationClient(false);
+        $commande->setLu(false);
 
         $commande->setMontant($montant);
         $commande->setOffre($offre);
@@ -208,12 +300,15 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/vendeur/commande/validate/{id}', name: 'vendeur_valider_commande', methods: ['POST'])]
-    public function vendeurValiderCommande(Request $request, CommandeRepository $commandeRepository, 
-        $id, EntityManagerInterface $entityManager): Response
-    {
+    public function vendeurValiderCommande(
+        Request $request,
+        CommandeRepository $commandeRepository,
+        $id,
+        EntityManagerInterface $entityManager
+    ): Response {
         $commande = $commandeRepository->find($id);
 
-        if ($this->isCsrfTokenValid('validate'.$commande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('validate' . $commande->getId(), $request->request->get('_token'))) {
 
             $portefeuille = $commande->getVendeur()->getPortefeuille();
 
@@ -236,24 +331,29 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/vendeur/commande/livrer/{id}', name: 'vendeur_livrer_commande', methods: ['POST'])]
-    public function vendeurLivrerCommande(Request $request, CommandeRepository $commandeRepository, 
-        $id, EntityManagerInterface $entityManager, MailerInterface $mailerInterface): Response
-    {
+    public function vendeurLivrerCommande(
+        Request $request,
+        CommandeRepository $commandeRepository,
+        $id,
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailerInterface
+    ): Response {
         $commande = $commandeRepository->find($id);
 
-        if ($this->isCsrfTokenValid('livrer'.$commande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('livrer' . $commande->getId(), $request->request->get('_token'))) {
 
             $portefeuille = $commande->getVendeur()->getPortefeuille();
+
+            dd($conversation);
 
             $somme = $commande->getMontant() + $portefeuille->getSoldeDisponible();
 
             $difference = null;
 
-            if($commande->getMontant() >= $portefeuille->getSoldeEncours()){
+            if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
 
                 $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
-
-            }else{
+            } else {
 
                 $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
             }
@@ -269,17 +369,16 @@ class CommandeController extends AbstractController
 
             // Envoie de mail
             $email = (new TemplatedEmail())
-            ->from('links@infinity.com')
-            ->to($commande->getVendeur()->getEmail())
-            ->subject('LINKS INFINITY - COMMANDE LIVREE')
-            ->htmlTemplate('commande/composants/_livraison_mail.html.twig')
-            ->context([
-                'useremail'  =>  $commande->getVendeur()->getEmail(),
-                'montantRecu'   =>  $commande->getMontant(),
-                'soldedispo' => $somme,
-                'destinataire' => $commande->getClient()->getEmail()
-            ])
-            ;
+                ->from('links@infinity.com')
+                ->to($commande->getVendeur()->getEmail())
+                ->subject('LINKS INFINITY - COMMANDE LIVREE')
+                ->htmlTemplate('commande/composants/_livraison_mail.html.twig')
+                ->context([
+                    'useremail'  =>  $commande->getVendeur()->getEmail(),
+                    'montantRecu'   =>  $commande->getMontant(),
+                    'soldedispo' => $somme,
+                    'destinataire' => $commande->getClient()->getEmail()
+                ]);
 
             $mailerInterface->send($email);
             $commande->setDeliver(true);
@@ -295,20 +394,22 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/vendeur/commande/annuler/{id}', name: 'vendeur_annuler_commande', methods: ['POST'])]
-    public function vendeurAnnulerCommande(Request $request, CommandeRepository $commandeRepository, 
-        $id, EntityManagerInterface $entityManager): Response
-    {
+    public function vendeurAnnulerCommande(
+        Request $request,
+        CommandeRepository $commandeRepository,
+        $id,
+        EntityManagerInterface $entityManager
+    ): Response {
         $commande = $commandeRepository->find($id);
 
-        if ($this->isCsrfTokenValid('annuler'.$commande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('annuler' . $commande->getId(), $request->request->get('_token'))) {
 
             $portefeuille = $commande->getVendeur()->getPortefeuille();
 
-            if($commande->getMontant() >= $portefeuille->getSoldeEncours()){
+            if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
 
                 $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
-
-            }else{
+            } else {
 
                 $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
             }
@@ -320,7 +421,7 @@ class CommandeController extends AbstractController
             $commande->setDeliver(false);
             $commande->setValidate(false);
             $commande->setCancelAt(new \DateTimeImmutable());
-            
+
             $entityManager->flush();
         }
 

@@ -81,9 +81,9 @@
 
                     {% for price in microservice.prix %}
                     <tr>
-                        <th>{{ price.name }}</th>
-                        <td>{{ price.tarif ~ currency }}</td>
-                        <td>{{ price.description }}</td>
+                        <th><span class="badge">{{ price.name }}</span></th>
+                        <td><strong class="badge font-weight-bold">{{ price.tarif ~ currency }}</strong></td>
+                        <td><p class="text-muted">{{ price.description }}</p></td>
                     </tr>
                     {% endfor %}
 

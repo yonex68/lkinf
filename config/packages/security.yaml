@@ -26,6 +26,11 @@ security:
                 # where to redirect after logout
                 target: app_login
 
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 29030400 # 1 week in seconds
+                path: /
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -36,7 +41,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/commandes, roles: ROLE_USER }
+        - { path: ^/favoris, roles: ROLE_USER }
+        - { path: ^/suivis, roles: ROLE_USER }
         - { path: ^/espace-utilisateur, roles: ROLE_USER }
+        - { path: ^/conversations, roles: ROLE_USER }
 
 when@test:
     security:

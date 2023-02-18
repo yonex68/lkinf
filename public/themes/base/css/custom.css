@@ -5,13 +5,24 @@
    /*background-color: transparent!important;
    background-image: linear-gradient(160deg, #FDBAF8 0%, #B0EFEB 100%)!important;*/
 }
-.navtop-absolute{
-   /*position: absolute!important;
-   background-color: transparent!important;
-   background-image: inherit!important;
+.navtop-home{
+   z-index: 1000!important;
+   background: transparent!important;
+   position: absolute!important;
    top: 0;
    right: 0;
-   left: 0;*/
+   left: 0;
+}
+.navtop-home .nav-item .nav-link{
+   color: white!important;
+}
+.py-5-home{
+   padding-bottom: 100px;
+}
+
+.homepage-search-title .font-weight-bold {
+    font-weight: 700!important;
+    margin: 150px 0;
 }
 
 /**
@@ -44,7 +55,7 @@
 }
 .bg-degrade{
    background-color: transparent;
-   background-image: linear-gradient(160deg, #FDBAF8 0%, #B0EFEB 100%);
+   background-image: linear-gradient(160deg, #82a0bc 0%, #95979d 100%);
 }
 .bg-degrade.home{
    height: 100vh;
@@ -90,4 +101,29 @@
 .input-group-prepend {
    margin-right: -1px;
    height: 34px;
+}
+
+/* Favoris */
+.js-favoris i{
+   font-size: 1.6em!important;
+}
+.green{
+   color: rgb(17, 187, 17)!important;
+}
+.light{
+   color: #dddddd!important;
+}
+
+/* Message box */
+.message-box{
+   border-radius: 15px!important;
+   padding-top: 15px!important;
+   padding-bottom: 0!important;
+}
+.badge-message{
+   position: relative;
+   top: -10px;
+   left:-20px;
+   height: 15px;
+   line-height: 10px;
 }
