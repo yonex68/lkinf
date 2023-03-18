@@ -67,7 +67,7 @@ class EditProfilType extends AbstractType
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
-                'imagine_pattern'   =>  'medium_size',
+                'imagine_pattern'   =>  'small_size',
                 'attr'   =>  ['class' => 'form-control-file'],
             ])
             ->add('apropos', TextareaType::class, [
