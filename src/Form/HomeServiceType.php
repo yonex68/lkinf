@@ -24,7 +24,7 @@ class HomeServiceType extends AbstractType
                     'class' => 'form-control border-0 form-control-lg shadow-sm',
                 ]
             ])
-            ->add('categories', EntityType::class, [
+            /*->add('categories', EntityType::class, [
                 'label' => False,
                 'required' => false,
                 'multiple' => true,
@@ -39,7 +39,7 @@ class HomeServiceType extends AbstractType
                     'class' => '', 
                     'placeholder' => 'Catégorie'
                 ]
-            ])
+            ])*/
         ;
     }
 
