@@ -38,9 +38,15 @@ class SearchService {
      */
     public $categories;
 
+    /**
+     * @var ArrayCollection
+     */
+    public $villes;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->villes = new ArrayCollection();
     }
 
     /**
@@ -57,5 +63,21 @@ class SearchService {
     public function setCategories(ArrayCollection $categories): void
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getVilles(): ArrayCollection
+    {
+        return $this->villes;
+    }
+
+    /**
+     * @param ArrayCollection $Villes
+     */
+    public function setVilles(ArrayCollection $Villes): void
+    {
+        $this->villes = $Villes;
     }
 }

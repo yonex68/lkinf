@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\SearchService;
+use App\Form\HomeServiceType;
 use App\Repository\CategorieRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\UserRepository;
@@ -17,11 +19,12 @@ class AccueilController extends AbstractController
     {
         $user = $this->getUser();
 
-        $session = $request->getSession();
+        $service = new SearchService();
 
-        $session->set('nom', 'Malonga');
-
-        //dd($session->get('nom'));
+        $form = $this->createForm(HomeServiceType::class, $service, [
+            'action' => $this->generateUrl('microservices'),
+            'method' => 'GET',
+        ]);
 
         if ($user) {
             $microservices = $microserviceRepository->findBylocation($user->getAdresse());
@@ -34,6 +37,7 @@ class AccueilController extends AbstractController
         return $this->render('accueil/index.html.twig', [
             'microservices' => $microservices,
             'vendeurs' => $vendeurs,
+            'form' => $form->createView(),
             'categories' => $categorieRepository->findBy([], ['created' => 'DESC'], 6)
         ]);
     }

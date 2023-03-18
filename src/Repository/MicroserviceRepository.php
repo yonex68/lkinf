@@ -65,7 +65,9 @@ class MicroserviceRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('m')
             ->select('v', 'm')
+            ->select('c', 'm')
             ->leftjoin('m.vendeur', 'v')
+            ->join('m.categories', 'c')
             ->orderBy('m.created', 'DESC')
             ->andWhere('m.online = 1');
 
@@ -88,13 +90,9 @@ class MicroserviceRepository extends ServiceEntityRepository
         }
 
         if ($search->getCategories()->count() > 0) {
-            $k = 0;
-            foreach ($search->getCategories() as $categorie) {
-                $k++;
-                $query = $query
-                    ->andWhere(":categorie$k MEMBER OF m.categories")
-                    ->setParameter("categorie$k", $categorie);
-            }
+            $query = $query
+                ->andWhere('c.id IN (:categorie)')
+                ->setParameter('categorie', $search->categories);
         }
 
         if (!empty($search->promo)) {

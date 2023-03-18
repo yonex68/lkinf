@@ -1,0 +1,25 @@
+{{ form_start(form, {attr: {class: 'form-noborder'}}) }}
+<div class="form-row">
+   <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+      <div class="location-dropdown">
+         <i class="icofont-location-arrow"></i>
+         <div name="categories" class="custom-select form-control border-0 shadow-sm form-control-lg">
+            {{ form_widget(form.categories) }}
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-7 col-md-7 col-sm-12 form-group">
+      <div class="input-group bg-white border-0 rounded">
+         <span class="input-group-text border-0 bg-transparent" id="basic-addon1">
+            <i class="fa fa-map-marker"></i>
+         </span>
+         {{ form_widget(form.q) }}
+      </div>
+   </div>
+   <div class="col-lg-2 col-md-2 col-sm-12 form-group">
+      <button type="submit" class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">
+         <i class="fa fa-search"></i>
+      </button>
+   </div>
+</div>
+{{ form_end(form) }}
