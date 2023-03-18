@@ -31,8 +31,8 @@ class Categorie
     #[ORM\Column(type: 'string', length: 7)]
     private $hexColor;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Microservice::class)]
-    private $microservices;
+    #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'categories')]
+    private Collection $microservices;
 
     public function __construct()
     {
@@ -98,7 +98,7 @@ class Categorie
     }
 
     /**
-     * @return Collection|Microservice[]
+     * @return Collection<int, Microservice>
      */
     public function getMicroservices(): Collection
     {
@@ -108,8 +108,8 @@ class Categorie
     public function addMicroservice(Microservice $microservice): self
     {
         if (!$this->microservices->contains($microservice)) {
-            $this->microservices[] = $microservice;
-            $microservice->setCategorie($this);
+            $this->microservices->add($microservice);
+            $microservice->addCategory($this);
         }
 
         return $this;
@@ -118,10 +118,7 @@ class Categorie
     public function removeMicroservice(Microservice $microservice): self
     {
         if ($this->microservices->removeElement($microservice)) {
-            // set the owning side to null (unless already changed)
-            if ($microservice->getCategorie() === $this) {
-                $microservice->setCategorie(null);
-            }
+            $microservice->removeCategory($this);
         }
 
         return $this;

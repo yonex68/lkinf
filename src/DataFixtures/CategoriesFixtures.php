@@ -64,7 +64,7 @@ class CategoriesFixtures extends Fixture
             14 => [
                 'name' => 'Punk',
             ],
-            15 => [
+            /*15 => [
                 'name' => 'Reggae',
             ],
             16 => [
@@ -81,7 +81,7 @@ class CategoriesFixtures extends Fixture
             ],
             20 => [
                 'name' => 'Country',
-            ],
+            ],*/
         ];
 
         foreach($categories as $key => $value){

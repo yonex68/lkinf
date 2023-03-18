@@ -3,7 +3,11 @@
 namespace App\Controller\Vendeur;
 
 use App\Entity\Microservice;
+use App\Form\Microservice\DescriptionType;
+use App\Form\Microservice\MicroserrviceOptionType;
 use App\Form\Microservice\MicroserviceGalerieType;
+use App\Form\Microservice\MicroservicePublierType;
+use App\Form\Microservice\MicroserviceTitreType;
 use App\Form\Microservice\MicroserviceType;
 use App\Repository\MicroserviceRepository;
 use App\Repository\SuivisRepository;
@@ -31,6 +35,11 @@ class VendeurMicroservicesController extends AbstractController
     {
         $user = $this->getUser();
 
+        if (empty($user->getAdresse())) {
+            $this->addFlash('warning', 'Veuillez indiquer votre adresse pour completer votre compte');
+            return $this->redirectToRoute('user_edit_adresse');
+        }
+
         $microservices = $paginator->paginate(
             $microserviceRepository->findBy(['vendeur' => $user], ['created' => 'DESC']),
             $request->query->getInt('page', 1),
@@ -42,11 +51,11 @@ class VendeurMicroservicesController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'vendeur_microservices_new', methods: ['GET', 'POST'])]
+    #[Route('/nouveau-service', name: 'vendeur_microservices_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, MailerService $mailer, SuivisRepository $suivisRepository): Response
     {
         $microservice = new Microservice();
-        $form = $this->createForm(MicroserviceType::class, $microservice);
+        $form = $this->createForm(MicroserviceTitreType::class, $microservice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,35 +64,127 @@ class VendeurMicroservicesController extends AbstractController
 
             $microservice->setSlug(strtolower($this->sluger->slug($slug)));
             $microservice->setVendeur($this->getUser());
+            $microservice->setPrixMastering(0);
+            $microservice->setPrixMixage(0);
+            $microservice->setPrixBeatmaking(0);
+            $microservice->setPromo(false);
             $entityManager->persist($microservice);
             $entityManager->flush();
 
             // Liste des clients qui le suivent
             $vendeur = $this->getUser();
             $suivis = $suivisRepository->findBy(['vendeur' => $vendeur]);
-            //dd($clients);
+            //dd($suivis);
 
-            foreach ($suivis as $suivi) {
-                $mailer->sendMail(
-                    $vendeur->getEmail(),
-                    $suivi->getClient()->getEmail(),
-                    'Nouvelle publication',
-                    $vendeur->getNom() . ' ' . $vendeur->getPrenom(),
-                    'Nouveau message',
-                    $microservice
-                );
+            if (count($suivis) > 0) {
+
+                foreach ($suivis as $suivi) {
+
+                    if (!empty($suivi->getClient())) {
+                        $mailer->sendMail(
+                            $vendeur->getEmail(),
+                            $suivi->getClient()->getEmail(),
+                            'Nouvelle publication',
+                            $vendeur->getNom() . ' ' . $vendeur->getPrenom(),
+                            'Nouveau message',
+                            $microservice
+                        );
+                    }
+                }
             }
 
             $this->addFlash('success', 'Le contenu a bien été cré');
+
+            return $this->redirectToRoute('vendeur_microservices_description', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('vendeur/microservices/titre.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form,
+        ]);
+    }
+    
+    #[Route('/{id}/titre', name: 'vendeur_microservices_titre', methods: ['GET', 'POST'])]
+    public function titre(Request $request, EntityManagerInterface $entityManager, Microservice $microservice): Response
+    {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
+        $form = $this->createForm(MicroserviceTitreType::class, $microservice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $slug = $form->get('name')->getData() . '-' . $microservice->getId();
+
+            $microservice->setSlug(strtolower($this->sluger->slug($slug)));
+            
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été cré');
+
+            return $this->redirectToRoute('vendeur_microservices_description', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('vendeur/microservices/titre.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form,
+        ]);
+    }
+    
+    #[Route('/{id}/description', name: 'vendeur_microservices_description', methods: ['GET', 'POST'])]
+    public function description(Request $request, EntityManagerInterface $entityManager, Microservice $microservice): Response
+    {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
+        $form = $this->createForm(DescriptionType::class, $microservice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été cré');
+
+            return $this->redirectToRoute('vendeur_microservices_options', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('vendeur/microservices/description.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/options', name: 'vendeur_microservices_options', methods: ['GET', 'POST'])]
+    public function options(Request $request, EntityManagerInterface $entityManager, Microservice $microservice): Response
+    {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
+        $form = $this->createForm(MicroserrviceOptionType::class, $microservice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été enregistrer');
 
             return $this->redirectToRoute('vendeur_microservices_galerie', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('vendeur/microservices/new.html.twig', [
+        return $this->render('vendeur/microservices/options.html.twig', [
             'microservice' => $microservice,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -102,7 +203,7 @@ class VendeurMicroservicesController extends AbstractController
 
             $this->addFlash('success', 'Le contenu a bien été cré');
 
-            return $this->redirectToRoute('vendeur_microservices_show', [
+            return $this->redirectToRoute('vendeur_microservices_publication', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -110,6 +211,33 @@ class VendeurMicroservicesController extends AbstractController
         return $this->renderForm('vendeur/microservices/galerie.html.twig', [
             'microservice' => $microservice,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/publication', name: 'vendeur_microservices_publication', methods: ['GET', 'POST'])]
+    public function publication(Request $request, EntityManagerInterface $entityManager, Microservice $microservice): Response
+    {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
+        $form = $this->createForm(MicroservicePublierType::class, []);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $microservice->setOnline(true);
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été cré');
+
+            return $this->redirectToRoute('vendeur_microservices_index', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('vendeur/microservices/publication.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form->createView(),
         ]);
     }
 

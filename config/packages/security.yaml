@@ -19,8 +19,20 @@ security:
             security: false
         main:
             lazy: true
-            provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthenticator
+            form_login:
+                provider: app_user_provider
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+                default_target_path: accueil
+
+            custom_authenticators:
+                - App\Security\LoginFormAuthenticator
+                - App\Security\GoogleAuthenticator
+                - App\Security\FacebookAuthenticator
+
+            entry_point: App\Security\LoginFormAuthenticator
+
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -28,7 +40,7 @@ security:
 
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 29030400 # 1 week in seconds
+                always_remember_me: true
                 path: /
 
             # activate different ways to authenticate
@@ -45,6 +57,7 @@ security:
         - { path: ^/suivis, roles: ROLE_USER }
         - { path: ^/espace-utilisateur, roles: ROLE_USER }
         - { path: ^/conversations, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_USER }
 
 when@test:
     security:

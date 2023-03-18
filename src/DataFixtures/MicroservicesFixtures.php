@@ -24,14 +24,17 @@ class MicroservicesFixtures extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('fr_FR');
 
         for($microservices = 1; $microservices <= 500; $microservices++){
-            $user = $this->getReference('user_'. $faker->numberBetween(1, 20));
-            $categorie = $this->getReference('categorie_'. $faker->numberBetween(1, 20));
+            $user = $this->getReference('user_'. $faker->numberBetween(1, 50));
+            $categories = $this->getReference('categorie_'. $faker->numberBetween(1, 14));
 
             $microservice = new Microservice();
 
             $microservice->setName($faker->realText(50));
-            $microservice->setDescription($faker->realText(150));
-            $microservice->setCategorie($categorie);
+            $microservice->setDescription($faker->realText(500));
+            $microservice->setDelai($faker->numberBetween(1, 30));
+            for($categorie = 1; $categorie < 4; $categorie++){
+                $microservice->addCategory($categories);
+            }
 
             /*foreach($categories as $key => $value){
 
@@ -48,14 +51,20 @@ class MicroservicesFixtures extends Fixture implements DependentFixtureInterface
 
             $microservice->setSlug($this->sluger->slug($faker->realText(150)));
             $microservice->setOnline($faker->numberBetween(0, 1));
+            if ($user->getCompte() == 'Vendeur') {
+                
+            }
             $microservice->setVendeur($user);
+            $microservice->setPromo($faker->numberBetween(0, 1));
+            $microservice->setPrixMastering($faker->numberBetween(0, 100));
+            $microservice->setPrixMixage($faker->numberBetween(0, 250));
+            $microservice->setPrixBeatmaking($faker->numberBetween(0, 1000));
 
             $manager->persist($microservice);
 
             // Enregistre l'utilisateur dans une référence
             $this->addReference('microservice_'. $microservices, $microservice);
         }
-        
 
         $manager->flush();
     }

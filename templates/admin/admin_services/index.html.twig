@@ -1,0 +1,116 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Services{% endblock %}
+
+{% block pageTitle %}Services ({{ microservices.getTotalItemCount }}){% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header bg-white">
+        <div class="row mt-4">
+            <div class="col-sm-10">
+                {{ knp_pagination_filter(microservices, {'m.name': 'name'}) }}
+            </div>
+            <div class="col-sm-2 justify-content-end mx-auto">
+                {{ knp_pagination_sortable(microservices, 'Prix', 'm.prixMastering') }}
+                {{ knp_pagination_sortable(microservices, 'Date', 'm.created') }}
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-rep-plugin">
+            <div class="table-responsive mb-0" data-bs-pattern="priority-columns">
+
+                <table id="tech-companies-1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Média</th>
+                            <th>Service</th>
+                            <th>Statut</th>
+                            <th>Prix Mastering</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for microservice in microservices %}
+                        <tr>
+                            <td>{{ microservice.id }}</td>
+                            <td>
+                                {% if microservice.medias|length > 0 %}
+
+                                <img class="img-fluid rounded"
+                                    src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_avatar') }}" />
+
+                                {% else %}
+
+                                <img class="img-fluid rounded"
+                                    src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" />
+
+                                {% endif %}
+                            </td>
+                            <td>
+                                <strong class="mb-2 d-block">
+                                    {{ microservice.name|u.truncate(60, '...') }}
+                                </strong>
+
+                                <div class="d-flex">
+                                    <div class="me-2">
+                                        {% if microservice.vendeur.reseauAvatar %}
+
+                                        <img src="{{ reseauAvatar }}" class="img-fluid rounded-circle"
+                                            alt="{{ microservice.vendeur.prenom }}">
+
+                                        {% else %}
+
+                                        {% if microservice.vendeur.avatar %}
+                                        <img src="{{ vich_uploader_asset( microservice.vendeur, 'imageFile') | imagine_filter('small_avatar') }}"
+                                            class="img-fluid rounded-circle" alt="{{ microservice.vendeur.prenom }}">
+                                        {% else %}
+
+                                        <img class="img-fluid rounded-circle"
+                                            src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt='' />
+
+                                        {% endif %}
+
+                                        {% endif %}
+                                    </div>
+                                    <div class="">
+                                        <strong class="small">{{ microservice.vendeur.nom }}</strong>
+                                        <strong class="small">{{ microservice.vendeur.prenom }}</strong> <br>
+                                        <small class="text-muted text-italic">{{ microservice.created ?
+                                            microservice.created|ago(locale='fr') : '' }}</small>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td><strong>{{ microservice.prixMastering ~ currency }}</strong></td>
+                            <td>
+                                <span class="badge bg-{{ microservice.online ? 'success' : 'light' }} rounded-pill">{{
+                                    microservice.online ? 'En ligne' : 'Hors ligne' }}</span>
+                            </td>
+                            <td>
+                                <a href="{{ path('microservice_details', {'slug': microservice.slug}) }}"
+                                    class="btn btn-light" target="_blank">Details</a>
+                                {% include "admin/admin_services/_delete_form.html.twig" %}
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="11">Aucun service</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+        {{ knp_pagination_render(microservices, null, {}, {
+        'align': 'right',
+        'size': 'medium',
+        'rounded': true,
+        }) }}
+    </div>
+</div>
+
+{% endblock %}

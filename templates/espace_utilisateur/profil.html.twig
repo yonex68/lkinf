@@ -13,94 +13,105 @@
 
 {% block sidebar %}
 
-	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
-
-	{{ parent() }}
+{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
 
 {% endblock %}
 
 {% block body %}
 
-	<div class="">
-		<div class="box shadow-sm rounded bg-white mb-3">
-			<div class="box-title border-bottom p-3">
-				<h6 class="m-0">Information du compte</h6>
-			</div>
-			<div class="box-body p-3 border-bottom">
-				<div class="d-flex align-items-top job-item-header pb-2">
-					<div class="mr-2">
-						<div class="text-truncate text-muted">Nom(s) et prénom</div>
-						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.nom }}
-							{{ app.user.prenom }}</h6>
+<div class="">
+	<div class="box shadow-sm rounded bg-white mb-3">
+		<div class="box-title p-3 text-left bg-dark rounded">
+			<h4 class="mb-0 text-light">
+				Informations du compte
+			</h4>
+		</div>
+
+		<div class="box-body p-3 border-bottom">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="align-items-top job-item-header pb-2">
+						<span class="text-truncate text-muted">Nom(s)</span>
+						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.nom }}</h6>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="align-items-top job-item-header pb-2">
+						<span class="text-truncate text-muted">Prénom(s)</span>
+						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.prenom }}</h6>
 					</div>
 				</div>
 			</div>
-			<div class="box-body p-3 border-bottom">
-				<div class="d-flex align-items-top job-item-header pb-2">
-					<div class="mr-2">
-						<div class="text-truncate text-muted">Genre</div>
-						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.genre ?? 'Non spécifier' }}</h6>
-					</div>
+
+			<div class="d-flex align-items-top job-item-header pb-2">
+				<div class="mr-2">
+					<div class="text-truncate text-muted">Genre</div>
+					<h6 class="font-weight-bold text-dark mb-0">{{ app.user.genre ?? 'Non spécifier' }}</h6>
 				</div>
 			</div>
-			<div class="box-body p-3 border-bottom">
-				<div class="d-flex align-items-top job-item-header pb-2">
-					<div class="mr-2">
-						<div class="text-truncate text-muted">Email</div>
-						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.email }}</h6>
-					</div>
+
+			<div class="d-flex align-items-top job-item-header pb-2">
+				<div class="mr-2">
+					<div class="text-truncate text-muted">Email</div>
+					<h6 class="font-weight-bold text-dark mb-0">{{ app.user.email }}</h6>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="box shadow-sm rounded bg-white mb-3">
-			<div class="box-title border-bottom p-3">
-				<h6 class="m-0">Coordonnées</h6>
-			</div>
-			<div class="box-body p-3 border-bottom">
-				<div class="pb-2">
-					<div class="mr-2">
-						<div class="row">
-							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-muted">Pays</div>
-								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.pays }}</h6>
-							</div>
-							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-muted">Ville</div>
-								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.ville }}</h6>
-							</div>
-							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-muted">Adresse</div>
-								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.adresse }}</h6>
-							</div>
-							<div class="col-sm-6 mb-3">
-								<div class="text-truncate text-muted">Téléphone</div>
-								<h6 class="font-weight-bold text-dark mb-0">{{ app.user.telephone }}</h6>
-							</div>
+	<div class="box shadow-sm rounded bg-white mb-3">
+		<div class="box-title border-bottom p-3">
+			<h6 class="m-0">Coordonnées</h6>
+		</div>
+		<div class="box-body p-3 border-bottom">
+			<div class="pb-2">
+				<div class="mr-2">
+					<div class="row">
+						<div class="col-sm-6 mb-3">
+							<div class="text-truncate text-muted">Adresse</div>
+							<h6 class="font-weight-bold text-dark mb-0">{{ app.user.adresse }}</h6>
+						</div>
+						<div class="col-sm-6 mb-3">
+							<div class="text-truncate text-muted">Ville</div>
+							<h6 class="font-weight-bold text-dark mb-0">{{ app.user.ville }}</h6>
+						</div>
+						<div class="col-sm-6 mb-3">
+							<div class="text-truncate text-muted">Pays</div>
+							<h6 class="font-weight-bold text-dark mb-0">{{ app.user.pays }}</h6>
+						</div>
+						<div class="col-sm-6 mb-3">
+							<div class="text-truncate text-muted">Téléphone</div>
+							<h6 class="font-weight-bold text-dark mb-0">{{ app.user.telephone }}</h6>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="box shadow-sm rounded bg-white mb-3">
-			<div class="box-title border-bottom p-3">
-				<h6 class="m-0">Mes accès</h6>
-			</div>
-			<div class="box-body p-3 border-bottom">
-				<div class="d-flex align-items-top job-item-header pb-2">
-					<div class="mr-2">
+	<div class="box shadow-sm rounded bg-white mb-3">
+		<div class="box-title border-bottom p-3">
+			<h6 class="m-0">Mes accès</h6>
+		</div>
+		<div class="box-body p-3 border-bottom">
+
+			<div class="align-items-top job-item-header pb-2">
+				<div class="row">
+					<div class="col-sm-5">
 						<div class="text-truncate text-muted">Mot de passe</div>
 						<h6 class="font-weight-bold text-dark mb-0">
-							<i class="fa fa-key"></i>****</h6>
+							<i class="fa fa-key"></i>****
+						</h6>
+					</div>
+					<div class="col-sm-5 ml-auto text-right">
+						<a href="{{ path('edit_password') }}" class="btn btn-outline-dark pl-4 pr-4">
+							Mettre à jour
+						</a>
 					</div>
 				</div>
-
-				<a href="{{ path('edit_password') }}" class="btn btn-light pl-4 pr-4">
-					Mettre à jour
-				</a>
 			</div>
 		</div>
 	</div>
+</div>
 
 {% endblock %}

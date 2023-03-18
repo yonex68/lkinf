@@ -34,11 +34,8 @@ class Microservice
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'microservices')]
     private $vendeur;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $online;
-
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'microservices')]
-    private $categorie;
 
     #[ORM\ManyToMany(targetEntity: Prix::class, inversedBy: 'microservices', cascade: ["persist"])]
     private $prix;
@@ -52,6 +49,27 @@ class Microservice
     #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Favoris::class)]
     private $favoris;
 
+    #[ORM\ManyToMany(targetEntity: ServiceOption::class, mappedBy: 'microservice', cascade: ["persist"])]
+    private Collection $serviceOptions;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $delai = null;
+
+    #[ORM\Column]
+    private ?float $prixMastering = null;
+
+    #[ORM\Column]
+    private ?float $prixMixage = null;
+
+    #[ORM\Column]
+    private ?float $prixBeatmaking = null;
+
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'microservices')]
+    private Collection $categories;
+
+    #[ORM\Column]
+    private ?bool $promo = null;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
@@ -59,6 +77,8 @@ class Microservice
         $this->commandes = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->favoris = new ArrayCollection();
+        $this->serviceOptions = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,7 +163,7 @@ class Microservice
         return $this->online;
     }
 
-    public function setOnline(bool $online): self
+    public function setOnline(?bool $online): self
     {
         $this->online = $online;
 
@@ -153,18 +173,6 @@ class Microservice
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
     }
 
     /**
@@ -293,5 +301,116 @@ class Microservice
         }
 
         return false;
+    }
+
+    /**
+     * @return Collection<int, ServiceOption>
+     */
+    public function getServiceOptions(): Collection
+    {
+        return $this->serviceOptions;
+    }
+
+    public function addServiceOption(ServiceOption $serviceOption): self
+    {
+        if (!$this->serviceOptions->contains($serviceOption)) {
+            $this->serviceOptions->add($serviceOption);
+            $serviceOption->addMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceOption(ServiceOption $serviceOption): self
+    {
+        if ($this->serviceOptions->removeElement($serviceOption)) {
+            $serviceOption->removeMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function getDelai(): ?int
+    {
+        return $this->delai;
+    }
+
+    public function setDelai(?int $delai): self
+    {
+        $this->delai = $delai;
+
+        return $this;
+    }
+
+    public function getPrixMastering(): ?float
+    {
+        return $this->prixMastering;
+    }
+
+    public function setPrixMastering(float $prixMastering): self
+    {
+        $this->prixMastering = $prixMastering;
+
+        return $this;
+    }
+
+    public function getPrixMixage(): ?float
+    {
+        return $this->prixMixage;
+    }
+
+    public function setPrixMixage(float $prixMixage): self
+    {
+        $this->prixMixage = $prixMixage;
+
+        return $this;
+    }
+
+    public function getPrixBeatmaking(): ?float
+    {
+        return $this->prixBeatmaking;
+    }
+
+    public function setPrixBeatmaking(float $prixBeatmaking): self
+    {
+        $this->prixBeatmaking = $prixBeatmaking;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categorie $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function isPromo(): ?bool
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(bool $promo): self
+    {
+        $this->promo = $promo;
+
+        return $this;
     }
 }

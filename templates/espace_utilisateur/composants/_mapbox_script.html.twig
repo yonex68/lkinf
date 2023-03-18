@@ -1,0 +1,58 @@
+<script>
+   // TO MAKE THE EXAMPLE WORK YOU MUST
+   // ADD YOUR ACCESS TOKEN FROM
+   // https://account.mapbox.com
+
+   const ACCESS_TOKEN = '{{ map_box_token }}'
+
+   $("#registration_form_adresse").on('change', function (e) {
+
+      const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
+      const query = e.target.value
+
+      fetch(`${url}${query}.json?access_token=${ACCESS_TOKEN}`)
+         .then((response) => response.json())
+         .then((data) => {
+            //console.log(data)
+            const longitude = data.features[0].geometry.coordinates[0];
+            const latitude = data.features[0].geometry.coordinates[1];
+
+            $("#registration_form_longitude").val(longitude)
+            $("#registration_form_latitude").val(latitude)
+
+            console.log(longitude, latitude)
+         });
+
+      console.log('form has changed', e.target.value);
+   })
+
+   const script = document.getElementById('search-js');
+   script.onload = () => {
+      // Add search box to input
+      const collection = mapboxsearch.autofill({
+         accessToken: ACCESS_TOKEN,
+         options: { country: 'fr' }
+      });
+
+      // Configure minimap
+      const minimap = document.querySelector('mapbox-address-minimap');
+      minimap.accessToken = ACCESS_TOKEN;
+      minimap.defaultMapStyle = ['mapbox', 'outdoors-v11'];
+      minimap.theme = {
+         variables: { border: '13px solid #bbb', borderRadius: '18px', boxShadow: '0 2px 8px #000' }
+      }
+
+      minimap.onSaveMarkerLocation = (coordinate) => { console.log(coordinate); }
+      minimap.feature = {
+         type: 'Feature',
+         geometry: { type: 'Point', coordinates: [-73.981872, 40.768037] },
+         properties: {}
+      };
+
+      // Set minimap feature on search box selection
+      collection.addEventListener('retrieve', (e) => {
+         minimap.feature = e.detail.features[0];
+         console.log(minimap.feature)
+      })
+   };
+</script>

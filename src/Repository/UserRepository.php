@@ -36,22 +36,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Used to find user by role
+     */
+    public function findByRole(string $role)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', "%\"$role\"%")
+            ->orderBy('u.created', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?User
@@ -64,4 +60,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function findByLocation($userAdresse): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.adresse = :adresse')
+            ->andWhere('u.compte = :compte')
+            ->setParameters([
+                'adresse' => $userAdresse,
+                'compte' => 'vendeur'
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }

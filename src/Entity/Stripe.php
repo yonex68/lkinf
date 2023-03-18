@@ -6,6 +6,7 @@ use App\Entity\Traits\Timestamp;
 use App\Repository\StripeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StripeRepository::class)]
@@ -30,6 +31,12 @@ class Stripe
 
     #[ORM\OneToMany(mappedBy: 'stripe', targetEntity: Abonnement::class)]
     private $abonnements;
+
+    #[ORM\Column(length: 7, nullable: true)]
+    private ?string $hexColor = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -103,6 +110,30 @@ class Stripe
                 $abonnement->setStripe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHexColor(): ?string
+    {
+        return $this->hexColor;
+    }
+
+    public function setHexColor(?string $hexColor): self
+    {
+        $this->hexColor = $hexColor;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

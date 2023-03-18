@@ -7,12 +7,10 @@
 	<meta name="description" content="Gurdeep singh osahan">
 	<meta name="author" content="Gurdeep singh osahan">
 	<title>
-		{% block title %}
-		{{ appName }}
-		{% endblock %}
+		{% block title %}{{ appName }} des services pour tout vos besoins{% endblock %}
 	</title>
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.svg">
+	<link rel="icon" type="{{ asset('img/Logo.png') }}" href="images/fav.svg">
 	<!-- Bootstrap core CSS -->
 	<link href="{{ asset('themes/base/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- Font Awesome-->
@@ -30,6 +28,10 @@
 	<!-- Custom styles for this template -->
 	<link href="{{ asset('themes/base/css/style.css') }}" rel="stylesheet">
 
+	<!-- map box -->
+	<script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.14/web.js">
+	</script>
+
 	{% block stylesheets %}
 	{{ encore_entry_link_tags('app') }}
 	{% endblock %}
@@ -42,12 +44,13 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="py-2">
-						<a href="{{ path('accueil') }}" class="btn btn-light"><i class="mdi mdi-arrow-left"></i> Retournez vers accueil</a>
+						<a href="{{ path('accueil') }}" class="btn btn-light"><i class="mdi mdi-arrow-left"></i> Retournez
+							vers accueil</a>
 					</div>
 				</div>
 			</div>
 			<div class="row justify-content-center align-items-center d-flex ">
-				<div class="col-lg-{% block col %}4{% endblock %} mx-auto">
+				<div class="col-lg-{% block col %}5{% endblock %} mx-auto">
 					<div class="osahan-login py-4">
 						<div class="text-center mb-4">
 							<a href="{{ path('accueil') }}"><img src="{{ asset('img/logo.png') }}" style="width: 80%;"
@@ -101,15 +104,6 @@
 	<script src="{{ asset('themes/base/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	<!-- Contact form JavaScript -->
 	<!-- Do not edit these files! In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
-	<script src="{{ asset('themes/base/js/jqBootstrapValidation.js') }}"></script>
-	<script src="{{ asset('themes/base/js/contact_me.js') }}"></script>
-	<!-- Slick -->
-	<script src="{{ asset('themes/base/vendor/slick-master/slick/slick.js') }}" type="text/javascript"
-		charset="utf-8"></script>
-	<!-- lightgallery -->
-	<script src="{{ asset('themes/base/vendor/lightgallery-master/dist/js/lightgallery-all.min.js') }}"></script>
-	<!-- select2 Js -->
-	<script src="{{ asset('themes/base/vendor/select2/js/select2.min.js') }}"></script>
 	<!-- Custom -->
 	<script src="{{ asset('themes/base/js/custom.js') }}"></script>
 

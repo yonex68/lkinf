@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -43,8 +44,8 @@ class RegistrationFormType extends AbstractType
             ->add('compte', ChoiceType::class, [
                 'label' => 'Que souhaitez vous?',
                 'choices'  => [
-                    'Vendre des prestations'    =>  'vendeur',
-                    'Acheter des prestations' =>  'acheteur',
+                    'Vendre des prestations'    =>  'Vendeur',
+                    'Acheter des prestations' =>  'Client',
                 ],
                 'expanded' => true,
                 'multiple' => false,
@@ -54,10 +55,29 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('apropos', TextareaType::class, [
-                'label' => false,
+            ->add('adresse', TextType::class, [
+                'label' => 'Adresse',
+                'help' => 'Exemple (N° Ruelle/Avenue)',
+                'attr' => ['placeholder' => 'Adresse', 'autocomplete' => "address-line1"],
                 'required' => false,
-                'attr' => ['placeholder' => 'Soyez bref', 'class' => 'm-0', 'rows' => 5]
+            ])
+            ->add('ville', TextType::class, [
+                'label' => 'Ville',
+                'help' => 'Ville de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level2"],
+                'required' => false,
+            ])
+            ->add('pays', TextType::class, [
+                'label' => 'Pays',
+                'help' => 'Ville de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "country"],
+                'required' => false,
+            ])
+            ->add('etat', TextType::class, [
+                'label' => 'Etat',
+                'help' => 'Etat de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
+                'required' => false,
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
@@ -96,6 +116,18 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('longitude', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('latitude', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('agreeLocations', CheckboxType::class, [
+                'mapped' => false,
+                'label' => 'Je souhaite être géolocaliser',
+                'required' => false,
+                'help' => '*Cette case est reserver uniquement pour ceux qui souhaite acheter des prestations'
             ]);
     }
 

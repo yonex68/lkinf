@@ -1,0 +1,6 @@
+<div class="pt-3">
+   {% for categorie in categories %}
+   <a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}"
+      class="btn btn-outline-light mr-2 mb-2 btn-sm">#{{ categorie.name }}</a>
+   {% endfor %}
+</div>

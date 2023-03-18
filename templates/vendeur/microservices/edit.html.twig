@@ -4,6 +4,10 @@
 	{{ microservice.name }}
 {% endblock %}
 
+{% block sidebar %}
+	{% include "vendeur/microservices/composants/_step.html.twig" %}
+{% endblock %}
+
 {% block body %}
 	<div class="p-3 border-bottom text-right">
 		<h6 class="mb-0">Mettre à jour

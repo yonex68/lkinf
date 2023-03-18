@@ -48,7 +48,7 @@ class StripeFixtures extends Fixture implements DependentFixtureInterface
             $stripe->setName($value['name']);
             $stripe->setTarif($value['tarif']);
             $stripe->setStripeKey($value['stripeKey']);
-            //$stripe->setHexhaDecimal($faker->hexColor());
+            $stripe->setHexColor($faker->hexColor());
             $manager->persist($stripe);
 
             // Enregistre la catégorie dans une référence

@@ -7,11 +7,11 @@
 
 				{% if app.user and user.isFollowed(app.user) %}
 
-					<button type="" class="btn-danger btn btn-block">Ne plus suivre</button>
+					<button type="" class="btn-outline-danger btn btn-block rounded-btn">Ne plus suivre</button>
 
 				{% else %}
 
-					<button type="" class="btn-success btn btn-block">Suivre</button>
+					<button type="" class="btn-outline-success btn btn-block rounded-btn"><i class="fa fa-plus"></i> Suivre</button>
 
 				{% endif %}
 

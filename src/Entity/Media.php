@@ -38,7 +38,7 @@ class Media
     **/
     private $imageFile;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $imageName;
 
     #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'medias')]
@@ -71,7 +71,7 @@ class Media
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): self
+    public function setImageName(?string $imageName): self
     {
         $this->imageName = $imageName;
 

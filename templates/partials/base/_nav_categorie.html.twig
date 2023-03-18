@@ -1,0 +1,27 @@
+<!-- Catégories -->
+<li class="nav-item dropdown no-arrow no-caret dropdown-notifications">
+   <a class="nav-link dropdown-toggle" id="navbarDropdownCategories" href="javascript:void(0);" role="button"
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      style="font-weight:900!important;padding-left:15px;font-size: 1rem;">
+      <i class="fa fa-list"></i>&nbsp;Catégories
+   </a>
+   <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up"
+      aria-labelledby="navbarDropdownCategories">
+      <h6 class="dropdown-header dropdown-notifications-header">
+         Catégorie
+      </h6>
+
+      {% for categorie in categories() %}
+      <a class="dropdown-item dropdown-notifications-item"
+         href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}">
+         <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-text">{{ categorie.name }}</div>
+         </div>
+      </a>
+      {% endfor %}
+
+      <a class="dropdown-item dropdown-notifications-footer" href="{{ path('microservices') }}">
+         Toute les catégories
+      </a>
+   </div>
+</li>

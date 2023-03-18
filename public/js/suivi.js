@@ -12,12 +12,12 @@ function onClickBtnFavoris(event) {
       .then(function (response) {
          // handle success
          //const favoris = response.data.favoris;
-         if (button.classList.contains('btn-danger')) {
-            button.classList.replace('btn-danger', 'btn-success');
+         if (button.classList.contains('btn-outline-danger')) {
+            button.classList.replace('btn-outline-danger', 'btn-outline-success');
             button.textContent = "Suivre"
          }
          else{
-            button.classList.replace('btn-success', 'btn-danger');
+            button.classList.replace('btn-outline-success', 'btn-outline-danger');
             button.textContent = "Ne plus suivre"
          }
             

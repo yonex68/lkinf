@@ -19,6 +19,11 @@
                <img class="rounded"
                   src="{{ vich_uploader_asset(commande.microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}">
 
+               {% else %}
+
+               <img class="img-fluid rounded"
+                  src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}" />
+
                {% endif %}
                <div class="media-body pl-3">
                   <span class="d-block">{{ commande.microservice.name }}</span>
@@ -32,6 +37,7 @@
             {% if app.request.attributes.get('_route') == 'vendeur_commandes_index' %}
 
             <div class="media">
+               
                {% if commande.client.avatar %}
 
                <img class="rounded-circle"
@@ -69,7 +75,8 @@
                </a>
 
                <div class="media-body pl-3">
-                  <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank" class="d-block font-weight-bold">{{ commande.vendeur.nom }}</a>
+                  <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank"
+                     class="d-block font-weight-bold">{{ commande.vendeur.nom }}</a>
                   <span class="text-muted small">{{ commande.vendeur.prenom }}</span>
                </div>
             </div>

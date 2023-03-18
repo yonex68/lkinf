@@ -2,12 +2,22 @@
 
 {% block title %}Nouveau service{% endblock %}
 
+{% block colleft %}4{% endblock %}
+
+{% block colright %}8{% endblock %}
+
+{% block sidebar %}
+	{% include "vendeur/microservices/composants/_step.html.twig" %}
+{% endblock %}
+
 {% block body %}
 
-	<div class="p-3 border-bottom text-right">
-		<h6 class="mb-0">Nouveau service
-		</h6>
+	<div class="p-3 border-bottom text-left bg-dark rounded">
+		<h4 class="mb-0 text-light">
+			Nouveau service
+		</h4>
 	</div>
+
 	{{ include('vendeur/microservices/_form.html.twig') }}
 
 {% endblock %}

@@ -50,15 +50,15 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $usernames = strtolower($this->sluger->slug($user->getNom() . '-' . $user->getPrenom()));
+            $userNameUrl = $this->sluger->slug(strtolower($user->getNom() . '-' . $user->getPrenom()));
 
-            $user->setNameUrl($usernames);
+            $user->setNameUrl($userNameUrl);
             //$user->setIsLocked(false);
 
-            if($form->get('compte')->getData() == 'vendeur'){
+            if($form->get('compte')->getData() == 'Vendeur'){
 
                 $user->setRoles(['ROLE_VENDEUR']);
-                $user->setCompte('vendeur');
+                $user->setCompte('Vendeur');
 
                 // Création du portefeuille si l'utilisateur choisis le compte vendeur
                 $portefeuille = new Portefeuille();
@@ -70,12 +70,12 @@ class RegistrationController extends AbstractController
 
                 $route = 'register_mail_send';
 
-            }elseif($form->get('compte')->getData() == 'acheteur'){
+            }elseif($form->get('compte')->getData() == 'Client'){
 
                 $route = 'register_mail_send';
 
-                $user->setRoles(['ROLE_ACHETEUR']);
-                $user->setCompte('acheteur');
+                $user->setRoles(['ROLE_CLIENT']);
+                $user->setCompte('Client');
             }
 
             $entityManager->persist($user);

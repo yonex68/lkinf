@@ -7,7 +7,9 @@ use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ConversationRepository;
+use App\Repository\MicroserviceRepository;
 use App\Repository\PortefeuilleRepository;
+use App\Repository\SuivisRepository;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -26,7 +28,11 @@ class AppExtension extends AbstractExtension
 
     private $commandeRepository;
 
-    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository){
+    private $suivisRepository;
+
+    private $microserviceRepository;
+
+    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -34,6 +40,8 @@ class AppExtension extends AbstractExtension
         $this->avisRepository = $avisRepository;
         $this->conversationRepository = $conversationRepository;
         $this->commandeRepository = $commandeRepository;
+        $this->suivisRepository = $suivisRepository;
+        $this->microserviceRepository = $microserviceRepository;
 
     }
 
@@ -47,6 +55,10 @@ class AppExtension extends AbstractExtension
             new TwigFunction('avisnegatif', [$this, 'getVendeurAvisNegatif']),
             new TwigFunction('getMessageNonLu', [$this, 'getMessageNonLu']),
             new TwigFunction('getCommandeNonLu', [$this, 'getCommandeNonLu']),
+            new TwigFunction('followers', [$this, 'getVendeurFollowers']),
+            new TwigFunction('serviceAvis', [$this, 'getServicesAvisPositif']),
+            new TwigFunction('serviceCommandes', [$this, 'getServicesCommandes']),
+            new TwigFunction('lastedServices', [$this, 'getLastServices']),
         ];
     }
 
@@ -69,6 +81,10 @@ class AppExtension extends AbstractExtension
     public function getVendeurAvisNegatif($vendeur){
         return $this->avisRepository->findOneBy(['vendeur' => $vendeur, 'type' => 'Negatif']);
     }
+
+    public function getVendeurFollowers($vendeur){
+        return $this->suivisRepository->findBy(['vendeur' => $vendeur], ['created' => 'DESC'], 12);
+    }
     
     public function getMessageNonLu($user) {
         return $this->conversationRepository->findByParticipationNonLu($user);
@@ -76,5 +92,17 @@ class AppExtension extends AbstractExtension
     
     public function getCommandeNonLu($user) {
         return $this->commandeRepository->findBy(['destinataire' => $user, 'lu' => 0]);
+    }
+
+    public function getServicesAvisPositif($service){
+        return count($this->avisRepository->findBy(['microservice' => $service, 'type' => 'Positif']));
+    }
+
+    public function getServicesCommandes($service){
+        return $this->commandeRepository->findBy(['microservice' => $service]);
+    }
+
+    public function getLastServices(){
+        return $this->microserviceRepository->findLasted();
     }
 }

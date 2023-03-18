@@ -7,7 +7,9 @@
 						<img src="{{ asset('img/logo.png') }}" class="img-fluid w-50">
 					</a>
 				</h2>
-				<p class="text-muted pr-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, deleniti! Nihil, beatae. Nam, reiciendis ad.</p>
+				<p class="text-muted pr-2">
+					La plateforme Links Infinity donne la facilité à toute personnes de ce lancer en indépendant accompagner par des professionnels.
+				</p>
 				<div class="copyright">
 					<ul class="social">
 						<li>
@@ -39,43 +41,40 @@
 				</div>
 			</div>
 			<div class="footer-list">
-				<h2>About</h2>
+				<h2>Besoin d'aide?</h2>
 				<ul class="list">
 					<li>
-						<a href="#">Careers</a>
+						<a href="#">Comment ça marche?</a>
 					</li>
 					<li>
-						<a href="#">Press &amp; News</a>
+						<a href="#">FAQS</a>
 					</li>
 					<li>
-						<a href="#">Partnerships</a>
-					</li>
-					<li>
-						<a href="#">Privacy Policy</a>
+						<a href="#">Contacter-nous</a>
 					</li>
 				</ul>
 			</div>
 			<div class="footer-list">
-				<h2>Support</h2>
+				<h2>{{ appName }}</h2>
 				<ul class="list">
 					<li>
-						<a href="#">Help &amp; Support</a>
+						<a href="#">Vendre/connexion</a>
 					</li>
 					<li>
-						<a href="#">Trust &amp; Safety</a>
+						<a href="#">Politique de confidentialité</a>
 					</li>
 					<li>
-						<a href="#">Selling on Miver
+						<a href="#">CGU et CGV
 						</a>
 					</li>
 					<li>
-						<a href="#">Buying on Miver
+						<a href="#">Mentions légales
 						</a>
 					</li>
 				</ul>
 			</div>
 			<div class="footer-list">
-				<h2>Community</h2>
+				<h2>Comunauté</h2>
 				<ul class="list">
 					<li>
 						<a href="#">Events</a>
@@ -92,26 +91,17 @@
 				</ul>
 			</div>
 			<div class="footer-list">
-				<h2>More From Miver</h2>
+				<h2>{{ appName }}</h2>
 				<ul class="list">
 					<li>
-						<a href="#">Miver Pro</a>
-					</li>
-					<li>
-						<a href="#">Miver Studios</a>
-					</li>
-					<li>
-						<a href="#">Miver Logo Maker</a>
-					</li>
-					<li>
-						<a href="#">Get Inspired</a>
+						<a href="mailto:{{ appEmail }}">{{ appEmail }}</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 	<div class="text-center py-4 text-muted border-top">
-		<p class="p-0 m-0">© Copyright 2022 Miver. All Rights Reserved
+		<p class="p-0 m-0">© Copyright {{ 'now'|date('Y') }} {{ appName }}.
 		</p>
 	</div>
 </footer>

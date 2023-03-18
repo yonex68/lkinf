@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\ChangePasswordFormType;
 use App\Form\EditProfilType;
+use App\Form\PositionType;
 use App\Repository\AbonnementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,11 @@ class EspaceUtilisateurController extends AbstractController
     #[Route('/', name: 'user_profil')]
     public function profil(): Response
     {
+        if (empty($this->getUser()->getAdresse())) {
+            $this->addFlash('warning', 'Veuillez indiquer votre adresse pour completer votre compte');
+            return $this->redirectToRoute('user_edit_adresse');
+        }
+
         return $this->render('espace_utilisateur/profil.html.twig', [
             
         ]);
@@ -78,6 +84,29 @@ class EspaceUtilisateurController extends AbstractController
         }
 
         return $this->renderForm('espace_utilisateur/edit_profil.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/indiquez-votre-adresse', name: 'user_edit_adresse', methods: ['GET', 'POST'])]
+    public function adresse(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(PositionType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->flush();
+
+            $this->addFlash('success', "Votre adresse a bien été mise à jour");
+
+            return $this->redirectToRoute('user_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('espace_utilisateur/edit_adresse.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);

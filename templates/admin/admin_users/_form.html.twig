@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table">
+            <tbody>
+                {{ form_start(form) }}
+                <tr>
+                    <th>Nom(s)</th>
+                    <td>
+                        {{ form_row(form.nom) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Prénom(s)</th>
+                    <td>
+                        {{ form_row(form.prenom) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Genre</th>
+                    <td>
+                        {{ form_row(form.genre) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Avatar</th>
+                    <td>
+                        {{ form_row(form.imageFile) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Compte</th>
+                    <td>
+                        {{ form_rest(form) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button></td>
+                </tr>
+                {{ form_end(form) }}
+
+                {% if user.id %}
+                
+                <tr>
+                    <th></th>
+                    <td>
+                        {{ include('admin/admin_users/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+        
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+</div>

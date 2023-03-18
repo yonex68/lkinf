@@ -8,6 +8,4 @@ fos_ck_editor:
     configs:
         main_config:
             toolbar:
-                - { name: "styles", items: ['Bold', 'Italic', 'Underline', '-',
-                'Link', '-', 'RemoveFormat', '-', 'Outdent', 'Indent', '-',
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'TextColor', 'Maximize'] }
+                - { name: "styles", items: ['Bold', 'Italic', 'Underline', '-', 'Preview', 'Print', 'Link', '-', 'RemoveFormat', 'Table', 'Smiley', 'ListGroup', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'TextColor', 'Maximize'] }

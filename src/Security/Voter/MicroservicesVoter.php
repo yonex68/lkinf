@@ -38,7 +38,7 @@ class MicroservicesVoter extends Voter
         }
 
         //On autorise à un administrateur de modifier
-        if ($this->security->isGranted("ROLE_ADMIN")) return true;
+        /*if ($this->security->isGranted("ROLE_ADMIN")) return true;*/
 
         //Verifie si une annonce a un auteur
         if (null === $miscroservice->getVendeur()) return false;
@@ -63,7 +63,7 @@ class MicroservicesVoter extends Voter
     }
 
     private function canDelete(Microservice $miscroservice, User $user){
-        if($this->security->isGranted("ROLE_ADMIN")) return true;
+        /*if($this->security->isGranted("ROLE_ADMIN")) return true;*/
         return $user === $miscroservice->getVendeur();
     }
 }

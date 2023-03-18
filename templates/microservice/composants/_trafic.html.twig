@@ -1,0 +1,125 @@
+<div class="sticky"><!-- sticky -->
+   <ul class="nav nav-tabs">
+      <li><a class="active" data-toggle="tab" href="#Mastering">Mastering</a></li>
+      <li><a data-toggle="tab" href="#Mixage">Mixage</a></li>
+      <li><a data-toggle="tab" href="#Beatmaking">Beatmaking</a></li>
+   </ul>
+   <div class="tab-content mb-0 pb-1">
+      <div id="Mastering" class="tab-pane fade show active">
+         <div class="header">
+            <h3><b class="title">{{ microservice.name }}</b><span class="price badge">
+                  {{ microservice.prixMastering ~ currency }}</span>
+            </h3>
+            <p></p>
+         </div>
+
+         {% if is_granted('microservice_edit', microservice) %}
+
+         {% include "microservice/composants/_edit_btn.html.twig" %}
+
+         {% else %}
+
+         <a href="{{ path('commander_microservice', {slug: microservice.slug, offre: 'Mastering'}) }}">
+            <button>{{ microservice.prixMastering ~ currency }} commander</button>
+         </a>
+
+         {% endif %}
+      </div>
+      <div id="Mixage" class="tab-pane fade">
+         <div class="header">
+            <h3><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixMixage ~
+                  currency }}</span></h3>
+            <p></p>
+         </div>
+         <!--<article>
+            <div class="d-flex">
+               <b class="delivery text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ microservice.delai }}
+                  de réalisation</b>
+            </div>
+         </article>-->
+
+         {% if is_granted('microservice_edit', microservice) %}
+
+         {% include "microservice/composants/_edit_btn.html.twig" %}
+
+         {% else %}
+
+         <a href="{{ path('commander_microservice', {slug: microservice.slug, offre: 'Mixage'}) }}">
+            <button>{{ microservice.prixMixage ~ currency }} commander</button>
+         </a>
+
+         {% endif %}
+      </div>
+      <div id="Beatmaking" class="tab-pane fade">
+         <div class="header">
+            <h3><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixBeatmaking ~
+                  currency }}</span></h3>
+            <p></p>
+         </div>
+
+         {% if is_granted('microservice_edit', microservice) %}
+
+         {% include "microservice/composants/_edit_btn.html.twig" %}
+
+         {% else %}
+
+         <a href="{{ path('commander_microservice', {slug: microservice.slug, offre: 'Beatmaking'}) }}">
+            <button>{{ microservice.prixBeatmaking ~ currency }} commander</button>
+         </a>
+
+         {% endif %}
+
+      </div>
+
+      <p class="pt-4 pb-0 text-center p-0">
+         Paiement <strong><i class="fa fa-lock"></i> Sécurisé</strong>
+      </p>
+   </div>
+
+   <div class="shadow-sm border rounded my-3 bg-white p-0">
+      <div class="profile-card my-4">
+         <div class="user-profile-image d-flex shadow-none py-0">
+            <label class="profile-pict" for="profile_image">
+               <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}">
+                  <img width="80" height="80"
+                     src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
+                     class="profile-pict-img img-fluid" alt="">
+               </a>
+            </label>
+            <div class="right">
+               <div class="profile-name">
+                  <span class="user-status">
+                     <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}"
+                        class="seller-link">{{ microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
+                  </span>
+                  <div class="seller-level">
+                     <span>{{ microservice.created|ago(locale='fr') }}</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="pl-4 pr-4 pt-4 bg-white">
+            {{ microservice.vendeur.apropos|raw }}
+
+            <div class="row pt-3">
+               <div class="col-sm-6">
+                  <a class="btn btn-dark btn-block"
+                     href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter</a>
+               </div>
+               <div class="col-sm-6">
+                  <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl }) }}"
+                     class="btn btn-outline-dark btn-block">Voir le profil</a>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+   </div>
+
+   {% if is_granted('ROLE_ADMIN') %}
+      {% include "admin/admin_services/_delete_form.html.twig" %}
+   {% endif %}
+
+</div>

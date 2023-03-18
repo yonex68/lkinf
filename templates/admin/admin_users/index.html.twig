@@ -1,0 +1,87 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Comptes utilisateurs{% endblock %}
+
+{% block pageTitle %}Comptes utilisateurs ({{ users.getTotalItemCount }}){% endblock %}
+
+{% block body %}
+
+<div class="card">
+    <div class="card-body p-0">
+
+        <div class="table-rep-plugin">
+            <div class="table-responsive mb-0" data-bs-pattern="priority-columns">
+
+                <table id="tech-companies-1" class="table  table-striped">
+                    <thead>
+                        <tr>
+                            <th>#Id</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Genre</th>
+                            <th>Avatar</th>
+                            <th>Email</th>
+                            <th>Compte</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td><strong>{{ user.nom }}</strong></td>
+                            <td><strong>{{ user.prenom }}</strong></td>
+                            <td>{{ user.genre }}</td>
+                            <td>
+
+                                {% if user.reseauAvatar %}
+
+                                <img src="{{ user.reseauAvatar | imagine_filter('small_avatar') }}" alt="">
+
+                                {% endif %}
+
+                                {% if user.avatar %}
+
+                                <img class="img-fluid rounded"
+                                    src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('small_avatar') }}" />
+
+                                {% else %}
+
+                                <img class="img-fluid rounded"
+                                    src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" />
+
+                                {% endif %}
+
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td><span class="badge bg-dark rounded-pill text-uppercase">{{ user.compte }}</span></td>
+                            <td>
+                                <a href="{{ path('app_admin_users_show', {'nameUrl': user.nameUrl}) }}"
+                                    class="btn btn-light border">Profil</a>
+                                <a href="{{ path('app_admin_users_edit', {'id': user.id}) }}"
+                                    class="btn btn-light border">Modifier</a>
+                                {% include "admin/admin_users/_delete_form.html.twig" %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="10">Aucun compte utilisateur</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer bg-white">
+        {{ knp_pagination_render(users, null, {}, {
+        'align': 'right',
+        'size': 'medium',
+        'rounded': true,
+        }) }}
+    </div>
+</div>
+
+{% endblock %}

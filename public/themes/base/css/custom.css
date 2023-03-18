@@ -38,12 +38,6 @@
    padding: 9px 20px;
 }
 
-@media(min-width:767px) {
-   .bg-image {
-      background-position-y: -200px;
-   }
-}
-
 .bg-image .caption {
    position: absolute;
    top: 0;
@@ -126,4 +120,29 @@
    left:-20px;
    height: 15px;
    line-height: 10px;
+}
+.rounded-btn{
+   border-radius: 20px!important;
+}
+.tache-terminer i{
+   color: #43aa8b!important;
+   font-weight: bold!important;
+}
+.tache-terminer.active i{
+   color: black!important;
+   font-weight: bold!important;
+}
+.tache-encours i.text-muted{
+   color: #e2e1e1!important;
+}
+.miblie-notif{
+   width: 30px!important;
+   height: 30px!important;
+}
+.danger-bg{
+   background-color: rgb(168, 16, 16)!important;
+}
+.bloc-masquer{
+   visibility: hidden!important;
+   height: 1px!important;
 }

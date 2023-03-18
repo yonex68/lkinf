@@ -6,49 +6,50 @@
 {% block navbar %}{% endblock %}
 
 {% block body %}
-	<section class="py-5">
-		<div class="container">
+<section class="py-5">
+	<div class="container">
 
-			<div class="py-2">
-				<a href="{{ path('accueil') }}" class="btn btn-light">
-					<i class="mdi mdi-arrow-left"></i>
-					Retournez vers accueil</a>
-			</div>
+		<div class="py-2">
+			<a href="{{ path('accueil') }}" class="btn btn-light">
+				<i class="mdi mdi-arrow-left"></i>
+				Retournez vers accueil</a>
+		</div>
 
-			<div class="text-center">
-				<h1 class="font-weight-bold">Salut
-					{{ app.user.prenom }},</h1>
-				<h3 class="font-weight-bold">Choisir votre plan d'abonnement</h3>
-			</div>
-			<div class="row pt-5 d-flex justify-content-center">
-                {% for abonnement in stripe %}
-                
-				<div class="col-md-4">
-					<div class="bg-white rounded shadow-sm p-5">
-						<p class="h5 font-weight-bold text-center">{{ abonnement.name }}</p>
-						<p class="text-muted text-center">Manage 2 accounts with 2 separate logins, one for my private stuff and one for work</p>
+		<div class="text-center">
+			<h1 class="font-weight-bold">Salut
+				{{ app.user.prenom }},</h1>
+			<h3 class="font-weight-bold">Choisir votre plan d'abonnement</h3>
+		</div>
+		<div class="row pt-5 d-flex justify-content-center">
+			{% for abonnement in stripe %}
 
-						<div class="text-center py-4">
-							<strong class="h1">{{ abonnement.tarif }}</strong>
-							<span class="lead">{{ currency }}/mois</span>
-						</div>
+			<div class="col-md-4">
+				<div class="bg-white rounded shadow-sm p-5">
+					<p class="h5 font-weight-bold text-center">{{ abonnement.name }}</p>
+					<p class="text-muted text-center">{{ abonnement.description|raw }}</p>
 
-						<form method="post" class="p-0 m-0" action="{{ path('stripe_abonnement_checkout', {'priceKey': abonnement.stripeKey }) }}">
-							<button class="btn btn-success btn-lg btn-block my-3">
-                                Continue {{ abonnement.tarif ~ currency }}</button>
-						</form>
+					<div class="text-center py-4">
+						<strong class="h1">{{ abonnement.tarif }}</strong>
+						<span class="lead">{{ currency }}/mois</span>
+					</div>
 
-						<hr>
-						<div>
-                            
-						</div>
+					<form method="post" class="p-0 m-0"
+						action="{{ path('stripe_abonnement_checkout', {'priceKey': abonnement.stripeKey }) }}">
+						<button class="btn btn-success btn-lg btn-block my-3">
+							Continue {{ abonnement.tarif ~ currency }}</button>
+					</form>
+
+					<hr>
+					<div>
+
 					</div>
 				</div>
-                
-                {% endfor %}
 			</div>
+
+			{% endfor %}
 		</div>
-	</section>
+	</div>
+</section>
 {% endblock %}
 
 {% block footer %}{% endblock %}

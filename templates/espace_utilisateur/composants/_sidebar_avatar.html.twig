@@ -13,16 +13,16 @@
 				<div class="user-profile-image text-left">
 					<label class="user-pict">
 						{% if app.user.avatar %}
-							<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('midle_size') }}" class="img-fluid" alt="{{ app.user.prenom }}">
+							<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}" class="" alt="{{ app.user.prenom }}">
 						{% else %}
 
 							{% if app.user.genre == 'Feminin' %}
 
-								<img class="img-fluid" src="{{ asset('img/femme.jpg') | imagine_filter('midle_size') }}" alt=''/>
+								<img class="" src="{{ asset('img/femme.jpg') | imagine_filter('large_avatar') }}" alt=''/>
 
 							{% else %}
 
-								<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('midle_size') }}" alt=''/>
+								<img class="" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}" alt=''/>
 
 							{% endif %}
 
@@ -56,11 +56,17 @@
 					</p>
 				</div>
 
+				{% if app.request.attributes.get('_route') == 'user_edit_profil'%}
+
+				{% else %}
+
 				<div class="text-center">
-					<a href="{{ path('user_edit_profil') }}" class="btn btn-light pl-4 pr-4 btn-block">
+					<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-dark pl-4 pr-4 btn-block">
 						<i class="fa fa-cog"></i> Mettre à jour mon profil
 					</a>
 				</div>
+					
+				{% endif %}
 			</div>
 		</div>
 	</div>

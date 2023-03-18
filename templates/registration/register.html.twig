@@ -1,79 +1,144 @@
 {% extends 'auth.html.twig' %}
 
-{% block title %}Créer un compte {{ appName }}{% endblock %}
+{% block title %}Créer un compte
+{{ appName }}
+{% endblock %}
 
-{% block titre %}Créer un compte {{ appName }}{% endblock %}
+{% block titre %}Créer un compte
+{{ appName }}
+{% endblock %}
 
-{% block text %}Nouveau sur {{ appName }}? crée gratuitement votre compte{% endblock %}
+{% block text %}Nouveau sur
+{{ appName }}? crée gratuitement votre compte
+{% endblock %}
 
 {% block body %}
 
+<div class="text-center mt-3 pb-3">
+
+	{% include "security/_reseaux.html.twig" %}
+
+</div>
+
 {% for flashError in app.flashes('verify_email_error') %}
-<div class="alert alert-danger" role="alert"><!-- flashError --> Le lien pour vérifier votre e-mail semble être pour un autre compte ou e-mail. Veuillez demander un nouveau lien.</div>
+<div class="alert alert-danger" role="alert">
+	<!-- flashError -->
+	Le lien pour vérifier votre e-mail semble être pour un autre compte ou e-mail. Veuillez demander un nouveau lien.
+</div>
 {% endfor %}
 
 {{ form_start(registrationForm) }}
 <div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label class="mb-1">Nom</label>
-            <div class="position-relative icon-form-control">
-                <i class="mdi mdi-account position-absolute"></i>
-                {{ form_widget(registrationForm.nom) }}
-            </div>
-            {{ form_errors(registrationForm.nom) }}
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label class="mb-1">Prénom</label>
-            <div class="position-relative icon-form-control">
-                <i class="mdi mdi-account position-absolute"></i>
-                {{ form_widget(registrationForm.prenom) }}
-            </div>
-            {{ form_errors(registrationForm.prenom) }}
-        </div>
-    </div>
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="mb-1">Nom</label>
+			<div class="position-relative icon-form-control">
+				<i class="mdi mdi-account position-absolute"></i>
+				{{ form_widget(registrationForm.nom) }}
+			</div>
+			{{ form_errors(registrationForm.nom) }}
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="mb-1">Prénom</label>
+			<div class="position-relative icon-form-control">
+				<i class="mdi mdi-account position-absolute"></i>
+				{{ form_widget(registrationForm.prenom) }}
+			</div>
+			{{ form_errors(registrationForm.prenom) }}
+		</div>
+	</div>
 </div>
 
 <div class="form-group">
-    <label class="mb-1">Je souhaite?</label>
-    {{ form_widget(registrationForm.compte) }}
-    {{ form_errors(registrationForm.compte) }}
+	<label class="mb-1">Je souhaite?</label>
+	{{ form_widget(registrationForm.compte) }}
+	{{ form_errors(registrationForm.compte) }}
 </div>
 
 <div class="form-group">
-    <label class="mb-1">Parlez-nous de vous!</label>
-    {{ form_widget(registrationForm.apropos) }}
-    {{ form_errors(registrationForm.apropos) }}
+	{{ form_row(registrationForm.agreeLocations) }}
 </div>
 
 <div class="form-group">
-    <label class="mb-1">Email</label>
-    <div class="position-relative icon-form-control">
-        <i class="mdi mdi-email-outline position-absolute"></i>
-        {{ form_widget(registrationForm.email) }}
-    </div>
-    {{ form_errors(registrationForm.email) }}
+	<label class="mb-1">Adresse</label>
+	<div class="position-relative icon-form-control">
+		<i class="mdi mdi-map position-absolute"></i>
+		{{ form_widget(registrationForm.adresse) }}
+	</div>
+	{{ form_errors(registrationForm.adresse) }}
+</div>
+
+<div style="visibility: hidden;height:1px;">
+	{{ form_row(registrationForm.ville) }}
+
+	{{ form_row(registrationForm.etat) }}
+
+	{{ form_row(registrationForm.pays) }}
 </div>
 
 <div class="form-group">
-    <label class="mb-1">Mot de passe</label>
-    <div class="position-relative icon-form-control">
-        <i class="mdi mdi-key-variant position-absolute"></i>
-        {{ form_widget(registrationForm.plainPassword) }}
-    </div>
+	<label class="mb-1">Email</label>
+	<div class="position-relative icon-form-control">
+		<i class="mdi mdi-email-outline position-absolute"></i>
+		{{ form_widget(registrationForm.email) }}
+	</div>
+	{{ form_errors(registrationForm.email) }}
+</div>
+
+<div class="form-group">
+	<label class="mb-1">Mot de passe</label>
+	<div class="position-relative icon-form-control">
+		<i class="mdi mdi-key-variant position-absolute"></i>
+		{{ form_widget(registrationForm.plainPassword) }}
+	</div>
 </div>
 
 <div class="mb-3">
-    {{ form_widget(registrationForm.agreeTerms) }}
-    <label for="registration_form_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
-        J'accepte les <a href="">termes</a> et <a href="">conditions d'utilisation</a>
-    </label>
+	{{ form_widget(registrationForm.agreeTerms) }}
+	<label for="registration_form_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
+		J'accepte les
+		<a href="">termes</a>
+		et
+		<a href="">conditions d'utilisation</a>
+	</label>
 </div>
 
 <button type="submit" formnovalidate class="btn btn-success btn-block text-uppercase">S'inscrire</button>
 
 {{ form_end(registrationForm) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+{% include "espace_utilisateur/composants/_mapbox_script.html.twig" %}
+
+<script>
+
+	$("#registration_form_agreeLocations").on('change', async function (e) {
+
+		function getLocation(position) {
+
+			console.log(position.coords)
+
+			const longitude = position.coords.longitude
+			const latitude = position.coords.latitude
+
+			$("#registration_form_longitude").val(longitude)
+			$("#registration_form_latitude").val(latitude)
+		}
+
+		function failedToGet() {
+			console.log('Une erreur est survenu lors de la confirmation de votre localisation')
+		}
+
+		const result = navigator.geolocation.getCurrentPosition(getLocation, failedToGet)
+	})
+
+</script>
 
 {% endblock %}

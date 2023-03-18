@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,28 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    /**
+     * @Route("/connect/facebook", name="facebook_connect")
+     */
+    public function connect(ClientRegistry $clientRegistry){
+        /** @var FacebookClient $client */
+        $client = $clientRegistry->getClient('facebook');
+        return $client->redirect([
+            'public_profile', 'email'
+        ]);
+    }
+
+    /**
+     * @Route("/connect/google", name="google_connect")
+     */
+    public function googleConnect(ClientRegistry $clientRegistry){
+        /** @var GoogleClient $client */
+        $client = $clientRegistry->getClient('google');
+        return $client->redirect([
+            'profile', 'email'
+        ]);
     }
 
     /**

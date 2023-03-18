@@ -35,7 +35,7 @@ $(document).ready(function () {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 				}
 			}
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 				}
 			}
 
@@ -181,14 +181,14 @@ $(document).ready(function () {
 	});
 
 	$(".view").not('.slick-initialized').slick({
-		slidesToShow: 4,
+		slidesToShow: 3,
 		slidesToScroll: 1,
 		arrows: true,
 		fade: false,
 		responsive: [{
 				breakpoint: 1099,
 				settings: {
-					slidesToShow: 4,
+					slidesToShow: 3,
 				}
 			},
 			{

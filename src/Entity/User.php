@@ -74,6 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'string', length: 255)]
     private $nameUrl;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profession = null;
+
     #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Microservice::class)]
     private $microservices;
 
@@ -121,6 +124,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommandeMessage::class)]
     private $commandeMessages;
+
+    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    private $reseauAvatar;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $facebookId = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $googleId = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etat = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $latitude = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $longitude = null;
 
     public function __construct()
     {
@@ -742,6 +763,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $commandeMessage->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReseauAvatar(): ?string
+    {
+        return $this->reseauAvatar;
+    }
+
+    public function setReseauAvatar(?string $reseauAvatar): self
+    {
+        $this->reseauAvatar = $reseauAvatar;
+
+        return $this;
+    }
+
+    public function getFacebookId(): ?int
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?int $facebookId): self
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?int
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?int $googleId): self
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getProfession(): ?string
+    {
+        return $this->profession;
+    }
+
+    public function setProfession(?string $profession): self
+    {
+        $this->profession = $profession;
 
         return $this;
     }

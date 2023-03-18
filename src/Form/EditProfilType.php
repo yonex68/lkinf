@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class EditProfilType extends AbstractType
@@ -28,7 +29,7 @@ class EditProfilType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => false,
+                'label' => 'Nom*',
                 'attr' => ['placeholder' => 'Nom'],
                 'constraints' => [
                     new NotBlank([
@@ -37,7 +38,7 @@ class EditProfilType extends AbstractType
                 ],
             ])
             ->add('prenom', TextType::class, [
-                'label' => false,
+                'label' => 'Prénom*',
                 'attr' => ['placeholder' => 'Prénom'],
                 'constraints' => [
                     new NotBlank([
@@ -46,7 +47,7 @@ class EditProfilType extends AbstractType
                 ],
             ])
             ->add('genre', ChoiceType::class, [
-                'label' => false,
+                'label' => 'Genre*',
                 'choices'  => [
                     'Homme' =>  'Homme',
                     'Femme'    =>  'Femme',
@@ -60,7 +61,7 @@ class EditProfilType extends AbstractType
                 ],
             ])
             ->add('imageFile', VichImageType::class, [
-                'label' => '(Png, jpg et jpeg)',
+                'label' => 'Avatar (Png, jpg et jpeg)',
                 'required'  =>  false,
                 'allow_delete' =>  false,
                 'download_label'     =>  false,
@@ -70,30 +71,54 @@ class EditProfilType extends AbstractType
                 'attr'   =>  ['class' => 'form-control-file'],
             ])
             ->add('apropos', TextareaType::class, [
-                'label' => false,
+                'label' => 'Biographie',
                 'help' => 'Renseignements',
                 'required' => false,
                 'attr' => ['rows' => 6],
             ])
-            ->add('pays', CountryType::class, [
-                'label' => false,
-                'help' => 'Pays de residence actuelle',
-                'preferred_choices' => array('CG'),
-                'choice_translation_locale' => null,
-                'required' => false
-            ])
-            ->add('ville', TextType::class, [
-                'label' => false,
-                'help' => 'Ville de residence actuelle',
-                'attr' => ['placeholder' => 'Ville de residence'],
-                'required' => false
-            ])
             ->add('adresse', TextType::class, [
-                'label_format' => 'form.address.%name%',
                 'label' => 'Adresse',
                 'help' => 'Exemple (N° Ruelle/Avenue)',
-                'attr' => ['placeholder' => 'Adresse'],
-                'required' => false
+                'attr' => ['placeholder' => 'Adresse', 'autocomplete' => "address-line1"],
+                'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
+            ])
+            ->add('ville', TextType::class, [
+                'label' => 'Ville',
+                'help' => 'Ville de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level2"],
+                'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
+            ])
+            ->add('pays', TextType::class, [
+                'label' => 'Pays',
+                'help' => 'Ville de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "country"],
+                'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
+            ])
+            ->add('etat', TextType::class, [
+                'label' => 'Etat',
+                'help' => 'Etat de residence actuelle',
+                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
+                'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
             ])
             ->add('telephone', TextType::class, [
                 'help' => 'Facultatif',
@@ -102,7 +127,7 @@ class EditProfilType extends AbstractType
                 'attr' => ['placeholder' => 'Téléphone'],
             ])
             ->add('email', EmailType::class, [
-                'label' => false,
+                'label' => 'Email',
                 'help' => 'Exemple: email@domaine.com',
                 'attr' => ['placeholder' => 'Exemple@domail.com'],
                 'constraints' => [
@@ -113,6 +138,12 @@ class EditProfilType extends AbstractType
                         'message' => 'Veuillez saisir une adresse email valide',
                     ]),
                 ],
+            ])
+            ->add('longitude', HiddenType::class, [
+                'required' => false,
+            ])
+            ->add('latitude', HiddenType::class, [
+                'required' => false,
             ])
         ;
     }

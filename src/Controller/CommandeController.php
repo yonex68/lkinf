@@ -162,14 +162,14 @@ class CommandeController extends AbstractController
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
-        $prix =  $microservice->getPrix();
+        $montant = null;
 
-        foreach ($prix as $price) {
-
-            if ($price->getName() == $offre) {
-                // Affectation du montant
-                $montant = $price->getTarif();
-            }
+        if ($offre == 'Mastering') {
+            $montant = $microservice->getPrixMastering();
+        }elseif($offre == 'Mixage'){
+            $montant = $microservice->getPrixMixage();
+        }elseif($offre == 'Beatmaking'){
+            $montant = $microservice->getPrixBeatmaking();
         }
 
         $directory = $this->redirectToRoute('microservices');
@@ -256,7 +256,6 @@ class CommandeController extends AbstractController
 
             'microservice' => $microservice,
             'type_offre' => $offre,
-            //'form' => $avisForm,
             'montant' => $montant,
             'clientId' => $sandBoxId,
         ]);
@@ -267,14 +266,14 @@ class CommandeController extends AbstractController
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
-        $prix =  $microservice->getPrix(); //$prixRepository->findOneBy(['name' => $offre, 'microservice' => $microservice]);
+        $montant = null;
 
-        foreach ($prix as $price) {
-
-            if ($price->getName() == $offre) {
-                // Affectation du montant
-                $montant = $price->getTarif();
-            }
+        if ($offre == 'Mastering') {
+            $montant = $microservice->getPrixMastering();
+        }elseif($offre == 'Mixage'){
+            $montant = $microservice->getPrixMixage();
+        }else{
+            $montant = $microservice->getPrixBeatmaking();
         }
 
         $commande = new Commande();
@@ -284,6 +283,7 @@ class CommandeController extends AbstractController
         $commande->setDestinataire($microservice->getVendeur());
         $commande->setConfirmationClient(false);
         $commande->setLu(false);
+        $commande->setStatut('En attente');
 
         $commande->setMontant($montant);
         $commande->setOffre($offre);
@@ -344,7 +344,7 @@ class CommandeController extends AbstractController
 
             $portefeuille = $commande->getVendeur()->getPortefeuille();
 
-            dd($conversation);
+            //dd($conversation);
 
             $somme = $commande->getMontant() + $portefeuille->getSoldeDisponible();
 

@@ -1,0 +1,14 @@
+@media(min-width:767px) {
+   .bg-image {
+      background-position-y: -200px;
+   }
+}
+
+@media(max-width:600px) {
+   section.py-5{
+      padding: 20px 5px!important;
+   }
+   .market-wrapper .categories-list li {
+      width: 47%;
+ }
+}

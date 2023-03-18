@@ -19,6 +19,28 @@ class PortefeuilleRepository extends ServiceEntityRepository
         parent::__construct($registry, Portefeuille::class);
     }
 
+    public function findTotalSoldeDisponioble()
+    {
+        return $this->createQueryBuilder('p')
+            ->select("SUM(p.soldeDisponible) as solde")
+            //->andWhere('p.statut = :statut')
+            //->setParameter('statut', 'En attente')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findTotalSoldeEnCours()
+    {
+        return $this->createQueryBuilder('p')
+            ->select("SUM(p.soldeEnCours) as solde")
+            //->andWhere('p.statut = :statut')
+            //->setParameter('statut', 'En attente')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Portefeuille[] Returns an array of Portefeuille objects
     //  */
