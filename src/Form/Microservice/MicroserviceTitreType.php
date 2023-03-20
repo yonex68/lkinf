@@ -28,7 +28,7 @@ class MicroserviceTitreType extends AbstractType
             ])
             ->add('categorie', EntityType::class, [
                 'label'     =>  false,
-                'multiple'     =>  true,
+                //'multiple'     =>  true,
                 'attr' => ['class' => ""],
                 'placeholder'     =>  '--Sélectionnez une catégorie--',
                 'class' => Categorie::class,
