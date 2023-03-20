@@ -25,7 +25,7 @@
 						</a>
 
 						{% else %}
-						
+
 						<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}" class="btn btn-success">
 							Contacter le vendeur
 						</a>
@@ -70,14 +70,26 @@
 								{{ user.prenom }}</h5>
 							<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
 						</div>
-						<div class="p-4">
+						<div class="p-4 pb-0 border-bottom">
 							<div class="d-flex align-items-top mb-2">
 								<p class="mb-0 text-muted">Avis positif</p>
 								<p class="text-dark mb-0 mt-0 ml-auto">({{ avispositif(user)|length }})</p>
 							</div>
-							<div class="d-flex align-items-top">
+							<div class="d-flex align-items-top mb-2">
 								<p class="mb-0 text-muted">Avis négatif</p>
 								<p class="text-dark mb-0 mt-0 ml-auto">({{ avisnegatif(user)|length }})</p>
+							</div>
+							<div class="d-flex align-items-top mb-2">
+								<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">0</p>
+							</div>
+							<div class="d-flex align-items-top mb-2">
+								<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">0</p>
+							</div>
+							<div class="d-flex align-items-top">
+								<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> Vendeur</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">{{ user.created|ago(locale='fr') }}</p>
 							</div>
 						</div>
 
@@ -90,7 +102,7 @@
 			<main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
 				<div class="card mb-3 shadow-sm">
 					<div class="card-body">
-						<h2 class="card-title h5">Microservices</h2>
+						<h2 class="card-title h5">Services disponibles</h2>
 					</div>
 				</div>
 
@@ -108,7 +120,11 @@
 									<div class="py-4">
 										<i class="fa fa-search fa-3x text-muted"></i>
 									</div>
-									<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">Nouveau service</a>
+									{% if app.user.id == user.id %}
+									<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">
+										Nouveau service
+									</a>
+									{% endif %}
 								</div>
 							</div>
 							{% endfor %}
@@ -119,42 +135,47 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</main>
 			<aside class="col col-xl-3 order-xl-3 col-lg-12 order-lg-3 col-12">
 				<div class="box shadow-sm rounded bg-white mb-3">
 					<div class="box-title border-bottom p-3">
-						<h6 class="m-0">Followers</h6>
+						<h6 class="m-0">Abonnés</h6>
 					</div>
 					<div class="box-body p-3">
+						{% for follow in followers(user) %}
+
 						<div class="d-flex align-items-center osahan-post-header mb-3 people-list">
 							<div class="dropdown-list-image mr-3">
-								<img class="rounded-circle" src="{{ asset('themes/base/images/user/s1.png') }}" alt="">
-								<div class="status-indicator bg-success"></div>
+
+								{% if follow.client.avatar %}
+
+								<img
+									src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
+									class="rounded-circle" alt="{{ follow.client.prenom ?? '' }}"/>
+
+								{% else %}
+
+								<img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}"
+									class="rounded-circle" alt="{{ follow.client.prenom ?? '' }}" />
+
+								{% endif %}
+
+								<div class="status-indicator bg-{{ app.user.id == follow.client.id ? 'success' : 'light'}}"></div>
 							</div>
 							<div class="font-weight-bold mr-2">
-								<div class="text-truncate">Sophia Lee</div>
-								<div class="small text-gray-500">@Harvard
-								</div>
+								<div class="text-truncate">{{ app.user.id == follow.client.id ? 'Vous' : follow.client.nom ~ ' ' ~ follow.client.prenom}}</div>
+								<div class="small text-gray-500"></div>
 							</div>
-							<span class="ml-auto">
-								<button type="button" class="btn btn-light btn-sm">Connent</button>
-							</span>
 						</div>
-						<div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-							<div class="dropdown-list-image mr-3">
-								<img class="rounded-circle" src="{{ asset('themes/base/images/user/s2.png') }}" alt="">
-								<div class="status-indicator bg-success"></div>
+
+						{% else %}
+							
+							<div>
+								<p>Aucun abonnés pour l'intant</p>
 							</div>
-							<div class="font-weight-bold mr-2">
-								<div class="text-truncate">John Doe</div>
-								<div class="small text-gray-500">Traveler
-								</div>
-							</div>
-							<span class="ml-auto">
-								<button type="button" class="btn btn-light btn-sm">Connent</button>
-							</span>
-						</div>
+
+						{% endfor %}
 					</div>
 				</div>
 
@@ -163,10 +184,10 @@
 						<div class="d-flex align-items-center p-3 job-item-header">
 							<div class="overflow-hidden mr-2">
 								<h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
-								<div class="text-truncate text-primary">Spotify Inc.</div>
+								<div class="text-truncate text-primary">Localisation.</div>
 								<div class="small text-gray-500">
 									<i class="fa fa-map"></i>
-									India, Punjab
+									{{ user.pays ~ ' ' ~ user.ville }}
 								</div>
 							</div>
 							<img class="img-fluid ml-auto" src="images/l3.png" alt="">

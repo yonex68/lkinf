@@ -3,7 +3,7 @@
 	{% else %}
 
 		<div class="p-4">
-			<a href="{{ path('suivre_new', {id: user.id}) }}" class="js-suivis">
+			<a href="{{ path('suivre_new', {id: user.id}) }}" class="{{ app.user ? 'js-suivis' : '' }}">
 
 				{% if app.user and user.isFollowed(app.user) %}
 

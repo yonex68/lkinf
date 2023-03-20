@@ -100,7 +100,33 @@
          </div>
 
          <div class="pl-4 pr-4 pt-4 bg-white">
-            {{ microservice.vendeur.apropos|raw }}
+            
+            <div class="mb-3">
+               {{ microservice.vendeur.apropos|raw }}
+            </div>
+
+            <div class="">
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted">Avis positif</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">({{ avispositif(microservice.vendeur)|length }})</p>
+               </div>
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted">Avis négatif</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">({{ avisnegatif(microservice.vendeur)|length }})</p>
+               </div>
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">0</p>
+               </div>
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">0</p>
+               </div>
+               <div class="d-flex align-items-top">
+                  <p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> Vendeur</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">{{ microservice.vendeur.created|ago(locale='fr') }}</p>
+               </div>
+            </div>
 
             <div class="row pt-3">
                <div class="col-sm-6">
@@ -117,9 +143,4 @@
 
       </div>
    </div>
-
-   {% if is_granted('ROLE_ADMIN') %}
-      {% include "admin/admin_services/_delete_form.html.twig" %}
-   {% endif %}
-
 </div>

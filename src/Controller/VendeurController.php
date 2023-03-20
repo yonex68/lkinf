@@ -25,7 +25,10 @@ class VendeurController extends AbstractController
     public function profil(User $user, MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $microservices = $paginator->paginate(
-            $microserviceRepository->findBy(['vendeur' => $user], ['created' => 'DESC']),
+            $microserviceRepository->findBy([
+                'vendeur' => $user,
+                'online' => true
+            ], ['created' => 'DESC']),
             $request->query->getInt('page', 1),
             6
         );

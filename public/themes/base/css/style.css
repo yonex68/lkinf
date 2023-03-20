@@ -2947,7 +2947,7 @@ p.help-block li {
 /* responsive design */
  @media(max-width:1024px) {
      .sidenav, .submenu, .search a.green-btn, .third-menu, .main-page .breadcrumb {
-         display: none;
+         /*display: none;*/
     }
      .review-section, .review-list {
          display: none;

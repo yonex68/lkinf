@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230317154245 extends AbstractMigration
+final class Version20230319225328 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -30,10 +30,9 @@ final class Version20230317154245 extends AbstractMigration
         $this->addSql('CREATE TABLE galerie (id INT AUTO_INCREMENT NOT NULL, image1 VARCHAR(255) DEFAULT NULL, image2 VARCHAR(255) DEFAULT NULL, image3 VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE media (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) DEFAULT NULL, image_name VARCHAR(255) DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE message (id INT AUTO_INCREMENT NOT NULL, conversation_id INT DEFAULT NULL, auteur_id INT NOT NULL, destinataire_id INT NOT NULL, commande_id INT DEFAULT NULL, contenu LONGTEXT NOT NULL, lu TINYINT(1) NOT NULL, created DATETIME NOT NULL, INDEX IDX_B6BD307F9AC0396 (conversation_id), INDEX IDX_B6BD307F60BB6FE6 (auteur_id), INDEX IDX_B6BD307FA4F84F6E (destinataire_id), INDEX IDX_B6BD307F82EA2E54 (commande_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE microservice (id INT AUTO_INCREMENT NOT NULL, vendeur_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, online TINYINT(1) DEFAULT NULL, delai INT DEFAULT NULL, prix_mastering DOUBLE PRECISION NOT NULL, prix_mixage DOUBLE PRECISION NOT NULL, prix_beatmaking DOUBLE PRECISION NOT NULL, promo TINYINT(1) NOT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, INDEX IDX_770EA0AF858C065E (vendeur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE microservice (id INT AUTO_INCREMENT NOT NULL, vendeur_id INT DEFAULT NULL, categorie_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, online TINYINT(1) DEFAULT NULL, delai INT DEFAULT NULL, prix_mastering DOUBLE PRECISION NOT NULL, prix_mixage DOUBLE PRECISION NOT NULL, prix_beatmaking DOUBLE PRECISION NOT NULL, promo TINYINT(1) NOT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, INDEX IDX_770EA0AF858C065E (vendeur_id), INDEX IDX_770EA0AFBCF5E72D (categorie_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE microservice_media (microservice_id INT NOT NULL, media_id INT NOT NULL, INDEX IDX_C91878DBFDDA4EF4 (microservice_id), INDEX IDX_C91878DBEA9FDD75 (media_id), PRIMARY KEY(microservice_id, media_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE microservice_prix (microservice_id INT NOT NULL, prix_id INT NOT NULL, INDEX IDX_7F36493CFDDA4EF4 (microservice_id), INDEX IDX_7F36493C944722F2 (prix_id), PRIMARY KEY(microservice_id, prix_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE microservice_categorie (microservice_id INT NOT NULL, categorie_id INT NOT NULL, INDEX IDX_8453580EFDDA4EF4 (microservice_id), INDEX IDX_8453580EBCF5E72D (categorie_id), PRIMARY KEY(microservice_id, categorie_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE portefeuille (id INT AUTO_INCREMENT NOT NULL, vendeur_id INT DEFAULT NULL, solde_disponible DOUBLE PRECISION NOT NULL, solde_en_cours DOUBLE PRECISION DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, UNIQUE INDEX UNIQ_2955FFFE858C065E (vendeur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE prix (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, tarif DOUBLE PRECISION NOT NULL, description LONGTEXT DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reset_password_request (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_7CE748AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -41,7 +40,7 @@ final class Version20230317154245 extends AbstractMigration
         $this->addSql('CREATE TABLE service_option_microservice (service_option_id INT NOT NULL, microservice_id INT NOT NULL, INDEX IDX_7AB32DF9FF552725 (service_option_id), INDEX IDX_7AB32DF9FDDA4EF4 (microservice_id), PRIMARY KEY(service_option_id, microservice_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE stripe (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, tarif DOUBLE PRECISION NOT NULL, stripe_key VARCHAR(255) NOT NULL, hex_color VARCHAR(7) DEFAULT NULL, description LONGTEXT DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE suivis (id INT AUTO_INCREMENT NOT NULL, client_id INT DEFAULT NULL, vendeur_id INT DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, INDEX IDX_6627ED7019EB6921 (client_id), INDEX IDX_6627ED70858C065E (vendeur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, genre VARCHAR(255) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, email VARCHAR(180) NOT NULL, password VARCHAR(255) NOT NULL, compte VARCHAR(255) NOT NULL, apropos LONGTEXT DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', name_url VARCHAR(255) NOT NULL, pays VARCHAR(255) DEFAULT NULL, ville VARCHAR(255) DEFAULT NULL, adresse VARCHAR(255) DEFAULT NULL, telephone VARCHAR(255) DEFAULT NULL, reseau_avatar VARCHAR(500) DEFAULT NULL, facebook_id INT DEFAULT NULL, google_id INT DEFAULT NULL, etat VARCHAR(255) DEFAULT NULL, latitude VARCHAR(255) DEFAULT NULL, longitude VARCHAR(255) DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, genre VARCHAR(255) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, email VARCHAR(180) NOT NULL, password VARCHAR(255) NOT NULL, compte VARCHAR(255) NOT NULL, apropos LONGTEXT DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', name_url VARCHAR(255) NOT NULL, profession VARCHAR(255) DEFAULT NULL, pays VARCHAR(255) DEFAULT NULL, ville VARCHAR(255) DEFAULT NULL, adresse VARCHAR(255) DEFAULT NULL, telephone VARCHAR(255) DEFAULT NULL, reseau_avatar VARCHAR(500) DEFAULT NULL, facebook_id INT DEFAULT NULL, google_id INT DEFAULT NULL, etat VARCHAR(255) DEFAULT NULL, latitude VARCHAR(255) DEFAULT NULL, longitude VARCHAR(255) DEFAULT NULL, created DATETIME NOT NULL, updated DATETIME NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE abonnement ADD CONSTRAINT FK_351268BB3F1B1098 FOREIGN KEY (stripe_id) REFERENCES stripe (id)');
         $this->addSql('ALTER TABLE abonnement ADD CONSTRAINT FK_351268BBA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF0858C065E FOREIGN KEY (vendeur_id) REFERENCES user (id)');
@@ -65,12 +64,11 @@ final class Version20230317154245 extends AbstractMigration
         $this->addSql('ALTER TABLE message ADD CONSTRAINT FK_B6BD307FA4F84F6E FOREIGN KEY (destinataire_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE message ADD CONSTRAINT FK_B6BD307F82EA2E54 FOREIGN KEY (commande_id) REFERENCES commande (id)');
         $this->addSql('ALTER TABLE microservice ADD CONSTRAINT FK_770EA0AF858C065E FOREIGN KEY (vendeur_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE microservice ADD CONSTRAINT FK_770EA0AFBCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
         $this->addSql('ALTER TABLE microservice_media ADD CONSTRAINT FK_C91878DBFDDA4EF4 FOREIGN KEY (microservice_id) REFERENCES microservice (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE microservice_media ADD CONSTRAINT FK_C91878DBEA9FDD75 FOREIGN KEY (media_id) REFERENCES media (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE microservice_prix ADD CONSTRAINT FK_7F36493CFDDA4EF4 FOREIGN KEY (microservice_id) REFERENCES microservice (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE microservice_prix ADD CONSTRAINT FK_7F36493C944722F2 FOREIGN KEY (prix_id) REFERENCES prix (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE microservice_categorie ADD CONSTRAINT FK_8453580EFDDA4EF4 FOREIGN KEY (microservice_id) REFERENCES microservice (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE microservice_categorie ADD CONSTRAINT FK_8453580EBCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE portefeuille ADD CONSTRAINT FK_2955FFFE858C065E FOREIGN KEY (vendeur_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE service_option_microservice ADD CONSTRAINT FK_7AB32DF9FF552725 FOREIGN KEY (service_option_id) REFERENCES service_option (id) ON DELETE CASCADE');
@@ -105,12 +103,11 @@ final class Version20230317154245 extends AbstractMigration
         $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307FA4F84F6E');
         $this->addSql('ALTER TABLE message DROP FOREIGN KEY FK_B6BD307F82EA2E54');
         $this->addSql('ALTER TABLE microservice DROP FOREIGN KEY FK_770EA0AF858C065E');
+        $this->addSql('ALTER TABLE microservice DROP FOREIGN KEY FK_770EA0AFBCF5E72D');
         $this->addSql('ALTER TABLE microservice_media DROP FOREIGN KEY FK_C91878DBFDDA4EF4');
         $this->addSql('ALTER TABLE microservice_media DROP FOREIGN KEY FK_C91878DBEA9FDD75');
         $this->addSql('ALTER TABLE microservice_prix DROP FOREIGN KEY FK_7F36493CFDDA4EF4');
         $this->addSql('ALTER TABLE microservice_prix DROP FOREIGN KEY FK_7F36493C944722F2');
-        $this->addSql('ALTER TABLE microservice_categorie DROP FOREIGN KEY FK_8453580EFDDA4EF4');
-        $this->addSql('ALTER TABLE microservice_categorie DROP FOREIGN KEY FK_8453580EBCF5E72D');
         $this->addSql('ALTER TABLE portefeuille DROP FOREIGN KEY FK_2955FFFE858C065E');
         $this->addSql('ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748AA76ED395');
         $this->addSql('ALTER TABLE service_option_microservice DROP FOREIGN KEY FK_7AB32DF9FF552725');
@@ -130,7 +127,6 @@ final class Version20230317154245 extends AbstractMigration
         $this->addSql('DROP TABLE microservice');
         $this->addSql('DROP TABLE microservice_media');
         $this->addSql('DROP TABLE microservice_prix');
-        $this->addSql('DROP TABLE microservice_categorie');
         $this->addSql('DROP TABLE portefeuille');
         $this->addSql('DROP TABLE prix');
         $this->addSql('DROP TABLE reset_password_request');

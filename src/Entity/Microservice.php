@@ -64,11 +64,11 @@ class Microservice
     #[ORM\Column]
     private ?float $prixBeatmaking = null;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'microservices')]
-    private Collection $categories;
-
     #[ORM\Column]
     private ?bool $promo = null;
+
+    #[ORM\ManyToOne(inversedBy: 'microservices')]
+    private ?Categorie $categorie = null;
 
     public function __construct()
     {
@@ -78,7 +78,6 @@ class Microservice
         $this->avis = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->serviceOptions = new ArrayCollection();
-        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -378,30 +377,6 @@ class Microservice
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Categorie $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        $this->categories->removeElement($category);
-
-        return $this;
-    }
-
     public function isPromo(): ?bool
     {
         return $this->promo;
@@ -410,6 +385,18 @@ class Microservice
     public function setPromo(bool $promo): self
     {
         $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

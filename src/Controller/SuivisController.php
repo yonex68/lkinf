@@ -55,10 +55,10 @@ class SuivisController extends AbstractController
 
             $entityManager->remove($suivi);
             $entityManager->flush();
-            return $this->json([
+            /*return $this->json([
                 'code' => 200,
                 'message' => 'Vous ne suivez plus ce vendeur',
-            ], 200);
+            ], 200);*/
 
         } else {
             $suivi = new Suivis;
@@ -67,11 +67,13 @@ class SuivisController extends AbstractController
             $suivi->setVendeur($vendeur);
             $entityManager->persist($suivi);
             $entityManager->flush();
-            return $this->json([
+            /*return $this->json([
                 'code' => 200,
                 'message' => 'Vous suivez ce vendeur',
-            ], 200);
+            ], 200);*/
         }
+
+        return $this->redirectToRoute('suivis_index', [], Response::HTTP_SEE_OTHER);
 
     }
 

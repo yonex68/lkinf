@@ -25,16 +25,14 @@ class MicroservicesFixtures extends Fixture implements DependentFixtureInterface
 
         for($microservices = 1; $microservices <= 500; $microservices++){
             $user = $this->getReference('user_'. $faker->numberBetween(1, 50));
-            $categories = $this->getReference('categorie_'. $faker->numberBetween(1, 14));
+            $categories = $this->getReference('categorie_'. $faker->numberBetween(1, 5));
 
             $microservice = new Microservice();
 
             $microservice->setName($faker->realText(50));
             $microservice->setDescription($faker->realText(500));
             $microservice->setDelai($faker->numberBetween(1, 30));
-            for($categorie = 1; $categorie < 4; $categorie++){
-                $microservice->addCategory($categories);
-            }
+            $microservice->setCategorie($categories);
 
             /*foreach($categories as $key => $value){
 

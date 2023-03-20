@@ -19,6 +19,11 @@ class SearchService {
     public $q = null;
 
     /**
+     * @var string
+     */
+    public $ville = null;
+
+    /**
      * @var int|null
      */
     public $minPrice;

@@ -26,7 +26,7 @@ class MicroserviceTitreType extends AbstractType
                 ],
                 'attr' => ['class' => 'font-weight-bold text-muted', 'placeholder' => 'Titre'],
             ])
-            ->add('categories', EntityType::class, [
+            ->add('categorie', EntityType::class, [
                 'label'     =>  false,
                 'multiple'     =>  true,
                 'attr' => ['class' => ""],

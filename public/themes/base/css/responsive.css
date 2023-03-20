@@ -1,3 +1,12 @@
+.mobile-filter{
+   display: none;
+}
+@media(max-width:1024px){
+   .mobile-filter{
+      display: block;
+   }
+}
+
 @media(min-width:767px) {
    .bg-image {
       background-position-y: -200px;
@@ -10,5 +19,8 @@
    }
    .market-wrapper .categories-list li {
       width: 47%;
- }
+   }
+   .third-menu{
+      position: relative!important;
+   }
 }

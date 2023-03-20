@@ -146,3 +146,24 @@
    visibility: hidden!important;
    height: 1px!important;
 }
+.select2-container--default .select2-selection--multiple {
+   border: solid white 0px!important;
+   outline: 0;
+   overflow: hidden!important;
+   height: 25%!important;
+}
+.homepage-search-form .form-control {
+   overflow: hidden!important;
+}
+.dropdown-filters .dropdown .dropdown-toggle::after{
+   position: absolute!important;
+   top: 8px!important;
+   right: 10px!important;
+}
+.dropdown-filters .dropdown button{
+   width: 100%!important;
+}
+.scroled{
+   height: 300px!important;
+   overflow: scroll!important;
+}

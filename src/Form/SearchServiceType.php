@@ -27,6 +27,13 @@ class SearchServiceType extends AbstractType
                'placeholder'   =>  'De quoi avez-vous besoin ?', 'class' =>  'w-100 shadow-none'
             ]
          ])
+         ->add('ville', TextType::class, [
+            'label' =>  false,
+            'required'  =>  false,
+            'attr'  =>  [
+               'placeholder'   =>  'Ville.(Exemple: Londre)', 'class' =>  'w-100 shadow-none'
+            ]
+         ])
          ->add('minPrice', NumberType::class, [
             'label' => false,
             'required' => false,
@@ -52,11 +59,10 @@ class SearchServiceType extends AbstractType
             'multiple' => true,
          ])
          ->add('promo', CheckboxType::class, [
-            //'label' => 'En promotion',
-            'label' => false,
+            'label' => 'En promotion',
             'required' => false,
             'attr' => [
-            'class' => null,
+               'class' => null,
             ]
          ]);
    }

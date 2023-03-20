@@ -59,14 +59,12 @@
                                         {% if follow.client.avatar %}
 
                                         <img src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('large_avatar') }}"
-                                            class="rounded-circle avatar-xs" alt="{{ follow.client.prenom ?? '' }}"
-                                            class="rounded-circle avatar-xs" rounded-circle avatar-xs />
+                                            class="rounded-circle avatar-xs" alt="{{ follow.client.prenom ?? '' }}"/>
 
                                         {% else %}
 
                                         <img src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-                                            class="rounded-circle avatar-xs" alt="{{ follow.client.prenom ?? '' }}"
-                                            class="rounded-circle avatar-xs" rounded-circle avatar-xs />
+                                            class="rounded-circle avatar-xs" alt="{{ follow.client.prenom ?? '' }}"/>
 
                                         {% endif %}
 

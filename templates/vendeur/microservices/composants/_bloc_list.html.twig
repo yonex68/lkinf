@@ -12,19 +12,15 @@
 	{% endif %}
 	<div class="media-body ml-3">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-9">
 				<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
-					<h4 class="h6 mb-1">{{ microservice.name }}</h4>
+					<h4 class="h6 font-weight-bold text-dark mb-1">{{ microservice.name }}</h4>
 				</a>
 
-				{% for categorie in microservice.categories %}
-
-				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}"
+				<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
 					class="badge badge-light border badge-pill" style="font-size: .9em!important;">
-					#{{ categorie.name }}
+					#{{ microservice.categorie.name }}
 				</a>
-
-				{% endfor %}
 
 				{% if is_granted('microservice_edit', microservice) %}
 
@@ -41,8 +37,8 @@
 
 				{% endif %}
 			</div>
-			<div class="col-sm-4 text-right">
-				<span class="text-muted">Mastering</span>
+			<div class="col-sm-3 text-right">
+				<span class="text-muted">A partir de</span>
 				<h4 class="h6 mb-1 text-right font-weight-bold">
 					{{ microservice.prixMastering ~ currency }}
 				</h4>

@@ -39,10 +39,8 @@
 					</div>
 					<div class="pl-3">
 						<strong class="d-block">{{ microservice.name }}</strong>
-
-						{% for categorie in microservice.categories %}
-							<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}" class="badge badge-warning">#{{ categorie.name }}</a>
-						{% endfor %}
+						
+							<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ categorie.id }}" class="badge badge-warning">#{{ microservice.categorie.name }}</a>
 
 						{% if microservice.prix|length > 0 %}
 

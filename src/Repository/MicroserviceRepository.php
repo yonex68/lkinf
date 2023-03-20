@@ -67,7 +67,7 @@ class MicroserviceRepository extends ServiceEntityRepository
             ->select('v', 'm')
             ->select('c', 'm')
             ->leftjoin('m.vendeur', 'v')
-            ->join('m.categories', 'c')
+            ->join('m.categorie', 'c')
             ->orderBy('m.created', 'DESC')
             ->andWhere('m.online = 1');
 
@@ -75,6 +75,11 @@ class MicroserviceRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('m.name LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
+        }
+        if (!empty($search->ville)) {
+            $query = $query
+                ->andWhere('v.ville LIKE :ville')
+                ->setParameter('ville', "%{$search->ville}%");
         }
 
         if (!empty($search->minPrice)) {
@@ -91,8 +96,8 @@ class MicroserviceRepository extends ServiceEntityRepository
 
         if ($search->getCategories()->count() > 0) {
             $query = $query
-                ->andWhere('c.id IN (:categorie)')
-                ->setParameter('categorie', $search->categories);
+                ->andWhere('c.id IN (:cat)')
+                ->setParameter('cat', $search->categories);
         }
 
         if (!empty($search->promo)) {

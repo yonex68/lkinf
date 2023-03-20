@@ -23,21 +23,21 @@ class CategoriesFixtures extends Fixture
 
         $categories = [
             1 => [
-                'name' => 'Acoustic',
+                'name' => 'Studio',
             ],
             2 => [
-                'name' => 'Ambient',
+                'name' => 'Vidéaste',
             ],
             3 => [
-                'name' => 'Blues',
+                'name' => 'Ingénieur son',
             ],
             4 => [
-                'name' => 'Classical',
+                'name' => 'Danseur',
             ],
             5 => [
-                'name' => 'Electronic',
+                'name' => 'Figurant',
             ],
-            6 => [
+            /*6 => [
                 'name' => 'Emo',
             ],
             7 => [
