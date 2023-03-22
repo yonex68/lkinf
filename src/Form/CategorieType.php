@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CategorieType extends AbstractType
 {
@@ -23,6 +25,15 @@ class CategorieType extends AbstractType
                         'message' => 'Ce champ est obligatoir',
                     ])
                 ]
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => '(Png, jpg et jpeg)',
+                'required' =>  false,
+                'allow_delete' =>  false,
+                'download_label'     =>  false,
+                'image_uri'     =>  false,
+                'download_uri'     =>  false,
+                'imagine_pattern'   =>  'large_avatar',
             ])
             ->add('description', CKEditorType::class, [
                 'required' => false,

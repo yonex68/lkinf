@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="Gurdeep singh osahan">
 	<meta name="author" content="Gurdeep singh osahan">
+	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />
 	<title>
 		{% block title %}{{ appName }} des services pour tout vos besoins{% endblock %}
 	</title>
@@ -57,14 +58,14 @@
 	<section class="py-5">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-{% block colleft %}3{% endblock %}">
+				<div class="col-md-{% block colleft %}4{% endblock %}">
 					<div class="sidebar-fix">
 						{% block sidebar %}
 						{% include "partials/vendeur/_sidebar.html.twig" %}
 						{% endblock %}
 					</div>
 				</div>
-				<div class="col-md-{% block colright %}9{% endblock %}">
+				<div class="col-md-{% block colright %}8{% endblock %}">
 
 					{{ include('partials/_flash_message.html.twig') }}
 
@@ -106,6 +107,16 @@
 			var fileName = $(this).val().split("\\").pop();
 			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 		});
+	</script>
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBWPH2ZDRB"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-TBWPH2ZDRB');
 	</script>
 
 	{% block javascripts %}

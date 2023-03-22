@@ -38,7 +38,7 @@ class MicroserviceController extends AbstractController
 
             return new JsonResponse([
                 'content' => $this->renderView('microservice/composants/_listing.html.twig', ['microservices' => $microservices]),
-                'sorting' => $this->renderView('microservice/composants/_sorting.html.twig', ['microservices' => $microservices]),
+                /*'sorting' => $this->renderView('microservice/composants/_sorting.html.twig', ['microservices' => $microservices]),*/
                 'form' => $this->renderView('microservice/composants/_search_form.html.twig', ['microservices' => $microservices, 'form' => $form->createView()]),
                 'pagination' => $this->renderView('microservice/composants/_pagination.html.twig', ['microservices' => $microservices]),
             ]);
@@ -68,7 +68,7 @@ class MicroserviceController extends AbstractController
 
             return new JsonResponse([
                 'content' => $this->renderView('microservice/composants/_listing.html.twig', ['microservices' => $microservices]),
-                'sorting' => $this->renderView('microservice/composants/_sorting.html.twig', ['microservices' => $microservices]),
+                /*'sorting' => $this->renderView('microservice/composants/_sorting.html.twig', ['microservices' => $microservices]),*/
                 'form' => $this->renderView('microservice/composants/_search_form.html.twig', ['microservices' => $microservices, 'form' => $form->createView()]),
                 'pagination' => $this->renderView('microservice/composants/_pagination.html.twig', ['microservices' => $microservices]),
             ]);

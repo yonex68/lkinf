@@ -3,7 +3,7 @@
 namespace App\Form\Microservice;
 
 use App\Entity\Microservice;
-use App\Form\MediaType;
+use App\Form\Microservice\EditMediaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,14 +15,15 @@ class MicroserviceGalerieType extends AbstractType
     {
         $builder
             ->add('medias', CollectionType::class, [
-                'entry_type' => MediaType::class,
+                'entry_type' => EditMediaType::class,
                 'label' => false,
                 'entry_options' => [
                     'label' => false,
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false
+                'by_reference' => false,
+                'required' => false
             ])
         ;
     }

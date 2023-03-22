@@ -56,55 +56,22 @@
 	<div class="container">
 		<h2 class="text-center">Catégories</h2>
 		<ul class="categories-list mb-0">
+			{% for categorie in categories %}
 			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/graphics.svg') }}" alt="" loading="lazy">Graphics &amp; Design
-				</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/online-marketing.svg') }}" alt="Digital Marketing"
-						loading="lazy">Digital Marketing
-				</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/writing-translation.svg') }}" alt="Writing &amp; Translation"
-						loading="lazy">Writing &amp;
-					Translation
-				</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/video-animation.svg') }}" alt="Video &amp; Animation"
-						loading="lazy">Video &amp; Animation
-				</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/music-audio.svg') }}" alt="Music &amp; Audio" loading="lazy">Music
-					&amp; Audio</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/programming.svg') }}" alt="Programming &amp; Tech"
-						loading="lazy">Programming &amp; Tech
-				</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/business.svg') }}" alt="Business" loading="lazy">Business</a>
-			</li>
-			<li class="my-3">
-				<a href="#">
-					<img src="{{ asset('themes/base/images/lifestyle.svg') }}" alt="Lifestyle" loading="lazy">Lifestyle
-				</a>
-			</li>
-		</ul>
+				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}">
+					{% if categorie.image %}
+					
+					<img src="{{ vich_uploader_asset(categorie, 'imageFile') | imagine_filter('small_avatar') }}" alt="{{ categorie.name }}" loading="lazy" class="rounded-circle">
 
-		<div class="text-center py-5">
-			<a href="#" class="c-btn c-fill-color-btn">Plus de catégorie</a>
-		</div>
+					{% else %}
+
+					<img src="{{ asset('themes/base/images/graphics.svg') }}" alt="{{ categorie.name }}" loading="lazy">
+					{% endif %}
+					{{ categorie.name }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
 
@@ -113,7 +80,7 @@
 		<div class="about-section">
 			<div class="row align-items-center">
 				<div class="col-md-6">
-					<img src="{{ asset('themes/base/images/ipad.svg') }}" class="video-img w-100">
+					<img src="{{ asset('img/banner.png') }}" class="video-img w-100">
 				</div>
 				<div class="col-md-6">
 					<h2>Comment ça marche?</h2>
@@ -198,13 +165,8 @@
 						{% endif %}
 
 						{% endif %}
-						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}">
-							<h5>{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}
-								<br>
-								<span class="badge d-inline">
-									{% include "partials/_user_compte.html.twig" %}
-								</span>
-							</h5>
+						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="py-2">
+							<h5>{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</h5>
 						</a>
 					</div>
 				</div>

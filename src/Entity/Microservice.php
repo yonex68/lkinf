@@ -28,17 +28,11 @@ class Microservice
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\ManyToMany(targetEntity: Media::class, inversedBy: 'microservices', cascade: ["persist"])]
-    private $medias;
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'microservices')]
     private $vendeur;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $online;
-
-    #[ORM\ManyToMany(targetEntity: Prix::class, inversedBy: 'microservices', cascade: ["persist"])]
-    private $prix;
 
     #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Commande::class)]
     private $commandes;
@@ -70,14 +64,22 @@ class Microservice
     #[ORM\ManyToOne(inversedBy: 'microservices')]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $prixComposition = null;
+
+    #[ORM\Column]
+    private ?float $prix = null;
+
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Media::class)]
+    private Collection $medias;
+
     public function __construct()
     {
-        $this->medias = new ArrayCollection();
-        $this->prix = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->serviceOptions = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,30 +123,6 @@ class Microservice
         return $this;
     }
 
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedias(): Collection
-    {
-        return $this->medias;
-    }
-
-    public function addMedia(Media $media): self
-    {
-        if (!$this->medias->contains($media)) {
-            $this->medias[] = $media;
-        }
-
-        return $this;
-    }
-
-    public function removeMedia(Media $media): self
-    {
-        $this->medias->removeElement($media);
-
-        return $this;
-    }
-
     public function getVendeur(): ?User
     {
         return $this->vendeur;
@@ -172,30 +150,6 @@ class Microservice
     public function __toString()
     {
         return $this->name;
-    }
-
-    /**
-     * @return Collection|Prix[]
-     */
-    public function getPrix(): Collection
-    {
-        return $this->prix;
-    }
-
-    public function addPrix(Prix $prix): self
-    {
-        if (!$this->prix->contains($prix)) {
-            $this->prix[] = $prix;
-        }
-
-        return $this;
-    }
-
-    public function removePrix(Prix $prix): self
-    {
-        $this->prix->removeElement($prix);
-
-        return $this;
     }
 
     /**
@@ -397,6 +351,60 @@ class Microservice
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getPrixComposition(): ?float
+    {
+        return $this->prixComposition;
+    }
+
+    public function setPrixComposition(?float $prixComposition): self
+    {
+        $this->prixComposition = $prixComposition;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias->add($media);
+            $media->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->medias->removeElement($media)) {
+            // set the owning side to null (unless already changed)
+            if ($media->getMicroservice() === $this) {
+                $media->setMicroservice(null);
+            }
+        }
 
         return $this;
     }

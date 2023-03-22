@@ -272,8 +272,10 @@ class CommandeController extends AbstractController
             $montant = $microservice->getPrixMastering();
         }elseif($offre == 'Mixage'){
             $montant = $microservice->getPrixMixage();
-        }else{
+        }elseif($offre == 'Beatmaking'){
             $montant = $microservice->getPrixBeatmaking();
+        }else {
+            $montant = $microservice->getPrixComposition();
         }
 
         $commande = new Commande();

@@ -14,7 +14,7 @@ class MicroservicePublierType extends AbstractType
     {
         $builder
             ->add('question1', CheckboxType::class, [
-                'label' => "Avoir relu très attentivement mon service 🧐",
+                'label' => "Avoir relu très attentivement mon service",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',
@@ -22,7 +22,7 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question2', CheckboxType::class, [
-                'label' => "Que celui-ci est conforme et respecte les CGU de ComeUp 😇",
+                'label' => "Que celui-ci est conforme et respecte les CGU de Links Infinity",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',
@@ -30,7 +30,7 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question3', CheckboxType::class, [
-                'label' => "Que celui-ci est conforme et respecte les CGU de ComeUp 😇",
+                'label' => "Que celui-ci est conforme et respecte les CGU de Links Infinity",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',
@@ -38,7 +38,7 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question4', CheckboxType::class, [
-                'label' => "Toujours rester professionnel et courtois avec mes clients 🙂",
+                'label' => "Toujours rester professionnel et courtois avec mes clients",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',
@@ -46,7 +46,7 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question5', CheckboxType::class, [
-                'label' => "Et ne jamais leur proposer de discuter ou de me payer en dehors de Links Infinity 😉",
+                'label' => "Et ne jamais leur proposer de discuter ou de me payer en dehors de Links Infinity",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',

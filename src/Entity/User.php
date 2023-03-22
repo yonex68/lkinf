@@ -143,6 +143,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?string $longitude = null;
 
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Retrait::class)]
+    private Collection $retraits;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -155,6 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->senderconversations = new ArrayCollection();
         $this->destinatairesCommandes = new ArrayCollection();
         $this->commandeMessages = new ArrayCollection();
+        $this->retraits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -847,6 +851,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setProfession(?string $profession): self
     {
         $this->profession = $profession;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Retrait>
+     */
+    public function getRetraits(): Collection
+    {
+        return $this->retraits;
+    }
+
+    public function addRetrait(Retrait $retrait): self
+    {
+        if (!$this->retraits->contains($retrait)) {
+            $this->retraits->add($retrait);
+            $retrait->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetrait(Retrait $retrait): self
+    {
+        if ($this->retraits->removeElement($retrait)) {
+            // set the owning side to null (unless already changed)
+            if ($retrait->getVendeur() === $this) {
+                $retrait->setVendeur(null);
+            }
+        }
 
         return $this;
     }

@@ -2,7 +2,6 @@
    <thead>
       <tr>
          <th>Service</th>
-         <th>Montant</th>
          <th>{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' : 'Vendeur' }}</th>
          <th>Statut</th>
          <th>Date</th>
@@ -26,12 +25,12 @@
 
                {% endif %}
                <div class="media-body pl-3">
-                  <span class="d-block">{{ commande.microservice.name }}</span>
+                  <strong>{{ commande.montant ~ currency }}</strong>
                   <span class="badge badge-light border badge-pill">Offre {{ commande.offre }}</span>
+                  <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}" class="d-block text-dark font-weight-bold" target="_blank">{{ commande.microservice.name }}</a>
                </div>
             </div>
          </td>
-         <td><strong>{{ commande.montant ~ currency }}</strong></td>
          <td>
 
             {% if app.request.attributes.get('_route') == 'vendeur_commandes_index' %}
@@ -51,7 +50,7 @@
                {% endif %}
 
                <div class="media-body pl-3">
-                  <strong class="d-block">{{ commande.client.nom }}</strong>
+                  <strong class="">{{ commande.client.nom }}</strong>
                   <span class="text-muted small">{{ commande.client.prenom }}</span>
                </div>
             </div>
@@ -76,8 +75,8 @@
 
                <div class="media-body pl-3">
                   <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank"
-                     class="d-block font-weight-bold">{{ commande.vendeur.nom }}</a>
-                  <span class="text-muted small">{{ commande.vendeur.prenom }}</span>
+                     class="font-weight-bold">{{ commande.vendeur.nom }}
+                  <span class="text-muted small">{{ commande.vendeur.prenom }}</span></a>
                </div>
             </div>
 

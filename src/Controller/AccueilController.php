@@ -26,14 +26,9 @@ class AccueilController extends AbstractController
             'method' => 'GET',
         ]);
 
-        if ($user) {
-            $microservices = $microserviceRepository->findBylocation($user->getAdresse());
-            $vendeurs = $userRepository->findByLocation($user->getAdresse());
-        }else{
-            $microservices = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 6);
-            $vendeurs = $userRepository->findBy(['compte' => 'vendeur'], ['created' => 'DESC'], 6);
-        }
-        
+        $microservices = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 6);
+        $vendeurs = $userRepository->findBy(['compte' => 'vendeur'], ['created' => 'DESC'], 6);
+
         return $this->render('accueil/index.html.twig', [
             'microservices' => $microservices,
             'vendeurs' => $vendeurs,

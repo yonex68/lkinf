@@ -2,8 +2,11 @@
 
 namespace App\Controller\Vendeur;
 
+use App\Entity\Media;
 use App\Entity\Microservice;
+use App\Form\MediaType;
 use App\Form\Microservice\DescriptionType;
+use App\Form\Microservice\IngenieurSonType;
 use App\Form\Microservice\MicroserrviceOptionType;
 use App\Form\Microservice\MicroserviceGalerieType;
 use App\Form\Microservice\MicroservicePublierType;
@@ -67,6 +70,8 @@ class VendeurMicroservicesController extends AbstractController
             $microservice->setPrixMastering(0);
             $microservice->setPrixMixage(0);
             $microservice->setPrixBeatmaking(0);
+            $microservice->setPrixComposition(0);
+            $microservice->setPrix(0);
             $microservice->setPromo(false);
             $entityManager->persist($microservice);
             $entityManager->flush();
@@ -141,7 +146,17 @@ class VendeurMicroservicesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('microservice_edit', $microservice);
 
-        $form = $this->createForm(DescriptionType::class, $microservice);
+        $formType = DescriptionType::class;
+
+        if ($microservice->getCategorie()->getSlug() == 'ingenieur-son') {
+
+            $formType = IngenieurSonType::class;
+
+        }else{
+            $formType = DescriptionType::class;
+        }
+
+        $form = $this->createForm($formType, $microservice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -196,6 +211,10 @@ class VendeurMicroservicesController extends AbstractController
         $form = $this->createForm(MicroserviceGalerieType::class, $microservice);
         $form->handleRequest($request);
 
+        $media = new Media();
+        $mediaForm = $this->createForm(MediaType::class, $media);
+        $mediaForm->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             
             $entityManager->persist($microservice);
@@ -208,9 +227,22 @@ class VendeurMicroservicesController extends AbstractController
             ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('vendeur/microservices/galerie.html.twig', [
+        if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
+            $media->setMicroservice($microservice);
+            $entityManager->persist($media);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été cré');
+
+            return $this->redirectToRoute('vendeur_microservices_galerie', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('vendeur/microservices/galerie.html.twig', [
             'microservice' => $microservice,
-            'form' => $form,
+            'form' => $form->createView(),
+            'mediaForm' => $mediaForm->createView(),
         ]);
     }
 

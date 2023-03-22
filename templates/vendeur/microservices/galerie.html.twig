@@ -6,99 +6,134 @@
 
 {% block colright %}8{% endblock %}
 
+{% block bg %}transparent{% endblock %}
+
 {% block sidebar %}
-	{% include "vendeur/microservices/composants/_step.html.twig" %}
+{% include "vendeur/microservices/composants/_step.html.twig" %}
 {% endblock %}
 
 {% block body %}
 
-<div class="p-3 border-bottom text-left bg-dark rounded">
-    <h4 class="mb-0 text-light">
-        Nouveau service
-    </h4>
+<div class="bg-white shadow-sm">
+    <div class="p-3 border-bottom text-left bg-dark rounded">
+        <h4 class="mb-0 text-light">
+            Nouveau service
+        </h4>
+    </div>
+
+    <div class="p-3 border-bottom">
+        <div class="form-group">
+            <h6 class="font-weight-bold">Galerie</h6>
+            <p class="text-muted">
+                La 1re image, principale, sera utilisée dans la recherche, les catégories, et sur votre profil. C’est la
+                plus importante. Afin que votre service se démarque des autres, privilégiez une miniature lisible en
+                format
+                réduit, en rapport direct avec ce que vous faites dans votre service basique, et surtout : de votre
+                création. <br>
+
+                Les autres images, optionnelles, serviront à montrer des exemples de votre travail ou illustrer plus
+                précisément ce que vous vendez. Vous pouvez également joindre une vidéo que vous aurez hébergée sur
+                YouTube
+                ou Vimeo.
+            </p>
+        </div>
+
+        {% if microservice.medias|length > 0 %}
+
+        <div class="slider mt-4">
+            <div id="aniimated-thumbnials" class="slider-for slick-slider-single">
+                {% for media in microservice.medias %}
+
+                {% if media.imageName %}
+
+                <a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}">
+                    <img class="img-fluid"
+                        src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}"
+                        alt="{{ media.name }}" />
+                </a>
+
+                {% else %}
+
+                <a href="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}">
+                    <img class="img-fluid"
+                        src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}"
+                        alt="{{ media.name }}" />
+                </a>
+
+                {% endif %}
+
+                {% endfor %}
+            </div>
+            <div class="slider-nav slick-slider-single pl-2 text-center">
+                {% for media in microservice.medias %}
+
+                <div class="item-slick">
+                    <img class="img-fluid"
+                        src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('small_size') }}"
+                        alt="{{ media.name }}">
+
+                    {{ include('vendeur/vendeur_services_medias/_delete_form.html.twig') }}
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+        {% endif %}
+
+        <!-- Si le nombre maximal d'image pour un service est 2 -->
+        {% if microservice.medias|length < 3 %} {{ form_start(mediaForm) }} <div class="row mt-3">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    {{ form_row(mediaForm.imageFile) }}
+                </div>
+            </div>
+    </div>
+    <div class="form-group">
+        {{ form_row(mediaForm.name) }}
+    </div>
+    <div class="">
+        <button type="submit" class="btn btn-outline-dark shadow-sm mb-4">Télécharger</button>
+    </div>
+    {{ form_end(mediaForm) }}
+
+    {% endif %}
+
+</div>
 </div>
 
-<div class="p-3 border-bottom">
-    {{ form_start(form) }}
-    <div class="form-group">
-        <h6 class="font-weight-bold">Galerie</h6>
-        <p class="text-muted">
-            La 1re image, principale, sera utilisée dans la recherche, les catégories, et sur votre profil. C’est la plus importante. Afin que votre service se démarque des autres, privilégiez une miniature lisible en format réduit, en rapport direct avec ce que vous faites dans votre service basique, et surtout : de votre création. <br>
 
-            Les autres images, optionnelles, serviront à montrer des exemples de votre travail ou illustrer plus précisément ce que vous vendez. Vous pouvez également joindre une vidéo que vous aurez hébergée sur YouTube ou Vimeo.
-        </p>
-        <div class="">
-            <div id="media" data-prototype="{{ form_row(form.medias.vars.prototype)|e('html_attr') }}">
-                {{ form_row(form.medias) }}
-                <span></span>
+{% if microservice.medias|length > 0 %}
+<!-- Form collection -->
+
+<div class="card mt-4 bg-white shadow-sm">
+    <div class="card-header bg-dark py-3">
+        <div class="text-left rounded">
+            <h4 class="mb-0 text-light">
+                Editer la galérie
+            </h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="microservice_galerie_medias">
+                    {{ form_start(form) }}
+
+                    {{ form_row(form.medias) }}
+
+                    <div class="">
+                        <div class="">
+                            <button class="btn btn-dark">{{ button_label|default('Enregistrer et suivant') }}</button>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>
-    <div class="">
-        <div class="">
-            <button class="btn btn-dark">{{ button_label|default('Enregistrer et suivant') }}</button>
-        </div>
-    </div>
-
-    {{ form_end(form) }}
 </div>
-
-{% endblock %}
-
-{% block javascripts %}
-
-{{ parent() }}
-
-<script>
-    let collection,
-        boutonAjout,
-        span;
-    window.onload = () => {
-        collection = document.querySelector("#media");
-        span = collection.querySelector("span");
-
-        boutonAjout = document.createElement("button");
-        boutonAjout.className = "ajout-media ajout-prix btn btn-dark mb-4";
-        boutonAjout.innerText = "Ajouter une image";
-
-        let nouveauBouton = span.append(boutonAjout);
-
-        collection.dataset.index = collection.querySelectorAll("input").length;
-
-        boutonAjout.addEventListener("click", function () {
-            addButton(collection, nouveauBouton);
-        });
-    }
-
-    function addButton(collection, nouveauBouton) {
-        let prototype = collection.dataset.prototype;
-
-        let index = collection.dataset.index;
-
-        prototype = prototype.replace(/__name__/g, index);
-
-        let content = document.createElement("html");
-        content.innerHTML = prototype;
-        let newForm = content.querySelector("div");
-
-        let boutonSuppr = document.createElement("button");
-        boutonSuppr.type = "button";
-        boutonSuppr.className = "btn btn-danger mb-3";
-        boutonSuppr.id = "delete-media-" + index;
-        boutonSuppr.innerText = "Supprimer";
-
-        newForm.append(boutonSuppr);
-
-        collection.dataset.index++;
-
-        let boutonAjout = collection.querySelector(".ajout-media");
-
-        span.insertBefore(newForm, boutonAjout);
-
-        boutonSuppr.addEventListener("click", function () {
-            this.previousElementSibling.parentElement.remove();
-        })
-    }
-</script>
+{% endif %}
 
 {% endblock %}

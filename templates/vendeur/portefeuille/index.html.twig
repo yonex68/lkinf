@@ -10,6 +10,22 @@
 
 {% block body %}
 
-{% include "vendeur/portefeuille/composants/_box.html.twig" %}
+<div class="">
+   <div class="box shadow-sm rounded bg-white mb-3">
+      <div class="p-3 border-bottom text-left bg-dark rounded box-title">
+         <h4 class="mb-0 text-light">
+            Portefeuille
+         </h4>
+      </div>
+
+      <div class="border-bottom">
+         {% include "vendeur/portefeuille/composants/_box.html.twig" %}
+      </div>
+      
+      <div class="p-3">
+         <a href="" class="btn btn-success">Retrait de fond</a>
+      </div>
+   </div>
+</div>
 
 {% endblock %}

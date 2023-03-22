@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -16,13 +17,20 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageFile', DropzoneType::class, [
-                'label' => '(Png, jpg et jpeg)',
-                /*'allow_delete' =>  false,
+            ->add('name', TextareaType::class, [
+                'label' => 'Comment décrivez-vous ce media?',
+                'help' => "Exemple: Studio d'enregistrement",
+                'required' => false
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Joindre une image',
+                'help' => '(Png, jpg et jpeg)',
+                'allow_delete' =>  false,
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
-                'imagine_pattern'   =>  'large_avatar',*/
+                'imagine_pattern'   =>  'large_avatar',
+                'attr' => ['class' => ''],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',

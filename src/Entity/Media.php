@@ -41,13 +41,8 @@ class Media
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $imageName;
 
-    #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'medias')]
-    private $microservices;
-
-    public function __construct()
-    {
-        $this->microservices = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'medias')]
+    private ?Microservice $microservice = null;
 
     public function getId(): ?int
     {
@@ -78,33 +73,6 @@ class Media
         return $this;
     }
 
-    /**
-     * @return Collection|Microservice[]
-     */
-    public function getMicroservices(): Collection
-    {
-        return $this->microservices;
-    }
-
-    public function addMicroservice(Microservice $microservice): self
-    {
-        if (!$this->microservices->contains($microservice)) {
-            $this->microservices[] = $microservice;
-            $microservice->addMedia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMicroservice(Microservice $microservice): self
-    {
-        if ($this->microservices->removeElement($microservice)) {
-            $microservice->removeMedia($this);
-        }
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->name;
@@ -127,5 +95,17 @@ class Media
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    public function getMicroservice(): ?Microservice
+    {
+        return $this->microservice;
+    }
+
+    public function setMicroservice(?Microservice $microservice): self
+    {
+        $this->microservice = $microservice;
+
+        return $this;
     }
 }

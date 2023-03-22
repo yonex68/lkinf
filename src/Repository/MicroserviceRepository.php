@@ -108,17 +108,79 @@ class MicroserviceRepository extends ServiceEntityRepository
         return $query;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Microservice
+    /**
+     * Recupère les annonces en lien avec une recherche
+     * @return PaginationInterface
+     */
+    public function findAdminSearch(SearchService $search): PaginationInterface
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $this->getAdminSearcheQuery($search)->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            50
+        );
     }
-    */
+
+    /**
+     * //@return QueryBuilder
+     */
+    private function getAdminSearcheQuery(SearchService $search) //: QueryBuilder
+    {
+        $query = $this->createQueryBuilder('m')
+            ->select('v', 'm')
+            ->select('c', 'm')
+            ->leftjoin('m.vendeur', 'v')
+            ->join('m.categorie', 'c')
+            ->orderBy('m.created', 'DESC');
+
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('m.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+        if (!empty($search->ville)) {
+            $query = $query
+                ->andWhere('v.ville LIKE :ville')
+                ->setParameter('ville', "%{$search->ville}%");
+        }
+
+        if (!empty($search->minPrice)) {
+            $query = $query
+                ->andWhere('m.prixMastering >= :minPrice')
+                ->setParameter('minPrice', $search->minPrice);
+        }
+
+        if (!empty($search->maxPrice)) {
+            $query = $query
+                ->andWhere('m.prixBeatmaking <= :maxPrice')
+                ->setParameter('maxPrice', $search->maxPrice);
+        }
+
+        if ($search->getCategories()->count() > 0) {
+            $query = $query
+                ->andWhere('c.id IN (:cat)')
+                ->setParameter('cat', $search->categories);
+        }
+
+        if (!empty($search->promo)) {
+            $query = $query
+                ->andWhere('m.promo = 1');
+        }
+
+        if (!empty($search->online)) {
+            $query = $query
+                ->andWhere('m.online = 1');
+        }
+
+        if (!empty($search->offline)) {
+            $query = $query
+                ->andWhere('m.online = 0');
+        }
+
+        return $query;
+    }
 
     /**
      * Undocumented function

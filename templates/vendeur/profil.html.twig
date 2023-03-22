@@ -9,7 +9,8 @@
 			<div class="col-md-12">
 				<div class="d-flex align-items-center py-3">
 					<div class="profile-left">
-						<h5 class="font-weight-bold text-dark mb-1 mt-0">{{ user.nom ~ ' ' ~ user.prenom }}</h5>
+						<h5 class="font-weight-bold text-dark mb-1 mt-0"><i class="fa fa-check-circle text-success"></i> {{
+							user.nom ~ ' ' ~ user.prenom }}</h5>
 						<p class="mb-0 text-muted">
 							<i class="fa fa-map"></i>
 							{{ user.pays ~ ' ' ~ user.ville }}
@@ -20,13 +21,14 @@
 
 						{% if app.user == user %}
 
-						<a href="{{ path('user_edit_profil') }}" class="btn btn-light border">
+						<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-dark shadow-sm">
 							<i class="fa fa-cog"></i> Mettre à jour mon profil
 						</a>
 
 						{% else %}
 
-						<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}" class="btn btn-success">
+						<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
+							class="btn btn-outline-dark shadow-sm">
 							Contacter le vendeur
 						</a>
 
@@ -41,51 +43,43 @@
 <div class="py-5">
 	<div class="container">
 		<div class="row">
-			<aside class="col col-xl-3 order-xl-1 col-lg-12 order-lg-1 col-12">
-				<div class="sidebar-fix">
+			<aside class="col col-xl-4 order-xl-1 col-lg-12 order-lg-1 col-12">
+				<div class="sidebar-fix mb-3">
 					<div class="box mb-3 shadow-sm rounded bg-white profile-box text-center">
 						<div class="p-4">
 							{% if user.avatar %}
-							<img class="img-fluid rounded"
-								src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('midle_size') }}" alt='' />
+							<img class="img-fluid rounded-circle"
+								src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('identite_size') }}" alt='' />
 
 							{% else %}
 
-							{% if user.genre == 'Feminin' %}
-
-							<img class="img-fluid rounded" src="{{ asset('img/femme.jpg') | imagine_filter('midle_size') }}"
-								alt='' />
-
-							{% else %}
-
-							<img class="img-fluid rounded" src="{{ asset('img/user.jpg') | imagine_filter('midle_size') }}"
-								alt='' />
-
-							{% endif %}
+							<img class="img-fluid rounded-circle"
+								src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}" alt='' />
 
 							{% endif %}
 						</div>
-						<div class="p-4 border-top border-bottom">
+						<div class="p-3 border-top border-bottom">
 							<h5 class="font-weight-bold text-dark mb-1 mt-0 text-left">{{ user.nom }}
 								{{ user.prenom }}</h5>
 							<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
 						</div>
-						<div class="p-4 pb-0 border-bottom">
+
+						<div class="p-3">
 							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted">Avis positif</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">({{ avispositif(user)|length }})</p>
+								<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">{{ avispositif(user)|length }}</p>
 							</div>
 							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted">Avis négatif</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">({{ avisnegatif(user)|length }})</p>
+								<p class="mb-0 text-muted"><i class="fa fa-thumbs-down"></i> Avis négatif</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">{{ avisnegatif(user)|length }}</p>
 							</div>
 							<div class="d-flex align-items-top mb-2">
 								<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">0</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(user)|length }}</p>
 							</div>
 							<div class="d-flex align-items-top mb-2">
 								<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">0</p>
+								<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(user)|length }}</p>
 							</div>
 							<div class="d-flex align-items-top">
 								<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> Vendeur</p>
@@ -93,29 +87,37 @@
 							</div>
 						</div>
 
-						{% include "vendeur/composants/_suivre_btn.html.twig" %}
+						<div class="p-3">
+							{% include "vendeur/composants/_suivre_btn.html.twig" %}
+
+							<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
+								class="btn btn-outline-dark shadow-sm rounded-btn w-100 mt-3">
+								Contacter le vendeur
+							</a>
+
+						</div>
 
 					</div>
 				</div>
 			</aside>
 			<!-- Main Content -->
-			<main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
-				<div class="card mb-3 shadow-sm">
-					<div class="card-body">
-						<h2 class="card-title h5">Services disponibles</h2>
-					</div>
-				</div>
+			<main class="col col-xl-5 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
 
 				<div class="">
-					<div class="">
-						<div class="row">
-							{% for microservice in microservices %}
-							<div class="col-md-12">
-								{% include "vendeur/microservices/composants/_bloc_list.html.twig" %}
-							</div>
-							{% else %}
-							<div class="col-md-12">
-								<div class="py-3 text-center bg-white border rounded shadow-sm">
+					<div class="row">
+						{% for microservice in microservices %}
+
+						<div class="col-12 col-sm-12">
+
+							{% include "vendeur/microservices/composants/_bloc.html.twig" %}
+
+						</div>
+
+						{% else %}
+
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body text-center bg-white border rounded shadow-sm">
 									<p class="text-muted">Aucun service</p>
 									<div class="py-4">
 										<i class="fa fa-search fa-3x text-muted"></i>
@@ -127,93 +129,59 @@
 									{% endif %}
 								</div>
 							</div>
-							{% endfor %}
 						</div>
 
-						<div class="py-3">
-							{{ knp_pagination_render(microservices) }}
+						{% endfor %}
+
+						<div class="col-12">
+							<div class="py-3">
+								{{ knp_pagination_render(microservices) }}
+							</div>
 						</div>
+
 					</div>
 				</div>
 
 			</main>
+
 			<aside class="col col-xl-3 order-xl-3 col-lg-12 order-lg-3 col-12">
-				<div class="box shadow-sm rounded bg-white mb-3">
-					<div class="box-title border-bottom p-3">
-						<h6 class="m-0">Abonnés</h6>
-					</div>
-					<div class="box-body p-3">
-						{% for follow in followers(user) %}
-
-						<div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-							<div class="dropdown-list-image mr-3">
-
-								{% if follow.client.avatar %}
-
-								<img
-									src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
-									class="rounded-circle" alt="{{ follow.client.prenom ?? '' }}"/>
-
-								{% else %}
-
-								<img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}"
-									class="rounded-circle" alt="{{ follow.client.prenom ?? '' }}" />
-
-								{% endif %}
-
-								<div class="status-indicator bg-{{ app.user.id == follow.client.id ? 'success' : 'light'}}"></div>
-							</div>
-							<div class="font-weight-bold mr-2">
-								<div class="text-truncate">{{ app.user.id == follow.client.id ? 'Vous' : follow.client.nom ~ ' ' ~ follow.client.prenom}}</div>
-								<div class="small text-gray-500"></div>
-							</div>
+				<div class="shadow-sm rounded bg-white job-item mb-3">
+					<div class="p-3 job-item-header">
+						<div class="overflow-hidden mr-2">
+							<div class="text-truncate text-primary">Abonnés.</div>
+							<h6 class="font-weight-light text-dark mb-0 text-truncate">Ils suivent <strong
+									class="font-weight-bold ">{{ user.nom ~ ' ' ~ user.prenom }}</strong></h6>
 						</div>
+					</div>
+					<div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+						<div class="overlap-rounded-circle">
+							{% for follow in followers(user) %}
 
-						{% else %}
-							
-							<div>
-								<p>Aucun abonnés pour l'intant</p>
-							</div>
+							{% if follow.client.avatar %}
 
-						{% endfor %}
+							<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+								src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
+								alt="" data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
+
+							{% else %}
+
+							<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+								src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt=""
+								data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
+
+							{% endif %}
+
+							{% endfor %}
+						</div>
+					</div>
+					<div class="p-3 job-item-footer">
+						<span class="font-weight-bold text-muted">{{ followers(user)|length }} Abonné{{ followers(user)|length
+							> 1 ? 's' : '' }}</span>
+						<small class="text-gray-500">
+							<i class="fa fa-plus"></i>
+							15 autres</small>
 					</div>
 				</div>
-
-				<a href="job-profile.html">
-					<div class="shadow-sm rounded bg-white job-item mb-3">
-						<div class="d-flex align-items-center p-3 job-item-header">
-							<div class="overflow-hidden mr-2">
-								<h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
-								<div class="text-truncate text-primary">Localisation.</div>
-								<div class="small text-gray-500">
-									<i class="fa fa-map"></i>
-									{{ user.pays ~ ' ' ~ user.ville }}
-								</div>
-							</div>
-							<img class="img-fluid ml-auto" src="images/l3.png" alt="">
-						</div>
-						<div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-							<div class="overlap-rounded-circle">
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('themes/base/images/user/s5.png') }}" alt="" data-original-title="Sophia Lee">
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('themes/base/images/user/s6.png') }}" alt="" data-original-title="John Doe">
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('themes/base/images/user/s7.png') }}" alt="" data-original-title="Julia Cox">
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('themes/base/images/user/s8.png') }}" alt="" data-original-title="John Doe">
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('themes/base/images/user/s9.png') }}" alt="" data-original-title="Julia Cox">
-							</div>
-							<span class="font-weight-bold text-muted">18 connections</span>
-						</div>
-						<div class="p-3 job-item-footer">
-							<small class="text-gray-500">
-								<i class="fa fa-clock-o"></i>
-								Posted 3 Days ago</small>
-						</div>
-					</div>
-				</a>
 
 			</aside>
 		</div>
@@ -225,4 +193,5 @@
 {% block javascripts %}
 {{ parent() }}
 <script src="{{ asset('js/suivi.js') }}"></script>
+<script src="{{ asset('js/favoris.js') }}"></script>
 {% endblock %}

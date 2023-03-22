@@ -1,21 +1,19 @@
 {% if app.user == user %}
 
+{% else %}
+
+<a href="{{ path('suivre_new', {id: user.id}) }}" class="{{ app.user ? 'js-suivis' : '' }}">
+
+	{% if app.user and user.isFollowed(app.user) %}
+
+	<button type="" class="btn-outline-danger btn btn-block rounded-btn">Ne plus suivre</button>
+
 	{% else %}
 
-		<div class="p-4">
-			<a href="{{ path('suivre_new', {id: user.id}) }}" class="{{ app.user ? 'js-suivis' : '' }}">
+	<button type="" class="btn-outline-success btn btn-block rounded-btn"><i class="fa fa-plus"></i> Suivre</button>
 
-				{% if app.user and user.isFollowed(app.user) %}
+	{% endif %}
 
-					<button type="" class="btn-outline-danger btn btn-block rounded-btn">Ne plus suivre</button>
-
-				{% else %}
-
-					<button type="" class="btn-outline-success btn btn-block rounded-btn"><i class="fa fa-plus"></i> Suivre</button>
-
-				{% endif %}
-
-			</a>
-		</div>
+</a>
 
 {% endif %}

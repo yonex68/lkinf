@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+
+<div class="p-3 border-bottom bg-dark text-left rounded">
+    <h4 class="mb-0 text-light">
+        Nouveau retrait
+    </h4>
+</div>
+
+<div class="p-3">
+    <p class="text-muted">
+        Faites vos retraits de fonds en toute sécurité sur {{ appName }}
+    </p>
+
+
+    <div class="form-group">
+        {{ form_row(form.montant) }}
+    </div>
+
+    <div class="border p-3 rounded mb-3">
+        <div class="form-group font-weight-bold">
+            {{ form_row(form.modePaiement) }}
+        </div>
+    </div>
+
+    <h6 class="font-weight-bold">Informations de la carte</h6>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_row(form.nomsurCarte) }}
+        </div>
+        <div class="col-sm-6">
+            {{ form_row(form.numeroCarte) }}
+        </div>
+    </div>
+
+    {{ form_row(form.dateExpiration) }}
+
+    <h6 class="font-weight-bold">Informations Paymal</h6>
+    {{ form_row(form.adressePaypal) }}
+
+    <button class="btn btn-dark p-2 w-100 shadow-sm">{{ button_label|default('Envoyer') }}</button>
+
+</div>
+{{ form_end(form) }}

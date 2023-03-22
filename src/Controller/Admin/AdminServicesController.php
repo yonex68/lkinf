@@ -3,7 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Microservice;
+use App\Entity\SearchService;
+use App\Form\AdminSearchServiceType;
 use App\Form\MicroserviceType;
+use App\Form\SearchServiceType;
 use App\Repository\MicroserviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -18,14 +21,17 @@ class AdminServicesController extends AbstractController
     #[Route('/', name: 'app_admin_services_index', methods: ['GET'])]
     public function index(MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $microservices = $paginator->paginate(
-            $microserviceRepository->findBy([], ['created' => 'DESC']),
-            $request->query->getInt('page', 1),
-            20
-        );
+        $search = new SearchService();
+        $search->page = $request->get('page', 1);
+
+        $form = $this->createForm(AdminSearchServiceType::class, $search);
+        $form->handleRequest($request);
+
+        $microservices = $microserviceRepository->findAdminSearch($search);
 
         return $this->render('admin/admin_services/index.html.twig', [
             'microservices' => $microservices,
+            'form' => $form->createView(),
         ]);
     }
 

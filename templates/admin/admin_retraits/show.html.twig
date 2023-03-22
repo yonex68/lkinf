@@ -1,0 +1,54 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Retrait{% endblock %}
+
+{% block body %}
+    <h1>Retrait</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ retrait.id }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ retrait.montant }}</td>
+            </tr>
+            <tr>
+                <th>ModePaiement</th>
+                <td>{{ retrait.modePaiement }}</td>
+            </tr>
+            <tr>
+                <th>NomsurCarte</th>
+                <td>{{ retrait.nomsurCarte }}</td>
+            </tr>
+            <tr>
+                <th>NumeroCarte</th>
+                <td>{{ retrait.numeroCarte }}</td>
+            </tr>
+            <tr>
+                <th>DateExpiration</th>
+                <td>{{ retrait.dateExpiration ? retrait.dateExpiration|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>AdressePaypal</th>
+                <td>{{ retrait.adressePaypal }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ retrait.created ? retrait.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ retrait.updated ? retrait.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_retraits_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_retraits_edit', {'id': retrait.id}) }}">edit</a>
+
+    {{ include('admin/admin_retraits/_delete_form.html.twig') }}
+{% endblock %}

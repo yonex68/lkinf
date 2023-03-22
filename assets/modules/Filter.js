@@ -23,7 +23,7 @@ export default class Filter {
 
 		this.pagination = element.querySelector('.js-filter-pagination')
 		this.content = element.querySelector('.js-filter-content')
-		this.sorting = element.querySelector('.js-filter-sorting')
+		//this.sorting = element.querySelector('.js-filter-sorting')
 		this.form = element.querySelector('.js-filter-form')
 		this.bindEvents()
 	}
@@ -40,7 +40,7 @@ export default class Filter {
 			}
 		}
 
-		this.sorting.addEventListener('click', Clicklistener)
+		//this.sorting.addEventListener('click', Clicklistener)
 		this.pagination.addEventListener('click', Clicklistener)
 		this.form.querySelectorAll('input').forEach(input => {
 			input.addEventListener('change', this.loadForm.bind(this))
@@ -79,7 +79,7 @@ export default class Filter {
 			// Injection du contenu
 			this.content.innerHTML = data.content
 			//this.flipContent(data.content)
-			this.sorting.innerHTML = data.sorting
+			//this.sorting.innerHTML = data.sorting
 			this.pagination.innerHTML = data.pagination
 			//this.form.innerHTML = data.form
 

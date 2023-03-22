@@ -59,6 +59,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('serviceAvis', [$this, 'getServicesAvisPositif']),
             new TwigFunction('serviceCommandes', [$this, 'getServicesCommandes']),
             new TwigFunction('lastedServices', [$this, 'getLastServices']),
+            new TwigFunction('ventes', [$this, 'getVendeurTotalVente']),
+            new TwigFunction('commandeEncours', [$this, 'getVendeurCommandesEncours']),
         ];
     }
 
@@ -92,6 +94,14 @@ class AppExtension extends AbstractExtension
     
     public function getCommandeNonLu($user) {
         return $this->commandeRepository->findBy(['destinataire' => $user, 'lu' => 0]);
+    }
+    
+    public function getVendeurTotalVente($user) {
+        return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Livrer']);
+    }
+    
+    public function getVendeurCommandesEncours($user) {
+        return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Valider']);
     }
 
     public function getServicesAvisPositif($service){

@@ -6,6 +6,8 @@
 {% block titre %}Félicitation {{ app.user.nom }}
 {% endblock %}
 
+{% block col %}6{% endblock %}
+
 {% block body %}
 
 	<section class="pt-5">
@@ -13,9 +15,9 @@
 			<div class="row">
 
 				<div class="col-sm-12">
-					<div class="alert alert-success">
-						<p>Votre commande à bien été enregistrer</p>
-						<span class="span text-muted ">Pour des reclamations nous contacter:
+					<div class="alert shadow" style="border: 1px solid green;">
+						<p class="text-success font-weight-bold lead">Votre commande à bien été enregistrer</p>
+						<span class="span text-muted ">Pour des reclamations nous contacter: <br>
 							<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
 						</span>
 					</div>

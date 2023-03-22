@@ -1,0 +1,126 @@
+<div class="p-4 border-bottom">
+   {{ form_start(form) }}
+
+   <div class="border-bottom mb-4">
+      <div class="">
+         <h6 class="font-weight-bold">
+            Prix de départ
+         </h6>
+         <p class="text-muted">
+            Choisissez le prix de départ de votre service Mastering, c’est-à-dire sans options. En fonction de votre
+            offre {{ appName }} Plus, vous pouvez le proposer à un tarif supérieur.
+         </p>
+         <div class="row mb-5">
+            <div class="col-6 py-2">
+               <div class="card shadow-sm border-0">
+                  <div class="card-body text-center">
+                     <strong class="text-center d-block h6 pt-3">Mastering</strong>
+                     <div class="input-group mb-3 border border-light rounded">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+                        </div>
+                        {{ form_widget(form.prixMastering) }}
+                     </div>
+                     {{ form_errors(form.prixMastering) }}
+                  </div>
+               </div>
+            </div>
+            <div class="col-6 py-2">
+               <div class="card shadow-sm border-0">
+                  <div class="card-body text-center">
+                     <strong class="text-center d-block h6 pt-3">Mixage</strong>
+                     <div class="input-group mb-3 border border-light rounded">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+                        </div>
+                        {{ form_widget(form.prixMixage) }}
+                     </div>
+                     {{ form_errors(form.prixMixage) }}
+                  </div>
+               </div>
+            </div>
+            <div class="col-6 py-2">
+               <div class="card shadow-sm border-0">
+                  <div class="card-body text-center">
+                     <strong class="text-center d-block h6 pt-3">Beatmaking</strong>
+                     <div class="input-group mb-3 border border-light rounded">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+                        </div>
+                        {{ form_widget(form.prixBeatmaking) }}
+                     </div>
+                     {{ form_errors(form.prixBeatmaking) }}
+                  </div>
+               </div>
+            </div>
+            <div class="col-6 py-2">
+               <div class="card shadow-sm border-0">
+                  <div class="card-body text-center">
+                     <strong class="text-center d-block h6 pt-3">Composition</strong>
+                     <div class="input-group mb-3 border border-light rounded">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+                        </div>
+                        {{ form_widget(form.prixComposition) }}
+                     </div>
+                     {{ form_errors(form.prixComposition) }}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="mb-4">
+      <div class="">
+         <div class="">
+            <h6 class="font-weight-bold">
+               Description
+            </h6>
+            <p class="text-muted">
+               C’est la partie la plus importante de votre service, alors
+               soignez-la ! Rédigez un texte original, présentez-vous, vérifiez
+               attentivement votre orthographe, rassurez vos futurs clients sur vos
+               compétences, détaillez ce que vous faites pour le prix de départ
+               ainsi que dans vos options, définissez des limites, et bien sûr
+               appliquez nos conseils (disponibles sur l’aide) pour que votre
+               service soit validé par notre équipe de modération.
+            </p>
+         </div>
+         <div>
+            {{ form_widget(form.description) }}
+            {{ form_errors(form.description) }}
+         </div>
+      </div>
+   </div>
+
+   <div class="border-bottom">
+      <div class="">
+         <div class="">
+            <h6 class="font-weight-bold">
+               Délai de réalisation
+            </h6>
+            <p class="text-muted">
+               C’est la durée que prendra votre service Mastering uniquement, entre le moment où vous accepterez la
+               commande et celui où vous la livrerez. Il vaut mieux être trop large que promettre quelque chose
+               d’irréaliste (pensez aux soirées et weekends, mais également au fait que vous aurez peut-être
+               plusieurs commandes à gérer en même temps).
+            </p>
+         </div>
+         <div>
+            {{ form_widget(form.delai) }}
+            {{ form_errors(form.delai) }}
+         </div>
+      </div>
+   </div>
+
+   <div class="py-4">
+      <div class="">
+         <button class="btn btn-dark">
+            {{ button_label|default('Enregistrer et suivant') }}
+         </button>
+      </div>
+   </div>
+
+   {{ form_end(form) }}
+</div>

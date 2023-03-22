@@ -19,12 +19,12 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Média</th>
                             <th>Titre</th>
                             <th>Slug</th>
                             <th>Couleur Hexadecimal</th>
                             <th>Date création</th>
-                            <th>Date mise à jour</th>
-                            <th>Service</th>
+                            <th>Services</th>
                             <th>actions</th>
                         </tr>
                     </thead>
@@ -32,6 +32,16 @@
                         {% for categorie in categories %}
                         <tr>
                             <td>{{ categorie.id }}</td>
+                            <td>
+
+                                {% if categorie.image %}
+
+                                <img class="img-fluid rounded"
+                                    src="{{ vich_uploader_asset(categorie, 'imageFile') | imagine_filter('small_avatar') }}" />
+
+                                {% endif %}
+                                
+                            </td>
                             <td>{{ categorie.name }}</td>
                             <td>{{ categorie.slug }}</td>
                             <td>
@@ -39,7 +49,6 @@
                                     categorie.hexColor }}</span>
                             </td>
                             <td>{{ categorie.created ? categorie.created|date('d/m/Y') : '' }}</td>
-                            <td>{{ categorie.updated ? categorie.updated|date('d/m/Y') : '' }}</td>
                             <td><span class="badge rounded-pill bg-dark">{{ categorie.microservices|length }}</span></td>
                             <td>
                                 <a href="{{ path('app_admin_categories_edit', {'id': categorie.id}) }}"

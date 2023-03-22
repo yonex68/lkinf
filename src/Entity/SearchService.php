@@ -39,6 +39,16 @@ class SearchService {
     public $promo;
 
     /**
+     * @var bool|null
+     */
+    public $online;
+
+    /**
+     * @var bool|null
+     */
+    public $offline;
+
+    /**
      * @var ArrayCollection
      */
     public $categories;

@@ -43,9 +43,11 @@
 									<div class="star-rating-s15-wrapper">
 										<span class="star-rating-s15 rate-10"></span>
 									</div>
-									<span class="total-rating">({{ serviceAvis(microservice)|length }} Avi{{ serviceAvis(microservice)|length > 1 ? 's' : '' }})</span>
+									<span class="total-rating">({{ serviceAvis(microservice)|length }} Avi{{
+										serviceAvis(microservice)|length > 1 ? 's' : '' }})</span>
 								</span>
-								<span class="orders-in-queue">({{ serviceCommandes(microservice)|length }}) commande{{ serviceCommandes(microservice)|length > 1 ? 's' : '' }} en cours</span>
+								<span class="orders-in-queue">({{ serviceCommandes(microservice)|length }}) commande{{
+									serviceCommandes(microservice)|length > 1 ? 's' : '' }} en cours</span>
 							</div>
 						</div>
 
@@ -74,7 +76,7 @@
 										<span class="text-muted">{{ microservice.delai }} de réalisation</span>
 									</div>
 									<div class="col-sm-3 text-right">
-										<strong>{{ prix|length > 0 ? prix[0].tarif ~ currency : '' }}</strong>
+										<strong>{{ microservice.prix ~ currency }}</strong>
 									</div>
 								</div>
 							</div>
@@ -108,11 +110,11 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<a href="" class="btn btn-dark btn-lg h5">200 {{ currency }} Commander</a>
-									
+
 									{% if is_granted('microservice_edit', microservice) %}{% else %}
 									<a class="btn btn-outline-dark btn-lg h5"
 										href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter
-										le vendeur</a>										
+										le vendeur</a>
 									{% endif %}
 								</div>
 							</div>
@@ -120,7 +122,13 @@
 
 					</div>
 				</form>
-
+			</div>
+			<div class="col-lg-4 right">
+				{% include "microservice/composants/_trafic.html.twig" %}
+			</div>
+		</div>
+		<div class="row py-4">
+			<div class="col-sm-12">
 				<div class="view_slider recommended">
 					<h3>Autres services de ce vendeur</h3>
 					<div class="view recommended-slider">
@@ -131,11 +139,6 @@
 						{% endfor %}
 					</div>
 				</div>
-
-			</div>
-
-			<div class="col-lg-4 right">
-				{% include "microservice/composants/_trafic.html.twig" %}
 			</div>
 		</div>
 	</div>

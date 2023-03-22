@@ -18,25 +18,54 @@
 					href="{{ path('vendeur_microservices_index') }}">
 					<i class="text-muted fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;Mes services
 				</a>
-				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'active' : '' }}" href="{{ path('vendeur_commandes_index') }}"><i class="text-muted fa fa-shopping-bag"></i>&nbsp;&nbsp;&nbsp;Mes commandes</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'active' : '' }}" href="{{ path('vendeur_commandes_index') }}"><i class="text-muted fa fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Mes commandes</a>
 				
 				{% endif %}
 
-				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}" href="{{ path('vendeur_achats_index') }}"><i class="text-muted fa fa-shopping-bag"></i>&nbsp;&nbsp;&nbsp;Mes achats</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}" href="{{ path('vendeur_achats_index') }}"><i class="text-muted fa fa-opencart"></i>&nbsp;&nbsp;&nbsp;Mes achats</a>
 
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'favoris_index' ? 'active' : '' }}" href="{{ path('favoris_index') }}"><i class="text-muted fa fa-heart"></i>&nbsp;&nbsp;&nbsp;Favoris</a>
 
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'suivis_index' ? 'active' : '' }}" href="{{ path('suivis_index') }}"><i class="text-muted fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Suivis</a>
-
-				{% if is_granted('ROLE_VENDEUR') %}
-
-				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_portefeuille' ? 'active' : '' }}" href="{{ path('vendeur_portefeuille') }}"><i class="text-muted fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Mon portefeuille</a>
-
-				{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
+
+{% if is_granted('ROLE_VENDEUR') %}
+
+<div class="box shadow-sm  rounded bg-white mb-3">
+	<div class="box-title border-bottom p-3">
+		<h6 class="m-0">Mon portefeuille</h6>
+	</div>
+	<div class="box-body">
+		<div class="bg-white rounded shadow-sm">
+			<div class="dropdown-menu-show">
+
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_portefeuille' ? 'active' : '' }}" href="{{ path('vendeur_portefeuille') }}"><i class="text-muted fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Mes revenus</a>
+				
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_retraits_index' ? 'active' : '' }}"
+					href="{{ path('app_vendeur_retraits_index') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Retraits</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="box shadow-sm rounded bg-white mb-3">
+	<div class="box-title border-bottom p-3">
+		<h6 class="m-0">{{ appName }} abonnement</h6>
+	</div>
+	<div class="box-body">
+		<div class="bg-white rounded shadow-sm">
+			<div class="dropdown-menu-show">
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_abonnement' ? 'active' : '' }}" href="{{ path('vendeur_abonnement') }}"><i class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
+				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-cc-visa"></i>&nbsp;&nbsp;&nbsp;Méthode de paiement</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endif %}
 
 <div class="box shadow-sm  rounded bg-white mb-3">
 	<div class="box-title border-bottom p-3">
@@ -60,23 +89,5 @@
 		</div>
 	</div>
 </div>
-
-{% if is_granted('ROLE_VENDEUR') %}
-
-<div class="box shadow-sm rounded bg-white mb-3">
-	<div class="box-title border-bottom p-3">
-		<h6 class="m-0">{{ appName }} abonnement</h6>
-	</div>
-	<div class="box-body">
-		<div class="bg-white rounded shadow-sm">
-			<div class="dropdown-menu-show">
-				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_abonnement' ? 'active' : '' }}" href="{{ path('vendeur_abonnement') }}"><i class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
-				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-cc-visa"></i>&nbsp;&nbsp;&nbsp;Méthode de paiement</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-{% endif %}
 
 </div>

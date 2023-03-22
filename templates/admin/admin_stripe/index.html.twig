@@ -70,10 +70,13 @@
                 </ul>
             </div>
             <div class="card-footer bg-white py-4 text-center">
-                <div>
-                    <a href="{{ path('app_admin_stripe_edit', {'id': stripe.id}) }}" class="btn btn-light">Modifier</a>
-
-                    {% include "admin/admin_stripe/_delete_form.html.twig" %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="{{ path('app_admin_stripe_edit', {'id': stripe.id}) }}" class="btn btn-light w-100">Modifier</a>
+                    </div>
+                    <div class="col-sm-6">
+                        {% include "admin/admin_stripe/_delete_form.html.twig" %}
+                    </div>
                 </div>
             </div>
         </div>

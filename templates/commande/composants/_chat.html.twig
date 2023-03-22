@@ -1,5 +1,5 @@
 <div class="box shadow-sm rounded bg-white mb-3 osahan-chat">
-	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold">Suivez vos commandes</h5>
+	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold">Suivi des commandes</h5>
 	<div class="row m-0">
 		<div class="border-right col-lg-5 col-xl-4 px-0">
 			<div class="osahan-chat-left">
@@ -12,7 +12,7 @@
 					<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
 						<div class="dropdown-list-image mr-3">
 
-							<a href="{{ path('commande_details', {id: usercommande.id}) }}"></a>
+							<a href="{{ path('commande_details', {id: usercommande.id}) }}">
 							{% if usercommande.client.avatar %}
 							<img src="{{ vich_uploader_asset(usercommande.client) | imagine_filter('small_avatar') }}"
 								alt="{{ usercommande.client.prenom ?? '' }}" class="rounded-circle border">
@@ -23,7 +23,10 @@
 
 						</div>
 						<div class="font-weight-bold mr-1 overflow-hidden">
-							<div class="text-truncate">{{ usercommande.client.nom ~ ' ' ~ usercommande.client.prenom }}</div>
+							<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-dark">
+								<div class="text-truncate">{{ usercommande.client.nom ~ ' ' ~ usercommande.client.prenom }}
+								</div>
+							</a>
 							<div class="small text-truncate overflow-hidden text-black-50">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}">
 									<i class="mdi mdi-check text-primary"></i>
@@ -37,13 +40,13 @@
 							</div>
 						</span>
 					</div>
-						
+
 					{% else %}
 
 					<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
 						<div class="dropdown-list-image mr-3">
 
-							<a href="{{ path('commande_details', {id: usercommande.id}) }}"></a>
+							<a href="{{ path('commande_details', {id: usercommande.id}) }}">
 							{% if usercommande.vendeur.avatar %}
 							<img src="{{ vich_uploader_asset(usercommande.vendeur) | imagine_filter('small_avatar') }}"
 								alt="{{ usercommande.vendeur.prenom ?? '' }}" class="rounded-circle border">
@@ -54,7 +57,9 @@
 
 						</div>
 						<div class="font-weight-bold mr-1 overflow-hidden">
-							<div class="text-truncate">{{ usercommande.vendeur.nom ~ ' ' ~ usercommande.vendeur.prenom }}</div>
+							<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-dark">
+								<div class="text-truncate">{{ usercommande.vendeur.nom ~ ' ' ~ usercommande.vendeur.prenom }}</div>
+							</a>
 							<div class="small text-truncate overflow-hidden text-black-50">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}">
 									<i class="mdi mdi-check text-primary"></i>
@@ -128,10 +133,10 @@
 
 			{% if commande.deliver == false %}
 
-				{% include "conversations/composants/_message_form.html.twig" %}
-				
+			{% include "conversations/composants/_message_form.html.twig" %}
+
 			{% endif %}
-			
+
 			{% else %}
 
 			<div class="py-5 text-center">

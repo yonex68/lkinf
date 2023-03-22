@@ -1,0 +1,64 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Retraits{% endblock %}
+
+{% block bg %}transparent{% endblock %}
+
+{% block body %}
+
+<div class="card shadow-sm w-100 mb-4">
+    <div class="card-body">
+        <div class="row d-block d-sm-flex align-items-center">
+            <div class="col-sm-6">
+                <h2 class="h5 mb-3">Mes retraits</h2>
+            </div>
+            {% if retraitEnattente|length == 0 %}
+            <div class="col-sm-6 text-right">
+                <a href="{{ path('app_vendeur_retraits_new') }}" class="btn btn-success">Nouvelle demande</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive bg-white">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Montant</th>
+                        <th>Mode Paiement</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for retrait in retraits %}
+                    <tr>
+                        <td><strong>{{ retrait.montant ~ currency }}</strong></td>
+                        <td>{{ retrait.modePaiement }}</td>
+                        <td>{{ retrait.created|date('d/m/Y') }}</td>
+                        <td>
+                            <span
+                                class="badge badge-pill badge-{% if retrait.statut == 'En attente'  %}warning{% elseif retrait.statut == 'Valider' %}success{% else %}danger{% endif %}">{{
+                                retrait.statut }}</span>
+                        </td>
+                        <td>
+                            <a href="{{ path('app_vendeur_retraits_show', {'id': retrait.id}) }}"
+                                class="btn btn-outline-dark">Details</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Aucun demande</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
