@@ -1,9 +1,17 @@
 @font-face {
    font-family: Jost;
-   src: url(Font/Jost-Light-Italic-300.ttf);
+   src: url(Font/Jost-Regular-400.ttf);
+}
+@font-face {
+   font-family: Jost-semibold;
+   src: url(Font/Jost-SemiBold-600.ttf);
+   font-weight: 600!important;
 }
 body{
    font-family: Jost!important;
+}
+h1,h2,h3,h4,h5,h6{
+   font-family: Jost-semibold;
 }
 
 /* Navigation */

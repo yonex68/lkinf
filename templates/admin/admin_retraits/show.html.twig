@@ -1,54 +1,58 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Retrait{% endblock %}
+{% block title %}Details Retrait{% endblock %}
+
+{% block pageTitle %}Details Retrait{% endblock %}
 
 {% block body %}
-    <h1>Retrait</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ retrait.id }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ retrait.montant }}</td>
-            </tr>
-            <tr>
-                <th>ModePaiement</th>
-                <td>{{ retrait.modePaiement }}</td>
-            </tr>
-            <tr>
-                <th>NomsurCarte</th>
-                <td>{{ retrait.nomsurCarte }}</td>
-            </tr>
-            <tr>
-                <th>NumeroCarte</th>
-                <td>{{ retrait.numeroCarte }}</td>
-            </tr>
-            <tr>
-                <th>DateExpiration</th>
-                <td>{{ retrait.dateExpiration ? retrait.dateExpiration|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>AdressePaypal</th>
-                <td>{{ retrait.adressePaypal }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ retrait.created ? retrait.created|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{{ retrait.updated ? retrait.updated|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ retrait.id }}</td>
+                </tr>
+                <tr>
+                    <th>Montant</th>
+                    <td><strong>{{ retrait.montant ~ currency }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Mode de Paiement</th>
+                    <td>{{ retrait.modePaiement }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        <span
+                            class="badge rounded-pill bg-{% if retrait.statut == 'En attente'  %}warning{% elseif retrait.statut == 'Valider' %}success{% else %}danger{% endif %}">{{
+                            retrait.statut }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nom du titulaire de la carte</th>
+                    <td>{{ retrait.nomsurCarte }}</td>
+                </tr>
+                <tr>
+                    <th>Numéro de carte</th>
+                    <td>{{ retrait.numeroCarte }}</td>
+                </tr>
+                <tr>
+                    <th>Date d'expiration de la carte</th>
+                    <td>{{ retrait.dateExpiration|date('d/m/Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse Paypal</th>
+                    <td>{{ retrait.adressePaypal }}</td>
+                </tr>
+                <tr>
+                    <th>Date de la demande</th>
+                    <td>Le {{ retrait.created|date('d/m/Y') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <a href="{{ path('app_admin_retraits_index') }}">back to list</a>
-
-    <a href="{{ path('app_admin_retraits_edit', {'id': retrait.id}) }}">edit</a>
-
-    {{ include('admin/admin_retraits/_delete_form.html.twig') }}
 {% endblock %}

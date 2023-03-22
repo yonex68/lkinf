@@ -30,7 +30,7 @@
 
             Vos options doivent être claires et achetables par tous les clients. Si ce n'est pas déjà fait, pensez à les décrire dans votre description. Le délai d'une option s'ajoute au délai de votre service basique.
         </p>
-        <div class="">
+        <div class="{{ microservice.categorie.slug == 'ingenieur-son' ? 'bloc-masquer' : '' }}">
             <div class="" id="options" data-prototype="{{ form_row(form.serviceOptions.vars.prototype)|e('html_attr') }}">
                 <span></span>
             </div>
