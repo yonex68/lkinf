@@ -12,7 +12,8 @@
    <link rel="shortcut icon" href="{{ asset('img/Logo.png') }}">
 
    <!-- Responsive Table css -->
-   <link href="{{ asset('themes/admin/assets/libs/admin-resources/rwd-table/rwd-table.min.css') }}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset('themes/admin/assets/libs/admin-resources/rwd-table/rwd-table.min.css') }}" rel="stylesheet"
+      type="text/css" />
 
    <!--Chartist Chart CSS -->
    <link href="{{ asset('themes/admin/assets/libs/chartist/chartist.min.css') }}" rel="stylesheet" type="text/css" />
@@ -31,7 +32,7 @@
    <!-- App Css-->
    <link href="{{ asset('themes/admin/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
    {% block stylesheets %}
-      {{ encore_entry_link_tags('app') }}
+   {{ encore_entry_link_tags('app') }}
    {% endblock %}
 
    <style>
@@ -41,23 +42,33 @@
          margin: 15px 0;
       }
 
-      .table-rep-plugin .btn-group, .table-wrapper .btn-group {
+      .table-rep-plugin .btn-group,
+      .table-wrapper .btn-group {
          display: none !important;
       }
-      .bloc-small{
+
+      .bloc-small {
          width: 100px;
          margin: 0;
       }
-      table th{
+
+      table th {
          text-transform: uppercase;
-         font-weight: 500!important;
+         font-weight: 500 !important;
       }
-      .detail-table th{
+
+      .detail-table th {
          text-align: left;
       }
-      .rounded-radius{
-         border-radius: 30px!important;
-         overflow: hidden!important;
+
+      .rounded-radius {
+         border-radius: 30px !important;
+         overflow: hidden !important;
+      }
+
+      @font-face {
+         font-family: Jost;
+         src: url(Font/Jost-Light-Italic-300.ttf);
       }
    </style>
 
@@ -147,7 +158,7 @@
    <script src="{{ asset('themes/admin/assets/js/app.js') }}"></script>
 
    {% block javascripts %}
-      {{ encore_entry_script_tags('app') }}
+   {{ encore_entry_script_tags('app') }}
    {% endblock %}
 
 </body>

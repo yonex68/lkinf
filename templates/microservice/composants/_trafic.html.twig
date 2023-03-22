@@ -6,6 +6,12 @@
       <li><a data-toggle="tab" href="#Composition">Composition</a></li>
    </ul>
    <div class="tab-content mb-0 pb-1">
+      <article>
+         <div class="d-flex">
+            <b class="delivery text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ microservice.delai }} jour{{ microservice.delai > 1 ? 's' : '' }}
+               de réalisation</b>
+         </div>
+      </article>
       <div id="Mastering" class="tab-pane fade show active">
          <div class="header">
             <h3><b class="title">{{ microservice.name }}</b><span class="price badge">
@@ -65,14 +71,26 @@
          {% endif %}
 
       </div>
-
-
-      <article>
-         <div class="d-flex">
-            <b class="delivery text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ microservice.delai }}
-               de réalisation</b>
+      <div id="Composition" class="tab-pane fade">
+         <div class="header">
+            <h3><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixComposition ~
+                  currency }}</span></h3>
+            <p></p>
          </div>
-      </article>
+
+         {% if is_granted('microservice_edit', microservice) %}
+
+         {% include "microservice/composants/_edit_btn.html.twig" %}
+
+         {% else %}
+
+         <a href="{{ path('commander_microservice', {slug: microservice.slug, offre: 'Composition'}) }}">
+            <button>{{ microservice.prixComposition ~ currency }} commander</button>
+         </a>
+
+         {% endif %}
+
+      </div>
       <p class="pt-4 pb-0 text-center p-0">
          Paiement <strong><i class="fa fa-lock"></i> Sécurisé</strong>
       </p>

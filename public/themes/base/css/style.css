@@ -869,18 +869,18 @@ p.help-block li {
      flex-wrap: wrap;
 }
  .market-wrapper .categories-list li {
-     width: 23%;
-     margin: 1%;
+     width: 19%;
+     margin: 1% auto;
      list-style: none;
      -webkit-box-sizing: border-box;
      box-sizing: border-box;
      text-align: center;
      border: 1px solid transparent!important;
-     background: #c5d4e2!important;
+     background: #fff!important;
      border-radius: 10px;
 }
  .market-wrapper .categories-list li a:hover {
-     background: #fff;
+     background: #c5d4e2;
      border:#fff!important;
 }
  .market-wrapper .categories-list li a {

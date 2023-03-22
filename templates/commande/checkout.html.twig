@@ -9,44 +9,53 @@
 {% block body %}
 
 <section>
-   <div class="container">
-      <div class="row">
+	<div class="container">
+		<div class="row">
 
-         <div class="col-sm-12">
+			<div class="col-sm-12">
 
-            {% include "commande/composants/_stripe.html.twig" %}
+				{% include "commande/composants/_stripe.html.twig" %}
 
-            <div>
-               {% include "commande/composants/_paypal_button.html.twig" %}
-            </div>
+				<div>
+					{% include "commande/composants/_paypal_button.html.twig" %}
+				</div>
 
-         </div>
+			</div>
 
-      </div>
+		</div>
 
-      <h4 class="py-3 h5">Service à commander</h4>
-      <div class="list-group my-3">
+		<h4 class="py-3 h5">Service à commander</h4>
+		<div class="list-group my-3">
 			<div class="list-group-item">
 				<div class="d-flex">
 					<div>
 						{% if microservice.medias|length > 0 %}
 
-							<img class="rounded" src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}"/>
+						<img class="rounded"
+							src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}" />
 
-							{% else %}<img class="rounded" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}"/>
+						{% else %}<img class="rounded"
+							src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}" />
 
 						{% endif %}
 					</div>
 					<div class="pl-3">
 						<strong class="d-block">{{ microservice.name }}</strong>
+
+						<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
+							class="badge badge-warning">#{{ microservice.categorie.name }}</a>
+
+						{% if microservice.categorie.slug == 'ingenieur-son' %}
+
+						<p class="">
+							{{ type_offre }} <strong> {{ microservice.prixMixage ~ currency }}</strong>
+						</p>
+
+						{% else %}
 						
-							<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}" class="badge badge-warning">#{{ microservice.categorie.name }}</a>
-
-						{% if microservice.prix|length > 0 %}
-
-							<p class="">
-								<strong>Offre {{ type_offre }} {{ montant ~ currency }}</strong>
-							</p>
+						<p class="">
+							A partir de <strong> {{ microservice.prix ~ currency }}</strong>
+						</p>
 
 						{% endif %}
 					</div>
@@ -54,7 +63,7 @@
 			</div>
 		</div>
 
-   </div>
+	</div>
 </section>
 
 {% endblock %}

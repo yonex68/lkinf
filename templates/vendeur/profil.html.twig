@@ -64,6 +64,7 @@
 							<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
 						</div>
 
+						{% if user.compte == 'Vendeur' %}
 						<div class="p-3">
 							<div class="d-flex align-items-top mb-2">
 								<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
@@ -82,7 +83,7 @@
 								<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(user)|length }}</p>
 							</div>
 							<div class="d-flex align-items-top">
-								<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> Vendeur</p>
+								<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> {{ user.compte }}</p>
 								<p class="text-dark mb-0 mt-0 ml-auto">{{ user.created|ago(locale='fr') }}</p>
 							</div>
 						</div>
@@ -96,6 +97,8 @@
 							</a>
 
 						</div>
+
+						{% endif %}
 
 					</div>
 				</div>

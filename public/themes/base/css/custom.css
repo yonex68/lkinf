@@ -1,9 +1,9 @@
 @font-face {
    font-family: Jost;
-   src: url(Font/Jost\ Medium\ 500.ttf) !important;
+   src: url(Font/Jost-Light-Italic-300.ttf);
 }
 body{
-   font-family: jost;
+   font-family: Jost!important;
 }
 
 /* Navigation */
