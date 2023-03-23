@@ -1,73 +1,68 @@
-<div class="profile_info">
-	<div class="seller-card">
-		<div>
-			<div class="user-online-indicator is-online " data-user-id="{{ app.user.id }}">
-				<i class="fa fa-circle"></i>En ligne
+<div class=" mb-3"><!-- sidebar-fix -->
+	<div class="box mb-3 shadow-sm rounded bg-white profile-box text-center">
+		<div class="p-4">
+			{% if app.user.avatar %}
+			<img class="img-fluid rounded-circle"
+				src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('identite_size') }}" alt='' />
+
+			{% else %}
+
+			<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}"
+				alt='' />
+
+			{% endif %}
+		</div>
+		<div class="p-3 border-top border-bottom">
+			<h5 class="font-weight-bold text-dark mb-1 mt-0 text-left">{{ app.user.nom }}
+				{{ app.user.prenom }}</h5>
+			<p class="mb-0 text-muted text-left">{{ app.user.apropos|raw }}</p>
+		</div>
+
+		<div class="p-3">
+			{% if is_granted('ROLE_VENDEUR') %}
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ avispositif(app.user)|length }}</p>
+			</div>
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-thumbs-down"></i> Avis négatif</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ avisnegatif(app.user)|length }}</p>
+			</div>
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(app.user)|length }}</p>
+			</div>
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(app.user)|length }}</p>
+			</div>
+			{% else %}
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ clientCommandeEncours(app.user)|length }}</p>
+			</div>
+			<div class="d-flex align-items-top mb-2">
+				<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Total achat</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ clientAchats(app.user)|length }}</p>
+			</div>				
+			{% endif %}
+			<div class="d-flex align-items-top">
+				<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> {{ app.user.compte }}</p>
+				<p class="text-dark mb-0 mt-0 ml-auto">{{ app.user.created|ago(locale='fr') }}</p>
 			</div>
 		</div>
-		<div>
-			<a href="#" class="ambassadors-badge">{{ app.user.compte }}</a>
+
+		{% if app.request.attributes.get('_route') == 'user_edit_profil' %}
+
+		{% else %}
+
+		<div class="text-center p-3">
+			<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-dark pl-4 pr-4 btn-block rounded-btn">
+				<i class="fa fa-cog"></i> Mettre à jour mon profil
+			</a>
 		</div>
-		<div class="user-profile-info">
-			<div>
-				<div class="user-profile-image text-left">
-					<label class="user-pict">
-						{% if app.user.avatar %}
-							<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}" class="" alt="{{ app.user.prenom }}">
-						{% else %}
 
-							{% if app.user.genre == 'Feminin' %}
+		{% endif %}
 
-								<img class="" src="{{ asset('img/femme.jpg') | imagine_filter('large_avatar') }}" alt=''/>
-
-							{% else %}
-
-								<img class="" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}" alt=''/>
-
-							{% endif %}
-
-						{% endif %}
-
-						<a href="#" class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
-					</label>
-				</div>
-			</div>
-			<div class="user-profile-label">
-				<div class="username-line">
-					<a href="#" class="seller-link">{{ app.user.nom ~ ' ' ~ app.user.prenom }}</a>
-				</div>
-				<div class="oneliner-wrapper">
-					<small class="oneliner">{{ app.user.email }}</small>
-					<div class="py-4">
-						<div class="d-flex align-items-top mb-2">
-							<p class="mb-0 text-muted text-left">Avis positif</p>
-							<p class="text-dark mb-0 mt-0 ml-auto text-right">({{ avispositif(app.user)|length }})</p>
-						</div>
-						<div class="d-flex align-items-top">
-							<p class="mb-0 text-muted text-left">Avis négatif</p>
-							<p class="text-dark mb-0 mt-0 ml-auto text-right">({{ avisnegatif(app.user)|length }})</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="py-3">
-					<p class="text-left">
-						{{ app.user.apropos|raw }}
-					</p>
-				</div>
-
-				{% if app.request.attributes.get('_route') == 'user_edit_profil'%}
-
-				{% else %}
-
-				<div class="text-center">
-					<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-dark pl-4 pr-4 btn-block">
-						<i class="fa fa-cog"></i> Mettre à jour mon profil
-					</a>
-				</div>
-					
-				{% endif %}
-			</div>
-		</div>
 	</div>
 </div>

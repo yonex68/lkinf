@@ -1,0 +1,88 @@
+<div class="card avis">
+   <div class="card-header p-0 bg-transparent border-0">
+      <ul class="nav nav-pills mb-3" id="avisTab" role="tablist">
+         <li class="nav-item w-50">
+            <a class="nav-link shadow-sm active" id="positif-avis" data-toggle="tab" href="#positif" role="tab"
+               aria-controls="positif" aria-selected="true">Avis positifs ({{
+               serviceAvisPositifs(microservice)|length }})</a>
+         </li>
+         <li class="nav-item w-50">
+            <a class="nav-link shadow-sm" id="negatif-avis" data-toggle="tab" href="#negatif" role="tab"
+               aria-controls="negatif" aria-selected="false">Avis négatifs ({{
+               serviceAvisNegatifs(microservice)|length }})</a>
+         </li>
+      </ul>
+   </div>
+   <div class="card-body">
+      <div class="tab-content" id="avisTabContent">
+         <div class="tab-pane fade show active" id="positif" role="tabpanel" aria-labelledby="positif-avis">
+
+            <ul class="list-unstyled">
+               {% for avisPositif in serviceAvisPositifs(microservice) %}
+
+               <li class="media">
+                  {% if avisPositif.client.avatar %}
+                  <img src="{{ vich_uploader_asset(app.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+                     class="rounded-circle mr-3" alt="{{ app.client.prenom }}">
+                  {% else %}
+
+                  <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}"
+                     alt='' />
+
+                  {% endif %}
+                  <div class="media-body">
+                     <strong class="mt-0 mb-1 d-block h6 font-weight-bold">{{ avisPositif.client.nom ~ ' ' ~
+                        avisPositif.client.prenom }}</strong>
+                     {{ avisPositif.contenu }}
+
+                     <span class="text-muted d-block text-italic py-2">
+                        <i class="fa fa-clock-o"></i> {{ avisPositif.created|ago(locale='fr') }}</span>
+                  </div>
+               </li>
+               {% else %}
+               <li>
+                  <p>Aucun avis positif...</p>
+               </li>
+               {% endfor %}
+
+            </ul>
+
+         </div>
+         <div class="tab-pane fade" id="negatif" role="tabpanel" aria-labelledby="negatif-avis">
+
+            <ul class="list-unstyled">
+               {% for avisNegatif in serviceAvisNegatifs(microservice) %}
+
+               <li class="media">
+                  {% if avisNegatif.client.avatar %}
+                  <img src="{{ vich_uploader_asset(app.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+                     class="rounded-circle mr-3" alt="{{ app.client.prenom }}">
+                  {% else %}
+
+                  <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}"
+                     alt='' />
+
+                  {% endif %}
+                  <div class="media-body">
+                     <strong class="mt-0 mb-1 d-block h6 font-weight-bold">{{ avisNegatif.client.nom ~ ' ' ~
+                        avisNegatif.client.prenom }}</strong>
+                     {{ avisNegatif.contenu }}
+
+                     <span class="text-muted d-block text-italic py-2">
+                        <i class="fa fa-clock-o"></i> {{ avisNegatif.created|ago(locale='fr') }}</span>
+                  </div>
+               </li>
+               {% else %}
+
+               <li>
+                  <p>Aucun avis négatif...</p>
+               </li>
+
+               {% endfor %}
+
+            </ul>
+
+         </div>
+      </div>
+   </div>
+</div>

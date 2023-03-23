@@ -1,31 +1,50 @@
 {% extends 'auth.html.twig' %}
 
-{% block title %}Commande succès
+{% block title %}Commande enregister
 {% endblock %}
 
-{% block titre %}Félicitation {{ app.user.nom }}
-{% endblock %}
+{% block titre %}Félicitation {{ app.user.nom }} {{ app.user.prenom }}{% endblock %}
 
 {% block col %}6{% endblock %}
 
 {% block body %}
 
-	<section class="pt-5">
-		<div class="container">
-			<div class="row">
+<section class="pt-2">
+	<div class="container">
+		<div class="row pb-3">
+			<div class="col-6 col-sm-3 text-right ml-auto">
+				<div class="text-center">
 
-				<div class="col-sm-12">
-					<div class="alert shadow" style="border: 1px solid green;">
-						<p class="text-success font-weight-bold lead">Votre commande à bien été enregistrer</p>
-						<span class="span text-muted ">Pour des reclamations nous contacter: <br>
-							<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
-						</span>
-					</div>
+					{% if app.user.avatar %}
+					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}"
+						class="rounded-circle img-fluid" alt="{{ app.user.nom ~ ' ' ~ app.user.prenom }}">
+
+					{% else %}
+
+					<img class="rounded-circle img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}"
+						alt='{{ app.user.nom ~ ' ' ~ app.user.prenom }}' />
+
+					{% endif %}
 				</div>
-
+			</div>
+			<div class="col-6 col-sm-3 text-left mr-auto">
+				<img src="{{ asset('img/commande.png') }}" class="img-fluid" alt="">
 			</div>
 		</div>
-	</section>
+		<div class="row">
+
+			<div class="col-sm-12">
+				<div class="alert shadow" style="border: 1px solid green;">
+					<p class="text-success font-weight-bold lead">Votre commande à bien été enregistrer</p>
+					<span class="span text-muted ">Pour des reclamations et d'autres raisons, vous pouvez nous contacté: <br>
+						<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
+					</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
 
 {% endblock %}
 

@@ -58,8 +58,7 @@
 	<div class="box-body">
 		<div class="bg-white rounded shadow-sm">
 			<div class="dropdown-menu-show">
-				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_abonnement' ? 'active' : '' }}" href="{{ path('vendeur_abonnement') }}"><i class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
-				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-cc-visa"></i>&nbsp;&nbsp;&nbsp;Méthode de paiement</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'stripe_abonnement_services' ? 'active' : '' }}" href="{{ path('stripe_abonnement_services') }}"><i class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
 			</div>
 		</div>
 	</div>
@@ -74,15 +73,11 @@
 	<div class="box-body">
 		<div class="bg-white rounded shadow-sm">
 			<div class="dropdown-menu-show">
-
-				{% if is_granted('ROLE_VENDEUR') %}
-
-				<a class="dropdown-item py-2" href=""><i class="text-muted fa fa-user"></i>&nbsp;&nbsp;&nbsp;Mon compte vendeur</a>
-
-				{% endif %}
-				
+							
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
-					href="{{ path('user_profil') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon profil publique</a>
+					href="{{ path('user_profil') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
+					href="{{ path('user_coordonnees') }}"><i class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Mes coordonnées</a>
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
 						href="{{ path('edit_password') }}"><i class="text-muted fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
 			</div>

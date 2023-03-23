@@ -3,10 +3,17 @@
 <div class="box shadow-sm rounded bg-white mb-3">
    <div class="box-title p-3 text-left bg-dark rounded">
       <h4 class="mb-0 text-light">
-         Information du compte
+         Mon profil public
       </h4>
    </div>
    <div class="box-body p-3">
+      {% if is_granted('ROLE_VENDEUR') %}
+      <p>
+         En tant que vendeur, vous disposez d’un profil public présentant vos services en vente. Complétez-le avec
+         soin,
+         sans indiquer de coordonnée personnelle ni faire la promotion d’un autre moyen de contact que via {{ appName }}
+      </p>
+      {% endif %}
       <div class="form-group row">
          <div class="col-sm-6">
             {{ form_row(form.nom) }}
@@ -18,9 +25,16 @@
       </div>
       <div class="row">
          <div class="col-sm-6">
+            <strong>Photo de profil</strong>
             <div class="form-group">
                {{ form_row(form.imageFile) }}
-            </div>            
+            </div>
+            {% if is_granted('ROLE_VENDEUR') %}
+            <p>
+               Montrez-vous ! Les vendeurs avec une photo les représentant vraiment font plus de ventes que la
+               moyenne.
+            </p>
+            {% endif %}
          </div>
          <div class="col-sm-6">
             <div class="form-group">
@@ -54,10 +68,24 @@
       </div>
 
       <div class="form-group">
-         {{ form_row(form.apropos) }}
+         <strong>Biographie</strong>
+         {% if is_granted('ROLE_VENDEUR') %}
+         <p>
+            Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.
+            Attention : ce n’est pas votre service, et aucun lien externe, identifiant de réseau social, adresse
+            e-mail
+            ou numéro de téléphone n’est permis.
+         </p>
+         {% endif %}
+         {{ form_widget(form.apropos) }}
+         {{ form_errors(form.apropos) }}
       </div>
-      <div class="form-group">
-         <button type="submit" class="btn btn-success">Enregistrer les changements</button>
+      <div class="row">
+         <div class="col-sm-6">
+            <div class="form-group">
+               <button type="submit" formnovalidate class="btn btn-outline-dark btn-block rounded-btn">Mettre à jour</button>
+            </div>
+         </div>
       </div>
    </div>
 </div>

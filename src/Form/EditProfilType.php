@@ -54,14 +54,9 @@ class EditProfilType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
             ])
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Avatar (Png, jpg et jpeg)',
+                'label' => '(Png, jpg et jpeg)',
                 'required'  =>  false,
                 'allow_delete' =>  false,
                 'download_label'     =>  false,

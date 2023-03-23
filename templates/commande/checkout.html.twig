@@ -52,7 +52,7 @@
 						</p>
 
 						{% else %}
-						
+
 						<p class="">
 							A partir de <strong> {{ microservice.prix ~ currency }}</strong>
 						</p>
@@ -65,6 +65,23 @@
 
 	</div>
 </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+	$(document).ready(function () {
+		$("#btnFetch").click(function () {
+			// disable button
+			$(this).prop("disabled", true);
+			// add spinner to button
+			$(this).html(
+				`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Traitement...`
+			);
+		});
+	});
+</script>
 
 {% endblock %}
 

@@ -49,7 +49,7 @@ class CommandeController extends AbstractController
         }
     }
 
-    #[Route('/chat', name: 'commandes_chats')]
+    #[Route('/suivis', name: 'commandes_chats')]
     public function chat(CommandeRepository $commandeRepository): Response
     {
         $user = $this->getUser();
@@ -58,10 +58,11 @@ class CommandeController extends AbstractController
 
         return $this->render('commande/chat.html.twig', [
             'usercommandes' => $commandes,
+            'commande' => null,
         ]);
     }
 
-    #[Route('/validee/commande_id={id}', name: 'commande_details')]
+    #[Route('/suivis/commande_id={id}', name: 'commande_details')]
     public function commande(CommandeRepository $commandeRepository, $id, Request $request, EntityManagerInterface $entityManager, CommandeMessageRepository $commandeMessageRepository): Response
     {
         $user = $this->getUser();
@@ -371,7 +372,7 @@ class CommandeController extends AbstractController
 
             // Envoie de mail
             $email = (new TemplatedEmail())
-                ->from('links@infinity.com')
+                ->from('contact@links-infinity.com')
                 ->to($commande->getVendeur()->getEmail())
                 ->subject('LINKS INFINITY - COMMANDE LIVREE')
                 ->htmlTemplate('commande/composants/_livraison_mail.html.twig')

@@ -1,6 +1,6 @@
 {% extends 'auth.html.twig' %}
 
-{% block title %}Chargement...{% endblock %}
+{% block title %}Traitement...{% endblock %}
 
 {% block titre %}Veuillez patienter...{% endblock %}
 
@@ -9,11 +9,16 @@
 {% block body %}
 
 <section class="container">
-   <div class="row my-5">
-      <div class="col-12">
-        <p class="text-center">Chargement...</p>
+  <div class="row my-5">
+    <div class="col-12">
+      <div class="alert shadow-sm text-center border-light">
+        <p class="text-center text-success">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Traitement...
+        </p>
       </div>
     </div>
+  </div>
 </section>
 
 {% endblock %}
@@ -25,30 +30,30 @@
 
 <script type="text/javascript">
 
-    {% if app_environement == "dev" %}
+  {% if app_environement == "dev" %}
 
-    var stripeToken = "{{ stripe_public_key_test }}"
+  var stripeToken = "{{ stripe_public_key_test }}"
 
-    {% else %}
+  {% else %}
 
-    var stripeToken = "{{ stripe_public_key_live }}"
+  var stripeToken = "{{ stripe_public_key_live }}"
 
-    {% endif %}
+  {% endif %}
 
-    var stripe = Stripe(stripeToken);
-    var session = "{{ checkout_session_id }}";
-    stripe.redirectToCheckout({ sessionId: session })
-    .then(function(result) {
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using `error.message`.
-          if (result.error) {
-            alert(result.error.message);
-        }
+  var stripe = Stripe(stripeToken);
+  var session = "{{ checkout_session_id }}";
+  stripe.redirectToCheckout({ sessionId: session })
+    .then(function (result) {
+      // If `redirectToCheckout` fails due to a browser or network
+      // error, you should display the localized error message to your
+      // customer using `error.message`.
+      if (result.error) {
+        alert(result.error.message);
+      }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error('Error:', error);
-  });          
+    });
 
 </script>
 {% endblock %}

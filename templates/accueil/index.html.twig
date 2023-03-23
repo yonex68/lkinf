@@ -3,7 +3,7 @@
 {% block body %}
 
 <section class="py-5-home homepage-search-block position-relative bg-image"
-	style="background-image: url({{ asset('img/banner.png') }});">
+	style="background-image: url({{ asset('img/studio.jpg') }});" id="home-banner">
 	<div class="container">
 		<div class="row py-lg-5">
 			<div class="col-lg-8">
@@ -41,7 +41,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h3 class="text-white">Les plus rescents</h3>
-					<div class="view recent-slider recommended-slider d-flex align-items-stretch">
+					<div class="view recent-slider recommended-slider">
 						{% for microservice in lastedServices() %}
 						{{ include('microservice/composants/_bloc.html.twig') }}
 						{% endfor %}
@@ -59,16 +59,20 @@
 			{% for categorie in categories %}
 			<li class="my-3">
 				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}">
-					{% if categorie.image %}
-					
-					<img src="{{ vich_uploader_asset(categorie, 'imageFile') | imagine_filter('small_avatar') }}" alt="{{ categorie.name }}" loading="lazy" class="rounded-circle">
+					{% if categorie.icone %}
+
+					<img src="{{ vich_uploader_asset(categorie, 'iconeFile') | imagine_filter('small_avatar') }}"
+						alt="{{ categorie.name }}" loading="lazy" class="rounded-circle">
 
 					{% else %}
 
 					<img src="{{ asset('themes/base/images/graphics.svg') }}" alt="{{ categorie.name }}" loading="lazy">
+
 					{% endif %}
+
 					{{ categorie.name }} <br>
-					<span>({{ categorie.microservices|length }} service{{ categorie.microservices|length > 1 ? 's' : '' }} disponible)</span>
+					<span>({{ categorie.microservices|length }} service{{ categorie.microservices|length > 1 ? 's' : '' }}
+						disponible)</span>
 				</a>
 			</li>
 			{% endfor %}
@@ -85,31 +89,28 @@
 				</div>
 				<div class="col-md-6">
 					<h2>Comment ça marche?</h2>
+					<p>
+						Trouvez le prestataire qui répondra à vos besoins, parcourez de nombreuses catégories et trouvez des
+						prestations dématérialisées pour
+						tous vos besoins. Faites votre choix parmi de nombreux prestataires qui mettent leur talent à votre
+						disposition.
+					</p>
 					<div class="row">
 						<div class="col-sm-6">
 							<ul>
 								<li>
 									<span><img src="{{ asset('themes/base/images/checkmark.svg') }}">
-										Full Transparency</span>
-									A
-									new shared dashboard allows you to track your team's activity, so that everyone is always in
-									sync.
+										Choisissez un service</span>
 								</li>
 								<li>
 									<span><img src="{{ asset('themes/base/images/checkmark.svg') }}">
-										VIP Customer Support
-									</span>Quick response time and upgraded support solutions will help you to get what you need,
-									when you need it.
+										Passez une commande
+									</span>
 								</li>
-							</ul>
-						</div>
-						<div class="col-sm-6">
-							<ul>
 								<li>
 									<span><img src="{{ asset('themes/base/images/checkmark.svg') }}">
-										VIP Customer Support
-									</span>Quick response time and upgraded support solutions will help you to get what you need,
-									when you need it.
+										Récupérez votre commande
+									</span>
 								</li>
 							</ul>
 						</div>
@@ -206,7 +207,7 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modalLocationsLabel">Demande d'autorisation</h5>
+				<h5 class="modal-title" id="modalLocationsLabel text-center">Demande d'autorisation</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -265,6 +266,22 @@
 
 	});
 
+</script>
+
+<script>
+	window.onload = function () {     // Array of Images
+		var backgroundImg = [
+			"{{ asset('img/Danceur.jpg') }}",
+			"{{ asset('img/studio.jpg') }}",
+		]
+		setInterval(changeImage, 5000);
+		function changeImage() {
+			var i = Math.floor((Math.random() * 3));
+
+			document.getElementById("home-banner").style.backgroundImage = "url('" + backgroundImg[i] + "')";
+
+		}
+	}
 </script>
 
 {% endblock %}

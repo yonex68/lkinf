@@ -45,7 +45,7 @@
 
                <div class="py-3">
                   <h3 class="lead h5 font-weight-bold">3 - Commande en cours</h3>
-                  <span class="text-dark">Depuis {{ commande.validateAt|ago(locale='fr') }}</span>
+                  <span class="text-dark">{{ commande.validateAt|ago(locale='fr') }}</span>
                </div>
 
                {% endif %}

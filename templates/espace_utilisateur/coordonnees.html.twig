@@ -1,0 +1,75 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block bg %}{% endblock %}
+
+{% block colleft %}4
+{% endblock %}
+
+{% block colright %}8
+{% endblock %}
+
+{% block sidebar %}
+	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="">
+	<div class="box shadow-sm rounded bg-white mb-3">
+		<div class="box-title p-3 text-left bg-dark rounded">
+			<h4 class="mb-0 text-light">
+				Mes coordonnées
+			</h4>
+		</div>
+
+		<div class="box-body p-3 border-bottom">
+			<h6 class="font-weight-bold text-dark mb-0">Coordonnées personnelles</h6>
+			<div class="row">
+				<div class="col-sm-6 py-3">
+					<table class="table table-borderless table-hover table-striped">
+						<tbody>
+							<tr>
+								<th>Statut</th>
+								<td class="text-left">{{ app.user.compte }}</td>
+							</tr>
+							<tr>
+								<th>Nom</th>
+								<td class="text-left">{{ app.user.nom }}</td>
+							</tr>
+							<tr>
+								<th>Prénom</th>
+								<td class="text-left">{{ app.user.prenom }}</td>
+							</tr>
+							<tr>
+								<th>Genre</th>
+								<td class="text-left">{{ app.user.genre }}</td>
+							</tr>
+							<tr>
+								<th>Téléphone</th>
+								<td class="text-left">{{ app.user.telephone }}</td>
+							</tr>
+							<tr>
+								<th>Adresse</th>
+								<td class="text-left">{{ app.user.adresse }}</td>
+							</tr>
+							<tr>
+								<th>Ville</th>
+								<td class="text-left">{{ app.user.ville }}</td>
+							</tr>
+							<tr>
+								<th>Etat</th>
+								<td class="text-left">{{ app.user.pays }} - {{ app.user.etat }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

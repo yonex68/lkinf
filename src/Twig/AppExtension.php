@@ -56,11 +56,16 @@ class AppExtension extends AbstractExtension
             new TwigFunction('getMessageNonLu', [$this, 'getMessageNonLu']),
             new TwigFunction('getCommandeNonLu', [$this, 'getCommandeNonLu']),
             new TwigFunction('followers', [$this, 'getVendeurFollowers']),
+            new TwigFunction('lastFolowers', [$this, 'getVendeurlastFolowers']),
             new TwigFunction('serviceAvis', [$this, 'getServicesAvisPositif']),
             new TwigFunction('serviceCommandes', [$this, 'getServicesCommandes']),
             new TwigFunction('lastedServices', [$this, 'getLastServices']),
             new TwigFunction('ventes', [$this, 'getVendeurTotalVente']),
             new TwigFunction('commandeEncours', [$this, 'getVendeurCommandesEncours']),
+            new TwigFunction('clientCommandeEncours', [$this, 'getClientCommandesEncours']),
+            new TwigFunction('clientAchats', [$this, 'getClientTotalAchats']),
+            new TwigFunction('serviceAvisPositifs', [$this, 'getServiceAvisPositif']),
+            new TwigFunction('serviceAvisNegatifs', [$this, 'getServiceAvisNegatif']),
         ];
     }
 
@@ -84,7 +89,19 @@ class AppExtension extends AbstractExtension
         return $this->avisRepository->findOneBy(['vendeur' => $vendeur, 'type' => 'Negatif']);
     }
 
+    public function getServiceAvisPositif($service){
+        return $this->avisRepository->findBy(['microservice' => $service, 'type' => 'Positif']);
+    }
+
+    public function getServiceAvisNegatif($service){
+        return $this->avisRepository->findBy(['microservice' => $service, 'type' => 'Negatif']);
+    }
+
     public function getVendeurFollowers($vendeur){
+        return $this->suivisRepository->findBy(['vendeur' => $vendeur], ['created' => 'DESC']);
+    }
+
+    public function getVendeurlastFolowers($vendeur){
         return $this->suivisRepository->findBy(['vendeur' => $vendeur], ['created' => 'DESC'], 12);
     }
     
@@ -102,6 +119,14 @@ class AppExtension extends AbstractExtension
     
     public function getVendeurCommandesEncours($user) {
         return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Valider']);
+    }
+    
+    public function getClientTotalAchats($user) {
+        return $this->commandeRepository->findBy(['client' => $user, 'statut' => 'Livrer']);
+    }
+    
+    public function getClientCommandesEncours($user) {
+        return $this->commandeRepository->findBy(['client' => $user, 'statut' => 'Valider']);
     }
 
     public function getServicesAvisPositif($service){

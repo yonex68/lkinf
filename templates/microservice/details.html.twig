@@ -13,13 +13,13 @@
 						<a href="#description">Description</a>
 					</li>
 					<li class="nav-aboutSeller">
-						<a href="#aboutSeller">Personnaliser ce service</a>
+						<a href="#aboutSeller">Personnaliser</a>
 					</li>
 					<li class="nav-packagesTable">
-						<a href="#packagesTable">Contacter le vendeur</a>
+						<a href="#packagesTable">Contacter</a>
 					</li>
 					<li class="nav-recommendations">
-						<a href="#recommendations">Autres services de ce vendeur</a>
+						<a href="#recommendations">Autres services</a>
 					</li>
 				</ul>
 			</div>
@@ -33,11 +33,11 @@
 			<div class="col-lg-8 left">
 
 				<div class="card">
-					<div class="card-header bg-white border-0">
-						<h5 class="mt-3 p-2 font-weight-bold">{{ microservice.name }}</h5>
+					<div class="card-header bg-white border-0 p-2">
+						<h5 class="mt-2 font-weight-bold">{{ microservice.name }}</h5>
 					</div>
 					<div class="card-body p-0">
-						<div id="overview" class="seller-overview pl-3 d-flex align-items-center">
+						<div id="overview" class="seller-overview pl-2 d-flex align-items-center">
 							<div class="user-info d-flex border-0 p-0 mt-0">
 								<span class="user-info-rating d-flex border-0">
 									<div class="star-rating-s15-wrapper">
@@ -53,7 +53,7 @@
 
 						{% include "microservice/composants/_galerie.html.twig" %}
 
-						<div id="description" class="p-4">
+						<div id="description" class="p-2">
 							<h3 style="margin-top: -30px;">Description</h3>
 							<p class="p-0 m-0">{{ microservice.description|raw }}</p>
 						</div>
@@ -122,11 +122,29 @@
 
 					</div>
 				</form>
+
+				<!-- Avis -->
+				{% include "microservice/composants/_avis.html.twig" %}
+
+				<div class="tags">
+					<h3>Catégories relatives</h3>
+					<ul class="d-flex">
+						{% for categorie in categories() %}
+						<li>
+							<a
+								href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}">{{
+								categorie.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+
 			</div>
 			<div class="col-lg-4 right">
 				{% include "microservice/composants/_trafic.html.twig" %}
 			</div>
 		</div>
+
 		<div class="row py-4">
 			<div class="col-sm-12">
 				<div class="view_slider recommended">
@@ -134,7 +152,11 @@
 					<div class="view recommended-slider">
 						{% for similaire in similaires %}
 
+						{% if similaire == microservice %}{% else %}
+
 						{% include "microservice/composants/_similar_bloc.html.twig" %}
+
+						{% endif %}
 
 						{% endfor %}
 					</div>

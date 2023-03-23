@@ -1,0 +1,118 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Devenir vendeur sur
+{{ appName }}
+{% endblock %}
+
+{% block titre %}Devenir vendeur sur
+{{ appName }}
+{% endblock %}
+
+{% block text %}Devenez vendeur sur
+{{ appName }}? completer ces informations
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(devenirVendeur) }}
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="mb-1">Nom</label>
+			<div class="position-relative icon-form-control">
+				<i class="mdi mdi-account position-absolute"></i>
+				{{ form_widget(devenirVendeur.nom) }}
+			</div>
+			{{ form_errors(devenirVendeur.nom) }}
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="mb-1">Prénom</label>
+			<div class="position-relative icon-form-control">
+				<i class="mdi mdi-account position-absolute"></i>
+				{{ form_widget(devenirVendeur.prenom) }}
+			</div>
+			{{ form_errors(devenirVendeur.prenom) }}
+		</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="mb-1">Email</label>
+	<div class="position-relative icon-form-control">
+		<i class="mdi mdi-email-outline position-absolute"></i>
+		{{ form_widget(devenirVendeur.email) }}
+	</div>
+	{{ form_errors(devenirVendeur.email) }}
+</div>
+
+<!--<div class="form-group">
+	<label class="mb-1">Adresse</label>
+	<div class="position-relative icon-form-control">
+		<i class="mdi mdi-map position-absolute"></i>
+		 form_widget(devenirVendeur.adresse) }}
+	</div>
+	 form_errors(devenirVendeur.adresse) }}
+</div>
+
+<div style="visibility: hidden;height:1px;">
+	 form_row(devenirVendeur.ville) }}
+
+	 form_row(devenirVendeur.etat) }}
+
+	 form_row(devenirVendeur.pays) }}
+</div>-->
+
+<div class="form-group border p-3 rouned shadow-sm mb-0">
+	{{ form_row(devenirVendeur.agreeLocations) }}
+</div>
+
+<div class="mb-3">
+	{{ form_widget(devenirVendeur.agreeTerms) }}
+	<label for="devenir_vendeur_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
+		J'accepte les
+		<a href="">termes</a>
+		et
+		<a href="">conditions d'utilisation</a>
+	</label>
+</div>
+
+{{ form_rest(devenirVendeur) }}
+
+<button type="submit" formnovalidate class="btn btn-success btn-block text-uppercase">Envoyer</button>
+
+{{ form_end(devenirVendeur) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script>
+
+	$("#devenir_vendeur_agreeLocations").on('change', async function (e) {
+
+		function getLocation(position) {
+
+			console.log(position.coords)
+
+			const longitude = position.coords.longitude
+			const latitude = position.coords.latitude
+
+			$("#devenir_vendeur_longitude").val(longitude)
+			$("#devenir_vendeur_latitude").val(latitude)
+		}
+
+		function failedToGet() {
+			console.log('Une erreur est survenu lors de la confirmation de votre localisation')
+		}
+
+		const result = navigator.geolocation.getCurrentPosition(getLocation, failedToGet)
+	})
+
+</script>
+
+{% endblock %}

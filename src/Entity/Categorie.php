@@ -51,6 +51,17 @@ class Categorie
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+    
+    /**
+     * @Vich\UploadableField(mapping="categories_icon_images", fileNameProperty="icone")
+     * @var File|null
+     * @Assert\Image(maxSize="10M", maxSizeMessage="Image trop volumineuse maximum 10Mb")
+     * @Assert\Image(mimeTypes = {"image/jpeg", "image/jpg", "image/png"}, mimeTypesMessage = "Mauvais format d'image (jpeg, jpg et png)")
+    **/
+    private $iconeFile;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $icone = null;
 
     public function __construct()
     {
@@ -174,5 +185,36 @@ class Categorie
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    public function getIcone(): ?string
+    {
+        return $this->icone;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null eeFile
+     */
+    public function setIconeFile(?File $iconeFile = null): void
+    {
+        $this->iconeFile = $iconeFile;
+
+        if (null !== $iconeFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdated(new \DateTimeImmutable());
+        }
+    }
+
+    public function getIconeFile(): ?File
+    {
+        return $this->iconeFile;
+    }
+
+    public function setIcone(?string $icone): self
+    {
+        $this->icone = $icone;
+
+        return $this;
     }
 }

@@ -152,7 +152,21 @@
 						Mes services
 					</a>
 
+					<a class="dropdown-item" href="{{ path('vendeur_commandes_index') }}" target="_blank">
+						<div class="dropdown-item-icon">
+							<i class="fa fa-cart-plus"></i>
+						</div>
+						Mes commandes de vente
+					</a>
+
 					{% endif %}
+
+					<a class="dropdown-item" href="{{ path('vendeur_achats_index') }}" target="_blank">
+						<div class="dropdown-item-icon">
+							<i class="fa fa-opencart"></i>
+						</div>
+						Mes commandes d'achats
+					</a>
 
 					<a class="dropdown-item" href="{{ path('favoris_index') }}">
 						<div class="dropdown-item-icon">
@@ -168,6 +182,18 @@
 						Suivi
 					</a>
 
+					{% if is_granted('ROLE_CLIENT') %}
+
+					<a class="dropdown-item" href="{{ path('app_devenir_vendeur') }}">
+						<button class="btn rounded-btn btn-outline-success w-100">
+							<i class="fa fa-user"></i>
+							Devenir vendeur
+						</button>
+					</a>
+
+					{% endif %}
+
+					<div class="dropdown-divider"></div>
 					<a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
 						<div class="dropdown-item-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
@@ -186,7 +212,8 @@
 			{% else %}
 			<li class="nav-item">
 				<a href="{{ path('app_login') }}" class="nav-link">
-					<button class="btn {{ app.request.attributes.get('_route') == 'accueil' ? 'btn-outline-light' : 'btn-outline-dark' }} btn-padding font-weight-bold">Connexion</button>
+					<button
+						class="btn {{ app.request.attributes.get('_route') == 'accueil' ? 'btn-outline-light' : 'btn-outline-dark' }} btn-padding font-weight-bold">Connexion</button>
 				</a>
 			</li>
 			<li class="nav-item">
@@ -220,7 +247,8 @@
 
 		<ul class="navbar-nav align-items-center mx-auto">
 			<li class="nav-item">
-				<a href="{{ path('accueil') }}" class="nav-link"><img src="{{ asset('img/logo.png') }}" alt="{{ appName }}" width="100"></a>
+				<a href="{{ path('accueil') }}" class="nav-link"><img src="{{ asset('img/logo.png') }}" alt="{{ appName }}"
+						width="100"></a>
 			</li>
 		</ul>
 

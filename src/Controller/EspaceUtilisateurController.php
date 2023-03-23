@@ -28,6 +28,13 @@ class EspaceUtilisateurController extends AbstractController
             
         ]);
     }
+    #[Route('/coordonnees', name: 'user_coordonnees')]
+    public function coordonnees(): Response
+    {
+        return $this->render('espace_utilisateur/coordonnees.html.twig', [
+            
+        ]);
+    }
 
     #[Route('/modifier-votre-mot-de-passe', name: 'edit_password', methods: ['GET', 'POST'])]
     public function editPassword(

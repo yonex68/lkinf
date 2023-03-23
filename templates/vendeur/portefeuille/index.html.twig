@@ -2,7 +2,7 @@
 
 {% block title %}Mon protefeuille{% endblock %}
 
-{% block bg %}{% endblock %}
+{% block bg %}white{% endblock %}
 
 {% block colleft %}4{% endblock %}
 
@@ -10,20 +10,20 @@
 
 {% block body %}
 
-<div class="">
-   <div class="box shadow-sm rounded bg-white mb-3">
-      <div class="p-3 border-bottom text-left bg-dark rounded box-title">
-         <h4 class="mb-0 text-light">
-            Portefeuille
-         </h4>
-      </div>
+<div class="p-3 border-bottom text-left bg-dark rounded box-title">
+   <h4 class="mb-0 text-light">
+      Portefeuille
+   </h4>
+</div>
 
-      <div class="border-bottom">
-         {% include "vendeur/portefeuille/composants/_box.html.twig" %}
-      </div>
-      
-      <div class="p-3">
-         <a href="" class="btn btn-success">Retrait de fond</a>
+<div class="p-3">
+   <div class="my-3">
+      {% include "vendeur/portefeuille/composants/_box.html.twig" %}
+   </div>
+
+   <div class="row">
+      <div class="col-sm-6">
+         <a href="" class="btn btn-outline-success btn-block rounded-btn">Retrait de fond</a>
       </div>
    </div>
 </div>

@@ -15,6 +15,7 @@ use App\Form\Microservice\MicroserviceType;
 use App\Repository\MicroserviceRepository;
 use App\Repository\SuivisRepository;
 use App\Service\MailerService;
+use App\Service\VerifyAbonnementService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,8 +56,15 @@ class VendeurMicroservicesController extends AbstractController
     }
 
     #[Route('/nouveau-service', name: 'vendeur_microservices_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MailerService $mailer, SuivisRepository $suivisRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerService $mailer, SuivisRepository $suivisRepository, VerifyAbonnementService $verifyAbonnementService): Response
     {
+        /** Verification de l'abonnement de l'utilisateur */
+        $user = $this->getUser();
+        
+        if ($verifyAbonnementService->verifyAbonnement($user) === false) {
+            return $this->redirectToRoute('stripe_abonnement_services');
+        }
+
         $microservice = new Microservice();
         $form = $this->createForm(MicroserviceTitreType::class, $microservice);
         $form->handleRequest($request);

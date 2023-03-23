@@ -7,14 +7,24 @@
 
 {% block sidebar %}
 
-	{{ parent() }}
+{{ parent() }}
 
 {% endblock %}
 
 {% block body %}
 
-	{% include "vendeur/portefeuille/composants/_box.html.twig" %}
+<div class="bg-white shadow-sm rounded mb-3">
+	<div class="p-3 border-bottom text-left bg-dark rounded box-title">
+		<h4 class="mb-0 text-light">
+			Tableau de bord
+		</h4>
+	</div>
 
-	{% include "vendeur/abonnement/composants/_box.html.twig" %}
+	<div class="p-3">
+		{% include "vendeur/portefeuille/composants/_box.html.twig" %}
+	</div>
+</div>
+
+{% include "vendeur/abonnement/composants/_box.html.twig" %}
 
 {% endblock %}

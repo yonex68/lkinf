@@ -136,11 +136,11 @@
                </div>
                <div class="d-flex align-items-top mb-2">
                   <p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
-                  <p class="text-dark mb-0 mt-0 ml-auto">0</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(microservice.vendeur)|length }}</p>
                </div>
                <div class="d-flex align-items-top mb-2">
                   <p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
-                  <p class="text-dark mb-0 mt-0 ml-auto">0</p>
+                  <p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(microservice.vendeur)|length }}</p>
                </div>
                <div class="d-flex align-items-top">
                   <p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> Vendeur</p>
@@ -148,7 +148,7 @@
                </div>
             </div>
 
-            <div class="row pt-3">
+            <div class="row pt-3" id="packagesTable">
                <div class="col-sm-6">
                   <a class="btn btn-dark btn-block"
                      href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter</a>

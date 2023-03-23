@@ -27,7 +27,16 @@ class CategorieType extends AbstractType
                 ]
             ])
             ->add('imageFile', VichImageType::class, [
-                'label' => '(Png, jpg et jpeg)',
+                'label' => "Image de couverture (Png, jpg et jpeg)",
+                'required' =>  false,
+                'allow_delete' =>  false,
+                'download_label'     =>  false,
+                'image_uri'     =>  false,
+                'download_uri'     =>  false,
+                'imagine_pattern'   =>  'large_avatar',
+            ])
+            ->add('iconeFile', VichImageType::class, [
+                'label' => "Image d'avant plan (Png, jpg et jpeg)",
                 'required' =>  false,
                 'allow_delete' =>  false,
                 'download_label'     =>  false,

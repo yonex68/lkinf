@@ -58,10 +58,6 @@
 </div>
 
 <div class="form-group">
-	{{ form_row(registrationForm.agreeLocations) }}
-</div>
-
-<div class="form-group">
 	<label class="mb-1">Adresse</label>
 	<div class="position-relative icon-form-control">
 		<i class="mdi mdi-map position-absolute"></i>
@@ -93,6 +89,10 @@
 		<i class="mdi mdi-key-variant position-absolute"></i>
 		{{ form_widget(registrationForm.plainPassword) }}
 	</div>
+</div>
+
+<div class="form-group">
+	{{ form_row(registrationForm.agreeLocations) }}
 </div>
 
 <div class="mb-3">

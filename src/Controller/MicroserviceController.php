@@ -7,6 +7,7 @@ use App\Entity\Microservice;
 use App\Entity\SearchService;
 use App\Form\CommandeType;
 use App\Form\SearchServiceType;
+use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
@@ -83,7 +84,7 @@ class MicroserviceController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
-    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository): Response
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository): Response
     {
 
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
@@ -92,6 +93,7 @@ class MicroserviceController extends AbstractController
             'microservice' => $microservice,
             'similaires' => $similaires,
             'prix' => $microservice->getPrix(),
+            'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
         ]);
     }
 }

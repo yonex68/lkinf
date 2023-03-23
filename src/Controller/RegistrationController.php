@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Portefeuille;
 use App\Entity\User;
+use App\Form\DevenirVendeurType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +23,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
-    
+
     private $sluger;
 
     public function __construct(EmailVerifier $emailVerifier, SluggerInterface $sluger)
@@ -30,13 +32,13 @@ class RegistrationController extends AbstractController
         $this->sluger = $sluger;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('accueil');
         }
-        
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -44,7 +46,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -55,7 +57,7 @@ class RegistrationController extends AbstractController
             $user->setNameUrl($userNameUrl);
             //$user->setIsLocked(false);
 
-            if($form->get('compte')->getData() == 'Vendeur'){
+            if ($form->get('compte')->getData() == 'Vendeur') {
 
                 $user->setRoles(['ROLE_VENDEUR']);
                 $user->setCompte('Vendeur');
@@ -69,8 +71,7 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($portefeuille);
 
                 $route = 'register_mail_send';
-
-            }elseif($form->get('compte')->getData() == 'Client'){
+            } elseif ($form->get('compte')->getData() == 'Client') {
 
                 $route = 'register_mail_send';
 
@@ -82,7 +83,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('linksinfinity@domanine.com', 'links infinity'))
                     ->to($user->getEmail())
@@ -100,6 +103,50 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/devenir-vendeur', name: 'app_devenir_vendeur')]
+    public function devenirVendeur(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerService $mailer): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(DevenirVendeurType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setRoles(['ROLE_VENDEUR']);
+            $user->setCompte('Vendeur');
+
+            // Création du portefeuille si l'utilisateur choisis le compte vendeur
+            $portefeuille = new Portefeuille();
+            $portefeuille->setSoldeDisponible(0);
+            $portefeuille->setSoldeEncours(0);
+            $portefeuille->setVendeur($user);
+
+            $entityManager->persist($portefeuille);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            /*$mailer->sendMailBecomeSaller(
+                'contact@links-infinity.com',
+                $user->getEmail(),
+                'Sujet',
+                'mails/_default.html.twig',
+                $user,
+                'message'
+            );*/
+
+            // do anything else you need here, like send an email
+            $this->addFlash('success', "Félication vous êtes enfin devenu vendeur");
+
+            return $this->redirectToRoute('user_profil', []);
+        }
+
+        return $this->render('registration/devenir_vendeur.html.twig', [
+            'devenirVendeur' => $form->createView(),
         ]);
     }
 
@@ -131,7 +178,7 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
-            
+
             return $this->redirectToRoute('app_register');
         }
 

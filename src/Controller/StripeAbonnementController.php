@@ -79,7 +79,7 @@ class StripeAbonnementController extends AbstractController
       // Création du portefeuille si l'utilisateur choisis le compte vendeur
       $portefeuille = new Portefeuille();
 
-      if ($user->getCompte() == 'acheteur') {
+      if ($user->getCompte() == 'Client') {
 
          if (!$user->getPortefeuille()) {
 
@@ -87,7 +87,7 @@ class StripeAbonnementController extends AbstractController
             $portefeuille->setSoldeEnCours(0);
             $portefeuille->setVendeur($user);
 
-            $user->setCompte('vendeur');
+            $user->setCompte('Vendeur');
             $user->setRoles(['ROLE_VENDEUR']);
 
             $entityManager->persist($portefeuille);

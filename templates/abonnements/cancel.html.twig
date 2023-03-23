@@ -1,0 +1,34 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Oups
+{% endblock %}
+
+{% block titre %}Oups
+	{{ app.user.prenom }}
+{% endblock %}
+
+{% block text %}Abonnement annuler
+	<strong>{{ abonnement.name }}</strong> 
+   
+   <div>Vous avez annulez votre souscription
+   </div>
+
+{% endblock %}
+
+{% block body %}
+
+	<div class="alert alert-danger">
+		<h5 class="my-0 text-success">
+			<i class="fa fa-check"></i>
+			Abonnement annuler
+		</h5>
+		<div class="d-flex justify-content-between lh-condensed">
+			<span class="span text-muted ">Pour des reclamations et  nous contacter:
+				<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
+			</span>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

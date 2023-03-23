@@ -5,7 +5,6 @@
 @font-face {
    font-family: Jost-semibold;
    src: url(Font/Jost-SemiBold-600.ttf);
-   font-weight: 600!important;
 }
 body{
    font-family: Jost!important;
@@ -57,7 +56,28 @@ h1,h2,h3,h4,h5,h6{
    padding: 9px 20px;
 }
 
-.bg-image .caption {
+.categorieSection{
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
+   position: relative;
+   z-index: 4;
+}
+.categorieSection .container{
+   position: relative;
+   z-index: 3;
+}
+.categorieSection .container h1{
+   margin-top: 20%!important;
+}
+.categorieSection .container h1, .categorieSection .container p{
+   color: white!important;
+}
+.categorieSection{
+   height: 400px;
+}
+.bg-image .caption,
+.categorieSection .caption {
    position: absolute;
    top: 0;
    left: 0;
@@ -235,4 +255,27 @@ h1,h2,h3,h4,h5,h6{
 .microservice_galerie_medias form fieldset div {
    /*border: 1px solid red!important;
    margin-bottom: 30px;*/
+}
+.dropdown:hover .dropdown-menu{
+   display: block!important;
+}
+.dropdown-menu{
+   margin-top: 0!important;
+}
+.box-title.bg-dark{
+   background: #82a0bc!important;
+   border-radius: 0!important;
+}
+.avis .nav-pills .nav-item .nav-link{
+   font-weight: 500;
+   padding: 15px;
+   font-size: 1.2em;
+   color: #000!important;
+   background-color: tranparent!important;
+   margin: 0px;
+   border-radius: 0;
+}
+.avis .nav-pills .nav-item .nav-link.active{
+   background-color: transparent;
+   border-bottom: 2px solid #82a0bc;
 }
