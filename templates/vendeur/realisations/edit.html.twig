@@ -1,0 +1,15 @@
+{% extends 'vandeur.html.twig' %}
+
+{% block title %}Réalisation - mise à jour{% endblock %}
+
+{% block body %}
+
+    <h1>Réalisation - mise à jour</h1>
+
+    {{ include('vendeur/realisations/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_vendeur_realisation_index') }}">back to list</a>
+
+    {{ include('vendeur/realisations/_delete_form.html.twig') }}
+
+{% endblock %}

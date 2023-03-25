@@ -6,6 +6,7 @@ use App\Entity\Traits\Timestamp;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -69,6 +70,15 @@ class Commande
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeMessage::class)]
     private $commandeMessages;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $rapportValidate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $rapportValidateAt = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Rapport $rapport = null;
 
     public function __construct()
     {
@@ -317,6 +327,42 @@ class Commande
                 $commandeMessage->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isRapportValidate(): ?bool
+    {
+        return $this->rapportValidate;
+    }
+
+    public function setRapportValidate(?bool $rapportValidate): self
+    {
+        $this->rapportValidate = $rapportValidate;
+
+        return $this;
+    }
+
+    public function getRapportValidateAt(): ?\DateTimeInterface
+    {
+        return $this->rapportValidateAt;
+    }
+
+    public function setRapportValidateAt(?\DateTimeInterface $rapportValidateAt): self
+    {
+        $this->rapportValidateAt = $rapportValidateAt;
+
+        return $this;
+    }
+
+    public function getRapport(): ?Rapport
+    {
+        return $this->rapport;
+    }
+
+    public function setRapport(?Rapport $rapport): self
+    {
+        $this->rapport = $rapport;
 
         return $this;
     }

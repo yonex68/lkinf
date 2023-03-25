@@ -2,21 +2,103 @@
    font-family: Jost;
    src: url(Font/Jost-Regular-400.ttf);
 }
+
 @font-face {
    font-family: Jost-semibold;
    src: url(Font/Jost-SemiBold-600.ttf);
 }
-body{
-   font-family: Jost!important;
+
+body {
+   font-family: Jost !important;
 }
-h1,h2,h3,h4,h5,h6{
+
+/*body, div, footer, nav, section, .bg-white{
+   background: #1a1b21!important;
+   color: white!important;
+}
+.box, .card, table, .navbar-expand-lg{
+   background: #23242a!important;
+}*/
+.third-menu, .border-bottom {
+   border-color: #1a1b21 !important;
+   background: #1a1b21 !important;
+   ;
+}
+
+.box-title.border-bottom, .card, .border-bottom,
+.border, .dropdown-divider, .osahan-chat .border-right {
+   border-color: #23242a !important;
+}
+
+.border-light {
+   border-color: #fff !important;
+   border-width: 2px !important;
+}
+
+.profile-card .user-profile-image label img,
+.box, .box .box-body .bg-white, .box .box-title,
+.dropdown-menu, .bg-light, .sidebar-page-right,
+.card, .pagination .page-item .page-link,
+.dropdown-menu .dropdown-item, .bg-white,
+.list-group, .list-group-item,
+.market-wrapper .categories-list li, .modal-content, .message-box,
+.inner-wrapper, .select2-results__option[aria-selected], .select2-search--dropdown,
+.btn-icon, .freelancer, .freelancer-footer, .slick-arrow {
+   background: #23242a !important;
+   border-color: #23242a !important;
+   color: white !important;
+}
+
+.osahan-chat-box, .btn-icon {
+   background-color: #1a1b21 !important;
+   color: white !important;
+}
+
+.inner-wrapper .footer {
+   border: 0 !important;
+}
+
+.profile-card .user-profile-image,
+input, select, textarea, .select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+   background-color: transparent !important;
+   color: white !important;
+}
+
+.profile-card .user-profile-image .profile-name span a,
+.box .box-body .bg-white .dropdown-menu-show .dropdown-item,
+.dropdown-menu .dropdown-item, .inner-wrapper .seller-name a, ul li span,
+.nav-link, .dropdown button, .text-truncate {
+   color: #a5a5a8 !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+   background-color: #1a1b21 !important;
+}
+
+.bg-transparent {
+   background-color: transparent !important;
+}
+
+.dropdown-item.active, .dropdown-item:hover {
+   background-color: #1a1b21 !important;
+   color: white !important;
+   ;
+}
+
+footer h2 {
+   color: #a5a5a8 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
    font-family: Jost-semibold;
+   color: #a5a5a8 !important;
 }
 
 /* Navigation */
 .navbar-expand-lg {
    z-index: 900 !important;
-   background: #fff !important;
+   background: #23242a !important;
    /*background-color: transparent!important;
    background-image: linear-gradient(160deg, #FDBAF8 0%, #B0EFEB 100%)!important;*/
 }
@@ -56,26 +138,31 @@ h1,h2,h3,h4,h5,h6{
    padding: 9px 20px;
 }
 
-.categorieSection{
+.categorieSection {
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;
    position: relative;
    z-index: 4;
 }
-.categorieSection .container{
+
+.categorieSection .container {
    position: relative;
    z-index: 3;
 }
-.categorieSection .container h1{
-   margin-top: 20%!important;
+
+.categorieSection .container h1 {
+   margin-top: 20% !important;
 }
-.categorieSection .container h1, .categorieSection .container p{
-   color: white!important;
+
+.categorieSection .container h1, .categorieSection .container p {
+   color: white !important;
 }
-.categorieSection{
+
+.categorieSection {
    height: 400px;
 }
+
 .bg-image .caption,
 .categorieSection .caption {
    position: absolute;
@@ -83,13 +170,13 @@ h1,h2,h3,h4,h5,h6{
    left: 0;
    right: 0;
    bottom: 0;
-   background: linear-gradient(transparent, black);
+   background: linear-gradient(transparent, #1a1b21);
    z-index: 0;
 }
 
 .bg-degrade {
    background-color: transparent;
-   background-image: linear-gradient(160deg, #82a0bc 0%, #95979d 100%);
+   background-image: linear-gradient(160deg, #1a1b21 0%, #1a1b21 100%);
 }
 
 .bg-degrade.home {
@@ -124,6 +211,17 @@ h1,h2,h3,h4,h5,h6{
    border-radius: 50%;
 }
 
+.pagination .page-item .page-link.btn-success {
+   background: #82a0bc!important;
+   background: -webkit-linear-gradient(legacy-direction(to right), #82a0bc 0%, #a9a9a9 100%)!important;
+   background: -webkit-gradient(linear, left top, right top, from(#82a0bc), to(#a9a9a9))!important;
+   background: -webkit-linear-gradient(left, #82a0bc 0%, #a9a9a9 100%)!important;
+   background: -o-linear-gradient(left, #82a0bc 0%, #a9a9a9 100%)!important;
+   background: linear-gradient(to right, #82a0bc 0%, #a9a9a9 100%)!important;
+   border-color: #82a0bc!important;
+   border-radius: 20px !important;
+}
+
 .bg-siteprimary {
    background: #82a0bc !important;
 }
@@ -149,7 +247,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .green {
-   color: rgb(17, 187, 17) !important;
+   color: #82a0bc !important;
 }
 
 .light {
@@ -169,6 +267,7 @@ h1,h2,h3,h4,h5,h6{
    left: -20px;
    height: 15px;
    line-height: 10px;
+   color: white !important;
 }
 
 .rounded-btn {
@@ -256,26 +355,32 @@ h1,h2,h3,h4,h5,h6{
    /*border: 1px solid red!important;
    margin-bottom: 30px;*/
 }
-.dropdown:hover .dropdown-menu{
-   display: block!important;
+
+.dropdown:hover .dropdown-menu {
+   display: block !important;
 }
-.dropdown-menu{
-   margin-top: 0!important;
+
+.dropdown-menu {
+   margin-top: 0 !important;
 }
-.box-title.bg-dark{
-   background: #82a0bc!important;
-   border-radius: 0!important;
+
+.box-title.bg-dark {
+   background: #23242a !important;
+   border-radius: 0 !important;
+   border-bottom-color: #1a1b21 !important;
 }
-.avis .nav-pills .nav-item .nav-link{
+
+.avis .nav-pills .nav-item .nav-link {
    font-weight: 500;
    padding: 15px;
    font-size: 1.2em;
-   color: #000!important;
-   background-color: tranparent!important;
+   color: #f8f8f8 !important;
+   background-color: tranparent !important;
    margin: 0px;
    border-radius: 0;
 }
-.avis .nav-pills .nav-item .nav-link.active{
+
+.avis .nav-pills .nav-item .nav-link.active {
    background-color: transparent;
    border-bottom: 2px solid #82a0bc;
 }

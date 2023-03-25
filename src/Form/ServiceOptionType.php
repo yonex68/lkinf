@@ -17,11 +17,11 @@ class ServiceOptionType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => false,
+                'label' => 'Titre',
                 'attr' => ['placeholder' => "Titre de l'option"]
             ])
             ->add('delai', ChoiceType::class, [
-                'label' => false,
+                'label' => 'Délai',
                 'placeholder' => 'Pas de délai supplémentaire',
                 'empty_data' => 'Aucun',
                 'choices'  => [
@@ -61,7 +61,7 @@ class ServiceOptionType extends AbstractType
                 'required' => false,
             ])
             ->add('montant', NumberType::class, [
-                'label' => false,
+                'label' => 'Montant',
                 'attr' => ['placeholder' => 'Montant']
             ])
         ;

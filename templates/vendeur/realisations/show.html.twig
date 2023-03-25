@@ -1,0 +1,41 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Realisation - détails{% endblock %}
+
+{% block body %}
+    <h1>Realisation - détails</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ realisation.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ realisation.name }}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td>{{ realisation.link }}</td>
+            </tr>
+            <tr>
+                <th>Plateforme</th>
+                <td>{{ realisation.plateforme }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ realisation.description }}</td>
+            </tr>
+            <tr>
+                <th>Online</th>
+                <td>{{ realisation.online ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vendeur_realisation_edit', {'id': realisation.id}) }}">Modifier</a>
+
+    {{ include('vendeur/realisations/_delete_form.html.twig') }}
+
+{% endblock %}

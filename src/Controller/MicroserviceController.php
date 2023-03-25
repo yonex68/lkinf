@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Microservice;
 use App\Entity\SearchService;
+use App\Entity\ServiceOption;
 use App\Form\CommandeType;
+use App\Form\CustomServiceType;
 use App\Form\SearchServiceType;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
+use App\Repository\ServiceOptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PHPUnit\TextUI\Command;
@@ -84,15 +87,36 @@ class MicroserviceController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
-    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository): Response
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository): Response
     {
 
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
 
+        $options = $microservice->getServiceOptions();
+        //dd($options);
+
+        $commandeForm = $this->createForm(CustomServiceType::class, $microservice);
+        $commandeForm->handleRequest($request);
+        $commandeForm->setData('serviceOptions')->setData($options);
+
+        if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
+            $datas = $commandeForm->get('serviceOptions')->getData();
+            $somme = 0;
+            
+            foreach ($datas as $data) {
+                $somme += $data->getMontant();
+            }
+
+            echo $somme;
+            dd('montant total');
+        }
+
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,
             'similaires' => $similaires,
+            'commandeForm' => $commandeForm->createView(),
             'prix' => $microservice->getPrix(),
+            'options' => $options,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
         ]);
     }

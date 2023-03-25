@@ -1,5 +1,4 @@
-<nav
-	class="navbar d-none d-sm-block navbar-expand-lg navbar-light {{ app.request.attributes.get('_route') == 'accueil' ? 'navtop-home' : 'shadow-sm' }} topbar static-top bg-tranparent osahan-nav-top px-0">
+<nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top px-0">
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}"><img src="{{ asset('img/logo.png') }}"
@@ -7,11 +6,11 @@
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search"
 			style="width: 40%;margin-right: 0!important;" action="{{ path('microservices') }}" method="get">
-			<div class="input-group w-100">
-				<input type="text" name="q" class="form-control bg-white small" placeholder="Je cherche..."
+			<div class="input-group w-100 border rounded" style="border-color: white!important;">
+				<input type="text" name="q" class="form-control bg-transparent border-0 shadow-none small" placeholder="Je cherche..."
 					aria-label="Search" aria-describedby="basic-addon2">
-				<div class="input-group-append">
-					<button class="btn btn-success" type="submit">
+				<div class="input-group-append rounded">
+					<button class="btn btn-success rounded" type="submit">
 						<i class="fa fa-search fa-sm"></i>
 					</button>
 				</div>

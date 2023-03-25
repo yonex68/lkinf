@@ -1,0 +1,12 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Nounvelle Realisation{% endblock %}
+
+{% block body %}
+    <h1>Créer un nounvelle Realisation</h1>
+
+    {{ include('vendeur/realisations/_form.html.twig') }}
+
+    <a href="{{ path('app_vendeur_realisation_index') }}">back to list</a>
+
+{% endblock %}

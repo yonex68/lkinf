@@ -39,28 +39,28 @@ class ServiceOptionRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ServiceOption[] Returns an array of ServiceOption objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return ServiceOption[] Returns an array of ServiceOption objects
+     */
+    public function findByService($service): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('m', 's')
+            ->join('s.microservice', 'm')
+            ->andWhere('m = :microservice')
+            ->setParameter('microservice', $service)
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?ServiceOption
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?ServiceOption
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

@@ -2,12 +2,12 @@
    <div class="card-header p-0 bg-transparent border-0">
       <ul class="nav nav-pills mb-3" id="avisTab" role="tablist">
          <li class="nav-item w-50">
-            <a class="nav-link shadow-sm active" id="positif-avis" data-toggle="tab" href="#positif" role="tab"
+            <a class="nav-link shadow-sm active text-light" id="positif-avis" data-toggle="tab" href="#positif" role="tab"
                aria-controls="positif" aria-selected="true">Avis positifs ({{
                serviceAvisPositifs(microservice)|length }})</a>
          </li>
          <li class="nav-item w-50">
-            <a class="nav-link shadow-sm" id="negatif-avis" data-toggle="tab" href="#negatif" role="tab"
+            <a class="nav-link shadow-sm text-light" id="negatif-avis" data-toggle="tab" href="#negatif" role="tab"
                aria-controls="negatif" aria-selected="false">Avis négatifs ({{
                serviceAvisNegatifs(microservice)|length }})</a>
          </li>
@@ -22,8 +22,8 @@
 
                <li class="media">
                   {% if avisPositif.client.avatar %}
-                  <img src="{{ vich_uploader_asset(app.client, 'imageFile') | imagine_filter('midle_avatar') }}"
-                     class="rounded-circle mr-3" alt="{{ app.client.prenom }}">
+                  <img src="{{ vich_uploader_asset(avisPositif.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+                     class="rounded-circle mr-3" alt="{{ avisPositif.client.prenom }}">
                   {% else %}
 
                   <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}"
@@ -55,8 +55,8 @@
 
                <li class="media">
                   {% if avisNegatif.client.avatar %}
-                  <img src="{{ vich_uploader_asset(app.client, 'imageFile') | imagine_filter('midle_avatar') }}"
-                     class="rounded-circle mr-3" alt="{{ app.client.prenom }}">
+                  <img src="{{ vich_uploader_asset(avisPositif.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+                     class="rounded-circle mr-3" alt="{{ avisPositif.client.prenom }}">
                   {% else %}
 
                   <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}"

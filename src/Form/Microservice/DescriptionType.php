@@ -19,15 +19,6 @@ class DescriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prix', NumberType::class, [
-                'label' => 'Prix',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ]),
-                ],
-                'attr' => ['class' => 'border-0 text-center font-weight-bold']
-            ])
             ->add('description', CKEditorType::class, [
                 'label' => false,
                 'required' => false,

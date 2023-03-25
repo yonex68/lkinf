@@ -7,14 +7,17 @@ use App\Entity\Commande;
 use App\Entity\CommandeMessage;
 use App\Entity\Message;
 use App\Entity\Portefeuille;
+use App\Entity\Rapport;
 use App\Form\AvisType;
 use App\Form\CommandeMessageType;
+use App\Form\RapportType;
 use App\Repository\CommandeMessageRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
+use App\Repository\RapportRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\TextUI\Command;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -63,7 +66,8 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/suivis/commande_id={id}', name: 'commande_details')]
-    public function commande(CommandeRepository $commandeRepository, $id, Request $request, EntityManagerInterface $entityManager, CommandeMessageRepository $commandeMessageRepository): Response
+    public function commande(CommandeRepository $commandeRepository, $id, Request $request, EntityManagerInterface $entityManager, CommandeMessageRepository $commandeMessageRepository,
+    MailerInterface $mailerInterface, RapportRepository $rapportRepository): Response
     {
         $user = $this->getUser();
         $commande = $commandeRepository->find($id);
@@ -100,6 +104,7 @@ class CommandeController extends AbstractController
 
         if ($avisForm->isSubmitted() && $avisForm->isValid()) {
 
+            $commande->setRapportValidate(true);
             $avis->setVendeur($commande->getMicroservice()->getVendeur());
             $avis->setMicroservice($commande->getMicroservice());
             $avis->setClient($user);
@@ -130,7 +135,7 @@ class CommandeController extends AbstractController
 
             $commande->setDestinataire($destinataire);
             $commande->setLu(false);
-            
+
             $message->setCommande($commande);
             $message->setUser($this->getUser());
             $message->setLu(false);
@@ -143,19 +148,84 @@ class CommandeController extends AbstractController
             ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('commande/validee.html.twig', [
+        /** Rapport de fin de prestation */
+        $rapport = new Rapport();
+        $rapportForm = $this->createForm(RapportType::class, $rapport);
+        $rapportForm->handleRequest($request);
+
+        if ($rapportForm->isSubmitted() && $rapportForm->isValid()) {
+
+            $portefeuille = $commande->getVendeur()->getPortefeuille();
+
+            //dd($conversation);
+
+            $somme = $commande->getMontant() + $portefeuille->getSoldeDisponible();
+
+            $difference = null;
+
+            if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
+
+                $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
+            } else {
+
+                $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
+            }
+
+            $portefeuille->setSoldeDisponible($somme);
+            $portefeuille->setSoldeEncours($difference);
+            $entityManager->flush();
+
+            // Envoie de mail
+            $email = (new TemplatedEmail())
+                ->from('contact@links-infinity.com')
+                ->to($commande->getVendeur()->getEmail())
+                ->subject('LINKS INFINITY - COMMANDE LIVREE')
+                ->htmlTemplate('commande/composants/_livraison_mail.html.twig')
+                ->context([
+                    'useremail'  =>  $commande->getVendeur()->getEmail(),
+                    'montantRecu'   =>  $commande->getMontant(),
+                    'soldedispo' => $somme,
+                    'destinataire' => $commande->getClient()->getEmail()
+                ]);
+
+            $mailerInterface->send($email);
+
+            $rapport->setCommande($commande);
+            $entityManager->persist($rapport);
+            $entityManager->flush();
+
+            $commande->setRapport($rapport);
+            $commande->setRapportValidate(true);
+            $commande->setRapportValidateAt(new \DateTimeImmutable());
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Rapport envoyé avec succès');
+            return $this->redirectToRoute('commande_details', [
+                'id' => $commande->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('commande/suivis.html.twig', [
+            'rapport' => $rapportRepository->findOneBy(['commande' => $commande]),
             'commande' => $commande,
             'avisForm' => $avisForm->createView(),
+            'rapportForm' => $rapportForm->createView(),
             'usercommandes' => $usercommandes,
             'messages' => $messages,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/success', name: 'commande_success')]
-    public function success(): Response
+    #[Route('/success/commande_id={id}', name: 'commande_success')]
+    public function success(Commande $commande): Response
     {
-        return $this->render('commande/success.html.twig', []);
+        if ($commande->getClient() != $this->getUser()) {
+            return $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('commande/success.html.twig', [
+            'commande' => $commande
+        ]);
     }
 
     #[Route('/{slug}/{offre}', name: 'commander_microservice', methods: ['GET', 'POST'])]
@@ -167,9 +237,9 @@ class CommandeController extends AbstractController
 
         if ($offre == 'Mastering') {
             $montant = $microservice->getPrixMastering();
-        }elseif($offre == 'Mixage'){
+        } elseif ($offre == 'Mixage') {
             $montant = $microservice->getPrixMixage();
-        }elseif($offre == 'Beatmaking'){
+        } elseif ($offre == 'Beatmaking') {
             $montant = $microservice->getPrixBeatmaking();
         }
 
@@ -271,11 +341,11 @@ class CommandeController extends AbstractController
 
         if ($offre == 'Mastering') {
             $montant = $microservice->getPrixMastering();
-        }elseif($offre == 'Mixage'){
+        } elseif ($offre == 'Mixage') {
             $montant = $microservice->getPrixMixage();
-        }elseif($offre == 'Beatmaking'){
+        } elseif ($offre == 'Beatmaking') {
             $montant = $microservice->getPrixBeatmaking();
-        }else {
+        } else {
             $montant = $microservice->getPrixComposition();
         }
 
@@ -338,58 +408,17 @@ class CommandeController extends AbstractController
         Request $request,
         CommandeRepository $commandeRepository,
         $id,
-        EntityManagerInterface $entityManager,
-        MailerInterface $mailerInterface
+        EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
 
         if ($this->isCsrfTokenValid('livrer' . $commande->getId(), $request->request->get('_token'))) {
-
-            $portefeuille = $commande->getVendeur()->getPortefeuille();
-
-            //dd($conversation);
-
-            $somme = $commande->getMontant() + $portefeuille->getSoldeDisponible();
-
-            $difference = null;
-
-            if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
-
-                $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
-            } else {
-
-                $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
-            }
-
-            $portefeuille->setSoldeDisponible($somme);
-            $portefeuille->setSoldeEncours($difference);
-
-            $commande->setDeliver(true);
-            $commande->setStatut('Livrer');
-            $commande->setDeliverAt(new \DateTimeImmutable());
-
-            $entityManager->flush();
-
-            // Envoie de mail
-            $email = (new TemplatedEmail())
-                ->from('contact@links-infinity.com')
-                ->to($commande->getVendeur()->getEmail())
-                ->subject('LINKS INFINITY - COMMANDE LIVREE')
-                ->htmlTemplate('commande/composants/_livraison_mail.html.twig')
-                ->context([
-                    'useremail'  =>  $commande->getVendeur()->getEmail(),
-                    'montantRecu'   =>  $commande->getMontant(),
-                    'soldedispo' => $somme,
-                    'destinataire' => $commande->getClient()->getEmail()
-                ]);
-
-            $mailerInterface->send($email);
+            
             $commande->setDeliver(true);
             $commande->setDeliverAt(new \DateTimeImmutable());
             $entityManager->flush();
+            $this->addFlash('success', 'Commande validée!');
         }
-
-        $this->addFlash('success', 'Commande validée!');
 
         return $this->redirectToRoute('commande_details', [
             'id' => $commande->getId(),

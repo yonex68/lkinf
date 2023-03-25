@@ -69,7 +69,7 @@
 
 					{{ include('partials/_flash_message.html.twig') }}
 
-					<div class="bg-{% block bg %}white shadow-sm{% endblock %} rounded sidebar-page-right">
+					<div class="bg-{% block bg %}shadow-sm{% endblock %} rounded sidebar-page-right">
 						<div>
 
 							{% block body %}{% endblock %}
@@ -102,6 +102,7 @@
 	<!-- Custom -->
 	<script src="{{ asset('themes/base/js/custom.js') }}"></script>
 	<script src="{{ asset('themes/base/js/dropdown.js') }}"></script>
+	<script src="{{ asset('js/btnloader.js') }}"></script>
 	<script>
 		// Add the following code if you want the name of the file appear on select
 		$(".custom-file-input").on("change", function () {

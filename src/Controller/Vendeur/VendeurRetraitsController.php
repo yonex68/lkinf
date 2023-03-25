@@ -33,6 +33,8 @@ class VendeurRetraitsController extends AbstractController
         $form->handleRequest($request);
         $vendeur = $this->getUser();
 
+        $retraitsenattente = $retraitRepository->findBy(['vendeur' => $vendeur, 'statut' => 'En attente']);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $retrait->setVendeur($vendeur);
             $retrait->setStatut('En attente');
@@ -46,7 +48,7 @@ class VendeurRetraitsController extends AbstractController
         return $this->renderForm('vendeur/retraits/new.html.twig', [
             'retrait' => $retrait,
             'form' => $form,
-            'retraitEnattente' => $retraitRepository->findBy(['vendeur' => $vendeur, 'statut' => 'En attente']),
+            'retraitEnattente' => $retraitsenattente,
         ]);
     }
 

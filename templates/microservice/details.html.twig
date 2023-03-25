@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="col-lg-8 left">
 
-				<div class="card">
+				<div class="card mb-4">
 					<div class="card-header bg-white border-0 p-2">
 						<h5 class="mt-2 font-weight-bold">{{ microservice.name }}</h5>
 					</div>
@@ -60,71 +60,11 @@
 					</div>
 				</div>
 
-				<form class="my-4">
-					<div class="card">
-
-						<div class="card-header bg-white border-bottom">
-							<h3 id="aboutSeller" class="card-title mt-4">Personnaliser ce service</h3>
-						</div>
-
-						<div class="card-body p-0">
-							<div class="bg-white py-4 p-3">
-								<div class="row">
-									<div class="col-sm-9">
-										<h4 class="lead font-weight-bold"><input type="checkbox" checked disabled> {{
-											microservice.name }}</h4>
-										<span class="text-muted">{{ microservice.delai }} de réalisation</span>
-									</div>
-									<div class="col-sm-3 text-right">
-										<strong>{{ microservice.prix ~ currency }}</strong>
-									</div>
-								</div>
-							</div>
-
-							<div class="p-3 bg-light">
-								<h5 class="p-2 font-weight-bold">Options supplémentaires</h5>
-
-								<table class="table table-borderless">
-									<tbody>
-										{% for option in microservice.serviceOptions %}
-										<tr>
-											<th>
-												<label class="h6 font-weight-bold" for="{{ option.id }}"><input type="checkbox"
-														name="{{ option.id }}" id="{{ option.id }}"> {{ option.name }}</label>
-												<br>
-												<p class="pl-3 text-muted font-weight-light">Délai supplémentaire de +
-													{{ option.delai }} jour{{ option.delai > 0 ? 's' : '' }}</p>
-											</th>
-											<td class="text-right">
-												<strong>+{{ option.montant ~ currency }}</strong>
-											</td>
-										</tr>
-										{% endfor %}
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-
-						<div class="card-footer bg-white">
-							<div class="row">
-								<div class="col-sm-6">
-									<a href="" class="btn btn-dark btn-lg h5">200 {{ currency }} Commander</a>
-
-									{% if is_granted('microservice_edit', microservice) %}{% else %}
-									<a class="btn btn-outline-dark btn-lg h5"
-										href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter
-										le vendeur</a>
-									{% endif %}
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</form>
-
 				<!-- Avis -->
 				{% include "microservice/composants/_avis.html.twig" %}
+
+				<!-- Personaliser le service et commander -->
+				{% include "microservice/composants/_custom_form.html.twig" %}
 
 				<div class="tags">
 					<h3>Catégories relatives</h3>

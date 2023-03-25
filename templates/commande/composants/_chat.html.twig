@@ -1,5 +1,5 @@
-<div class="box shadow-sm rounded bg-white mb-3 osahan-chat">
-	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold">Suivi des commandes</h5>
+<div class="box shadow-sm rounded bg-transparent border mb-3 osahan-chat">
+	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold bg-light">Suivi des commandes</h5>
 	<div class="row m-0">
 		<div class="border-right col-lg-5 col-xl-4 px-0">
 			<div class="osahan-chat-left">
@@ -9,7 +9,7 @@
 
 					{% if usercommande.vendeur.id == app.user.id %}
 
-					<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-light' : '' }}">
+					<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-light' : '' }}">
 						<div class="dropdown-list-image mr-3">
 
 							<a href="{{ path('commande_details', {id: usercommande.id}) }}">
@@ -87,11 +87,12 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="col-lg-7 col-xl-8 px-0">
 
 			{% if app.request.attributes.get('_route') == 'commande_details' %}
 
-			<div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
+			<div class="p-1 d-flex align-items-center  border-bottom bg-light osahan-post-header">
 				<div class="font-weight-bold mr-1 overflow-hidden">
 					{% if commande.client.id == app.user.id %}
 
@@ -126,7 +127,10 @@
 					{% endif %}
 				</div>
 			</div>
-			<div class="osahan-chat-box p-3 border-top border-bottom bg-light">
+			<div class="osahan-chat-box p-3 border-top border-bottom">
+
+				{% include "conversations/composants/_security.html.twig" %}
+
 				<!-- Listing message -->
 				{% include "commande/composants/_messages.html.twig" %}
 			</div>
@@ -143,7 +147,7 @@
 				<div class="row">
 					<div class="col-sm-6 mx-auto">
 						<h6 class="h5">Choisir une commande à suivre</h6>
-						<img src="{{ asset('img/commande.png') }}" class="img-fluid" alt="">
+						<img src="{{ asset('img/commande.svg') }}" class="img-fluid" alt="">
 					</div>
 				</div>
 			</div>

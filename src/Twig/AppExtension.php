@@ -114,7 +114,7 @@ class AppExtension extends AbstractExtension
     }
     
     public function getVendeurTotalVente($user) {
-        return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Livrer']);
+        return $this->commandeRepository->findBy(['vendeur' => $user, 'validate' => true]);
     }
     
     public function getVendeurCommandesEncours($user) {

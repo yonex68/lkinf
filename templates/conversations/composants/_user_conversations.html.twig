@@ -3,7 +3,7 @@
 
 		{% for userconversation in conversations %}
 
-			<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
 
 				{% if userconversation.user1.id == app.user.id %}
 
@@ -83,8 +83,8 @@
 
 		{% else %}
 		
-		<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
-			<p>Aucune conversation</p>
+		<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
+			<p class="pt-2 pl-3">Aucune conversation</p>
 		</div>
 
 		{% endfor %}
@@ -93,7 +93,7 @@
 
 		{% for userconversation in conversations %}
 
-			<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
 
 				{% if userconversation.user1.id == app.user.id %}
 
@@ -174,8 +174,8 @@
 			</div>
 
 		{% else %}
-		<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
-			<p>Aucune conversation</p>
+		<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
+			<p class="pt-2 pl-3">Aucune conversation</p>
 		</div>
 		{% endfor %}
 

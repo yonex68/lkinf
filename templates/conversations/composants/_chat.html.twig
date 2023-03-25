@@ -1,5 +1,5 @@
-<div class="box shadow-sm rounded bg-white mb-3 osahan-chat">
-	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold">Vos conversation</h5>
+<div class="box shadow-sm rounded bg-transparent border mb-3 osahan-chat">
+	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold bg-light">Vos conversation</h5>
 	<div class="row m-0">
 		<div class="border-right col-md-4 col-xl-4 px-0">
 			<div class="osahan-chat-left">
@@ -47,13 +47,9 @@
 
 				</div>
 			</div>
-			<div class="osahan-chat-box p-3 border-top border-bottom bg-light">
-				<div class="text-center my-4">
-					<p class="alert alert-warning font-weight-light" style="font-size: .9em;">
-						<i class="fa fa-lock"></i> Pour votre securite , les discussions, envoies de fichiers et paiements
-						doivent se faire exclusivement sur {{ appName }}
-					</p>
-				</div>
+			<div class="osahan-chat-box p-3 border-top border-bottom">
+
+				{% include "conversations/composants/_security.html.twig" %}
 
 				{% include "conversations/composants/_messages.html.twig" %}
 
@@ -66,8 +62,8 @@
 			<div class="py-5 text-center">
 				<div class="row">
 					<div class="col-sm-6 mx-auto">
-						<h6 class="h5">Choisir une conversation</h6>
-						<img src="{{ asset('img/chating.png') }}" class="img-fluid" alt="">
+						<h6 class="h5">Choisissez une conversation</h6>
+						<img src="{{ asset('img/conversation.svg') }}" class="img-fluid" alt="">
 					</div>
 				</div>
 			</div>

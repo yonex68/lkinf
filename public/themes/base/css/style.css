@@ -37,7 +37,7 @@ Version: 1.0
      font-size: 13px;
      font-family: 'Muli', sans-serif;
      font-weight: 400;
-     background-color: #f0f2f5;
+     background: #1a1b21!important;
 }
  .container-fluid {
      max-width: 1400px;
@@ -876,19 +876,19 @@ p.help-block li {
      box-sizing: border-box;
      text-align: center;
      border: 1px solid transparent!important;
-     background: #fff!important;
+     background: #23242a!important;
      border-radius: 10px;
 }
  .market-wrapper .categories-list li a:hover {
-     background: #c5d4e2;
+     background: #1a1b21;
      border:#fff!important;
 }
  .market-wrapper .categories-list li a {
      width: 100%;
      padding: 25px 0px;
      border-radius: 7px;
-     border: 2px solid #fff;
-     color: #222325;
+     border: 2px solid #1a1b21;
+     color: #fff;
      text-decoration: none;
      text-align: center;
      position: relative;
@@ -1807,7 +1807,7 @@ p.help-block li {
      width: 48px;
      height: 48px;
      object-fit: cover;
-     border: 5px solid #fff;
+     border: 5px solid transparent;
 }
  .inner-slider .seller-image figure {
      margin: 0;
@@ -3078,7 +3078,7 @@ p.help-block li {
     }
      .osahan-nav-mid .navbar-collapse {
          position: absolute;
-         background: #fff;
+         background: #23242a;
          top: 55px;
          right: 0px;
          left: 0px;
@@ -3194,7 +3194,7 @@ p.help-block li {
     }
      .osahan-nav-mid .navbar-collapse {
          position: absolute;
-         background: #fff;
+         background: #23242a;
          top: 55px;
          right: 0px;
          left: 0px;

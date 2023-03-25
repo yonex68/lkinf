@@ -9,7 +9,8 @@
 {{ include('vendeur/portefeuille/composants/_box.html.twig') }}
 
 <div class="bg-white">
-    {% if retraitEnattente == 0 %}
+
+    {% if retraitEnattente|length == 0 %}
 
     {{ include('vendeur/retraits/_form.html.twig') }}
 

@@ -39,6 +39,10 @@
 					<span class="span text-muted ">Pour des reclamations et d'autres raisons, vous pouvez nous contacté: <br>
 						<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
 					</span>
+
+					<div class="py-2">
+						<a href="{{ path('commande_details', {id: commande.id}) }}">Continuer vers ma commande &longrightarrow;</a>
+					</div>
 				</div>
 			</div>
 

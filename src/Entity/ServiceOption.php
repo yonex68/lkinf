@@ -100,4 +100,9 @@ class ServiceOption
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getName() . ' - ' . $this->getMontant() . '$ ( + ' . $this->getDelai() . ' jours de réalisation)';
+    }
 }

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-   <table class="table bg-white table-hover">
+   <table class="table bg-white table-borderless">
       <thead>
          <tr>
             <th>Service</th>
@@ -29,7 +29,7 @@
                      <strong>{{ commande.montant ~ currency }}</strong>
                      <span class="badge badge-light border badge-pill">Offre {{ commande.offre }}</span>
                      <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}"
-                        class="d-block text-dark font-weight-bold" target="_blank">{{ commande.microservice.name }}</a>
+                        class="d-block text-light font-weight-bold" target="_blank">{{ commande.microservice.name }}</a>
                   </div>
                </div>
             </td>
@@ -91,7 +91,7 @@
             </td>
             <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
             <td>
-               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-outline-success rounded-btn"
+               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-outline-dark rounded-btn"
                   target="_blank">Suivi</a>
             </td>
          </tr>

@@ -1,6 +1,6 @@
 {% for message in messages %}
 
-<div class="media w-75 alert bg-white message-box {{ message.auteur == app.user ? 'ml-auto' : '' }}">
+<div class="media w-75 alert message-box {{ message.auteur == app.user ? 'ml-auto' : '' }}">
 	{% if message.auteur.avatar %}
 	<img src="{{ vich_uploader_asset(message.auteur) | imagine_filter('small_avatar') }}"
 		alt="{{ message.auteur.prenom ?? '' }}" class="rounded-circle border">

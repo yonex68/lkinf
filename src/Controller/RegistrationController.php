@@ -119,14 +119,15 @@ class RegistrationController extends AbstractController
             $user->setCompte('Vendeur');
 
             // Création du portefeuille si l'utilisateur choisis le compte vendeur
-            $portefeuille = new Portefeuille();
-            $portefeuille->setSoldeDisponible(0);
-            $portefeuille->setSoldeEncours(0);
-            $portefeuille->setVendeur($user);
+            $portefeuille = $user->getPortefeuille();
 
-            $entityManager->persist($portefeuille);
-
-            $entityManager->persist($user);
+            if (!$portefeuille) {
+                $portefeuille = new Portefeuille();
+                $portefeuille->setSoldeDisponible(0);
+                $portefeuille->setSoldeEncours(0);
+                $portefeuille->setVendeur($user);
+                $entityManager->persist($portefeuille);
+            }
             $entityManager->flush();
 
             // generate a signed url and email it to the user
