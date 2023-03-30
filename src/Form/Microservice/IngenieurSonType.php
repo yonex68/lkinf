@@ -26,7 +26,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center font-weight-bold']
+                'attr' => ['class' => 'border-0 text-center']
             ])
             ->add('prixMixage', NumberType::class, [
                 'label' => "Mixage",
@@ -35,7 +35,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center font-weight-bold']
+                'attr' => ['class' => 'border-0 text-center']
             ])
             ->add('prixBeatmaking', NumberType::class, [
                 'label' => 'Beatmaking',
@@ -44,7 +44,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center font-weight-bold']
+                'attr' => ['class' => 'border-0 text-center']
             ])
             ->add('prixComposition', NumberType::class, [
                 'label' => 'Composition',
@@ -53,7 +53,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center font-weight-bold']
+                'attr' => ['class' => 'border-0 text-center']
             ])
             ->add('description', CKEditorType::class, [
                 'label' => false,

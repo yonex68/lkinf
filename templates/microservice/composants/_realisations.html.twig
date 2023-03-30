@@ -1,0 +1,30 @@
+{% if microservice.realisations|length > 0 %}
+
+<div class="mb-4">
+   <div class="view_slider recommended">
+      <h3 id="recommendations">Réalisations</h3>
+      <div class="view recommended-slider">
+         {% for realisation in microservice.realisations %}
+
+         <a href="{{ realisation.link }}" class="d-block">
+            <div>
+               {% if realisation.type == 'image' %}
+
+               <img src="{{ realisation.file }}" class="img-fluid rounded" alt="{{ microservice.name }}">
+
+               {% elseif realisation.type == 'video' %}
+
+               {% if realisation.plateforme == 'youtube' %}
+               <iframe width="100%" class="rounded border" src="https://www.youtube.com/embed/{{ realisation.file }}"></iframe>
+               {% endif %}
+
+               {% endif %}
+            </div>
+         </a>
+
+         {% endfor %}
+      </div>
+   </div>
+</div>
+
+{% endif %}

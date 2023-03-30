@@ -24,6 +24,21 @@ class SearchService {
     public $ville = null;
 
     /**
+     * @var string
+     */
+    public $jour = null;
+
+    /**
+     * @var time
+     */
+    public $heureOuverture = null;
+
+    /**
+     * @var time
+     */
+    public $heureCloture = null;
+
+    /**
      * @var int|null
      */
     public $minPrice;

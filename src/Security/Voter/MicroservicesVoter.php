@@ -21,12 +21,12 @@ class MicroservicesVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports(string $attribute, $annonce): bool
+    protected function supports(string $attribute, $service): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::MICROSERVICE_EDIT, self::MICROSERVICE_DELETE])
-            && $annonce instanceof Microservice;
+            && $service instanceof Microservice;
     }
 
     protected function voteOnAttribute(string $attribute, $miscroservice, TokenInterface $token): bool
@@ -40,7 +40,7 @@ class MicroservicesVoter extends Voter
         //On autorise à un administrateur de modifier
         /*if ($this->security->isGranted("ROLE_ADMIN")) return true;*/
 
-        //Verifie si une annonce a un auteur
+        //Verifie si une service a un auteur
         if (null === $miscroservice->getVendeur()) return false;
 
         // ... (check conditions and return true to grant permission) ...
@@ -63,7 +63,7 @@ class MicroservicesVoter extends Voter
     }
 
     private function canDelete(Microservice $miscroservice, User $user){
-        /*if($this->security->isGranted("ROLE_ADMIN")) return true;*/
+        if($this->security->isGranted("ROLE_ADMIN")) return true;
         return $user === $miscroservice->getVendeur();
     }
 }

@@ -1,5 +1,5 @@
 <div class="box shadow-sm rounded bg-white mb-3">
-   <div class="box-title p-3">
+   <div class="box-title p-2">
       <h6 class="m-0">Service</h6>
    </div>
    <div class="box-body">
@@ -8,51 +8,51 @@
 
             {% if microservice.id %}
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_titre' ? 'active' : '' }} {{ microservice.name ? 'tache-terminer' : 'tache-encours' }}"
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_titre' ? 'active' : '' }} {{ microservice.name ? 'tache-terminer' : 'tache-encours' }}"
                href="{{ path('vendeur_microservices_titre', {id: microservice.id}) }}">
                1. Titre et catégorie &nbsp;&nbsp;&nbsp;
                <i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_description' ? 'active' : '' }} {{ microservice.description ? 'tache-terminer' : 'tache-encours' }}"
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_description' ? 'active' : '' }} {{ microservice.description ? 'tache-terminer' : 'tache-encours' }}"
                href="{{ path('vendeur_microservices_description', {id: microservice.id}) }}">
                2. Prix, description et délai &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_options' ? 'active' : 'tache-terminer' }} {{ microservice.serviceOptions|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_options' ? 'active' : 'tache-terminer' }} {{ microservice.serviceOptions|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
                href="{{ path('vendeur_microservices_options', {id: microservice.id}) }}">
                3. Options supplémentaire &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_galerie' ? 'active' : '' }} {{ microservice.medias|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_galerie' ? 'active' : '' }} {{ microservice.medias|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
                href="{{ path('vendeur_microservices_galerie', {id: microservice.id}) }}">
                4. Galerie &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') ==  'vendeur_microservices_publication' ? 'active' : '' }} {{ microservice.online == 1 ? 'tache-terminer' : 'tache-encours' }}"
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') ==  'vendeur_microservices_publication' ? 'active' : '' }} {{ microservice.online == 1 ? 'tache-terminer' : 'tache-encours' }}"
                href="{{ path('vendeur_microservices_publication', {id: microservice.id}) }}">
                5. Publication &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
             {% else %}
 
-            <a class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_new' ? 'active' : '' }}">
+            <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_new' ? 'active' : '' }}">
                1. Titre et catégorie &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </a>
 
-            <div class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_description' ? 'active' : '' }}">
+            <div class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_description' ? 'active' : '' }}">
                2. Prix, description et délai &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </div>
 
-            <div class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == '' ? 'active' : 'vendeur_microservices_options' }}">
+            <div class="dropdown-item p-2 {{ app.request.attributes.get('_route') == '' ? 'active' : 'vendeur_microservices_options' }}">
                3. Options supplémentaire &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </div>
 
-            <div class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_galerie' ? 'active' : '' }}">
+            <div class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_galerie' ? 'active' : '' }}">
                4. Galerie &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </div>
 
-            <div class="dropdown-item h6 p-2 {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
+            <div class="dropdown-item p-2 {{ app.request.attributes.get('_route') == '' ? 'active' : '' }}">
                5. Publication &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
             </div>
 

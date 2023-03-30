@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
-	{{ parent() }}
+{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
+{{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -26,7 +26,7 @@
 			</h4>
 		</div>
 
-		<div class="box-body p-3 border-bottom">
+		<div class="box-body p-3 border-bottom bg-light">
 
 			{% if is_granted('ROLE_VENDEUR') %}
 			<p>
@@ -40,9 +40,6 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<strong>Photo de profil</strong>
-					<div class="form-group">
-						{{ app.user.imageFile }}
-					</div>
 					{% if is_granted('ROLE_VENDEUR') %}
 					<p>
 						Montrez-vous ! Les vendeurs avec une photo les représentant vraiment font plus de ventes que la
@@ -52,12 +49,33 @@
 					<div>
 						{% if app.user.avatar %}
 						<img class="img-fluid rounded-circle"
-							src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}" alt='' />
+							src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}" alt='' />
 
 						{% else %}
 
 						<img class="img-fluid rounded-circle"
-							src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}" alt='' />
+							src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+
+						{% endif %}
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<strong>Photo de couverture</strong>
+					{% if is_granted('ROLE_VENDEUR') %}
+					<p>
+						Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
+						démarquer.
+					</p>
+					{% endif %}
+					<div>
+						{% if app.user.couverture %}
+						<img class="img-fluid"
+							src="{{ vich_uploader_asset(app.user, 'couvertureFile') | imagine_filter('rectangle_avatar') }}" alt='' />
+
+						{% else %}
+
+						<img class="img-fluid"
+							src="{{ asset('img/Logo.png') | imagine_filter('rectangle_avatar') }}" alt='' />
 
 						{% endif %}
 					</div>
@@ -65,13 +83,13 @@
 				<div class="col-sm-6">
 					<div class="align-items-top job-item-header pb-2">
 						<span class="text-truncate text-muted">Email</span>
-						<h6 class="font-weight-bold text-dark mb-0">{{ app.user.email }}</h6>
+						<h6 class="font-weight-bold text-muted mb-0">{{ app.user.email }}</h6>
 					</div>
 				</div>
 			</div>
 
 			<div class="form-group py-3">
-				<strong class="font-weight-bold text-dark mb-0">Biographie</strong>
+				<strong class="font-weight-bold text-muted mb-0">Biographie</strong>
 				{% if is_granted('ROLE_VENDEUR') %}
 				<p>
 					Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.
@@ -86,7 +104,7 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-sm-6 text-right">
-						<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-success btn-block rounded-btn">
+						<a href="{{ path('user_edit_profil') }}" class="btn btn-dark btn-block rounded-btn">
 							Mettre à jour
 						</a>
 					</div>

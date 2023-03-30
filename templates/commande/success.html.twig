@@ -7,11 +7,12 @@
 
 {% block col %}6{% endblock %}
 
+{% block imgBg %}{{ asset('img/login.jpg') }}{% endblock %}
+
 {% block body %}
 
-<section class="pt-2">
-	<div class="container">
-		<div class="row pb-3">
+<div class="pt-2">
+	<div class="row pb-3">
 			<div class="col-6 col-sm-3 text-right ml-auto">
 				<div class="text-center">
 
@@ -28,7 +29,7 @@
 				</div>
 			</div>
 			<div class="col-6 col-sm-3 text-left mr-auto">
-				<img src="{{ asset('img/commande.png') }}" class="img-fluid" alt="">
+				<img src="{{ asset('img/order_confirmed.svg') }}" class="img-fluid mt-3" alt="">
 			</div>
 		</div>
 		<div class="row">
@@ -47,8 +48,7 @@
 			</div>
 
 		</div>
-	</div>
-</section>
+</div>
 
 {% endblock %}
 

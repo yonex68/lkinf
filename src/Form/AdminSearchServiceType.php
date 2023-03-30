@@ -73,7 +73,7 @@ class AdminSearchServiceType extends AbstractType
             ]
          ])
          ->add('offline', CheckboxType::class, [
-            'label' => 'Hors ligne',
+            'label' => 'Bloqué',
             'required' => false,
             'attr' => [
                'class' => null,

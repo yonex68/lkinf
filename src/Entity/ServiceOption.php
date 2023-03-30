@@ -31,9 +31,13 @@ class ServiceOption
     #[ORM\ManyToMany(targetEntity: Microservice::class, inversedBy: 'serviceOptions')]
     private Collection $microservice;
 
+    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'serviceOptions')]
+    private Collection $commandes;
+
     public function __construct()
     {
         $this->microservice = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,5 +108,32 @@ class ServiceOption
     public function __toString()
     {
         return $this->getName() . ' - ' . $this->getMontant() . '$ ( + ' . $this->getDelai() . ' jours de réalisation)';
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->addServiceOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            $commande->removeServiceOption($this);
+        }
+
+        return $this;
     }
 }

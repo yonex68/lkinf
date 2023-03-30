@@ -7,6 +7,7 @@ use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ConversationRepository;
+use App\Repository\EmploisTempsRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PortefeuilleRepository;
 use App\Repository\SuivisRepository;
@@ -32,7 +33,9 @@ class AppExtension extends AbstractExtension
 
     private $microserviceRepository;
 
-    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository){
+    private $emploisTempsRepository;
+
+    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -42,6 +45,7 @@ class AppExtension extends AbstractExtension
         $this->commandeRepository = $commandeRepository;
         $this->suivisRepository = $suivisRepository;
         $this->microserviceRepository = $microserviceRepository;
+        $this->emploisTempsRepository = $emploisTempsRepository;
 
     }
 
@@ -66,6 +70,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('clientAchats', [$this, 'getClientTotalAchats']),
             new TwigFunction('serviceAvisPositifs', [$this, 'getServiceAvisPositif']),
             new TwigFunction('serviceAvisNegatifs', [$this, 'getServiceAvisNegatif']),
+            new TwigFunction('emploistemps', [$this, 'getVendeurEmploisTemps']),
         ];
     }
 
@@ -139,5 +144,9 @@ class AppExtension extends AbstractExtension
 
     public function getLastServices(){
         return $this->microserviceRepository->findLasted();
+    }
+
+    public function getVendeurEmploisTemps($vendeur){
+        return $this->emploisTempsRepository->findBy(['vendeur' => $vendeur], ['ordre' => 'ASC']);
     }
 }

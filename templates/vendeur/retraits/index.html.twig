@@ -14,7 +14,7 @@
             </div>
             {% if retraitEnattente|length == 0 %}
             <div class="col-sm-6 text-right">
-                <a href="{{ path('app_vendeur_retraits_new') }}" class="btn btn-success">Nouvelle demande</a>
+                <a href="{{ path('app_vendeur_retraits_new') }}" class="btn btn-dark">Nouvelle demande</a>
             </div>
             {% endif %}
         </div>
@@ -24,7 +24,7 @@
 <div class="card shadow-sm">
     <div class="card-body p-0">
         <div class="table-responsive bg-white">
-            <table class="table">
+            <table class="table table-borderless">
                 <thead>
                     <tr>
                         <th>Montant</th>

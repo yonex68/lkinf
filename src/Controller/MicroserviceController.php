@@ -6,18 +6,23 @@ use App\Entity\Commande;
 use App\Entity\Microservice;
 use App\Entity\SearchService;
 use App\Entity\ServiceOption;
+use App\Entity\ServiceSignale;
 use App\Form\CommandeType;
 use App\Form\CustomServiceType;
 use App\Form\SearchServiceType;
+use App\Form\ServiceSignaleType;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
 use App\Repository\ServiceOptionRepository;
+use App\Repository\ServiceSignaleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PHPUnit\TextUI\Command;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,15 +92,16 @@ class MicroserviceController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
-    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository): Response
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository, ServiceSignaleRepository $serviceSignaleRepository): Response
     {
 
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
 
         $options = $microservice->getServiceOptions();
         //dd($options);
-
-        $commandeForm = $this->createForm(CustomServiceType::class, $microservice);
+        $commande = new Commande();
+        $commande->setMicroservice($microservice);
+        $commandeForm = $this->createForm(CustomServiceType::class, $commande);
         $commandeForm->handleRequest($request);
         $commandeForm->setData('serviceOptions')->setData($options);
 
@@ -111,10 +117,29 @@ class MicroserviceController extends AbstractController
             dd('montant total');
         }
 
+        $serviceSignale = new ServiceSignale();
+        $servicesignaleForm = $this->createForm(ServiceSignaleType::class, $serviceSignale);
+        $servicesignaleForm->handleRequest($request);
+
+        if ($servicesignaleForm->isSubmitted() && $servicesignaleForm->isValid()) {
+
+            $serviceSignale->setUser($this->getUser());
+            $serviceSignale->setMicroservice($microservice);
+            $serviceSignaleRepository->save($serviceSignale, true);
+            $this->addFlash('success', 'Le service à bien été signalé merci pour votre collaboration');
+            
+            return $this->redirectToRoute('microservice_details', [
+                'slug' => $microservice->getSlug()
+            ], Response::HTTP_SEE_OTHER);
+
+            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+        }
+
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,
             'similaires' => $similaires,
             'commandeForm' => $commandeForm->createView(),
+            'servicesignaleForm' => $servicesignaleForm->createView(),
             'prix' => $microservice->getPrix(),
             'options' => $options,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),

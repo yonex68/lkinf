@@ -31,6 +31,9 @@
 	<link href="{{ asset('themes/base/css/custom.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/base/css/responsive.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/base/css/mapbox.css') }}" rel="stylesheet">
+	
+	<!-- Cke editor -->
+	<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
 	{% block stylesheets %}
 		{{ encore_entry_link_tags('app') }}
@@ -50,6 +53,7 @@
 	{% block navbar %}
 		{{ include('partials/base/_navbars.html.twig') }}
 	{% endblock %}
+	{% block serviceBlocNavigation %}{% endblock %}
 
 	{{ include('partials/_flash_message.html.twig') }}
 
@@ -110,6 +114,7 @@
 
 	gtag('config', 'G-TBWPH2ZDRB');
 	</script>
+
 </body>
 
 </html>

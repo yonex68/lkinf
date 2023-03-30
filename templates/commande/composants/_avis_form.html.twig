@@ -4,14 +4,14 @@
 
 <div class="card my-3 shadow-sm">
    <div class="card-header bg-white">
-      <h3 class="lead h5 font-weight-bold">Votre avis sur le service</h3>
+      <h3 class="h6">Votre avis sur le service</h3>
    </div>
    <div class="card-body">
 
       {% if app.user.avis|length > 0 %}
 
          {% for avis in app.user.avis %}
-            <div class="rounded p-3 bg-light">
+            <div class="rounded bg-light border">
                <i class="d-block">{{ avis.created|date('d/m/Y') }}</i>
                <q>{{ avis.contenu }}</q>
             </div>
@@ -23,7 +23,7 @@
 
             {{ form_start(avisForm) }}
                {{ form_widget(avisForm) }}
-               <button type="submit" class="btn btn-success" data-turbo="false">
+               <button type="submit" class="btn btn-success btn-rounded btn-block" data-turbo="false">
                   <span id="btnFetch"><i class="mdi mdi-send"></i> Envoyer</span>
                </button>
             {{ form_end(avisForm) }}

@@ -7,39 +7,39 @@
 
 {% block body %}
 
-	<div class="card shadow-sm w-100 mb-4">
-		<div class="card-body">
-			<div class="row d-block d-sm-flex align-items-center">
-				<div class="col-sm-6">
-					<h2 class="h5 mb-3">Mes services</h2>
-				</div>
-				<div class="col-sm-6 text-right">
-					<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">Nouveau service</a>
-				</div>
+<div class="card shadow-sm w-100 mb-4">
+	<div class="card-body p-3">
+		<div class="row d-block d-sm-flex align-items-center">
+			<div class="col-sm-6">
+				<h2 class="h5 mb-3">Mes services</h2>
+			</div>
+			<div class="col-sm-6 text-right">
+				<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-dark">Nouveau service</a>
 			</div>
 		</div>
-	</div>
-
-	<div class="">
-		<div class="">
-			{% for microservice in microservices %}
+		<div class="p-0">
+			<div class="">
+				{% for microservice in microservices %}
 				{% include "vendeur/microservices/composants/_bloc_list.html.twig" %}
-			{% else %}
+				{% else %}
 				<div class="">
 					<div class="py-3 text-center bg-white border rounded shadow-sm">
-						<p class="text-muted">Aucun service</p>
+						<p class="text-muted text-center">Vous n'avez aucun service actif. Créez-en un nouveau
+							ou activez-les depuis la page Mes services.</p>
 						<div class="py-4">
 							<i class="fa fa-search fa-3x text-muted"></i>
 						</div>
-						<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">Nouveau service</a>
+						<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-dark">Nouveau service</a>
 					</div>
 				</div>
-			{% endfor %}
-		</div>
+				{% endfor %}
+			</div>
 
-		<div class="py-3">
-			{{ knp_pagination_render(microservices) }}
+			<div class="py-3">
+				{{ knp_pagination_render(microservices) }}
+			</div>
 		</div>
 	</div>
+</div>
 
 {% endblock %}

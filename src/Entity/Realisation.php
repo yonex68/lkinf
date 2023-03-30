@@ -2,13 +2,19 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestamp;
 use App\Repository\RealisationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RealisationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Realisation
 {
+    use Timestamp;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -26,8 +32,22 @@ class Realisation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?bool $online = null;
+    #[ORM\ManyToOne(inversedBy: 'realisations')]
+    private ?User $vendeur = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'realisations')]
+    private Collection $microservices;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $file = null;
+
+    public function __construct()
+    {
+        $this->microservices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,14 +102,70 @@ class Realisation
         return $this;
     }
 
-    public function isOnline(): ?bool
+    public function getVendeur(): ?User
     {
-        return $this->online;
+        return $this->vendeur;
     }
 
-    public function setOnline(bool $online): self
+    public function setVendeur(?User $vendeur): self
     {
-        $this->online = $online;
+        $this->vendeur = $vendeur;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Microservice>
+     */
+    public function getMicroservices(): Collection
+    {
+        return $this->microservices;
+    }
+
+    public function addMicroservice(Microservice $microservice): self
+    {
+        if (!$this->microservices->contains($microservice)) {
+            $this->microservices->add($microservice);
+            $microservice->addRealisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMicroservice(Microservice $microservice): self
+    {
+        if ($this->microservices->removeElement($microservice)) {
+            $microservice->removeRealisation($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

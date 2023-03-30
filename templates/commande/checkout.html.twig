@@ -4,67 +4,49 @@
 
 {% block titre %}Nouvelle commande{% endblock %}
 
-{% block col %}5{% endblock %}
+{% block space %}{% endblock %}
 
 {% block body %}
 
-<section>
-	<div class="container">
-		<div class="row">
+{% include "commande/composants/_stripe.html.twig" %}
 
-			<div class="col-sm-12">
+<div>
+	{% include "commande/composants/_paypal_button.html.twig" %}
+</div>
 
-				{% include "commande/composants/_stripe.html.twig" %}
+<h4 class="py-3 h5">Service à commander</h4>
+<div class="media p-3 bg-light rounded">
+	{% if microservice.medias|length > 0 %}
 
-				<div>
-					{% include "commande/composants/_paypal_button.html.twig" %}
-				</div>
+	<img class="rounded"
+		src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_avatar') }}" />
 
-			</div>
+	{% else %}
 
-		</div>
+	<img class="rounded" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" />
 
-		<h4 class="py-3 h5">Service à commander</h4>
-		<div class="list-group my-3">
-			<div class="list-group-item">
-				<div class="d-flex">
-					<div>
-						{% if microservice.medias|length > 0 %}
+	{% endif %}
+	<div class="media-body pl-2">
+		<strong class="d-block">{{ microservice.name }}</strong>
 
-						<img class="rounded"
-							src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('midle_avatar') }}" />
+		<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
+			class="badge badge-warning">#{{ microservice.categorie.name }}</a>
 
-						{% else %}<img class="rounded"
-							src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('midle_avatar') }}" />
+		{% if microservice.categorie.slug == 'ingenieur-son' %}
 
-						{% endif %}
-					</div>
-					<div class="pl-3">
-						<strong class="d-block">{{ microservice.name }}</strong>
+		<p class="">
+			{{ type_offre }} <strong> {{ microservice.prixMixage ~ currency }}</strong>
+		</p>
 
-						<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
-							class="badge badge-warning">#{{ microservice.categorie.name }}</a>
+		{% else %}
 
-						{% if microservice.categorie.slug == 'ingenieur-son' %}
+		<p class="">
+			A partir de <strong> {{ microservice.prix ~ currency }}</strong>
+		</p>
 
-						<p class="">
-							{{ type_offre }} <strong> {{ microservice.prixMixage ~ currency }}</strong>
-						</p>
-
-						{% else %}
-
-						<p class="">
-							A partir de <strong> {{ microservice.prix ~ currency }}</strong>
-						</p>
-
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-
+		{% endif %}
 	</div>
-</section>
+</div>
 
 {% endblock %}
 

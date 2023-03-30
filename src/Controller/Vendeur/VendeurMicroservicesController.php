@@ -47,7 +47,7 @@ class VendeurMicroservicesController extends AbstractController
         $microservices = $paginator->paginate(
             $microserviceRepository->findBy(['vendeur' => $user], ['created' => 'DESC']),
             $request->query->getInt('page', 1),
-            6
+            12
         );
 
         return $this->render('vendeur/microservices/index.html.twig', [
@@ -81,6 +81,7 @@ class VendeurMicroservicesController extends AbstractController
             $microservice->setPrixComposition(0);
             $microservice->setPrix(0);
             $microservice->setPromo(false);
+            $microservice->setOffline(false);
             $entityManager->persist($microservice);
             $entityManager->flush();
 
@@ -156,7 +157,7 @@ class VendeurMicroservicesController extends AbstractController
 
         $formType = DescriptionType::class;
 
-        if ($microservice->getCategorie()->getSlug() == 'ingenieur-son') {
+        if ($microservice->getCategorie()->getSlug() == 'Ingenieur-son') {
 
             $formType = IngenieurSonType::class;
 
@@ -228,7 +229,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', "L'image a bien été téléchargée");
 
             return $this->redirectToRoute('vendeur_microservices_publication', [
                 'id' => $microservice->getId()
@@ -284,6 +285,8 @@ class VendeurMicroservicesController extends AbstractController
     #[Route('/{id}', name: 'vendeur_microservices_show', methods: ['GET'])]
     public function show(Microservice $microservice): Response
     {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+
         return $this->render('vendeur/microservices/show.html.twig', [
             'microservice' => $microservice,
         ]);

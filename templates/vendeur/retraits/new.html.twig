@@ -8,7 +8,7 @@
 
 {{ include('vendeur/portefeuille/composants/_box.html.twig') }}
 
-<div class="bg-white">
+<div class="bg-white rounded shadow-sm">
 
     {% if retraitEnattente|length == 0 %}
 
@@ -16,7 +16,7 @@
 
     {% else %}
 
-        <p class="text-light alert alert-warning">Vous avez déjà un retrait en attentes</p>
+    <p class="text-light alert alert-warning">Vous avez déjà un retrait en attentes</p>
 
     {% endif %}
 </div>

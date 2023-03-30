@@ -54,6 +54,7 @@ class MicroservicesFixtures extends Fixture implements DependentFixtureInterface
             }
             $microservice->setVendeur($user);
             $microservice->setPromo($faker->numberBetween(0, 1));
+            $microservice->setOffline($faker->numberBetween(0, 1));
             $microservice->setPrixMastering($faker->numberBetween(0, 1000));
             $microservice->setPrixMixage($faker->numberBetween(0, 1000));
             $microservice->setPrixBeatmaking($faker->numberBetween(0, 1000));

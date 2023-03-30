@@ -1,0 +1,22 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Planning des services{% endblock %}
+{% block bg %}transparent{% endblock %}
+
+{% block body %}
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="h5 mb-3">Planning des services</h2>
+        {% include "vendeur/emplois_temps/_table.html.twig" %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p class="text-muted py-1">Ajouter vos jours et heures d'ouverture et de cloture</p>
+        {% include "vendeur/emplois_temps/_form.html.twig" %}
+    </div>
+</div>
+
+{% endblock %}

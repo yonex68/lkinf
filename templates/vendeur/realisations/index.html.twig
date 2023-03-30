@@ -1,44 +1,85 @@
 {% extends 'vendeur.html.twig' %}
 
-{% block title %}Realisations{% endblock %}
+{% block title %}Mes réalisations
+{% endblock %}
+
+{% block bg %}{% endblock %}
 
 {% block body %}
-    <h1>Realisations</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Link</th>
-                <th>Plateforme</th>
-                <th>Description</th>
-                <th>Online</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="card shadow-sm w-100 mb-4">
+    <div class="card-body">
+        <div class="row d-block d-sm-flex align-items-center">
+            <div class="col-sm-6">
+                <h2 class="h5 mb-3">Mes réalisations</h2>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="{{ path('app_vendeur_realisation_new') }}" class="btn btn-dark">Ajouter une réalisation</a>
+            </div>
+        </div>
+
         {% for realisation in realisations %}
-            <tr>
-                <td>{{ realisation.id }}</td>
-                <td>{{ realisation.name }}</td>
-                <td>{{ realisation.link }}</td>
-                <td>{{ realisation.plateforme }}</td>
-                <td>{{ realisation.description }}</td>
-                <td>{{ realisation.online ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_vendeur_realisation_show', {'id': realisation.id}) }}">show</a>
-                    <a href="{{ path('app_vendeur_realisation_edit', {'id': realisation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="card mb-2">
+            <div class="card-body p-1">
+                <div class="row d-block d-sm-flex align-items-center">
+                    <div class="col-sm-4">
+                        {% if realisation.type == 'image' %}
 
-    <a href="{{ path('app_vendeur_realisation_new') }}">Create new</a>
-    
+                        <img class="img-fluid rounded" src="{{ realisation.link }}" />
+
+                        {% elseif realisation.type == 'video' %}
+
+                        {% if realisation.plateforme == 'youtube' %}
+
+                        <iframe width="100%" height="200px" class="border rounded" src="https://www.youtube.com/embed/{{ realisation.file }}"></iframe>
+                        
+                        {% endif %}
+
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-8">
+
+                        <small class="text-muted d-block-py-2">{{ realisation.created|ago(locale='fr') }}</small>
+
+                        <a href="{{ path('app_vendeur_realisation_show', {id: realisation.id}) }}">
+                            <strong class="d-block text-light py-3 mb-1 h5">{{ realisation.name }}</strong>
+                        </a>
+
+                        <div class="content-info mb-3 text-left">
+
+                            <a href="{{ path('app_vendeur_realisation_show', {'id': realisation.id}) }}"
+                                class="btn btn-outline-dark">Details</a>
+
+                            {% if is_granted('realisation_edit', realisation) %}
+                            <a href="{{ path('app_vendeur_realisation_edit', {'id': realisation.id}) }}"
+                                class="btn btn-outline-secondary">Modifier</a>
+
+                            {% include "vendeur/realisations/_delete_form.html.twig" %}
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="">
+            <div class="py-3 text-center bg-white ">
+                <p class="text-muted">Aucune réalisation</p>
+                <div class="py-4">
+                    <i class="fa fa-search fa-3x text-muted"></i>
+                </div>
+                <a href="{{ path('app_vendeur_realisation_new') }}" class="btn btn-dark">Ajouter une réalisation</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="py-3">
+            {{ knp_pagination_render(realisations) }}
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}

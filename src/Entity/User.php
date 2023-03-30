@@ -146,6 +146,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Retrait::class)]
     private Collection $retraits;
 
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Realisation::class)]
+    private Collection $realisations;
+
+    /**
+     * @Vich\UploadableField(mapping="users_couvertures", fileNameProperty="couverture")
+     * @var File|null
+     * @Assert\Image(maxSize="10M", maxSizeMessage="Image trop volumineuse maximum 10Mb")
+     * @Assert\Image(mimeTypes = {"image/jpeg", "image/jpg", "image/png"}, mimeTypesMessage = "Mauvais format d'image (jpeg, jpg et png)")
+    **/
+    private $couvertureFile;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $couverture = null;
+
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: EmploisTemps::class)]
+    private Collection $emploisTemps;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ServiceSignale::class)]
+    private Collection $serviceSignales;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -159,6 +179,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->destinatairesCommandes = new ArrayCollection();
         $this->commandeMessages = new ArrayCollection();
         $this->retraits = new ArrayCollection();
+        $this->realisations = new ArrayCollection();
+        $this->emploisTemps = new ArrayCollection();
+        $this->serviceSignales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -296,6 +319,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setCouvertureFile(?File $couvertureFile = null): void
+    {
+        $this->couvertureFile = $couvertureFile;
+
+        if (null !== $couvertureFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdated(new \DateTimeImmutable());
+        }
+    }
+
+    public function getCouvertureFile(): ?File
+    {
+        return $this->couvertureFile;
     }
 
     public function serialize() {
@@ -883,5 +925,112 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Realisation>
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations->add($realisation);
+            $realisation->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        if ($this->realisations->removeElement($realisation)) {
+            // set the owning side to null (unless already changed)
+            if ($realisation->getVendeur() === $this) {
+                $realisation->setVendeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCouverture(): ?string
+    {
+        return $this->couverture;
+    }
+
+    public function setCouverture(?string $couverture): self
+    {
+        $this->couverture = $couverture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EmploisTemps>
+     */
+    public function getEmploisTemps(): Collection
+    {
+        return $this->emploisTemps;
+    }
+
+    public function addEmploisTemp(EmploisTemps $emploisTemp): self
+    {
+        if (!$this->emploisTemps->contains($emploisTemp)) {
+            $this->emploisTemps->add($emploisTemp);
+            $emploisTemp->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploisTemp(EmploisTemps $emploisTemp): self
+    {
+        if ($this->emploisTemps->removeElement($emploisTemp)) {
+            // set the owning side to null (unless already changed)
+            if ($emploisTemp->getVendeur() === $this) {
+                $emploisTemp->setVendeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ServiceSignale>
+     */
+    public function getServiceSignales(): Collection
+    {
+        return $this->serviceSignales;
+    }
+
+    public function addServiceSignale(ServiceSignale $serviceSignale): self
+    {
+        if (!$this->serviceSignales->contains($serviceSignale)) {
+            $this->serviceSignales->add($serviceSignale);
+            $serviceSignale->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceSignale(ServiceSignale $serviceSignale): self
+    {
+        if ($this->serviceSignales->removeElement($serviceSignale)) {
+            // set the owning side to null (unless already changed)
+            if ($serviceSignale->getUser() === $this) {
+                $serviceSignale->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getEmail();
     }
 }

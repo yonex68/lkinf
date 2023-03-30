@@ -73,6 +73,18 @@ class Microservice
     #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Media::class)]
     private Collection $medias;
 
+    #[ORM\ManyToMany(targetEntity: Realisation::class, inversedBy: 'microservices')]
+    private Collection $realisations;
+
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: ServiceSignale::class)]
+    private Collection $serviceSignales;
+
+    #[ORM\ManyToMany(targetEntity: EmploisTemps::class, inversedBy: 'microservices')]
+    private Collection $emploitemps;
+
+    #[ORM\Column]
+    private ?bool $offline = null;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -80,6 +92,9 @@ class Microservice
         $this->favoris = new ArrayCollection();
         $this->serviceOptions = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->realisations = new ArrayCollection();
+        $this->serviceSignales = new ArrayCollection();
+        $this->emploitemps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -405,6 +420,96 @@ class Microservice
                 $media->setMicroservice(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Realisation>
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations->add($realisation);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        $this->realisations->removeElement($realisation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ServiceSignale>
+     */
+    public function getServiceSignales(): Collection
+    {
+        return $this->serviceSignales;
+    }
+
+    public function addServiceSignale(ServiceSignale $serviceSignale): self
+    {
+        if (!$this->serviceSignales->contains($serviceSignale)) {
+            $this->serviceSignales->add($serviceSignale);
+            $serviceSignale->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceSignale(ServiceSignale $serviceSignale): self
+    {
+        if ($this->serviceSignales->removeElement($serviceSignale)) {
+            // set the owning side to null (unless already changed)
+            if ($serviceSignale->getMicroservice() === $this) {
+                $serviceSignale->setMicroservice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EmploisTemps>
+     */
+    public function getEmploitemps(): Collection
+    {
+        return $this->emploitemps;
+    }
+
+    public function addEmploitemp(EmploisTemps $emploitemp): self
+    {
+        if (!$this->emploitemps->contains($emploitemp)) {
+            $this->emploitemps->add($emploitemp);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploitemp(EmploisTemps $emploitemp): self
+    {
+        $this->emploitemps->removeElement($emploitemp);
+
+        return $this;
+    }
+
+    public function getOffline(): ?bool
+    {
+        return $this->offline;
+    }
+
+    public function setOffline(bool $offline): self
+    {
+        $this->offline = $offline;
 
         return $this;
     }

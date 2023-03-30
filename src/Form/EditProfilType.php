@@ -65,6 +65,16 @@ class EditProfilType extends AbstractType
                 'imagine_pattern'   =>  'small_size',
                 'attr'   =>  ['class' => 'form-control-file'],
             ])
+            ->add('couvertureFile', VichImageType::class, [
+                'label' => '(Png, jpg et jpeg)',
+                'required'  =>  false,
+                'allow_delete' =>  false,
+                'download_label'     =>  false,
+                'image_uri'     =>  false,
+                'download_uri'     =>  false,
+                'imagine_pattern'   =>  'rectangle_avatar',
+                'attr'   =>  ['class' => 'form-control-file'],
+            ])
             ->add('apropos', TextareaType::class, [
                 'label' => 'Biographie',
                 'help' => 'Renseignements',

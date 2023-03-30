@@ -5,7 +5,7 @@
 {% block body %}
 <!-- Inner Header -->
 {% if categorie.image %}
-<section class="inner-header categorieSection" style="background-image: url({{ vich_uploader_asset(categorie, 'imageFile') | imagine_filter('medium_size') }});">
+<section class="inner-header categorieSection" style="background-image: url({{ vich_uploader_asset(categorie, 'imageFile') | imagine_filter('very_large_size') }})">
    {% else %}
    <section class="py-5 inner-header bg-degrade">
       {% endif %}
@@ -14,7 +14,7 @@
             <div class="col-md-9 text-left">
                <h1 class="mt-0 mb-3 text-light">#{{ categorie.name }} ({{ microservices.getTotalItemCount }})</h1>
                <div class="breadcrumbs">
-                  <p class="mb-0 text-light lead">
+                  <p class="mb-0 text-muted font-weight-light" style="font-size: 1.2em;">
                      Pour tous vos travaux vidéo et audio, le site {{ appName }} vous propose des centaines de
                      freelances
                      disponibles et qualifiés, pour vous accompagner dans votre projet. Spécialiste des services, vous

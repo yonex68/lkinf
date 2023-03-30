@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 class SearchServiceType extends AbstractType
 {
@@ -27,11 +28,36 @@ class SearchServiceType extends AbstractType
                'placeholder'   =>  'De quoi avez-vous besoin ?', 'class' =>  'w-100 shadow-none'
             ]
          ])
+         ->add('jour', ChoiceType::class, [
+             'label' => 'Jours',
+             'expanded' => true,
+             'placeholder' => 'Tout',
+             'required' => false,   
+             'choices' => [
+                 'Lundi' => 'Lundi',
+                 'Mardi' => 'Mardi',
+                 'Mercredi' => 'Mercredi',
+                 'Jeudi' => 'Jeudi',
+                 'Vendredi' => 'Vendredi',
+                 'Samedi' => 'Samedi',
+                 'Dimanche' => 'Dimanche'
+             ]
+         ])
+         ->add('heureOuverture', TimeType::class, [
+            'label' => 'Ouverte',
+             'widget' => 'single_text',
+             'required' => false,
+         ])
+         ->add('heureCloture', TimeType::class, [
+            'label' => 'Fermer',
+             'widget' => 'single_text',
+             'required' => false,
+         ])
          ->add('ville', TextType::class, [
-            'label' =>  false,
+            'label' =>  'Ville',
             'required'  =>  false,
             'attr'  =>  [
-               'placeholder'   =>  'Ville.(Exemple: Londre)', 'class' =>  'w-100 shadow-none'
+               'placeholder'   =>  'Ville', 'class' =>  'w-100 shadow-none'
             ]
          ])
          ->add('minPrice', NumberType::class, [
@@ -59,7 +85,7 @@ class SearchServiceType extends AbstractType
             'multiple' => true,
          ])
          ->add('promo', CheckboxType::class, [
-            'label' => 'En promotion',
+            'label' => 'Services en promotion',
             'required' => false,
             'attr' => [
                'class' => null,

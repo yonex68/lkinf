@@ -80,10 +80,14 @@ class Commande
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Rapport $rapport = null;
 
+    #[ORM\ManyToMany(targetEntity: ServiceOption::class, inversedBy: 'commandes')]
+    private Collection $serviceOptions;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->commandeMessages = new ArrayCollection();
+        $this->serviceOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -363,6 +367,30 @@ class Commande
     public function setRapport(?Rapport $rapport): self
     {
         $this->rapport = $rapport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ServiceOption>
+     */
+    public function getServiceOptions(): Collection
+    {
+        return $this->serviceOptions;
+    }
+
+    public function addServiceOption(ServiceOption $serviceOption): self
+    {
+        if (!$this->serviceOptions->contains($serviceOption)) {
+            $this->serviceOptions->add($serviceOption);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceOption(ServiceOption $serviceOption): self
+    {
+        $this->serviceOptions->removeElement($serviceOption);
 
         return $this;
     }

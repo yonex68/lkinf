@@ -1,4 +1,25 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(form) }}
+<div class="card">
+    <div class="card-body">
+        {{ form_start(form) }}
+
+        {{ form_row(form.name) }}
+        
+        {{ form_row(form.type) }}
+        
+        {{ form_row(form.file) }}
+
+        {{ form_row(form.plateforme) }}
+        
+        {{ form_row(form.link) }}
+        
+        {{ form_rest(form) }}
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-dark rounded-btn btn-block">{{ button_label|default('Enregistrer') }}</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>

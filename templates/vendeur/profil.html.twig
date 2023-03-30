@@ -3,206 +3,192 @@
 {% block title %}Compte vendeur - {{ user.nom ~ ' ' ~ user.prenom }} {% endblock %}
 
 {% block body %}
-<div class="bg-white shadow-sm-bottom">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="d-flex align-items-center py-3">
-					<div class="profile-left">
-						<h5 class="font-weight-bold text-dark mb-1 mt-0"><i class="fa fa-check-circle text-success"></i> {{
-							user.nom ~ ' ' ~ user.prenom }}</h5>
-						{% if user.pays %}
-						<p class="mb-0 text-muted">
-							<i class="fa fa-map"></i>
-							{{ user.pays ~ ' ' ~ user.ville }}
-						</p>
-						{% endif %}
-					</div>
-
-					<div class="profile-right ml-auto">
-
-						{% if app.user == user %}
-
-						<a href="{{ path('user_edit_profil') }}" class="btn btn-outline-dark shadow-sm">
-							<i class="fa fa-cog"></i> Mettre à jour mon profil
-						</a>
-
-						{% else %}
-
-						<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
-							class="btn btn-outline-dark shadow-sm">
-							Contacter le vendeur
-						</a>
-
-						{% endif %}
-
+{% if user.couverture %}
+<section class="inner-header categorieSection profilCouverture"
+	style="background-image: url({{ vich_uploader_asset(user, 'couvertureFile') | imagine_filter('very_large_size') }})">
+	{% else %}
+	<section class="py-5 inner-header bg-degrade profilCouverture">
+		{% endif %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7 text-left">
+					<h1 class="mt-0 mb-3 text-light">{{ user.nom }} {{ user.prenom }}</h1>
+					<div class="breadcrumbs text-light">
+						<span class="badge badge-dark rounded-btn">{{ user.compte }}</span>
+						{{ user.created|ago(locale='fr') }}
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="py-5">
-	<div class="container">
-		<div class="row">
-			<aside class="col col-xl-4 order-xl-1 col-lg-12 order-lg-1 col-12">
-				<div class="sidebar-fix mb-3">
-					<div class="box mb-3 shadow-sm rounded bg-white profile-box text-center">
-						<div class="p-4">
-							{% if user.avatar %}
-							<img class="img-fluid rounded-circle"
-								src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('identite_size') }}" alt='' />
+		<div class="caption"></div>
+	</section>
+	<!-- End Inner Header -->
 
-							{% else %}
+	<div class="py-5">
+		<div class="container">
+			<div class="row">
+				<aside class="col col-md-4 order-xl-1 order-lg-1 col-12">
+					<div class="mb-3"> <!-- sidebar-fix  -->
+						<div class="box mb-3 shadow-sm rounded bg-white profile-box text-center">
+							<div class="p-4">
+								{% if user.avatar %}
+								<img class="img-fluid rounded-circle"
+									src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('identite_size') }}"
+									alt='' />
 
-							<img class="img-fluid rounded-circle"
-								src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}" alt='' />
+								{% else %}
 
-							{% endif %}
-						</div>
-						<div class="p-3 border-top border-bottom">
-							<h5 class="font-weight-bold text-dark mb-1 mt-0 text-left">{{ user.nom }}
-								{{ user.prenom }}</h5>
-							<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
-						</div>
+								<img class="img-fluid rounded-circle"
+									src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}" alt='' />
 
-						{% if user.compte == 'Vendeur' %}
-						<div class="p-3">
-							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">{{ avispositif(user)|length }}</p>
+								{% endif %}
 							</div>
-							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted"><i class="fa fa-thumbs-down"></i> Avis négatif</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">{{ avisnegatif(user)|length }}</p>
+							<div class="p-3 border-top border-bottom bg-light">
+								<h5 class="font-weight-bold text-light mb-1 mt-0 text-left">{{ user.nom }}
+									{{ user.prenom }}</h5>
+								<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
 							</div>
-							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(user)|length }}</p>
-							</div>
-							<div class="d-flex align-items-top mb-2">
-								<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(user)|length }}</p>
-							</div>
-							<div class="d-flex align-items-top">
-								<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> {{ user.compte }}</p>
-								<p class="text-dark mb-0 mt-0 ml-auto">{{ user.created|ago(locale='fr') }}</p>
-							</div>
-						</div>
 
-						<div class="p-3">
-
-							{% include "vendeur/composants/_suivre_btn.html.twig" %}
-
-							{% if app.user == user %}{% else %}
-
-							<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
-								class="btn btn-outline-dark shadow-sm rounded-btn w-100 mt-3">
-								Contacter
-							</a>
-
-							{% endif %}
-
-						</div>
-
-						{% endif %}
-
-					</div>
-				</div>
-			</aside>
-			<!-- Main Content -->
-			<main class="col col-xl-5 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
-
-				<div class="">
-					<div class="row">
-						{% for microservice in microservices %}
-
-						<div class="col-12 col-sm-12">
-
-							{% include "vendeur/microservices/composants/_bloc.html.twig" %}
-
-						</div>
-
-						{% else %}
-
-						<div class="col-12">
-							<div class="card">
-								<div class="card-body text-center bg-white border rounded shadow-sm">
-									<p class="text-muted lead">Aucun service disponible</p>
-									<div class="py-4">
-										<i class="fa fa-search fa-3x text-muted"></i>
-									</div>
-									{% if app.user.id == user.id %}
-									<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">
-										Nouveau service
-									</a>
-									{% endif %}
+							{% if user.compte == 'Vendeur' %}
+							<h6 class="font-weight-bold text-left pl-3 pb-0">Statistiques vendeur</h6>
+							<div class="p-3 pt-0">
+								<div class="d-flex align-items-top mb-2">
+									<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
+									<p class="text-dark mb-0 mt-0 ml-auto">{{ avispositif(user)|length }}</p>
+								</div>
+								<div class="d-flex align-items-top mb-2">
+									<p class="mb-0 text-muted"><i class="fa fa-thumbs-down"></i> Avis négatif</p>
+									<p class="text-dark mb-0 mt-0 ml-auto">{{ avisnegatif(user)|length }}</p>
+								</div>
+								<div class="d-flex align-items-top mb-2">
+									<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
+									<p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(user)|length }}</p>
+								</div>
+								<div class="d-flex align-items-top mb-2">
+									<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
+									<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(user)|length }}</p>
+								</div>
+								<div class="d-flex align-items-top">
+									<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> {{ user.compte }}</p>
+									<p class="text-dark mb-0 mt-0 ml-auto">{{ user.created|ago(locale='fr') }}</p>
 								</div>
 							</div>
-						</div>
 
-						{% endfor %}
+							<div class="p-3">
 
-						<div class="col-12">
-							<div class="py-3">
-								{{ knp_pagination_render(microservices) }}
+								{% include "vendeur/composants/_suivre_btn.html.twig" %}
+
+								{% if app.user == user %}
+								<a href="{{ path('user_edit_profil') }}" class="btn btn-dark rounded-btn btn-block">
+									<i class="fa fa-cog"></i> Mettre à jour mon profil
+								</a>
+								{% else %}
+
+								<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
+									class="btn btn-outline-dark shadow-sm rounded-btn w-100 mt-3">
+									Contacter
+								</a>
+
+								{% endif %}
+
 							</div>
-						</div>
-
-					</div>
-				</div>
-
-			</main>
-
-			<aside class="col col-xl-3 order-xl-3 col-lg-12 order-lg-3 col-12">
-				<div class="shadow-sm rounded bg-white job-item mb-3">
-					<div class="p-3 job-item-header border-0">
-						<div class="overflow-hidden mr-2">
-							<h6 class="font-weight-light text-dark mb-0 text-truncate">Abonnés</h6>
-						</div>
-					</div>
-					<div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-						<div class="overlap-rounded-circle">
-							{% for follow in followers(user) %}
-
-							{% if follow.client.avatar %}
-
-							<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-								src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
-								alt="" data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
-
-							{% else %}
-
-							<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-								src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt=""
-								data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
 
 							{% endif %}
 
-							{% endfor %}
 						</div>
 					</div>
-					<div class="p-3 job-item-footer border-0">
-						<span class="font-weight-bold text-muted">{{ lastFolowers(user)|length }} Abonné{{
-							lastFolowers(user)|length > 1 ? 's' : '' }}</span>
+					
+					<div class="shadow-sm rounded bg-light job-item mb-3">
+						<div class="p-3 job-item-header border-0">
+							<div class="overflow-hidden mr-2">
+								<h6 class="font-weight-light text-dark mb-0 text-truncate">Abonnés</h6>
+							</div>
+						</div>
+						<div class="d-flex align-items-center bg-light p-3 border-top border-bottom job-item-body">
+							<div class="overlap-rounded-circle">
+								{% for follow in followers(user) %}
 
-						{% if followers(user)|length > lastFolowers(user)|length %}
-						<small class="text-gray-500">
-							<i class="fa fa-plus"></i>
-							{{ followers(user)|length - lastFolowers(user)|length }} autres</small>
-						{% endif %}
+								{% if follow.client.avatar %}
+
+								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+									src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
+									alt="" data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
+
+								{% else %}
+
+								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+									src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt=""
+									data-original-title="{{ follow.client.nom ~ ' ' ~ follow.client.prenom }}">
+
+								{% endif %}
+
+								{% endfor %}
+							</div>
+						</div>
+						<div class="p-3 job-item-footer border-0">
+							<span class="font-weight-bold text-muted">{{ lastFolowers(user)|length }} Abonné{{
+								lastFolowers(user)|length > 1 ? 's' : '' }}</span>
+
+							{% if followers(user)|length > lastFolowers(user)|length %}
+							<small class="text-gray-500">
+								<i class="fa fa-plus"></i>
+								{{ followers(user)|length - lastFolowers(user)|length }} autres</small>
+							{% endif %}
+						</div>
 					</div>
-				</div>
+				</aside>
+				<!-- Main Content -->
+				<main class="col col-md-8 order-xl-2 order-lg-2 col-12">
 
-			</aside>
+					<div class="">
+						<div class="row">
+							{% for microservice in microservices %}
+
+							<div class="col-12">
+
+								{% include "vendeur/microservices/composants/_bloc_list.html.twig" %}
+
+							</div>
+
+							{% else %}
+
+							<div class="col-12">
+								<div class="card">
+									<div class="card-body text-center bg-white border rounded shadow-sm">
+										<p class="text-muted lead text-center">Vous n'avez aucun service actif. Créez-en un
+											nouveau ou activez-les depuis la page Mes services.</p>
+										<div class="py-4">
+											<i class="fa fa-search fa-3x text-muted"></i>
+										</div>
+										{% if app.user.id == user.id %}
+										<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">
+											Nouveau service
+										</a>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+
+							{% endfor %}
+
+							<div class="col-12">
+								<div class="py-3">
+									{{ knp_pagination_render(microservices) }}
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</main>
+			</div>
 		</div>
 	</div>
-</div>
 
-{% endblock %}
+	{% endblock %}
 
-{% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('js/suivi.js') }}"></script>
-<script src="{{ asset('js/favoris.js') }}"></script>
-{% endblock %}
+	{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/suivi.js') }}"></script>
+	<script src="{{ asset('js/favoris.js') }}"></script>
+	{% endblock %}

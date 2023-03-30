@@ -1,13 +1,14 @@
-<nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top px-0">
+<nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top px-0">
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
-		<a class="navbar-brand" href="{{ path('accueil') }}"><img src="{{ asset('img/logo.png') }}"
-				alt="{{ appName }}"></a>
+		<a class="navbar-brand" href="{{ path('accueil') }}">
+			<h6 class="text-light font-weight-bold h6 text-uppercase">{{ appName }}</h6>
+		</a>
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search"
 			style="width: 40%;margin-right: 0!important;" action="{{ path('microservices') }}" method="get">
-			<div class="input-group w-100 border rounded" style="border-color: white!important;">
-				<input type="text" name="q" class="form-control bg-transparent border-0 shadow-none small" placeholder="Je cherche..."
+			<div class="input-group w-100 rounded bg-dark">
+				<input type="text" name="q" class="form-control bg-dark border-0 shadow-none small" placeholder="Je cherche..."
 					aria-label="Search" aria-describedby="basic-addon2">
 				<div class="input-group-append rounded">
 					<button class="btn btn-success rounded" type="submit">
@@ -104,7 +105,7 @@
 					aria-labelledby="navbarDropdownUserImage">
 					<h6 class="dropdown-header d-flex align-items-center">
 						<div class="dropdown-user-details">
-							<div class="dropdown-user-details-name">{{ app.user.nom }}
+							<div class="dropdown-user-details-name text-light">{{ app.user.nom }}
 								{{ app.user.prenom }}</div>
 							<div class="dropdown-user-details-email">{{ app.user.email }}</div>
 						</div>

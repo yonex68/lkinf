@@ -17,19 +17,6 @@
 
          <div class="d-flex align-items-center">
 
-            <span class="seller-image">
-               {% if similaire.vendeur.avatar %}
-               <img class="img-fluid"
-                  src="{{ vich_uploader_asset(similaire.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
-                  alt='' />
-
-               {% else %}
-
-               <img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
-
-               {% endif %}
-            </span>
-
             <span class="seller-name">
                <a href="{{ path('microservice_details', {slug: similaire.slug}) }}">
                   {{ similaire.name|u.truncate(60, '...') }}
@@ -44,7 +31,7 @@
                <div class="rating-wrapper">
                   <span class="gig-rating text-body-2">
                      <a href="{{ path('microservices_categories', {slug: similaire.categorie.slug}) }}?categories%5B%5D={{ similaire.categorie.id }}"
-                        class="badge badge-light border badge-pill my-2" style="font-size: .9em!important;">
+                        class="badge badge-dark border badge-pill my-2" style="font-size: .9em!important;">
                         #{{ similaire.categorie.name }}
                      </a>
                   </span>

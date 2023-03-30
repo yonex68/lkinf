@@ -18,6 +18,7 @@ use App\Repository\MessageRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
 use App\Repository\RapportRepository;
+use App\Service\PaymentService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\TextUI\Command;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -66,9 +67,15 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/suivis/commande_id={id}', name: 'commande_details')]
-    public function commande(CommandeRepository $commandeRepository, $id, Request $request, EntityManagerInterface $entityManager, CommandeMessageRepository $commandeMessageRepository,
-    MailerInterface $mailerInterface, RapportRepository $rapportRepository): Response
-    {
+    public function commande(
+        CommandeRepository $commandeRepository,
+        $id,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        CommandeMessageRepository $commandeMessageRepository,
+        MailerInterface $mailerInterface,
+        RapportRepository $rapportRepository
+    ): Response {
         $user = $this->getUser();
         $commande = $commandeRepository->find($id);
 
@@ -229,7 +236,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/{slug}/{offre}', name: 'commander_microservice', methods: ['GET', 'POST'])]
-    public function checkout(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, $offre): Response
+    public function checkout(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, $offre, PaymentService $paymentService): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
@@ -241,6 +248,8 @@ class CommandeController extends AbstractController
             $montant = $microservice->getPrixMixage();
         } elseif ($offre == 'Beatmaking') {
             $montant = $microservice->getPrixBeatmaking();
+        } elseif ($offre == 'Composition') {
+            $montant = $microservice->getPrixComposition();
         }
 
         $directory = $this->redirectToRoute('microservices');
@@ -271,7 +280,7 @@ class CommandeController extends AbstractController
 
         $order = [
             'purchase_units' => [[
-                'description'    => 'Allbeats achats de prestation',
+                'description'    => 'Links infinity achats de prestation',
                 'items'   =>  [
                     'name'  =>  $microservice->getName(),
                     'quatity'   =>  1,
@@ -292,7 +301,6 @@ class CommandeController extends AbstractController
         $userTest = 'sb-rw3oo17429039@personal.example.com';
         $sandBoxId = $this->paypalkey;
 
-
         // Stripe payment
         if ($montant > 0) {
 
@@ -304,7 +312,6 @@ class CommandeController extends AbstractController
                 'currency'  =>  'eur',
                 'payment_method_types'  =>  ['card']
             ]);
-
             // Traitement du formulaire Stripe
 
             if ($request->getMethod() === "POST") {
@@ -314,9 +321,6 @@ class CommandeController extends AbstractController
 
                 }
             }
-
-            //dd($intent);
-
         } else {
             //dd('aucun prix');
         }
@@ -413,7 +417,7 @@ class CommandeController extends AbstractController
         $commande = $commandeRepository->find($id);
 
         if ($this->isCsrfTokenValid('livrer' . $commande->getId(), $request->request->get('_token'))) {
-            
+
             $commande->setDeliver(true);
             $commande->setDeliverAt(new \DateTimeImmutable());
             $entityManager->flush();

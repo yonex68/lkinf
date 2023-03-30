@@ -2,40 +2,9 @@
 
 {% block body %}
 
-<section class="py-5-home homepage-search-block position-relative bg-image"
-	style="background-image: url({{ asset('img/studio.jpg') }});" id="home-banner">
-	<div class="container">
-		<div class="row py-lg-5">
-			<div class="col-lg-8">
-				<div class="homepage-search-title">
-					<h1 class="mb-3 text-shadow text-light text-gray-900 font-weight-bold">Trouvez les services indépendants parfaits
-						pour votre entreprise</h1>
-					<h5 class="mb-5 text-shadow text-gray-800 font-weight-normal text-light">Des millions de personnes utilisent {{
-						appName }} pour concrétiser leurs idées.
-					</h5>
-				</div>
-				<div class="homepage-search-form">
-					{% include "accueil/_search.html.twig" %}
-				</div>
-				<div class="popular">
-					<span class="text-body-2">Populaire</span>
-					<ul>
-						{% for categorie in categories %}
-						<li><a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}"
-								class="text-body-2">#{{ categorie.name }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-			<!-- <div class="col-lg-5">
-									<img class="img-fluid" src="{{ asset('themes/base/images/banner.svg') }}" alt=''/>
-								</div>-->
-		</div>
-	</div>
-	<div class="caption"></div>
-</section>
+{% include "accueil/_banner_slider.html.twig" %}
 
-<section class="py-5">
+<section class="pb-5">
 	<div class="view_slider recommended">
 		<div class="container">
 			<div class="row">
@@ -141,14 +110,21 @@
 <div class="freelance-projects pb-5">
 	<div class="container">
 		<h5 class="font-weight-bold pb-3">
-			Prestataires à proximité
+			Profésionnels à proximité
 		</h5>
 		<div class="row freelance-slider">
 			{% for vendeur in vendeurs %}
 
 			<div class="col">
 				<div class="freelancer">
-					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') }}">
+					{% if vendeur.couverture %}
+					<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
+						class="img-fluid" alt="{{ vendeur.prenom }}">
+					{% else %}
+
+					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
+
+					{% endif %}
 					<div class="freelancer-footer">
 
 						{% if vendeur.avatar %}
@@ -156,15 +132,7 @@
 							class="img-fluid" alt="{{ vendeur.prenom }}">
 						{% else %}
 
-						{% if vendeur.genre == 'Feminin' %}
-
-						<img class="img-fluid" src="{{ asset('img/femme.jpg') | imagine_filter('medium_avatar') }}" alt='' />
-
-						{% else %}
-
 						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
-
-						{% endif %}
 
 						{% endif %}
 						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="py-2">
@@ -207,7 +175,7 @@
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
 			<div class="modal-header border-0">
-				<h5 class="modal-title" id="modalLocationsLabel text-center">Demande d'autorisation</h5>
+				<h5 class="modal-title" id="modalLocationsLabel text-center">Profésionnels autour de vous</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -271,8 +239,12 @@
 <script>
 	window.onload = function () {     // Array of Images
 		var backgroundImg = [
-			"{{ asset('img/Danceur.jpg') }}",
-			"{{ asset('img/studio.jpg') }}",
+			"{{ asset('img/home-1.png') }}",
+			"{{ asset('img/home-2.png') }}",
+			"{{ asset('img/home-3.png') }}",
+			"{{ asset('img/home-4.png') }}",
+			"{{ asset('img/home-5.png') }}",
+			"{{ asset('img/home-6.png') }}",
 		]
 		setInterval(changeImage, 5000);
 		function changeImage() {

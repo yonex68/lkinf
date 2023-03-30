@@ -3,7 +3,8 @@
       <thead>
          <tr>
             <th>Service</th>
-            <th>{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' : 'Vendeur' }}</th>
+            <th class="text-center">{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' :
+               'Vendeur' }}</th>
             <th>Statut</th>
             <th>Date</th>
             <th>actions</th>
@@ -37,7 +38,7 @@
 
                {% if app.request.attributes.get('_route') == 'vendeur_commandes_index' %}
 
-               <div class="media">
+               <div class="text-center shadow border rounded">
 
                   {% if commande.client.avatar %}
 
@@ -51,17 +52,17 @@
 
                   {% endif %}
 
-                  <div class="media-body pl-3">
-                     <strong class="">{{ commande.client.nom }}</strong>
-                     <span class="text-muted small">{{ commande.client.prenom }}</span>
+                  <div class="text-center">
+                     <strong class="d-block">{{ commande.client.nom }} {{ commande.client.prenom }}</strong>
                   </div>
                </div>
 
                {% else %}
 
-               <div class="media">
+               <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank">
 
-                  <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank">
+                  <div class="text-center">
+
                      {% if commande.vendeur.avatar %}
 
                      <img class="rounded-circle"
@@ -73,14 +74,12 @@
                         class="rounded-circle" alt="">
 
                      {% endif %}
-                  </a>
 
-                  <div class="media-body pl-3">
-                     <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank"
-                        class="font-weight-bold">{{ commande.vendeur.nom }}
-                        <span class="text-muted small">{{ commande.vendeur.prenom }}</span></a>
+                     <div class="text-center">
+                        <strong>{{ commande.vendeur.nom }} {{ commande.vendeur.prenom }}</strong>
+                     </div>
                   </div>
-               </div>
+               </a>
 
                {% endif %}
 
@@ -91,7 +90,7 @@
             </td>
             <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
             <td>
-               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-outline-dark rounded-btn"
+               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-dark"
                   target="_blank">Suivi</a>
             </td>
          </tr>

@@ -66,15 +66,34 @@ class MicroserviceRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('m')
             ->select('v', 'm')
             ->select('c', 'm')
+            ->select('e', 'm')
             ->leftjoin('m.vendeur', 'v')
-            ->join('m.categorie', 'c')
+            ->leftjoin('m.categorie', 'c')
+            ->leftjoin('m.emploitemps', 'e')
             ->orderBy('m.created', 'DESC')
-            ->andWhere('m.online = 1');
+            ->andWhere('m.online = 1')
+            ->andWhere('m.offline = 0');
 
         if (!empty($search->q)) {
             $query = $query
                 ->andWhere('m.name LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
+        }
+        if (!empty($search->jour)) {
+            $query = $query
+                ->andWhere('e.jour = :jour')
+                ->setParameter('jour', $search->jour);
+        }
+        if (!empty($search->heureOuverture)) {
+            $query = $query
+                ->andWhere('e.heureOuverture >= :heureOuverture')
+                ->setParameter('heureOuverture', $search->heureOuverture);
+        }
+
+        if (!empty($search->heureCloture)) {
+            $query = $query
+                ->andWhere('e.heureCloture <= :heureCloture')
+                ->setParameter('heureCloture', $search->heureCloture);
         }
         if (!empty($search->ville)) {
             $query = $query
@@ -176,7 +195,7 @@ class MicroserviceRepository extends ServiceEntityRepository
 
         if (!empty($search->offline)) {
             $query = $query
-                ->andWhere('m.online = 0');
+                ->andWhere('m.offline = 1');
         }
 
         return $query;

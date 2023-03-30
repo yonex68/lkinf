@@ -7,39 +7,54 @@
 {% block colright %}8{% endblock %}
 
 {% block sidebar %}
-	{% include "vendeur/microservices/composants/_step.html.twig" %}
+{% include "vendeur/microservices/composants/_step.html.twig" %}
 {% endblock %}
 
 {% block body %}
 
-<div class="p-3 border-bottom text-left bg-dark rounded">
+<div class="p-3 text-left bg-light rounded">
     <h4 class="mb-0 text-light">
         Nouveau service
     </h4>
 </div>
 
-<div class="p-3 border-bottom">
+<div class="p-3">
     {{ form_start(form) }}
 
     <div class="form-group">
-        <h6 class="font-weight-bold">Options supplémentaires</h6>
+        <h6 class="font-weight-bold">Options</h6>
         <p class="text-muted">
-            Afin de compléter et personnaliser votre service basique, vous pouvez ajouter des options en relation directe avec ce dernier. Pas de service de traduction avec des options de montage vidéo ! Leur nombre et prix maximal dépend de votre offre ComeUp Plus.
-
-            <br><br>
-
-            Vos options doivent être claires et achetables par tous les clients. Si ce n'est pas déjà fait, pensez à les décrire dans votre description. Le délai d'une option s'ajoute au délai de votre service basique.
+            Afin de compléter et personnaliser votre service, vous pouvez ajouter des options en relation
+            directe avec ce dernier. Pas de service de traduction avec des options de montage vidéo ! Leur nombre et
+            prix maximal dépend de votre offre {{ appName }} Plus.
+        </p>
+        <p>
+            Vos options doivent être claires et achetables par tous les clients. Si ce n'est pas déjà fait, pensez à les
+            décrire dans votre description. Le délai d'une option s'ajoute au délai de votre service basique.
         </p>
         <div class="{{ microservice.categorie.slug == 'ingenieur-son' ? 'bloc-masquer' : '' }}">
-            <div class="" id="options" data-prototype="{{ form_row(form.serviceOptions.vars.prototype)|e('html_attr') }}">
+            <div class="" id="options"
+                data-prototype="{{ form_row(form.serviceOptions.vars.prototype)|e('html_attr') }}">
                 <span></span>
             </div>
         </div>
-
-        <div class="form-group">
-            {{ form_row(form.promo) }}
-        </div>
-        
+    </div>
+    <div class="form-group">
+        <h6 class="font-weight-bold">Réalisations</h6>
+        <p class="text-muted">
+            Ajouter vos réalisations en relation directe avec ce dernier.
+        </p>
+        {{ form_row(form.realisations) }}
+    </div>
+    <div class="form-group">
+        <h6 class="font-weight-bold">Planning</h6>
+        <p class="text-muted">
+            Ajouter les jours en relation directe avec ce service.
+        </p>
+        {{ form_row(form.emploiTemps) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.promo) }}
     </div>
     <div class="form-group">
         <div class="">

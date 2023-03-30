@@ -1,6 +1,6 @@
-{{ form_start(form, {'attr': {'class': 'shadow-0'}}) }}
+{{ form_start(form, {'attr': {'class': 'message-form bg-light border-top'}}) }}
 
-<div class="w-100 border-top border-bottom">
+<div class="p-3">
 
 	{{ form_errors(form.contenu) }}
 
@@ -11,14 +11,12 @@
 	</div>
 
 	<!--<textarea placeholder="Write a message…" class="form-control border-0 p-3 shadow-none" rows="2"></textarea>-->
-</div>
-<div class="p-3 d-flex align-items-center">
-	<span class="ml-auto">
+	<div class="text-right">
 		<button type="submit" class="btn btn-success btn-sm rounded">
-			<i class="mdi mdi-send"></i>
-			Envoyer
-		</button>
-	</span>
+		<i class="mdi mdi-send"></i>
+		Envoyer
+	</button>
+	</div>
 </div>
 
 {{ form_end(form) }}

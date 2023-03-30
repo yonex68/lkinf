@@ -14,9 +14,19 @@
 					href="{{ path('vendeur_dashboard') }}">
 					<i class="text-muted fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord
 				</a>
+
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_emplois_temps_index' ? 'active' : '' }}"
+					href="{{ path('app_vendeur_emplois_temps_index') }}">
+					<i class="text-muted fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;Planning
+				</a>
+
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_index' ? 'active' : '' }}"
 					href="{{ path('vendeur_microservices_index') }}">
 					<i class="text-muted fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;Mes services
+				</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_realisation_index' ? 'active' : '' }}"
+					href="{{ path('app_vendeur_realisation_index') }}">
+					<i class="text-muted fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;Mes réalisations
 				</a>
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'active' : '' }}" href="{{ path('vendeur_commandes_index') }}"><i class="text-muted fa fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Mes commandes</a>
 				

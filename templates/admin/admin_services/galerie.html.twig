@@ -1,0 +1,154 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Galérie{% endblock %}
+
+{% block colleft %}4{% endblock %}
+
+{% block colright %}8{% endblock %}
+
+{% block bg %}transparent{% endblock %}
+
+{% block pageTitle %}Nouveau service{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-12">
+        <!-- Left sidebar -->
+        {% include "admin/admin_services/composants/_step.html.twig" %}
+
+        <!-- Right Sidebar -->
+        <div class="email-rightbar" style="background: transparent!important;">
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="font-weight-bold">Galerie</h6>
+                    <p class="text-muted">
+                        La 1re image, principale, sera utilisée dans la recherche, les catégories, et sur
+                        votre profil. C’est la
+                        plus importante. Afin que votre service se démarque des autres, privilégiez une
+                        miniature lisible en
+                        format
+                        réduit, en rapport direct avec ce que vous faites dans votre service basique, et
+                        surtout : de votre
+                        création. <br>
+
+                        Les autres images, optionnelles, serviront à montrer des exemples de votre travail
+                        ou illustrer plus
+                        précisément ce que vous vendez. Vous pouvez également joindre une vidéo que vous
+                        aurez hébergée sur
+                        YouTube
+                        ou Vimeo.
+                    </p>
+
+                    {% if microservice.medias|length > 0 %}
+
+                    <div class="slider mt-2">
+                        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for media in microservice.medias %}
+                                <div class="carousel-item {{ microservice.medias[0].id == media.id ? 'active' : '' }}">
+                                    {% if media.imageName %}
+                                    <img class="d-block img-fluid"
+                                        src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}"
+                                        alt="First slide">
+
+                                    {% else %}
+                                    <img class="d-block img-fluid"
+                                        src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}"
+                                        alt="First slide">
+
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleFade" role="button"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Précédent</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleFade" role="button"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Suivant</span>
+                            </a>
+                        </div>
+
+                        <div class="row my-2">
+                            {% for media in microservice.medias %}
+
+                            <div class="col-sm-2 text-left">
+
+                                <img class="img-fluid"
+                                    src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('small_size') }}"
+                                    alt="{{ media.name }}"> <br>
+
+                                <form method="post" class="d-inline"
+                                    action="{{ path('app_admin_services_medias_delete', {'id': media.id}) }}"
+                                    onsubmit="return confirm('Voulez-vous vraiment supprimer cette image?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                    <button class="btn btn-outline-danger my-2 btn-sm"><i class="fa fa-trash"></i> Supprimer</button>
+                                </form>
+                                
+                            </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                    <!-- Si le nombre maximal d'image pour un service est 2 -->
+                    {% if microservice.medias|length <= 10 %} {{ form_start(mediaForm) }} <div class="row mt-3">
+                        <div class="col-sm-6">
+                            <div class="form-group py-1">
+                                {{ form_row(mediaForm.imageFile) }}
+                            </div>
+                        </div>
+                </div>
+
+                <div class="form-group py-1">
+                    {{ form_row(mediaForm.name) }}
+                </div>
+
+                <div class="">
+                    <button type="submit" class="btn btn-dark mb-4">Télécharger</button>
+                </div>
+
+                {{ form_end(mediaForm) }}
+
+                {% endif %}
+            </div>
+
+            {% if microservice.medias|length > 0 %}
+            <!-- Form collection -->
+            <hr>
+            <div class="p-3">
+                <h4 class="">
+                    Editer la galérie
+                </h4>
+                <div class="row">
+                    <div class="col-sm-8">
+                        {{ form_start(form) }}
+
+                        {{ form_row(form.medias) }}
+
+                        <div class="py-3">
+                            <div class="">
+                                <button class="btn btn-primary">{{ button_label|default('Enregistrer et
+                                    suivant') }}</button>
+                            </div>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div> <!-- panel -->
+
+{% endblock %}

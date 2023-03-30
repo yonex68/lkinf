@@ -1,14 +1,9 @@
 {{ form_start(commandeForm) }}
 <div class="my-4">
    <div class="card">
-
-      <div class="card-header bg-white border-bottom">
-         <h3 id="aboutSeller" class="card-title mt-4">Personnaliser et commander</h3>
-      </div>
-
       <div class="card-body p-0">
          <div class="p-3 bg-light">
-            <h5 class="p-2 font-weight-bold">Options supplémentaires</h5>
+            <h5 class="font-weight-bold">Personnaliser et commander</h5>
             <div class="">
                {{ form_widget(commandeForm) }}
             </div>
@@ -22,7 +17,7 @@
                <button type="submit" class="btn btn-dark btn-lg h5">Commander</button>
 
                {% if is_granted('microservice_edit', microservice) %}{% else %}
-               <a class="btn btn-outline-dark btn-lg h5"
+               <a class="btn btn-outline-light btn-lg h5"
                   href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter
                   le vendeur</a>
                {% endif %}

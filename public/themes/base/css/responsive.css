@@ -10,7 +10,7 @@
 
 @media(min-width:767px) {
    .bg-image {
-      background-position-y: -200px;
+      background-position-y: 0;
    }
 }
 
@@ -46,5 +46,16 @@
 
    .categorieSection {
       height: 400px;
+   }
+
+   .homepage-search-title .font-weight-bold {
+      font-weight: 700 !important;
+      margin: 30px 0;
+      font-size: 2em;
+   }
+
+   .form-search .dropdown-menu,
+   .form-search .dropdown-menu.show {
+      min-width: 100%!important;
    }
 }

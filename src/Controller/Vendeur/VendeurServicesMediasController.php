@@ -68,7 +68,23 @@ class VendeurServicesMediasController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_vendeur_services_medias_delete', methods: ['POST'])]
+    #[Route('/vendeur-delete/{id}', name: 'app_vendeur_services_medias_delete', methods: ['POST'])]
+    public function vendeurDelete(Request $request, Media $media, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$media->getId(), $request->request->get('_token'))) {
+            $service = $media->getMicroservice();
+            $entityManager->remove($media);
+            $entityManager->flush();
+
+            $this->addFlash('success', "L'image a bien été supprimer de la galérie");
+        }
+
+        return $this->redirectToRoute('vendeur_microservices_galerie', [
+            'id' => $service->getId(),
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/admin-delete/{id}', name: 'app_admin_services_medias_delete', methods: ['POST'])]
     public function delete(Request $request, Media $media, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$media->getId(), $request->request->get('_token'))) {
@@ -76,10 +92,10 @@ class VendeurServicesMediasController extends AbstractController
             $entityManager->remove($media);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'image média a bien été supprimer de la galérie");
+            $this->addFlash('success', "L'image a bien été supprimer de la galérie");
         }
 
-        return $this->redirectToRoute('vendeur_microservices_galerie', [
+        return $this->redirectToRoute('app_admin_services_galerie', [
             'id' => $service->getId(),
         ], Response::HTTP_SEE_OTHER);
     }
