@@ -1,5 +1,5 @@
 <div class="box shadow-sm rounded bg-transparent border mb-3 osahan-chat">
-	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h5 font-weight-bold bg-light">Suivre la commande</h5>
+	<h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3 h6 bg-light">Suivis commande</h5>
 	<div class="row m-0">
 		<div class="border-right col-lg-5 col-xl-4 px-0 bg-light {{ app.request.attributes.get('_route') == 'commande_details' ? 'd-none d-lg-block' : '' }}">
 			<div class="osahan-chat-left">
@@ -29,8 +29,7 @@
 							</a>
 							<div class="small text-truncate overflow-hidden text-black-50">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-muted">
-									<i class="mdi mdi-check text-success"></i>
-									Service: {{ usercommande.microservice.name }}
+									{{ usercommande.microservice.name }}
 								</a>
 							</div>
 						</div>
@@ -62,8 +61,7 @@
 							</a>
 							<div class="small text-truncate overflow-hidden text-black-50">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-muted">
-									<i class="mdi mdi-check text-success"></i>
-									Service: {{ usercommande.microservice.name }}
+									{{ usercommande.microservice.name }}
 								</a>
 							</div>
 						</div>

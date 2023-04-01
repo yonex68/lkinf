@@ -33,27 +33,29 @@
 			J'atteste…
 		</p>
 
-		<div class="{{ microservice.online == true ? 'bloc-masquer' : '' }}">
+		<div class="text-muted{{ microservice.online == true ? 'bloc-masquer' : '' }}">
 
-			<div class="my-3 font-weight-bold">
+			<div class="my-3">
 				{{ form_row(form.question1) }}
 			</div>
-			<div class="my-3 font-weight-bold">
+			<div class="my-3">
 				{{ form_row(form.question2) }}
 			</div>
-			<div class="my-3 font-weight-bold">
+			<div class="my-3">
 				{{ form_row(form.question3) }}
 			</div>
-			<div class="my-3 font-weight-bold">
+			<div class="my-3">
 				{{ form_row(form.question4) }}
 			</div>
-			<div class="my-3 font-weight-bold">
+			<div class="my-3">
 				{{ form_row(form.question5) }}
 			</div>
 
 			<div class="">
 				<button class="btn btn-dark" formnovalidate>
-					{{ button_label|default('Enregistrer et suivant') }}
+					<span id="btnFetch">
+						{{ button_label|default('Enregistrer et suivant') }}
+					</span>
 				</button>
 			</div>
 			

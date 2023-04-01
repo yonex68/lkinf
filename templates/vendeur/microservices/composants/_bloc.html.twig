@@ -1,5 +1,5 @@
 <div class="box mb-3 shadow-sm rounded bg-white osahan-post">
-   <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
+   <div class="p-3 d-flex align-items-center border-bottom osahan-post-header rounded">
       <div class="dropdown-list-image mr-3">
          {% if microservice.vendeur.avatar %}
          <img class="rounded-circle"
@@ -35,7 +35,7 @@
 
    <div class="p-3 osahan-post-body">
       <a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="text-dark">
-         <h5 class="mb-1 text-dark">{{ microservice.name }}</h5>
+         <h5 class="mb-1 text-muted h6">{{ microservice.name }}</h5>
       </a>
       <div class="mb-2">
          <a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
@@ -43,27 +43,14 @@
             #{{ microservice.categorie.name }}
          </a>
       </div>
-      <div class="rating-wrapper">
+      <div class="rating-wrapper mb-2">
          <span class="gig-rating text-success">
             {% include "microservice/composants/_etoilles.html.twig" %}
             <span class="text-muted">({{ serviceAvis(microservice) }})</span>
          </span>
       </div>
-      <p></p>
-   </div>
-   <div class="overflow-hidden border-top text-left">
-      <div class="row">
-         <div class="col-6">
-            <div class="price p-3 text-capitalize">
-               A partir de
-               <strong>{{ microservice.prixMastering ~ currency }}</strong>
-            </div>
-         </div>
-         <div class="col-6 text-right">
-            <a class="font-weight-bold p-3 d-block"
-               href="{{ path('microservice_details', {slug: microservice.slug}) }}"> EN
-               SAVOIR PLUS </a>
-         </div>
-      </div>
+      <p>
+         A partir de <strong class="text-light">{{ microservice.prixMastering ~ currency }}</strong>
+      </p>
    </div>
 </div>

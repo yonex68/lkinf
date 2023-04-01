@@ -70,7 +70,8 @@ class RegistrationController extends AbstractController
 
                 $entityManager->persist($portefeuille);
 
-                $route = 'register_mail_send';
+                $route = 'user_categorie';
+
             } elseif ($form->get('compte')->getData() == 'Client') {
 
                 $route = 'register_mail_send';

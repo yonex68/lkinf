@@ -4,11 +4,11 @@
 
 {% block titre %}Félicitation {{ user.prenom }}{% endblock %}
 
-{% block text %}Merci de vous être inscrit sur notre plate-forme <strong>{{ appName }}</strong>{% endblock %}
+{% block text %}Merci de vous êtes inscrit sur notre plate-forme <strong>{{ appName }}</strong>{% endblock %}
 
 {% block body %}
 
-<div class="alert alert-info">
+<div class="alert alertflash">
    Nous devons vérifier votre adresse e-mail "<strong>{{ user.email }}</strong>" avant que vous puissiez accéder à votre portail <strong>{{ user.compte }}</strong>. <br>
 
    Vérifiez votre adresse e-mail puis cliquez sur: <span class="text-muted">Confirmer mon e-mail</span>

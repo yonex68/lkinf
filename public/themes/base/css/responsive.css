@@ -14,9 +14,9 @@
    }
 }
 
-@media(max-width:600px) {
+@media(max-width: 600px) {
    .py-5, .py-4, .pb-5 {
-      padding: 20px 0 !important;
+      padding: 20px 1px !important;
    }
 
    .main-page.best-selling .view_slider.recommended {
@@ -28,7 +28,7 @@
    }
 
    .market-wrapper .categories-list li {
-      width: 47%;
+      width: 48%;
    }
 
    .third-menu {
@@ -56,6 +56,39 @@
 
    .form-search .dropdown-menu,
    .form-search .dropdown-menu.show {
-      min-width: 100%!important;
+      min-width: 400px !important;
+   }
+
+   #bannerCarouselIndicators {
+      height: 60vh !important;
+   }
+
+   .carousel-inner {
+      height: 60vh !important;
+   }
+
+   #bannerCarouselIndicators .carousel-inner .carousel-item {
+      background-size: cover;
+      height: 400px;
+      padding: 50% 0 0;
+   }
+
+   #bannerCarouselIndicators .carousel-inner .carousel-caption {
+      width: 100% !important;
+      padding-left: 10px;
+      padding-top: 15%;
+   }
+
+   #bannerCarouselIndicators .carousel-inner .carousel-caption h5 {
+      width: 100%;
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      margin-top: 25%;
+   }
+   .about-section{
+      padding: 15px!important;
+   }
+   .view_slider h3 {
+      padding-top: 40px;
    }
 }

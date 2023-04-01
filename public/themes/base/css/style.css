@@ -1420,7 +1420,7 @@ p.help-block li {
      min-height: 48px;
 }
  .main-page .right .tab-content h3 b {
-     font-size: 16px;
+     font-size: .8em;
 }
  .main-page .right .tab-content h3 span {
      font-size: 20px;

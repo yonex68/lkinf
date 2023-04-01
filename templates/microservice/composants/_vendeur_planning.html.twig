@@ -1,7 +1,7 @@
 <div class="card mb-3">
    <div class="card-body">
-      <h6 class=" py-2"><i class="fa fa-calendar"></i> Disponibilité du profésionnel</h6>
-      <div class="">
+      <h6 class="h6 py-2"><i class="fa fa-calendar"></i> Disponibilité vendeur</h6>
+      <div class="mb-3">
          {% for emplois_temp in emploistemps(microservice.vendeur) %}
          <div class="d-flex align-items-top mb-2">
             <p class="mb-0 text-muted">{{ emplois_temp.jour }}</p>
@@ -16,5 +16,7 @@
          </div>
          {% endfor %}
       </div>
+      
+      {% include "microservice/composants/_reservation_btn.html.twig" %}
    </div>
 </div>

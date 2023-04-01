@@ -166,6 +166,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ServiceSignale::class)]
     private Collection $serviceSignales;
 
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Remboursement::class)]
+    private Collection $remboursements;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $statut = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lieuPrestation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Categorie $categorie = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $homeStudio = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $endRegister = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -182,6 +200,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->realisations = new ArrayCollection();
         $this->emploisTemps = new ArrayCollection();
         $this->serviceSignales = new ArrayCollection();
+        $this->remboursements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1032,5 +1051,95 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function __toString()
     {
         return $this->getEmail();
+    }
+
+    /**
+     * @return Collection<int, Remboursement>
+     */
+    public function getRemboursements(): Collection
+    {
+        return $this->remboursements;
+    }
+
+    public function addRemboursement(Remboursement $remboursement): self
+    {
+        if (!$this->remboursements->contains($remboursement)) {
+            $this->remboursements->add($remboursement);
+            $remboursement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRemboursement(Remboursement $remboursement): self
+    {
+        if ($this->remboursements->removeElement($remboursement)) {
+            // set the owning side to null (unless already changed)
+            if ($remboursement->getUser() === $this) {
+                $remboursement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?string $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getLieuPrestation(): ?string
+    {
+        return $this->lieuPrestation;
+    }
+
+    public function setLieuPrestation(?string $lieuPrestation): self
+    {
+        $this->lieuPrestation = $lieuPrestation;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function isHomeStudio(): ?bool
+    {
+        return $this->homeStudio;
+    }
+
+    public function setHomeStudio(?bool $homeStudio): self
+    {
+        $this->homeStudio = $homeStudio;
+
+        return $this;
+    }
+
+    public function isEndRegister(): ?bool
+    {
+        return $this->endRegister;
+    }
+
+    public function setEndRegister(?bool $endRegister): self
+    {
+        $this->endRegister = $endRegister;
+
+        return $this;
     }
 }

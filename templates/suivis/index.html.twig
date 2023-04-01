@@ -1,18 +1,16 @@
 {% extends 'vendeur.html.twig' %}
 
-{% block title %} Suivi {% endblock %}
+{% block title %} Vous suivez ces profesionnels {% endblock %}
 
 {% block bg %}{% endblock %}
 
 {% block body %}
 
 <div class="card shadow-sm w-100 mb-4">
+    <div class="card-header bg-white">
+        <h2 class="h5">Vous suivez ces prestatairess</h2>
+    </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <h2 class="h5 mb-3">Suivis</h2>
-            </div>
-        </div>
         <div class="">
             <div class="">
                 {% for suivi in suivis %}

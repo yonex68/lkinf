@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Form\CategorieType;
+use App\Form\CategorieUserType;
 use App\Form\ChangePasswordFormType;
+use App\Form\CoordonneeType;
 use App\Form\EditProfilType;
+use App\Form\LieuPrestationType;
 use App\Form\PositionType;
 use App\Repository\AbonnementRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +33,50 @@ class EspaceUtilisateurController extends AbstractController
             
         ]);
     }
-    #[Route('/coordonnees', name: 'user_coordonnees')]
-    public function coordonnees(): Response
+
+    #[Route('/coordonnees', name: 'user_coordonnees', methods: ['GET', 'POST'])]
+    public function coordonnees(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CoordonneeType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', "Votre compte a bien été mise à jour");
+            return $this->redirectToRoute('user_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('espace_utilisateur/coordonnees.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/categorie', name: 'user_categorie', methods: ['GET', 'POST'])]
+    public function categorie(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CategorieUserType::class, $user);
+        $form->handleRequest($request);
+        $route = 'user_profil';
+        $message = "Votre compte a bien été mise à jour";
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
             
+            if ($user->getCategorie() == 'Studio' && $user->getCouverture() == null) {
+                $route = 'user_edit_profil';
+                $message .= ", veuillez joindre une image de couverture pour votre studio";
+            }
+
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('espace_utilisateur/categorie.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

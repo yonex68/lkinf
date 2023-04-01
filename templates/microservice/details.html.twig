@@ -2,6 +2,12 @@
 
 {% block title %}{{ microservice.name }}{% endblock %}
 
+{% block meta %}
+  <meta name="author" content="{{ microservice.name|u.truncate(4, '...') }}" />
+  <meta name="keywords" content="{{ microservice.name|u.truncate(59, '...') }}: Commander" />
+  <meta name="description" content="{{ microservice.name|u.truncate(60, '...') }}: {{ (microservice.description|raw)|u.truncate(100, '...') }}" />
+{% endblock %}
+
 {% block serviceBlocNavigation %}
 <div class="third-menu bg-light border-top">
 	<div class="container">
@@ -59,9 +65,7 @@
 				<div id="overview" class="seller-overview d-flex align-items-center">
 					<div class="user-profile-image d-flex">
 						<label class="profile-pict" for="profile_image">
-							<img
-								src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-								class="profile-pict-img" width="40" height="40" alt="{{ microservice.vendeur.prenom }}">
+							<img src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}" class="profile-pict-img" width="40" height="40" alt="{{ microservice.vendeur.nom ~ ' '  ~ microservice.vendeur.prenom }}">
 						</label>
 						<div class="profile-name">
 							<div class="seller-level">
@@ -84,7 +88,7 @@
 				{% include "microservice/composants/_galerie.html.twig" %}
 
 				<div id="description" class="mb-3">
-					<h3 style="margin-top: -30px;">Description</h3>
+					<h6 style="margin-top: -30px;">Description</h6>
 					<p class="p-0 m-0">{{ microservice.description|raw }}</p>
 				</div>
 
@@ -110,7 +114,7 @@
 		<div class="row py-4">
 			<div class="col-sm-12">
 				<div class="view_slider recommended">
-					<h3 id="recommendations">Autres services de ce vendeur</h3>
+					<h6 class="pb-3" id="recommendations">Autres services de ce vendeur</h6>
 					<div class="view recommended-slider">
 						{% for similaire in similaires %}
 

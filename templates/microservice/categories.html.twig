@@ -2,6 +2,12 @@
 
 {% block title %}({{ microservices.getTotalItemCount }}) {{ categorie.name }} {% endblock %}
 
+{% block meta %}
+  <meta name="author" content="{{ categorie.name }}" />
+  <meta name="keywords" content="{{ categorie.name }}: trouver plus proche de vous" />
+  <meta name="description" content="{{ categorie.name }}: trouvez dès maintenant votre Le nom de la catégorie plus proche de chez vous pour vous accompagner dans votre projet." />
+{% endblock %}
+
 {% block body %}
 <!-- Inner Header -->
 {% if categorie.image %}

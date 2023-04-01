@@ -12,7 +12,6 @@
 {% endblock %}
 
 {% block sidebar %}
-{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
 {{ parent() }}
 {% endblock %}
 
@@ -21,7 +20,7 @@
 <div class="">
 	<div class="box shadow-sm rounded bg-white mb-3">
 		<div class="box-title p-3 text-left bg-dark rounded">
-			<h4 class="mb-0 text-light">
+			<h4 class="mb-0 h5 pl-2">
 				Mon profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
 			</h4>
 		</div>
@@ -83,13 +82,13 @@
 				<div class="col-sm-6">
 					<div class="align-items-top job-item-header pb-2">
 						<span class="text-truncate text-muted">Email</span>
-						<h6 class="font-weight-bold text-muted mb-0">{{ app.user.email }}</h6>
+						<h6 class="mb-0">{{ app.user.email }}</h6>
 					</div>
 				</div>
 			</div>
 
 			<div class="form-group py-3">
-				<strong class="font-weight-bold text-muted mb-0">Biographie</strong>
+				<strong class="mb-0">Biographie</strong>
 				{% if is_granted('ROLE_VENDEUR') %}
 				<p>
 					Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.

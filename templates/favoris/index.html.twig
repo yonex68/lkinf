@@ -1,24 +1,22 @@
 {% extends 'vendeur.html.twig' %}
 
-{% block title %}Mes favoris{% endblock %}
+{% block title %}Services favoris{% endblock %}
 
 {% block bg %}{% endblock %}
 
 {% block body %}
 
 <div class="card shadow-sm w-100 mb-4">
+	<div class="card-header bg-white">
+		<h2 class="h5">Services favoris</h2>
+	</div>
 	<div class="card-body">
-		<div class="row">
-			<div class="col-sm-6">
-				<h2 class="h5 mb-3">Mes favoris</h2>
-			</div>
-		</div>
 		<div class="">
 			<div class="">
 				{% for favori in favoris %}
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="media d-flex align-items-center p-3 mb-3 rounded bg-light rounded">
+						<div class="media d-flex align-items-center shadow-sm p-3 mb-3 rounded bg-white">
 							{% if favori.microservice.medias|length > 0 %}
 
 							<img class="img-fluid rounded"

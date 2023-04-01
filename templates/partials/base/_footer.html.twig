@@ -2,14 +2,16 @@
 	<div class="container">
 		<div class="d-flex justify-content-top">
 			<div class="footer-list">
-				<h2 class="p-1">
-					<a href="{{ path('accueil') }}">
-						<img src="{{ asset('img/logo.png') }}" width="100">
-					</a>
-				</h2>
-				<p class="text-muted pr-2">
-					La plateforme Links Infinity donne la facilité à toute personnes de ce lancer en indépendant accompagner par des professionnels.
-				</p>
+				<a href="{{ path('accueil') }}">
+					<h2 class="text-light text-uppercase">
+						{{ appName }}
+					</h2>
+				</a>
+				<ul class="list">
+					<li>
+						<p>La plateforme Links Infinity donne la facilité à toute personnes de ce lancer en indépendant accompagner par des professionnels.</p>
+					</li>
+				</ul>
 				<div class="copyright">
 					<ul class="social">
 						<li>
@@ -57,9 +59,11 @@
 			<div class="footer-list">
 				<h2>{{ appName }}</h2>
 				<ul class="list">
+					{% if app.user %}{% else %}
 					<li>
-						<a href="#">Vendre/connexion</a>
+						<a href="{{ path('app_register') }}">Vendre/connexion</a>
 					</li>
+					{% endif %}
 					<li>
 						<a href="#">Politique de confidentialité</a>
 					</li>

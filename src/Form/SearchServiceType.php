@@ -54,21 +54,21 @@ class SearchServiceType extends AbstractType
              'required' => false,
          ])
          ->add('ville', TextType::class, [
-            'label' =>  'Ville',
+            'label' =>  'Ville du profésionnel',
             'required'  =>  false,
             'attr'  =>  [
-               'placeholder'   =>  'Ville', 'class' =>  'w-100 shadow-none'
+               'placeholder'   =>  'Ville du profésionnel', 'class' =>  'w-100 shadow-none'
             ]
          ])
          ->add('minPrice', NumberType::class, [
-            'label' => false,
+            'label' => 'Min.(Mastering)',
             'required' => false,
             'attr' => [
                'placeholder' => 'Minimum',
             ]
          ])
          ->add('maxPrice', NumberType::class, [
-            'label' => false,
+            'label' => 'Min.(Beatmaking)',
             'required' => false,
             'attr' => [
                'placeholder' => 'Maximum',

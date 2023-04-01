@@ -2,7 +2,7 @@
    <div class="p-2 bg-white shadow-sm flex-fill border">
       <div class="media p-4">
          <div class="media-body">
-            <h5 class="h5 font-weight-bold">Revenu disponible</h5>
+            <h5 class="h6">Revenu disponible</h5>
             <div>
                <span class="h2 font-weight-bold">
                   {{ portefeuille(app.user).soldeEnCours }}
@@ -20,7 +20,7 @@
    <div class="p-2 bg-dark shadow-sm flex-fill">
       <div class="media p-4 text-light">
          <div class="media-body">
-            <h5 class="h5 font-weight-bold">Vente en cours</h5>
+            <h5 class="h6">Vente en cours</h5>
             <div>
                <span class="h2 font-weight-bold">
                   {{ ventes(app.user)|length }}

@@ -128,6 +128,8 @@ class StripeAbonnementController extends AbstractController
          ]],
       ]);
 
+      dd($checkout_session);
+      
       return $this->render('abonnements/checkout.html.twig', [
          'checkout_session_id' => $checkout_session['id'],
       ]);

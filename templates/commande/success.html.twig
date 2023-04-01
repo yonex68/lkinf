@@ -1,4 +1,4 @@
-{% extends 'auth.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Commande enregister
 {% endblock %}
@@ -7,49 +7,34 @@
 
 {% block col %}6{% endblock %}
 
-{% block imgBg %}{{ asset('img/login.jpg') }}{% endblock %}
-
 {% block body %}
 
-<div class="pt-2">
-	<div class="row pb-3">
-			<div class="col-6 col-sm-3 text-right ml-auto">
-				<div class="text-center">
-
-					{% if app.user.avatar %}
-					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}"
-						class="rounded-circle img-fluid" alt="{{ app.user.nom ~ ' ' ~ app.user.prenom }}">
-
-					{% else %}
-
-					<img class="rounded-circle img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-						alt='{{ app.user.nom ~ ' ' ~ app.user.prenom }}' />
-
-					{% endif %}
-				</div>
-			</div>
-			<div class="col-6 col-sm-3 text-left mr-auto">
-				<img src="{{ asset('img/order_confirmed.svg') }}" class="img-fluid mt-3" alt="">
-			</div>
-		</div>
+<section class="py-5">
+	<div class="container">
 		<div class="row">
+			<div class="col-sm-12 mx-auto">
+				<div class="card">
+					<div class="card-body text-center">
+						<div class="row">
+							<div class="col-sm-3 mx-auto text-center">
+								<img src="{{ asset('img/order_confirmed.svg') }}" class="img-fluid mt-3" alt="">
+							</div>
+						</div>
+						<div>
+							<h6 class="text-center py-3 text-light">Félicitation {{ app.user.nom }} {{ app.user.prenom }}</h6>
+							<p class="text-muted m-0">Votre commande a bien été enregistrer</p>
+							<p>Pour des reclamations et d'autres raisons, vous pouvez nous contacté:</p>
+							<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
 
-			<div class="col-sm-12">
-				<div class="alert shadow" style="border: 1px solid green;">
-					<p class="text-success font-weight-bold lead">Votre commande à bien été enregistrer</p>
-					<span class="span text-muted ">Pour des reclamations et d'autres raisons, vous pouvez nous contacté: <br>
-						<a href="mailto:{{ appEmail }}" class="font-weight-bold">{{ appEmail }}</a>
-					</span>
-
-					<div class="py-2">
-						<a href="{{ path('commande_details', {id: commande.id}) }}">Continuer vers ma commande &longrightarrow;</a>
+							<div class="py-2">
+								<a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-outline-secondary">Suivre ma commande &longrightarrow;</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
-</div>
+	</div>
+</section>
 
 {% endblock %}
-
-{% block footer %}{% endblock %}

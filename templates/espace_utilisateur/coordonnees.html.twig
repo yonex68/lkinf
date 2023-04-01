@@ -5,35 +5,22 @@
 
 {% block bg %}{% endblock %}
 
-{% block colleft %}4
-{% endblock %}
-
-{% block colright %}8
-{% endblock %}
-
 {% block sidebar %}
-	{% include "espace_utilisateur/composants/_sidebar_avatar.html.twig" %}
-	{{ parent() }}
+{{ parent() }}
 {% endblock %}
 
 {% block body %}
 
 <div class="">
-	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title p-3 text-left bg-dark rounded">
-			<h4 class="mb-0 text-light">
-				Mes coordonnées
-			</h4>
-		</div>
-
-		<div class="box-body p-3">
-			<h6 class="font-weight-bold text-muted mb-0">Coordonnées personnelles</h6>
+	<div class="card shadow-sm rounded bg-white mb-3">
+		<div class="card-body">
+			<h4 class="mb-0 h5 pl-2">Mes coordonnées</h4>
 			<div class="row">
-				<div class="col-sm-6 py-3">
-					<table class="table table-borderless table-striped text-muted">
+				<div class="col-sm-12 pt-3">
+					<table class="table table-borderless text-muted">
 						<tbody>
 							<tr>
-								<th>Statut</th>
+								<th>Compte</th>
 								<td class="text-left">{{ app.user.compte }}</td>
 							</tr>
 							<tr>
@@ -68,6 +55,23 @@
 					</table>
 				</div>
 			</div>
+
+			{% if is_granted('ROLE_VENDEUR') %}
+			<div class="text-muted">
+				<h6 class="h6 text-muted mb-0 py-2 font-weight-bold">Coordonnées personnelles</h6>
+				<p>
+					Ces informations servent à éditer les documents de facturation de vos prestations. Celles-ci sont
+					légalement requises et ne seront pas revendues à des tiers. Veillez à les remplir correctement. Attention
+					: un seul compte par personne ou entité légale est permis. Si vous devez effectuer une modification,
+					cliquez sur le bouton Mettre à jour.
+				</p>
+
+				{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<button class="btn btn-dark">Mettre à jour</button>
+				{{ form_end(form) }}
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

@@ -2,7 +2,7 @@
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}">
-			<h6 class="text-light font-weight-bold h6 text-uppercase">{{ appName }}</h6>
+			<h6 class="text-light font-weight-bold h6 text-uppercase pt-2">{{ appName }}</h6>
 		</a>
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search"
@@ -33,7 +33,7 @@
 					aria-labelledby="searchDropdown">
 					<form class="form-inline mr-auto w-100 navbar-search">
 						<div class="input-group">
-							<input type="text" class="form-control bg-light border-0 small" placeholder="Je cherche..."
+							<input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Je cherche..."
 								aria-label="Search" aria-describedby="basic-addon2">
 							<div class="input-group-append">
 								<button class="btn btn-primary" type="button">
@@ -156,7 +156,7 @@
 						<div class="dropdown-item-icon">
 							<i class="fa fa-cart-plus"></i>
 						</div>
-						Mes commandes de vente
+						Mes ventes
 					</a>
 
 					{% endif %}
@@ -165,7 +165,7 @@
 						<div class="dropdown-item-icon">
 							<i class="fa fa-opencart"></i>
 						</div>
-						Mes commandes d'achats
+						Mes commandes
 					</a>
 
 					<a class="dropdown-item" href="{{ path('favoris_index') }}">
@@ -232,7 +232,7 @@
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+			<span class="fa fa-list p-2 text-light"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav">
@@ -247,8 +247,9 @@
 
 		<ul class="navbar-nav align-items-center mx-auto">
 			<li class="nav-item">
-				<a href="{{ path('accueil') }}" class="nav-link"><img src="{{ asset('img/logo.png') }}" alt="{{ appName }}"
-						width="100"></a>
+				<a href="{{ path('accueil') }}" class="nav-link">
+					<h6 class="text-light text-uppercase">{{ appName }}</h6>
+				</a>
 			</li>
 		</ul>
 
@@ -376,7 +377,7 @@
 
 			{% else %}
 			<li class="nav-item">
-				<a href="{{ path('app_login') }}" class="nav-link">
+				<a href="{{ path('app_login') }}" class="nav-link text-light">
 					Vendre / connexion
 				</a>
 			</li>

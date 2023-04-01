@@ -11,6 +11,7 @@ use App\Entity\Rapport;
 use App\Form\AvisType;
 use App\Form\CommandeMessageType;
 use App\Form\RapportType;
+use App\Repository\AvisRepository;
 use App\Repository\CommandeMessageRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ConversationRepository;
@@ -74,7 +75,8 @@ class CommandeController extends AbstractController
         EntityManagerInterface $entityManager,
         CommandeMessageRepository $commandeMessageRepository,
         MailerInterface $mailerInterface,
-        RapportRepository $rapportRepository
+        RapportRepository $rapportRepository,
+        AvisRepository $avisRepository
     ): Response {
         $user = $this->getUser();
         $commande = $commandeRepository->find($id);
@@ -218,6 +220,11 @@ class CommandeController extends AbstractController
             'avisForm' => $avisForm->createView(),
             'rapportForm' => $rapportForm->createView(),
             'usercommandes' => $usercommandes,
+            'userserviceAvis' => $avisRepository->findOneBy([
+                'client' => $user, 
+                'vendeur' => $commande->getMicroservice()->getVendeur(), 
+                'microservice' => $commande->getMicroservice()
+            ]),
             'messages' => $messages,
             'form' => $form->createView(),
         ]);
@@ -235,7 +242,7 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/{offre}', name: 'commander_microservice', methods: ['GET', 'POST'])]
+    #[Route('/commander/{slug}/{offre}', name: 'commander_microservice', methods: ['GET', 'POST'])]
     public function checkout(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, $offre, PaymentService $paymentService): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
@@ -349,8 +356,12 @@ class CommandeController extends AbstractController
             $montant = $microservice->getPrixMixage();
         } elseif ($offre == 'Beatmaking') {
             $montant = $microservice->getPrixBeatmaking();
-        } else {
+        } elseif ($offre == 'composition') {
             $montant = $microservice->getPrixComposition();
+        }else {
+            foreach ($microservice->getServiceOptions() as $option) {
+                $montant += $option->getMontant();
+            }
         }
 
         $commande = new Commande();
@@ -466,5 +477,101 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('commande_details', [
             'id' => $commande->getId(),
         ], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/reservation/{slug}', name: 'commander_microservice_reservation', methods: ['GET', 'POST'])]
+    public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, PaymentService $paymentService): Response
+    {
+        $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
+
+        $directory = $this->redirectToRoute('microservices');
+
+        if (!$microservice) {
+            return $directory;
+        }
+
+        $options = $microservice->getServiceOptions();
+        $totalMontant = 0;
+        
+        foreach ($options as $option) {
+            $totalMontant += $option->getMontant();
+        }
+
+        $portefeuille = $microservice->getVendeur()->getPortefeuille();
+
+        if (!$portefeuille) {
+            $portefeuille = new Portefeuille();
+            $portefeuille->setSoldeEncours(0);
+            $portefeuille->setSoldeDisponible(0);
+            $portefeuille->setVendeur($microservice->getVendeur());
+            $entityManager->persist($portefeuille);
+            $entityManager->flush();
+        }
+
+        // Calcul des taxes
+        $tva = 0.2;
+        $montantTva = $totalMontant * $tva;
+
+        // Frais bancaire
+        $frais = 0.029;
+
+        $somme = ($montantTva + $totalMontant) * $frais;
+
+        $order = [
+            'purchase_units' => [[
+                'description'    => 'Links infinity achats de prestation',
+                'items'   =>  [
+                    'name'  =>  $microservice->getName(),
+                    'quatity'   =>  1,
+                    'unit_amount'   =>  [
+                        'value'     =>  $somme * 100,
+                        'currency_code' =>  'EUR',
+                    ],
+                ],
+
+                'amount'  =>  [
+                    'currency_code' =>  'EUR',
+                    'value'         =>  $somme * 100,
+                ]
+            ]]
+        ];
+
+        // Paypal infos
+        $userTest = 'sb-rw3oo17429039@personal.example.com';
+        $sandBoxId = $this->paypalkey;
+
+        // Stripe payment
+        if ($totalMontant > 0) {
+
+            // Instanciation Stripe
+            \Stripe\Stripe::setApiKey($this->privateKey);
+
+            $intent = \Stripe\PaymentIntent::create([
+                'amount'    =>  $totalMontant * 100,
+                'currency'  =>  'eur',
+                'payment_method_types'  =>  ['card']
+            ]);
+            // Traitement du formulaire Stripe
+
+            if ($request->getMethod() === "POST") {
+
+                if ($intent['status'] === "requires_payment_method") {
+                    // TODO
+
+                }
+            }
+        } else {
+            //dd('aucun prix');
+        }
+
+        return $this->render('commande/reservation.html.twig', [
+            'intentSecret'    =>  $intent['client_secret'],
+            'intent'    => $intent,
+
+            'microservice' => $microservice,
+            'type_offre' => 'reservation',
+            'montant' => $totalMontant,
+            'clientId' => $sandBoxId,
+        ]);
     }
 }

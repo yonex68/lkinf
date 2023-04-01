@@ -1,0 +1,30 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block bg %}{% endblock %}
+
+{% block sidebar %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="">
+	<div class="card shadow-sm rounded bg-white mb-3">
+		<div class="card-body">
+			<h4 class="mb-0 h5 pb-3">Autres informations</h4>
+			{% if is_granted('ROLE_VENDEUR') %}
+			<div class="text-muted">
+				{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<button class="btn btn-dark">Mettre à jour</button>
+				{{ form_end(form) }}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

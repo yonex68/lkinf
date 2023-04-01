@@ -4,7 +4,7 @@
 
 {% include "accueil/_banner_slider.html.twig" %}
 
-<section class="pb-5">
+<section class="pb-0 mt-sm-5">
 	<div class="view_slider recommended">
 		<div class="container">
 			<div class="row">
@@ -54,7 +54,8 @@
 		<div class="about-section">
 			<div class="row align-items-center">
 				<div class="col-md-6">
-					<img src="{{ asset('img/c-marche.jpg') }}" class="video-img w-100 rounded">
+					<img src="{{ asset('img/c-marche.jpg') }}" class="video-img img-fluid rounded"
+						alt="{{ appName }} : trouvez un studio, ingénieur de son, vidéas,">
 				</div>
 				<div class="col-md-6">
 					<h2>Comment ça marche?</h2>
@@ -90,18 +91,16 @@
 	</div>
 </section>
 
-<section class="py-4">
+<section class="py-4 best-selling">
 	<div class="view_slider recommended">
 		<div class="container">
+			<h3>Services à proximité</h3>
 			<div class="row">
-				<div class="col-lg-12">
-					<h3>Services à proximité</h3>
-					<div class="view recent-slider recommended-slider">
-						{% for microservice in microservices %}
-						{{ include('microservice/composants/_bloc.html.twig') }}
-						{% endfor %}
-					</div>
+				{% for microservice in microservices %}
+				<div class="col-6 col-sm-4 d-flex align-items-stretch paddingless">
+					{{ include('microservice/composants/_bloc.html.twig') }}
 				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
@@ -119,7 +118,7 @@
 				<div class="freelancer">
 					{% if vendeur.couverture %}
 					<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
-						class="img-fluid" alt="{{ vendeur.prenom }}">
+						class="img-fluid" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
 					{% else %}
 
 					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
@@ -129,14 +128,14 @@
 
 						{% if vendeur.avatar %}
 						<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
-							class="img-fluid" alt="{{ vendeur.prenom }}">
+							class="img-fluid" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
 						{% else %}
 
 						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
 
 						{% endif %}
-						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="py-2">
-							<h5>{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</h5>
+						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="py-2 pl-2 text-muted">
+							<strong class="">{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
 						</a>
 					</div>
 				</div>
@@ -174,20 +173,20 @@
 <div class="modal fade" id="modalLocations" tabindex="-1" aria-labelledby="modalLocationsLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
-			<div class="modal-header border-0">
-				<h5 class="modal-title" id="modalLocationsLabel text-center">Profésionnels autour de vous</h5>
+			<div class="modal-header border-0 text-center">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
+					<span class="text-light" aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body text-center">
-				<p class="lead text-center">
+				<h5 class="modal-title text-center" id="modalLocationsLabel">Profésionnels autour de vous</h5>
+				<p class="text-center">
 					{{ appName }} souhaite accéder à votre position!
 				</p>
 				<button id="button-location" class="btn btn-dark">Continuer / Autoriser l'accès à votre position</button>
 			</div>
 			<div class="modal-footer border-0">
-				<button type="button" class="btn btn-outline-light" data-dismiss="modal">Fermer</button>
+				<button type="button" class="btn btn-outline-light btn-lg" data-dismiss="modal">Fermer</button>
 			</div>
 		</div>
 	</div>

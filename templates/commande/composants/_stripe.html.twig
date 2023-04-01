@@ -1,18 +1,18 @@
 <!-- Stripe Payment Form -->
 <form id="payment-form" method="post" action="" class="text-light" id="stripe-section">
 
-	<div class="border rounded p-3">
+	<div class="border rounded p-3 border-light mb-3">
 
 		<div id="card-errors" class="w-100 text-danger" role="alert"></div>
 
-		<div id="card-elements" class="text-white" style="color: white!important;"></div>
+		<div id="card-elements" class="text-white border rounded" style="color: white!important;"></div>
 
 	</div>
 
 
-	<div class="py-5">
+	<div class="p2-5">
 		<div class="form-group">
-			<button type="submit" class="btn btn-success btn-block text-center">
+			<button type="submit" class="btn btn-success btn-block text-center btn-lg">
 				<span id="btnFetch">
 					<i class="fa fa-credit-card fa-2x"></i>&nbsp;Payer <strong>{{ montant ~ currency }}</strong>
 				</span>
@@ -51,7 +51,7 @@
         		fontSize: '18px',
         		width: '100%',
         		display: 'block',
-        		color: "#32325d"
+        		color: "#fff"
         	}
         }
 

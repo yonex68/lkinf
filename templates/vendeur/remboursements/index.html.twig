@@ -1,0 +1,62 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Remboursements{% endblock %}
+
+{% block body %}
+
+<div class="card shadow-sm w-100 mb-4">
+    <div class="card-body">
+        <div class="row d-block d-sm-flex align-items-center">
+            <div class="col-sm-6">
+                <h2 class="h5 mb-3">Remboursements</h2>
+            </div>
+            {% if userRemboursements(app.user)|length == 0 %}
+            <div class="col-sm-6 text-right">
+                <a href="{{ path('app_vendeur_remboursements_new') }}" class="btn btn-dark">Nouvelle demande</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="table-responsible">
+            <table class="table table-borderless text-muted">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for remboursement in remboursements %}
+                    <tr>
+                        <td>{{ remboursement.id }}</td>
+                        <td>
+                            <strong class="text-light">{{ remboursement.montant ~ currency }}</strong>
+                        </td>
+                        <td>{{ remboursement.created ? remboursement.created|date('d/m/Y') : '' }}</td>
+                        <td>
+                            <span class="badge badge-{% if remboursement.statut == 'En attente' %}warning{% elseif remboursement.statut == 'Accepter' %}success{% else %}danger{% endif %} badge-pill">{{ remboursement.statut }}</span>
+                        </td>
+                        <td>
+                            {% if remboursement.statut == 'En attente' %}
+                            ...
+                            {% else %}
+                            <a href="{{ path('app_vendeur_remboursements_show', {'id': remboursement.id}) }}" class="btn btn-dark">Détails</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <p class="text-center">Aucun remboursements</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -13,7 +13,7 @@
 			{% endif %}
 		</div>
 		<div class="p-3 pb-0 border-top border-bottom bg-light">
-			<h5 class="font-weight-bold text-light mb-1 mt-0 text-left">{{ app.user.nom }}
+			<h5 class="h6 text-light mb-1 mt-0 text-left">{{ app.user.nom }}
 				{{ app.user.prenom }}</h5>
 			<p class="mb-0 text-muted text-left">{{ app.user.apropos|raw }}</p>
 		</div>
@@ -23,33 +23,33 @@
 			{% if is_granted('ROLE_VENDEUR') %}
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-thumbs-up"></i> Avis positif</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ avispositif(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ avispositif(app.user)|length }}</p>
 			</div>
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-thumbs-down"></i> Avis négatif</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ avisnegatif(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ avisnegatif(app.user)|length }}</p>
 			</div>
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ commandeEncours(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ commandeEncours(app.user)|length }}</p>
 			</div>
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Vente au total</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ ventes(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ ventes(app.user)|length }}</p>
 			</div>
 			{% else %}
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-cart-plus"></i> Commandes en cours</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ clientCommandeEncours(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ clientCommandeEncours(app.user)|length }}</p>
 			</div>
 			<div class="d-flex align-items-top mb-2">
 				<p class="mb-0 text-muted"><i class="fa fa-opencart"></i> Total achat</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ clientAchats(app.user)|length }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ clientAchats(app.user)|length }}</p>
 			</div>				
 			{% endif %}
 			<div class="d-flex align-items-top">
 				<p class="mb-0 text-muted"><i class="fa fa-user-circle"></i> {{ app.user.compte }}</p>
-				<p class="text-dark mb-0 mt-0 ml-auto">{{ app.user.created|ago(locale='fr') }}</p>
+				<p class="text-muted mb-0 mt-0 ml-auto">{{ app.user.created|ago(locale='fr') }}</p>
 			</div>
 		</div>
 

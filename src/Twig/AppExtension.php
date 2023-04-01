@@ -10,6 +10,8 @@ use App\Repository\ConversationRepository;
 use App\Repository\EmploisTempsRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PortefeuilleRepository;
+use App\Repository\RemboursementRepository;
+use App\Repository\ServiceSignaleRepository;
 use App\Repository\SuivisRepository;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -35,7 +37,12 @@ class AppExtension extends AbstractExtension
 
     private $emploisTempsRepository;
 
-    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository){
+    private $serviceSignaleRepository;
+
+    private $remboursementRepository;
+
+    public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository, ServiceSignaleRepository $serviceSignaleRepository
+    , RemboursementRepository $remboursementRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -46,6 +53,8 @@ class AppExtension extends AbstractExtension
         $this->suivisRepository = $suivisRepository;
         $this->microserviceRepository = $microserviceRepository;
         $this->emploisTempsRepository = $emploisTempsRepository;
+        $this->serviceSignaleRepository = $serviceSignaleRepository;
+        $this->remboursementRepository = $remboursementRepository;
 
     }
 
@@ -71,6 +80,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('serviceAvisPositifs', [$this, 'getServiceAvisPositif']),
             new TwigFunction('serviceAvisNegatifs', [$this, 'getServiceAvisNegatif']),
             new TwigFunction('emploistemps', [$this, 'getVendeurEmploisTemps']),
+            new TwigFunction('alertesNonLu', [$this, 'getAlertesNonLu']),
+            new TwigFunction('userRemboursements', [$this, 'getUserRemboursements']),
         ];
     }
 
@@ -148,5 +159,13 @@ class AppExtension extends AbstractExtension
 
     public function getVendeurEmploisTemps($vendeur){
         return $this->emploisTempsRepository->findBy(['vendeur' => $vendeur], ['ordre' => 'ASC']);
+    }
+
+    public function getAlertesNonLu(){
+        return $this->serviceSignaleRepository->findBy(['lu' => null], ['created' => 'DESC']);
+    }
+
+    public function getUserRemboursements($user){
+        return $this->remboursementRepository->findBy(['user' => $user, 'statut' => 'En attente'], ['created' => 'DESC']);
     }
 }

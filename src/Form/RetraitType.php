@@ -28,7 +28,7 @@ class RetraitType extends AbstractType
                 'label' => 'Nom du titulaire de la carte'
             ])
             ->add('numeroCarte', TextType::class, [
-                'label' => 'Numéro de carte'
+                'label' => 'IBAN'
             ])
             ->add('dateExpiration', DateType::class, [
                 'label' => "Date d'expiration",

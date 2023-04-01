@@ -1,4 +1,4 @@
-{% extends 'auth.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Nouvelle commande{% endblock %}
 
@@ -8,46 +8,26 @@
 
 {% block body %}
 
-{% include "commande/composants/_stripe.html.twig" %}
+<section class="py-5">
+	<div class="container">
+		<h4 class="py-3 h5">Nouvelle commande</h4>
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="card mb-3">
+					<div class="card-body">
+						{% include "commande/composants/_stripe.html.twig" %}
 
-<div>
-	{% include "commande/composants/_paypal_button.html.twig" %}
-</div>
-
-<h4 class="py-3 h5">Service à commander</h4>
-<div class="media p-3 bg-light rounded">
-	{% if microservice.medias|length > 0 %}
-
-	<img class="rounded"
-		src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_avatar') }}" />
-
-	{% else %}
-
-	<img class="rounded" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" />
-
-	{% endif %}
-	<div class="media-body pl-2">
-		<strong class="d-block">{{ microservice.name }}</strong>
-
-		<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
-			class="badge badge-warning">#{{ microservice.categorie.name }}</a>
-
-		{% if microservice.categorie.slug == 'ingenieur-son' %}
-
-		<p class="">
-			{{ type_offre }} <strong> {{ microservice.prixMixage ~ currency }}</strong>
-		</p>
-
-		{% else %}
-
-		<p class="">
-			A partir de <strong> {{ microservice.prix ~ currency }}</strong>
-		</p>
-
-		{% endif %}
+						<div>
+							{% include "commande/composants/_paypal_button.html.twig" %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				{{ include('vendeur/microservices/composants/_bloc.html.twig') }}
+			</div>
+		</div>
 	</div>
-</div>
+</section>
 
 {% endblock %}
-
-{% block footer %}{% endblock %}

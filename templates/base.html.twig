@@ -4,12 +4,18 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Gurdeep singh osahan">
-	<meta name="author" content="Gurdeep singh osahan">
-	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />
 	<title>
 		{% block title %}{{ appName }} des services pour tout vos besoins{% endblock %}
 	</title>
+
+	{% block meta %}
+	<meta name="author" content="{{ appName }}">
+   <meta name="keywords" content="{{ appName }} : trouvez un studio, ingénieur de son, vidéaste,">
+	<meta name="description" content="Trouvez le prestataire qui répondra à vos besoins, qui vous aidera dans vos projets musicaux ; des ingénieurs de sons, danseurs…, proche de chez vous">
+	{% endblock %}
+
+	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />
+	
 	<!-- Favicon Icon -->
 	<link rel="icon" type="{{ asset('img/Logo.png') }}" href="images/fav.svg">
 	<!-- Bootstrap core CSS -->

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-   <table class="table bg-white table-borderless">
+   <table class="table text-muted table-borderless">
       <thead>
          <tr>
             <th>Service</th>
@@ -28,9 +28,9 @@
                   {% endif %}
                   <div class="media-body pl-3">
                      <strong>{{ commande.montant ~ currency }}</strong>
-                     <span class="badge badge-light border badge-pill">Offre {{ commande.offre }}</span>
+                     <span class="badge badge-light border badge-pill text-capitalize">{{ commande.offre }}</span>
                      <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}"
-                        class="d-block text-light font-weight-bold" target="_blank">{{ commande.microservice.name }}</a>
+                        class="d-block text-light font-weight-bold" target="_blank">{{ commande.microservice.name|u.truncate(30, '...') }}</a>
                   </div>
                </div>
             </td>
@@ -53,7 +53,7 @@
                   {% endif %}
 
                   <div class="text-center">
-                     <strong class="d-block">{{ commande.client.nom }} {{ commande.client.prenom }}</strong>
+                     <strong class="d-block text-muted">{{ commande.client.nom }} {{ commande.client.prenom }}</strong>
                   </div>
                </div>
 
@@ -75,7 +75,7 @@
 
                      {% endif %}
 
-                     <div class="text-center">
+                     <div class="text-center text-muted">
                         <strong>{{ commande.vendeur.nom }} {{ commande.vendeur.prenom }}</strong>
                      </div>
                   </div>

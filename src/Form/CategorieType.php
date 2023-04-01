@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Categorie;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,8 +19,14 @@ class CategorieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
+            ->add('name', ChoiceType::class, [
                 'label' => 'Désignation',
+                'choices' => [
+                    'Ingénieur de son' => 'Ingenieur-son',
+                    'Studio' => 'Studio',
+                    'Videaste' => 'Videaste',
+                    'Figurant' => 'Figurant',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est obligatoir',

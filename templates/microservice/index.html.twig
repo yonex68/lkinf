@@ -1,36 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} ({{ microservices.getTotalItemCount }}) Microservices{% endblock %}
+{% block title %}
+  ({{ microservices.getTotalItemCount }}) Microservices
+{% endblock %}
+
+{% block meta %}
+  <meta name="author" content="{{ appName }} catégories" />
+  <meta name="keywords" content="{{ appName }} : Links infinity catégories, studio, ingénieur de son, vidéastes" />
+  <meta name="description" content=" Links Infinity vous propose des centaines de freelances disponibles et qualifiés proches de chez vous, pour vous accompagner dans votre projet." />
+{% endblock %}
 
 {% block body %}
-<!-- Inner Header -->
-<section class="py-5 inner-header bg-degrade">
-   <div class="container">
+  <!-- Inner Header -->
+  <section class="py-5 inner-header bg-degrade">
+    <div class="container">
       <div class="row">
-         <div class="col-md-9 text-left">
-            <h1 class="mt-0 mb-3 text-light">Microservices ({{ microservices.getTotalItemCount }})</h1>
-            <div class="breadcrumbs">
-               <p class="mb-0 text-muted font-weight-light" style="font-size: 1.2em;">
-                  Pour tous vos travaux vidéo et audio, le site {{ appName }} vous propose des centaines de freelances
-                  disponibles et qualifiés, pour vous accompagner dans votre projet. Spécialiste des services, vous
-                  trouverez en ligne tout ce dont vous rêvez : animation de logo, réalisation de vidéo
-               </p>
-            </div>
-            {% include "microservice/composants/_categories.html.twig" %}
-         </div>
+        <div class="col-md-9 text-left">
+          <h1 class="mt-0 mb-3 text-light">
+            Microservices ({{ microservices.getTotalItemCount }})
+          </h1>
+          <div class="breadcrumbs">
+            <p class="mb-0 text-muted font-weight-light"
+              style="font-size: 1.2em;">
+              Pour tous vos travaux vidéo et audio, le site {{ appName }} vous propose
+              des centaines de freelances disponibles et qualifiés, pour vous accompagner
+              dans votre projet. Spécialiste des services, vous trouverez en ligne
+              tout ce dont vous rêvez : animation de logo, réalisation de vidéo
+            </p>
+          </div>
+          {% include 'microservice/composants/_categories.html.twig' %}
+        </div>
       </div>
-   </div>
-</section>
-<!-- End Inner Header -->
+    </div>
+  </section>
+  <!-- End Inner Header -->
 
-{% include "microservice/composants/_page_contenu.html.twig" %}
-
+  {% include 'microservice/composants/_page_contenu.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
+  {{ parent() }}
 
-{{ parent() }}
-
-<script src="{{ asset('js/favoris.js') }}"></script>
-
+  <script src="{{ asset('js/favoris.js') }}"></script>
 {% endblock %}

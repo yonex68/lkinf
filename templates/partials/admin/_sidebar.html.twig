@@ -27,7 +27,7 @@
             <li>
                <a href="{{ path('app_admin_services_signale_index') }}" class=" waves-effect">
                   <i class="mdi mdi-bell"></i>
-                  <span>Alertes</span>
+                  <span>Alertes</span> <span class="badge bg-danger rounded-pill ml-auto">{{ alertesNonLu()|length }}</span>
                </a>
             </li>
 
@@ -81,6 +81,13 @@
                <a href="{{ path('app_admin_retraits_index') }}" class=" waves-effect">
                   <i class="mdi mdi-currency-usd-circle-outline"></i>
                   <span>Retraits</span>
+               </a>
+            </li>
+
+            <li>
+               <a href="{{ path('app_admin_remboursements_index') }}" class=" waves-effect">
+                  <i class="mdi mdi-currency-usd-circle-outline"></i>
+                  <span>Remboursements</span>
                </a>
             </li>
 

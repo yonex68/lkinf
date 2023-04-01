@@ -1,30 +1,39 @@
-{{ form_start(commandeForm) }}
-<div class="my-4">
+<h6 class="my-4">Contenu (Options)</h6>
+
+<div class="accordion" id="serviceOptions">
+   {% for option in microservice.serviceOptions %}
    <div class="card">
-      <div class="card-body p-0">
-         <div class="p-3 bg-light">
-            <h5 class="font-weight-bold">Personnaliser et commander</h5>
-            <div class="">
-               {{ form_widget(commandeForm) }}
-            </div>
-         </div>
+      <div class="card-header" id="heading-{{ option.id }}">
+         <h5 class="mb-0">
+            <button class="btn btn-link text-muted btn-block text-left p-0" type="button"
+               data-toggle="collapse" data-target="#collapse-{{ option.id }}" aria-expanded="true"
+               aria-controls="collapse-{{ option.id }}">
+               <i class="text-success fa fa-check-circle mr-2"></i> {{ option.name }}
+            </button>
+         </h5>
       </div>
 
-      <div class="card-footer bg-white">
-         <div class="row">
-            <div class="col-sm-6">
-
-               <button type="submit" class="btn btn-dark btn-lg h5">Commander</button>
-
-               {% if is_granted('microservice_edit', microservice) %}{% else %}
-               <a class="btn btn-outline-light btn-lg h5"
-                  href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter
-                  le vendeur</a>
-               {% endif %}
-            </div>
+      <div id="collapse-{{ option.id }}"
+         class="collapse {{ microservice.serviceOptions[0].id == option.id ? 'show' : '' }}"
+         aria-labelledby="heading-{{ option.id }}" data-parent="#serviceOptions">
+         <div class="card-body">
+            <span>A partir de </span><strong>{{ option.montant ~ currency }}</strong> - <span>{{ option.delai }} Jour{{
+               option.delai > 1 ? 's' : '' }} de réalisation</span>
          </div>
       </div>
+   </div>
+   {% endfor %}
+</div>
 
+<div class="card rounded-0 mb-3" style="border-bottom-left-radius: 5px!important;border-bottom-right-radius: 5px!important;">
+   <div class="card-body">
+      <div class="row d-flex align-items-center">
+         <div class="col-sm-6">
+            <h6 class="text-uppercase">Total: <strong>{{ total ~ currency }}</strong></h6>
+         </div>
+         <div class="col-sm-6">
+            {% include "microservice/composants/_reservation_btn.html.twig" %}
+         </div>
+      </div>
    </div>
 </div>
-{{ form_end(commandeForm) }}

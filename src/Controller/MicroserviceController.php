@@ -98,23 +98,10 @@ class MicroserviceController extends AbstractController
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
 
         $options = $microservice->getServiceOptions();
-        //dd($options);
-        $commande = new Commande();
-        $commande->setMicroservice($microservice);
-        $commandeForm = $this->createForm(CustomServiceType::class, $commande);
-        $commandeForm->handleRequest($request);
-        $commandeForm->setData('serviceOptions')->setData($options);
-
-        if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
-            $datas = $commandeForm->get('serviceOptions')->getData();
-            $somme = 0;
-            
-            foreach ($datas as $data) {
-                $somme += $data->getMontant();
-            }
-
-            echo $somme;
-            dd('montant total');
+        $totalMontant = 0;
+        
+        foreach ($options as $option) {
+            $totalMontant += $option->getMontant();
         }
 
         $serviceSignale = new ServiceSignale();
@@ -138,10 +125,10 @@ class MicroserviceController extends AbstractController
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,
             'similaires' => $similaires,
-            'commandeForm' => $commandeForm->createView(),
             'servicesignaleForm' => $servicesignaleForm->createView(),
             'prix' => $microservice->getPrix(),
             'options' => $options,
+            'total' => $totalMontant,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
         ]);
     }

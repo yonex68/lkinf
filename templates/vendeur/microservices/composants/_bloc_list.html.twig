@@ -18,6 +18,8 @@
 
 				<small class="text-muted">{{ microservice.created|ago(locale='fr') }}</small>
 
+				{% if is_granted('microservice_edit', microservice) %}
+
 				{% if microservice.offline == true %}
 
 				<span class="badge badge-danger rounded-pill">Bloqué</span>
@@ -27,6 +29,8 @@
 				<span class="badge badge-{{ microservice.online == true ? 'success' : 'light' }} badge-pill">
 					{{ microservice.online == true ? 'En ligne' : 'Hors ligne' }}
 				</span>
+
+				{% endif %}
 
 				{% endif %}
 

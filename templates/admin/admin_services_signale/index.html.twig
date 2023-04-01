@@ -17,12 +17,13 @@
                     <th></th>
                     <th>Vendeur</th>
                     <th>Date</th>
+                    <th>Statut</th>
                     <th>actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for service_signale in service_signales %}
-                <tr>
+                <tr class="{{ service_signale.lu == true ? 'bg-light shadow border border-success' : '' }}">
                     <td>{{ service_signale.id }}</td>
                     <td>
                         <div class="d-flex">
@@ -68,7 +69,7 @@
 
                         {% endif %}
                     </td>
-                    <td>{{ service_signale.microservice.name|u.truncate(40, '...') }}</td>
+                    <td>{{ service_signale.microservice.name|u.truncate(30, '...') }}</td>
                     <td>
                         <div class="d-flex">
                             <div class="me-2">
@@ -99,6 +100,9 @@
                         </div>
                     </td>
                     <td>{{ service_signale.created ? service_signale.created|date('d/m/Y') : '' }}</td>
+                    <td>
+                        <span class="badge rounded-pill bg-{{ service_signale.lu == true ? 'success' : 'light' }}">{{ service_signale.lu == true ? 'Lu' : 'Non lu' }}</span>
+                    </td>
                     <td>
                         <a href="{{ path('app_admin_services_signale_show', {'id': service_signale.id}) }}"
                             class="btn btn-light">Lire</a>

@@ -7,6 +7,7 @@ use App\Entity\ServiceSignale;
 use App\Form\ServiceSignaleType;
 use App\Repository\ServiceSignaleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminServicesSignaleController extends AbstractController
 {
     #[Route('/', name: 'app_admin_services_signale_index', methods: ['GET'])]
-    public function index(ServiceSignaleRepository $serviceSignaleRepository): Response
+    public function index(ServiceSignaleRepository $serviceSignaleRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $service_signales = $paginator->paginate(
+            $serviceSignaleRepository->findBy([], ['created' => 'DESC']),
+            $request->query->getInt('page', 1),
+            20
+        );
+
         return $this->render('admin/admin_services_signale/index.html.twig', [
-            'service_signales' => $serviceSignaleRepository->findAll(),
+            'service_signales' => $service_signales,
         ]);
     }
 
@@ -43,8 +50,13 @@ class AdminServicesSignaleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_services_signale_show', methods: ['GET'])]
-    public function show(ServiceSignale $serviceSignale): Response
+    public function show(ServiceSignale $serviceSignale, ServiceSignaleRepository $serviceSignaleRepository): Response
     {
+        if ($serviceSignale->isLu() == false) {
+            $serviceSignale->setLu(true);
+            $serviceSignaleRepository->save($serviceSignale, true);
+        }
+
         return $this->render('admin/admin_services_signale/show.html.twig', [
             'service_signale' => $serviceSignale,
         ]);
