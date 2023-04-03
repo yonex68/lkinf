@@ -2,7 +2,7 @@
 
 <div class="box shadow-sm rounded bg-white mb-3">
    <div class="box-title p-3 text-left bg-light rounded">
-      <h4 class="mb-0 text-light">
+      <h4 class="mb-0 h5">
          Mon profil {% if is_granted('ROLE_VENDEUR') %}public{% endif %}
       </h4>
    </div>
@@ -23,6 +23,7 @@
             {{ form_row(form.prenom) }}
          </div>
       </div>
+      {{ form_row(form.genre) }}
       <div class="row">
          <div class="col-sm-6">
             <strong>Photo de profil</strong>
@@ -31,26 +32,10 @@
             </div>
             {% if is_granted('ROLE_VENDEUR') %}
             <p>
-               Montrez-vous ! Les vendeurs avec une photo les représentant vraiment font plus de ventes que la
-               moyenne.
+               Montrez-vous ! Les {{ app.user.compte }}s avec une photo les représentant
+               {{ is_granted('ROLE_VENDEUR') ? 'vraiment font plus de ventes que la moyenne.' : '.' }}
             </p>
             {% endif %}
-         </div>
-         <div class="col-sm-6">
-            <strong>Photo de couverture</strong>
-            <div class="form-group">
-               {{ form_row(form.couvertureFile) }}
-            </div>
-            {% if is_granted('ROLE_VENDEUR') %}
-            <p>
-               Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous démarquer.
-            </p>
-            {% endif %}
-         </div>
-         <div class="col-sm-6">
-            <div class="form-group">
-               {{ form_row(form.genre) }}
-            </div>
          </div>
       </div>
 
@@ -79,7 +64,7 @@
       </div>
 
       <div class="form-group">
-         <strong>Biographie</strong>
+         <label class="d-block">Biographie</label>
          {% if is_granted('ROLE_VENDEUR') %}
          <p>
             Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.

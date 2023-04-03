@@ -5,8 +5,10 @@
 
 {% block bg %}{% endblock %}
 
-{% block sidebar %}
-{{ parent() }}
+{% block colleft %}4
+{% endblock %}
+
+{% block colright %}8
 {% endblock %}
 
 {% block body %}
@@ -18,8 +20,30 @@
 			{% if is_granted('ROLE_VENDEUR') %}
 			<div class="text-muted">
 				{{ form_start(form) }}
-					{{ form_widget(form) }}
-					<button class="btn btn-dark">Mettre à jour</button>
+
+				{{ form_row(form.lieuPrestation) }}
+
+				{{ form_row(form.homeStudio) }}
+
+				<div class="row">
+					<div class="col-sm-6">
+						<strong>Photo de couverture</strong>
+						<div class="form-group">
+							{{ form_row(form.couvertureFile) }}
+						</div>
+						{% if is_granted('ROLE_VENDEUR') %}
+						<p>
+							Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
+							démarquer.
+						</p>
+						{% endif %}
+					</div>
+				</div>
+
+				{{ form_rest(form) }}
+
+				<button class="btn btn-dark">Mettre à jour</button>
+
 				{{ form_end(form) }}
 			</div>
 			{% endif %}

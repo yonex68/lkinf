@@ -54,11 +54,12 @@
 
 </head>
 
-<body data-turbo="false">
+<body data-turbo="false" class="bg">
 
 	{% block navbar %}
 		{{ include('partials/base/_navbars.html.twig') }}
 	{% endblock %}
+	
 	{% block serviceBlocNavigation %}{% endblock %}
 
 	{{ include('partials/_flash_message.html.twig') }}

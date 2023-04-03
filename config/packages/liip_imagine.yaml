@@ -61,7 +61,7 @@ liip_imagine:
         rectangle_avatar:
             filters:
                 thumbnail:
-                    size: [160, 80]
+                    size: [250, 100]
                     mode: outbound
 
         small_avatar:

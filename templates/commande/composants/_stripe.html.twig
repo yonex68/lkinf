@@ -92,7 +92,7 @@
                     document.getElementById("card-errors").innerText = result.error.message
                 }else if('paymentIntent' in result){
                 	stripeTokenHandler(result.paymentIntent);
-                	document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre}) }}"
+                	document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre, payment_intent: intentId}) }}"
                 }
             })
         	});

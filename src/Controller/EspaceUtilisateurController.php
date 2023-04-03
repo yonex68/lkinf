@@ -24,13 +24,54 @@ class EspaceUtilisateurController extends AbstractController
     #[Route('/', name: 'user_profil')]
     public function profil(): Response
     {
-        if (empty($this->getUser()->getAdresse())) {
-            $this->addFlash('warning', 'Veuillez indiquer votre adresse pour completer votre compte');
+        /*if (empty($this->getUser()->getAdresse())) {
+            $this->addFlash('warning', 'Veuillez indiquer votre adresse pour completer votre profil');
             return $this->redirectToRoute('user_edit_adresse');
+        }*/
+
+        return $this->render('espace_utilisateur/profil.html.twig', []);
+    }
+
+    #[Route('/categorie', name: 'user_categorie', methods: ['GET', 'POST'])]
+    public function categorie(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CategorieUserType::class, $user);
+        $form->handleRequest($request);
+        $route = 'user_profil';
+        $message = "Votre profil a bien été mise à jour";
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** Obliger les studios à joindre une image de couverture */
+            $categorie = $form->get('categorie')->getData()->getName();
+            $imageCouverture = $form->get('couvertureFile')->getData();
+            //dd($imageCouverture);
+
+            if ($categorie == 'Studio' && empty($imageCouverture)) {
+
+                if ($user->getCouverture() == null) {
+
+                    $route = 'user_categorie';
+                    $message = "Vous avez choisi l'option studio, veuillez joindre une image de couverture pour votre studio";
+
+                    $this->addFlash('warning', $message);
+                    return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+                }
+            }
+            
+            if ($user->isEndRegister() == null) {
+                $user->setEndRegister(true);
+            }
+            $entityManager->flush();
+
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('espace_utilisateur/profil.html.twig', [
-            
+        return $this->render('espace_utilisateur/categorie.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -43,9 +84,10 @@ class EspaceUtilisateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->flush();
-            $this->addFlash('success', "Votre compte a bien été mise à jour");
-            return $this->redirectToRoute('user_profil', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', "Votre profil a bien été mise à jour");
+            return $this->redirectToRoute('user_categorie', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('espace_utilisateur/coordonnees.html.twig', [
@@ -53,39 +95,12 @@ class EspaceUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/categorie', name: 'user_categorie', methods: ['GET', 'POST'])]
-    public function categorie(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-
-        $form = $this->createForm(CategorieUserType::class, $user);
-        $form->handleRequest($request);
-        $route = 'user_profil';
-        $message = "Votre compte a bien été mise à jour";
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            
-            if ($user->getCategorie() == 'Studio' && $user->getCouverture() == null) {
-                $route = 'user_edit_profil';
-                $message .= ", veuillez joindre une image de couverture pour votre studio";
-            }
-
-            $this->addFlash('success', $message);
-            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('espace_utilisateur/categorie.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     #[Route('/modifier-votre-mot-de-passe', name: 'edit_password', methods: ['GET', 'POST'])]
     public function editPassword(
-        Request $request, UserPasswordHasherInterface $userPasswordHasher,
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
-    ): Response
-    {
+    ): Response {
         $user = $this->getUser();
 
         // The token is valid; allow the user to change their password.
@@ -96,7 +111,7 @@ class EspaceUtilisateurController extends AbstractController
 
             // Encode(hash) the plain password, and set it.
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -129,7 +144,7 @@ class EspaceUtilisateurController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', "Votre compte a bien été mise à jour");
+            $this->addFlash('success', "Votre profil a bien été mise à jour");
 
             return $this->redirectToRoute('user_profil', [], Response::HTTP_SEE_OTHER);
         }

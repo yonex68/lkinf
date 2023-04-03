@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CategorieUserType extends AbstractType
 {
@@ -20,7 +21,6 @@ class CategorieUserType extends AbstractType
         $builder
             ->add('lieuPrestation', TextType::class, [
                 'label' => 'Lieu de prestation',
-                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',
@@ -30,7 +30,18 @@ class CategorieUserType extends AbstractType
             ])
             ->add('homeStudio', CheckboxType::class, [
                 'label'     =>  'Home studio',
+                'required' => false,
                 'help'     =>  "Cocher uniquement s'il s'agit d'un Home studio",
+            ])
+            ->add('couvertureFile', VichImageType::class, [
+                'label' => '(Png, jpg et jpeg)',
+                'required'  =>  false,
+                'allow_delete' =>  false,
+                'download_label'     =>  false,
+                'image_uri'     =>  false,
+                'download_uri'     =>  false,
+                'imagine_pattern'   =>  'rectangle_avatar',
+                'attr'   =>  ['class' => 'form-control-file'],
             ])
             ->add('categorie', EntityType::class, [
                 'label'     =>  'Catégorie de prestataire',

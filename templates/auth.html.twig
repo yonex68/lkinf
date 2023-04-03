@@ -29,37 +29,7 @@
 	<!-- Custom styles for this template -->
 	<link href="{{ asset('themes/base/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/base/css/custom.css') }}" rel="stylesheet">
-	<style>
-		.container-fluid {
-			max-width: 100% !important;
-			padding: 0 !important;
-			overflow: hidden !important;
-		}
-
-		.layout-row {
-			-ms-flex-direction: row;
-			flex-direction: row
-		}
-
-		.layout-row>.flex {
-			min-width: 0
-		}
-
-		.layout-column {
-			-ms-flex-direction: column;
-			flex-direction: column
-		}
-
-		.layout-column>.flex {
-			min-height: 0
-		}
-
-		.ElementsApp,
-		.ElementsApp .InputElement {
-			color: #fff !important;
-		}
-	</style>
-
+	<link href="{{ asset('themes/base/css/responsive.css') }}" rel="stylesheet">
 	<!-- map box -->
 	<script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.14/web.js">
 	</script>
@@ -69,76 +39,70 @@
 	{% endblock %}
 </head>
 
-<body data-turbo="false" class="layout-row text-light">
+<body data-turbo="false" class="responsive text-light"
+	style="background-image: url('{{ asset('img/register.png') }}');">
 
-	<div class="container-fluid d-flex flex-column flex">
-		<div class="row h-100">
-			<div class="col-sm-6 d-none d-sm-block"
-				style="background-image: url('{% block imgBg %}{{ asset('img/register.png') }}{% endblock %}');background-size: covert;background-position: 50% 50%;background-position-x: 0;background-position-y: 0;">
-			</div>
-			<div class="col-sm-{% block col %}6{% endblock %} h-100 align-items-center justify-content-center">
-				<div class="row">
-					<div class="col-sm-9 mx-auto">
-						<div class="p-md-3 h-100 flex">
-							<div class="pt-4">
-								<a href="{{ path('accueil') }}" class="btn btn-dark shadow-sm"><i
-										class="mdi mdi-arrow-left"></i>
-									Retournez
-									vers accueil</a>
-							</div>
-							<div class="osahan-login py-3">
-								<div class="text-center mb-4">
-									<a href="{{ path('accueil') }}">
-										<h5 class="text-uppercase">{{ appName }}</h5>
-									</a>
-									<h5 class="font-weight-bold mt-3 text-light">
-										{% block titre %}Inscription
-										{% endblock %}
-									</h5>
-									<p class="text-muted"> {% block text %}{% endblock %}
-									</p>
-								</div>
-								{% block body %}{% endblock %}
+	<div class="p-md-3 auth-bloc ml-auto">
+		<div class="row">
+			<div class="col-sm-9 mx-auto">
+				<div class="pt-4">
+					<a href="{{ path('accueil') }}" class="btn btn-dark shadow-sm"><i class="mdi mdi-arrow-left"></i>
+						Retournez
+						vers accueil</a>
+				</div>
+				
+				{{ include('partials/_flash_message.html.twig') }}
 
-								{% block space %}
-								<div style="height: 50px;" class="d-none d-sm-block"></div>
-								{% endblock %}
-
-								{% block footer %}
-								<div class="py-3 d-flex align-item-center">
-									<a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié!</a>
-									<span class="ml-auto">
-										{% if app.request.attributes.get('_route') == 'app_register' %}
-
-										<a href="{{ path('app_login') }}">Connexion</a>
-
-										{% elseif app.request.attributes.get('_route') == 'app_login' %}
-
-										<a href="{{ path('app_register') }}">Créer un compte</a>
-
-										{% else %}
-
-										<a href="{{ path('app_login') }}">Connexion</a>&nbsp;
-
-										<a href="{{ path('app_register') }}">Créer un compte</a>
-
-										{% endif %}
-									</span>
-								</div>
-
-								<div class="py-3 text-center">
-									<a class="mr-1" href="#">Besoin d'aide?</a>		
-								</div>
-
-								<div class="py-3">
-									<a class="text-muted mr-1" href="#">Conditons générales</a>
-									<a class="text-muted mr-1" href="#">Mentions légales</a>
-									<a class="text-muted mr-1" href="#">Politique de confidentialité</a>		
-								</div>
-								{% endblock %}
-							</div>
-						</div>
+				<div class="osahan-login py-3">
+					<div class="text-center mb-4">
+						<a href="{{ path('accueil') }}">
+							<h5 class="text-uppercase text-light">{{ appName }}</h5>
+						</a>
+						<h5 class="font-weight-bold mt-3 text-light">
+							{% block titre %}Inscription
+							{% endblock %}
+						</h5>
+						<p class="text-muted"> {% block text %}{% endblock %}
+						</p>
 					</div>
+					{% block body %}{% endblock %}
+
+					{% block space %}
+					<div style="height: 50px;" class="d-none d-sm-block"></div>
+					{% endblock %}
+
+					{% block footer %}
+					<div class="py-3 d-flex align-item-center">
+						<a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié!</a>
+						<span class="ml-auto">
+							{% if app.request.attributes.get('_route') == 'app_register' %}
+
+							<a href="{{ path('app_login') }}">Connexion</a>
+
+							{% elseif app.request.attributes.get('_route') == 'app_login' %}
+
+							<a href="{{ path('app_register') }}">Créer un compte</a>
+
+							{% else %}
+
+							<a href="{{ path('app_login') }}">Connexion</a>&nbsp;
+
+							<a href="{{ path('app_register') }}">Créer un compte</a>
+
+							{% endif %}
+						</span>
+					</div>
+
+					<div class="py-3 text-center">
+						<a class="mr-1" href="#">Besoin d'aide?</a>
+					</div>
+
+					<div class="py-3">
+						<a class="text-muted mr-1" href="#">Conditons générales</a>
+						<a class="text-muted mr-1" href="#">Mentions légales</a>
+						<a class="text-muted mr-1" href="#">Politique de confidentialité</a>
+					</div>
+					{% endblock %}
 				</div>
 			</div>
 		</div>

@@ -24,19 +24,9 @@ class StripeFixtures extends Fixture implements DependentFixtureInterface
 
         $stripes = [
             1 => [
-                'name' => 'Base',
-                'tarif' => 50,
-                'stripeKey' => 'price_1LnlytKh8lE9zjqNDYA6vCxo',
-            ],
-            2 => [
-                'name' => 'Intermediaire',
-                'tarif' => 150,
-                'stripeKey' => 'price_1LrQLhKh8lE9zjqNbhY9UrRj',
-            ],
-            3 => [
-                'name' => 'Premium',
-                'tarif' => 250,
-                'stripeKey' => 'price_1LrQNiKh8lE9zjqNT9typ7V7',
+                'name' => 'offre de lancement',
+                'tarif' => 5,99,
+                'stripeKey' => 'price_1Ms830Kh8lE9zjqNe559KpR5',
             ],
         ];
 

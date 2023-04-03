@@ -1,4 +1,6 @@
-<div class="large-icone">
+<div class="large-icone mb-3">
+
+	{% if is_granted('ROLE_VENDEUR') %}
 
 	{% if app.user.endRegister == true %}
 
@@ -9,8 +11,6 @@
 		<div class="box-body">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
-
-					{% if is_granted('ROLE_VENDEUR') %}
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_dashboard' ? 'active' : '' }}"
 						href="{{ path('vendeur_dashboard') }}">
@@ -28,13 +28,11 @@
 					</a>
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_realisation_index' ? 'active' : '' }}"
 						href="{{ path('app_vendeur_realisation_index') }}">
-						<i class="text-muted fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;Mes réalisations
+						<i class="text-muted fa fa-folder-open"></i>&nbsp;&nbsp;&nbsp;Mes réalisations
 					</a>
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'active' : '' }}"
 						href="{{ path('vendeur_commandes_index') }}"><i
 							class="text-muted fa fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Mes commandes</a>
-
-					{% endif %}
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}"
 						href="{{ path('vendeur_achats_index') }}"><i
@@ -47,12 +45,41 @@
 						href="{{ path('suivis_index') }}"><i class="text-muted fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Suivis</a>
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_remboursements_index' ? 'active' : '' }}"
 						href="{{ path('app_vendeur_remboursements_index') }}"><i
-							class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Remboursements</a>
+							class="text-muted fa fa-backward"></i>&nbsp;&nbsp;&nbsp;Remboursements</a>
 				</div>
 			</div>
 		</div>
 	</div>
-		
+
+	{% endif %}
+
+	{% else %}
+
+	<div class="box shadow-sm rounded bg-white mb-3">
+		<div class="box-title border-bottom p-3">
+			<h6 class="m-0 h6">Tableau de Bord</h6>
+		</div>
+		<div class="box-body">
+			<div class="bg-white rounded shadow-sm">
+				<div class="dropdown-menu-show">
+
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}"
+						href="{{ path('vendeur_achats_index') }}"><i
+							class="text-muted fa fa-opencart"></i>&nbsp;&nbsp;&nbsp;Mes achats</a>
+
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'favoris_index' ? 'active' : '' }}"
+						href="{{ path('favoris_index') }}"><i class="text-muted fa fa-heart"></i>&nbsp;&nbsp;&nbsp;Favoris</a>
+
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'suivis_index' ? 'active' : '' }}"
+						href="{{ path('suivis_index') }}"><i class="text-muted fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Suivis</a>
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_remboursements_index' ? 'active' : '' }}"
+						href="{{ path('app_vendeur_remboursements_index') }}"><i
+							class="text-muted fa fa-backward"></i>&nbsp;&nbsp;&nbsp;Remboursements</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	{% endif %}
 
 	{% if is_granted('ROLE_VENDEUR') %}
@@ -74,25 +101,9 @@
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_retraits_index' ? 'active' : '' }}"
 						href="{{ path('app_vendeur_retraits_index') }}"><i
 							class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Retraits</a>
-
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_remboursements_index' ? 'active' : '' }}"
-						href="{{ path('app_vendeur_remboursements_index') }}"><i
-							class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Remboursements</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3">
-			<h6 class="m-0 h6">Abonnement</h6>
-		</div>
-		<div class="box-body">
-			<div class="bg-white rounded shadow-sm">
-				<div class="dropdown-menu-show">
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'stripe_abonnement_services' ? 'active' : '' }}"
 						href="{{ path('stripe_abonnement_services') }}"><i
-							class="text-muted fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;Gérer mon offre</a>
+							class="text-muted fa fa-globe"></i>&nbsp;&nbsp;&nbsp;Mon abonnement</a>
 				</div>
 			</div>
 		</div>
@@ -102,7 +113,21 @@
 
 	{% endif %}
 
-	<div class="box shadow-sm  rounded bg-white mb-3">
+	{% if is_granted('ROLE_VENDEUR') %}
+
+	{% if app.user.endRegister == null %}
+
+	<div class="alert alertflash">
+		<p>Veuillez completter votre profil avant de vendre vos prestations il s'agit de:</p>
+		<p>1 - Vos coordonnées <br> 2 - Autres infos </p>
+	</div>
+
+	{% endif %}
+
+	{% endif %}
+
+
+	<div class="box shadow-sm  rounded bg-white">
 		<div class="box-title border-bottom p-3">
 			<h6 class="m-0 h6">Paramètres {{ is_granted('ROLE_VENDEUR') ? 'de vente' : '' }}</h6>
 		</div>
@@ -110,17 +135,30 @@
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
 
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
-						href="{{ path('user_profil') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}</a>
+					<a class="dropdown-item py-2 tache-terminer {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
+						href="{{ path('user_profil') }}"><i class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon
+						profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
+						<i class="text-muted fa fa-check-circle float-right"></i>
+					</a>
 
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}" href="{{ path('user_categorie') }}"><i class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Autres infos</a>
+					{% if is_granted('ROLE_VENDEUR') %}
 
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
-						href="{{ path('user_coordonnees') }}"><i
-							class="text-muted fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Mes coordonnées</a>
+					<a class="dropdown-item py-2 {{ app.user.statut ? 'tache-terminer' : 'tache-encours' }} {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
+						href="{{ path('user_coordonnees') }}"><i class="text-muted fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Mes
+						coordonnées
+						<i class="text-muted fa fa-check-circle float-right"></i>
+					</a>
+
+					<a class="dropdown-item py-2 {{ app.user.lieuPrestation ? 'tache-terminer' : 'tache-encours' }} {{ app.user.statut ? '' : 'disabled' }} {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}"
+						href="{{ path('user_categorie') }}"><i
+							class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Autres infos
+						<i class="text-muted fa fa-check-circle float-right"></i>
+					</a>
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
 						href="{{ path('edit_password') }}"><i class="text-muted fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
+
+					{% endif %}
 				</div>
 			</div>
 		</div>

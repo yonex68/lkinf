@@ -46,6 +46,7 @@ class RegistrationFormType extends AbstractType
                 'choices'  => [
                     'Vendre des prestations'    =>  'Vendeur',
                     'Acheter des prestations' =>  'Client',
+                    'Le deux' =>  'Vendeur',
                 ],
                 'expanded' => true,
                 'multiple' => false,

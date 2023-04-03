@@ -20,7 +20,7 @@
 <div class="">
 	<div class="box shadow-sm rounded bg-white mb-3">
 		<div class="box-title p-3 text-left bg-dark rounded">
-			<h4 class="mb-0 h5 pl-2">
+			<h4 class="mb-0 h5">
 				Mon profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
 			</h4>
 		</div>
@@ -45,7 +45,7 @@
 						moyenne.
 					</p>
 					{% endif %}
-					<div>
+					<div class="py-2">
 						{% if app.user.avatar %}
 						<img class="img-fluid rounded-circle"
 							src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}" alt='' />
@@ -57,34 +57,32 @@
 
 						{% endif %}
 					</div>
-				</div>
-				<div class="col-sm-6">
-					<strong>Photo de couverture</strong>
-					{% if is_granted('ROLE_VENDEUR') %}
-					<p>
-						Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
-						démarquer.
-					</p>
-					{% endif %}
-					<div>
-						{% if app.user.couverture %}
-						<img class="img-fluid"
-							src="{{ vich_uploader_asset(app.user, 'couvertureFile') | imagine_filter('rectangle_avatar') }}" alt='' />
-
-						{% else %}
-
-						<img class="img-fluid"
-							src="{{ asset('img/Logo.png') | imagine_filter('rectangle_avatar') }}" alt='' />
-
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm-6">
 					<div class="align-items-top job-item-header pb-2">
 						<span class="text-truncate text-muted">Email</span>
 						<h6 class="mb-0">{{ app.user.email }}</h6>
 					</div>
 				</div>
+				{% if is_granted('ROLE_VENDEUR') %}
+				<div class="col-sm-6">
+					<strong>Photo de couverture</strong>
+					<p>
+						Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
+						démarquer.
+					</p>
+					<div class="py-2">
+						{% if app.user.couverture %}
+
+						<img class="img-fluid rounded" src="{{ vich_uploader_asset(app.user, 'couvertureFile') | imagine_filter('rectangle_avatar') }}" alt='' />
+
+						{% else %}
+
+						<img class="img-fluid"
+							src="{{ asset('img/Logo.png') }}" alt='' />
+
+						{% endif %}
+					</div>
+				</div>
+				{% endif %}
 			</div>
 
 			<div class="form-group py-3">

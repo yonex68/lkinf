@@ -2,20 +2,25 @@
 
 {% block title %}Traitement...{% endblock %}
 
-{% block titre %}Veuillez patienter...{% endblock %}
-
-{% block text %}Abonnement en cours de validation...{% endblock %}
-
 {% block body %}
 
-<section class="container">
-  <div class="row my-5">
-    <div class="col-12">
-      <div class="alert alertflash shadow-sm text-center border-light">
-        <p class="text-center text-success">
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Traitement...
-        </p>
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 mx-auto">
+        <div class="card">
+          <div class="card-body text-center">
+            <div>
+              <h6 class="text-center py-3 text-light">
+                Veuillez patienter {{ app.user.nom }} {{ app.user.prenom }}
+              </h6>
+              <p class="text-muted m-0">Traitement...</p>
+              <p class="text-center text-success">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -57,5 +62,3 @@
 
 </script>
 {% endblock %}
-
-{% block footer %}{% endblock %}

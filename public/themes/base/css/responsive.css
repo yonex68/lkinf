@@ -60,23 +60,19 @@
    }
 
    #bannerCarouselIndicators {
-      height: 60vh !important;
+      height: 100% !important;
    }
 
    .carousel-inner {
-      height: 60vh !important;
+      height: 30vh !important;
+   }
+
+   .carousel-indicators {
+      display: none !important;
    }
 
    #bannerCarouselIndicators .carousel-inner .carousel-item {
-      background-size: cover;
-      height: 400px;
-      padding: 50% 0 0;
-   }
-
-   #bannerCarouselIndicators .carousel-inner .carousel-caption {
-      width: 100% !important;
-      padding-left: 10px;
-      padding-top: 15%;
+      padding: 0;
    }
 
    #bannerCarouselIndicators .carousel-inner .carousel-caption h5 {
@@ -85,10 +81,34 @@
       margin-bottom: 30px;
       margin-top: 25%;
    }
-   .about-section{
-      padding: 15px!important;
+
+   .about-section {
+      padding: 15px !important;
    }
+
    .view_slider h3 {
       padding-top: 40px;
+   }
+
+   .view_slider h3 {
+      padding-top: 20px !important;
+   }
+
+   h2, h3 {
+      font-size: 1.5em !important;
+   }
+
+   h4, h5, h6 {
+      font-size: 1em !important;
+   }
+
+   body.responsive {
+      background: #1a1b21!important;
+   }
+   .auth-bloc {
+      width: 100%;
+      margin: auto;
+      padding: 20px;
+      background-color: transparent;
    }
 }

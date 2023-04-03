@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Error;
 
 #[Route('/abonnements')]
 class StripeAbonnementController extends AbstractController
@@ -42,7 +43,7 @@ class StripeAbonnementController extends AbstractController
 
          $this->addFlash('warning', 'Vous avez déjà un abonnement actif!');
 
-         return $this->redirectToRoute('user_abonnement');
+         return $this->redirectToRoute('vendeur_abonnement');
       }
 
       $stripe = $stripeRepository->findAll();
@@ -69,6 +70,8 @@ class StripeAbonnementController extends AbstractController
 
          $abonnement = new Abonnement();
 
+         $abonnement->setIsActive(true);
+         $abonnement->setIsCanceled(false);
          $abonnement->setUser($user);
          $abonnement->setStripe($stripeAbonnement);
          $abonnement->setStatut(true);
@@ -110,6 +113,8 @@ class StripeAbonnementController extends AbstractController
    #[Route('/{priceKey}', name: 'stripe_abonnement_checkout', methods: ['POST'])]
    public function Checkout($priceKey, StripeRepository $abonnementRepo): Response
    {
+      $user = $this->getUser();
+
       $stripeAbonnement = $abonnementRepo->findOneBy(['stripeKey' => $priceKey]);
 
       \Stripe\Stripe::setApiKey($this->privateKey);
@@ -119,6 +124,7 @@ class StripeAbonnementController extends AbstractController
       $checkout_session = \Stripe\Checkout\Session::create([
          'success_url' => $websiteDomaine . '/success/' . $stripeAbonnement->getStripeKey(),
          'cancel_url' => $websiteDomaine . '/cancel',
+         'allow_promotion_codes' => true,
          'payment_method_types' => ['card'],
          'mode' => 'subscription',
          'line_items' => [[
@@ -126,10 +132,11 @@ class StripeAbonnementController extends AbstractController
             // For metered billing, do not pass quantity
             'quantity' => 1,
          ]],
+         "customer_email" => $user->getEmail()
       ]);
 
-      dd($checkout_session);
-      
+      //dd($checkout_session);
+
       return $this->render('abonnements/checkout.html.twig', [
          'checkout_session_id' => $checkout_session['id'],
       ]);
@@ -171,7 +178,7 @@ class StripeAbonnementController extends AbstractController
       // This is a public sample test API key.
       // Don’t submit any personally identifiable information in requests made with this key.
       // Sign in to see your own test API key embedded in code samples.
-      \Stripe\Stripe::setApiKey('sk_test_VePHdqKTYQjKNInc7u56JBrQ');
+      \Stripe\Stripe::setApiKey($this->privateKey);
 
       // Replace this endpoint secret with your endpoint's unique secret
       // If you are testing with the CLI, find the secret by running 'stripe listen'

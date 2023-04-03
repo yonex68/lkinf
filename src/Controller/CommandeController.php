@@ -8,6 +8,7 @@ use App\Entity\CommandeMessage;
 use App\Entity\Message;
 use App\Entity\Portefeuille;
 use App\Entity\Rapport;
+use App\Entity\Remboursement;
 use App\Form\AvisType;
 use App\Form\CommandeMessageType;
 use App\Form\RapportType;
@@ -221,8 +222,8 @@ class CommandeController extends AbstractController
             'rapportForm' => $rapportForm->createView(),
             'usercommandes' => $usercommandes,
             'userserviceAvis' => $avisRepository->findOneBy([
-                'client' => $user, 
-                'vendeur' => $commande->getMicroservice()->getVendeur(), 
+                'client' => $user,
+                'vendeur' => $commande->getMicroservice()->getVendeur(),
                 'microservice' => $commande->getMicroservice()
             ]),
             'messages' => $messages,
@@ -320,6 +321,7 @@ class CommandeController extends AbstractController
                 'payment_method_types'  =>  ['card']
             ]);
             // Traitement du formulaire Stripe
+            //dd($intent);
 
             if ($request->getMethod() === "POST") {
 
@@ -343,8 +345,8 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/save-commande/{slug}/{offre}', name: 'save_commande')]
-    public function save(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository): Response
+    #[Route('/save-commande/{slug}/{offre}/{payment_intent}', name: 'save_commande')]
+    public function save(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
@@ -358,7 +360,7 @@ class CommandeController extends AbstractController
             $montant = $microservice->getPrixBeatmaking();
         } elseif ($offre == 'composition') {
             $montant = $microservice->getPrixComposition();
-        }else {
+        } else {
             foreach ($microservice->getServiceOptions() as $option) {
                 $montant += $option->getMontant();
             }
@@ -366,6 +368,7 @@ class CommandeController extends AbstractController
 
         $commande = new Commande();
         $commande->setMicroservice($microservice);
+        $commande->setPaymentIntent($payment_intent);
         $commande->setClient($this->getUser());
         $commande->setVendeur($microservice->getVendeur());
         $commande->setDestinataire($microservice->getVendeur());
@@ -451,6 +454,31 @@ class CommandeController extends AbstractController
 
         if ($this->isCsrfTokenValid('annuler' . $commande->getId(), $request->request->get('_token'))) {
 
+            /** Annulation de la commande remboursement */
+            // Instanciation Stripe
+            \Stripe\Stripe::setApiKey($this->privateKey);
+
+            try {
+                $refound = \Stripe\Refund::create([
+                    "payment_intent" => $commande->getPaymentIntent(),
+                    "reason" => "requested_by_customer",
+                    //"receipt_number" => "4242 4242 4242 4242",
+                    //"source_transfer_reversal" => null,
+                    //"status" => "succeeded",
+                ]);
+            } catch (\Throwable $th) {
+                dd($th->getMessage());
+            }
+
+            $remboursement = new Remboursement();
+            $remboursement->setUser($this->getUser());
+            $remboursement->setCommande($commande);
+            $remboursement->setMontant($commande->getMontant());
+            $remboursement->setMotif("Commande annulée");
+            $remboursement->setStatut("Annuler");
+            $entityManager->persist($remboursement);
+            $entityManager->flush();
+
             $portefeuille = $commande->getVendeur()->getPortefeuille();
 
             if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
@@ -468,7 +496,6 @@ class CommandeController extends AbstractController
             $commande->setDeliver(false);
             $commande->setValidate(false);
             $commande->setCancelAt(new \DateTimeImmutable());
-
             $entityManager->flush();
         }
 
@@ -492,7 +519,7 @@ class CommandeController extends AbstractController
 
         $options = $microservice->getServiceOptions();
         $totalMontant = 0;
-        
+
         foreach ($options as $option) {
             $totalMontant += $option->getMontant();
         }
@@ -552,6 +579,7 @@ class CommandeController extends AbstractController
                 'payment_method_types'  =>  ['card']
             ]);
             // Traitement du formulaire Stripe
+            //dd($intent['id']);
 
             if ($request->getMethod() === "POST") {
 
@@ -567,6 +595,7 @@ class CommandeController extends AbstractController
         return $this->render('commande/reservation.html.twig', [
             'intentSecret'    =>  $intent['client_secret'],
             'intent'    => $intent,
+            'intentId'    => $intent['id'],
 
             'microservice' => $microservice,
             'type_offre' => 'reservation',

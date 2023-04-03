@@ -32,7 +32,7 @@ Version: 1.0
 @import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600;700;800;900&display=swap');
 
 /* Body */
- body {
+ body.bg {
      color: #222325;
      font-size: 13px;
      font-family: 'Muli', sans-serif;

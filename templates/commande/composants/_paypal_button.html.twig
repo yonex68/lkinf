@@ -32,7 +32,7 @@
 					</div>`;
 					// Or go to another URL:  
 					//actions.redirect('');
-					document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre}) }}"
+					document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre, payment_intent: intentId}) }}"
 				});
 			}
 		}).render('#paypal-button-container');

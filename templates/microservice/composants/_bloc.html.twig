@@ -1,4 +1,4 @@
-<div class="bg-white shadow-sm rounded mb-3 w-100" id="microservice-{{ microservice.id }}">
+<div class="bg-white shadow-sm rounded text-muted mb-3 w-100" id="microservice-{{ microservice.id }}">
 	<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
 		{% if microservice.medias|length > 0 %}
 
@@ -64,7 +64,7 @@
 
 				{% include "microservice/composants/_favoris_btn.html.twig" %}
 
-				<div class="price small text-capitalize">
+				<div class="price small text-capitalize text-muted">
 					A partir de
 					<strong>{{ microservice.prixMastering ~ currency }}</strong>
 				</div>

@@ -7,11 +7,11 @@
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search"
 			style="width: 40%;margin-right: 0!important;" action="{{ path('microservices') }}" method="get">
-			<div class="input-group w-100 rounded bg-dark">
-				<input type="text" name="q" class="form-control bg-dark border-0 shadow-none small" placeholder="Je cherche..."
+			<div class="input-group w-100 rounded bg-white"> <!-- radius -->
+				<input type="text" name="q" class="form-control bg-transparent border-0 shadow-none small" placeholder="Je cherche..."
 					aria-label="Search" aria-describedby="basic-addon2">
 				<div class="input-group-append rounded">
-					<button class="btn btn-success rounded" type="submit">
+					<button class="btn rounded bg-transparent text-dark" type="submit">
 						<i class="fa fa-search fa-sm"></i>
 					</button>
 				</div>
@@ -131,12 +131,14 @@
 						<div class="dropdown-item-icon">
 							<i class="fa fa-dashboard"></i>
 						</div>
-						Tableau de bord admin
+						Administration
 					</a>
 
 					{% endif %}
 
 					{% if is_granted('ROLE_VENDEUR') %}
+
+					{% if app.user.endRegister == true %}
 
 					<a class="dropdown-item" href="{{ path('vendeur_dashboard') }}">
 						<div class="dropdown-item-icon">
@@ -152,7 +154,7 @@
 						Mes services
 					</a>
 
-					<a class="dropdown-item" href="{{ path('vendeur_commandes_index') }}" target="_blank">
+					<a class="dropdown-item" href="{{ path('vendeur_commandes_index') }}">
 						<div class="dropdown-item-icon">
 							<i class="fa fa-cart-plus"></i>
 						</div>
@@ -161,31 +163,33 @@
 
 					{% endif %}
 
-					<a class="dropdown-item" href="{{ path('vendeur_achats_index') }}" target="_blank">
+					{% endif %}
+
+					<a class="dropdown-item" href="{{ path('vendeur_achats_index') }}">
 						<div class="dropdown-item-icon">
 							<i class="fa fa-opencart"></i>
 						</div>
-						Mes commandes
+						Mes achats
 					</a>
 
 					<a class="dropdown-item" href="{{ path('favoris_index') }}">
 						<div class="dropdown-item-icon">
 							<i class="fa fa-heart"></i>
 						</div>
-						Service Favoris
+						Favoris
 					</a>
 
 					<a class="dropdown-item" href="{{ path('suivis_index') }}">
 						<div class="dropdown-item-icon">
 							<i class="fa fa-plus"></i>
 						</div>
-						Suivi
+						Suivis
 					</a>
 
 					{% if is_granted('ROLE_CLIENT') %}
 
 					<a class="dropdown-item" href="{{ path('app_devenir_vendeur') }}">
-						<button class="btn rounded-btn btn-outline-success w-100">
+						<button class="btn rounded-btn btn-success w-100" style="color: white!important;">
 							<i class="fa fa-user"></i>
 							Devenir vendeur
 						</button>

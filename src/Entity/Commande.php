@@ -83,11 +83,18 @@ class Commande
     #[ORM\ManyToMany(targetEntity: ServiceOption::class, inversedBy: 'commandes')]
     private Collection $serviceOptions;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $payment_intent = null;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Remboursement::class)]
+    private Collection $remboursements;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->commandeMessages = new ArrayCollection();
         $this->serviceOptions = new ArrayCollection();
+        $this->remboursements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -391,6 +398,48 @@ class Commande
     public function removeServiceOption(ServiceOption $serviceOption): self
     {
         $this->serviceOptions->removeElement($serviceOption);
+
+        return $this;
+    }
+
+    public function getPaymentIntent(): ?string
+    {
+        return $this->payment_intent;
+    }
+
+    public function setPaymentIntent(?string $payment_intent): self
+    {
+        $this->payment_intent = $payment_intent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Remboursement>
+     */
+    public function getRemboursements(): Collection
+    {
+        return $this->remboursements;
+    }
+
+    public function addRemboursement(Remboursement $remboursement): self
+    {
+        if (!$this->remboursements->contains($remboursement)) {
+            $this->remboursements->add($remboursement);
+            $remboursement->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRemboursement(Remboursement $remboursement): self
+    {
+        if ($this->remboursements->removeElement($remboursement)) {
+            // set the owning side to null (unless already changed)
+            if ($remboursement->getCommande() === $this) {
+                $remboursement->setCommande(null);
+            }
+        }
 
         return $this;
     }

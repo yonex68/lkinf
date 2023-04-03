@@ -28,6 +28,12 @@ class Abonnement
     #[ORM\Column(type: 'boolean')]
     private $statut;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isActive = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isCanceled = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +71,30 @@ class Abonnement
     public function setStatut(bool $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function isIsCanceled(): ?bool
+    {
+        return $this->isCanceled;
+    }
+
+    public function setIsCanceled(?bool $isCanceled): self
+    {
+        $this->isCanceled = $isCanceled;
 
         return $this;
     }

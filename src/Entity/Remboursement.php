@@ -30,17 +30,11 @@ class Remboursement
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nomsurCarte = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $numeroCarte = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateExpiration = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $reponse = null;
+
+    #[ORM\ManyToOne(inversedBy: 'remboursements')]
+    private ?Commande $commande = null;
 
     public function getId(): ?int
     {
@@ -94,43 +88,7 @@ class Remboursement
 
         return $this;
     }
-
-    public function getNomsurCarte(): ?string
-    {
-        return $this->nomsurCarte;
-    }
-
-    public function setNomsurCarte(string $nomsurCarte): self
-    {
-        $this->nomsurCarte = $nomsurCarte;
-
-        return $this;
-    }
-
-    public function getNumeroCarte(): ?string
-    {
-        return $this->numeroCarte;
-    }
-
-    public function setNumeroCarte(string $numeroCarte): self
-    {
-        $this->numeroCarte = $numeroCarte;
-
-        return $this;
-    }
-
-    public function getDateExpiration(): ?\DateTimeInterface
-    {
-        return $this->dateExpiration;
-    }
-
-    public function setDateExpiration(\DateTimeInterface $dateExpiration): self
-    {
-        $this->dateExpiration = $dateExpiration;
-
-        return $this;
-    }
-
+    
     public function getReponse(): ?string
     {
         return $this->reponse;
@@ -139,6 +97,18 @@ class Remboursement
     public function setReponse(?string $reponse): self
     {
         $this->reponse = $reponse;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
 
         return $this;
     }
