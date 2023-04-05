@@ -56,11 +56,7 @@ class RealisationType extends AbstractType
             ->add('file', TextType::class, [
                 'label' => 'Coordonnées du fichier',
                 'help' => 'Exemple: ID Youtube, Vimeo, instagram....',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ])
-                ]
+                'required' => false
             ])
             ->add('link', TextType::class, [
                 'label' => 'Lien vers la réalisation',

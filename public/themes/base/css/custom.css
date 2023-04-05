@@ -51,6 +51,10 @@ input, select, textarea, .select2-container--default .select2-selection--single,
    color: white!important;
 }
 
+.dropdown-menu .dropdown-item:hover i {
+   color: white!important;
+}
+
 .bg-transparent {
    background-color: transparent !important;
 }
@@ -248,12 +252,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tache-terminer i {
-   color: #43aa8b !important;
+   color: #080679 !important;
    font-weight: bold !important;
 }
 
 .tache-terminer.active i {
-   color: #23242a !important;
+   color: #fff !important;
    font-weight: bold !important;
 }
 
@@ -515,4 +519,13 @@ body.responsive {
 }
 .text-blue{
    color: #080679!important;
+}
+.realisation-icon{
+   color: white;
+   width: 50px;
+   height: 50px;
+   line-height: 50px;
+   text-align: center;
+   border-radius: 10px;
+   background-color: #080679;
 }

@@ -9,7 +9,7 @@
 
 <div class="card shadow-sm w-100 mb-4">
     <div class="card-body">
-        <div class="row d-block d-sm-flex align-items-center">
+        <div class="row d-block d-sm-flex align-items-center mb-3">
             <div class="col-sm-6">
                 <h2 class="h5 mb-3">Mes réalisations</h2>
             </div>
@@ -19,33 +19,27 @@
         </div>
 
         {% for realisation in realisations %}
-        <div class="card mb-2">
-            <div class="card-body p-1">
-                <div class="row d-block d-sm-flex align-items-center">
-                    <div class="media p-2 shadow-sm w-100 mb-3">
-                        <div class="media-body">
-                            <small class="text-muted d-block-py-2">{{ realisation.created|ago(locale='fr') }}</small>
+        <div class="card mb-3">
+            <div class="card-body">
+                <small class="text-muted d-block-py-2">{{ realisation.created|ago(locale='fr') }}</small>
 
-                            <a href="{{ path('app_vendeur_realisation_show', {id: realisation.id}) }}">
-                                <strong class="d-block text-light py-3 mb-1 h5">{{ realisation.name }}</strong>
-                            </a>
-                            <p>#{{ realisation.type }} {{ realisation.plateForme }}</p>
-    
-                            <div class="content-info mb-3 text-left">
-    
-                                <a href="{{ realisation.link }}" target="_blank" class="btn btn-outline-secondary">Details</a>
-    
-                                {% if is_granted('realisation_edit', realisation) %}
-                                <a href="{{ path('app_vendeur_realisation_edit', {'id': realisation.id}) }}"
-                                    class="btn btn-outline-secondary">Modifier</a>
-    
-                                {% include "vendeur/realisations/_delete_form.html.twig" %}
-    
-                                {% endif %}
-    
-                            </div>
-                        </div>
-                    </div>
+                <a href="{{ path('app_vendeur_realisation_show', {id: realisation.id}) }}" target="_blank">
+                    <strong class="d-block text-dark py-3 mb-1 h6">{{ realisation.name }}</strong>
+                </a>
+                <p>#{{ realisation.type }} {{ realisation.plateForme }}</p>
+
+                <div class="content-info text-left">
+
+                    <a href="{{ realisation.link }}" target="_blank" class="btn btn-outline-secondary">Details</a>
+
+                    {% if is_granted('realisation_edit', realisation) %}
+                    <a href="{{ path('app_vendeur_realisation_edit', {'id': realisation.id}) }}"
+                        class="btn btn-outline-secondary">Modifier</a>
+
+                    {% include "vendeur/realisations/_delete_form.html.twig" %}
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@
 <div class="">
 	<div class="box shadow-sm rounded bg-white mb-3">
 		<div class="box-title p-3 text-left bg-dark rounded">
-			<h4 class="mb-0 h5">
+			<h4 class="mb-0 h6 text-light">
 				Mon profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
 			</h4>
 		</div>
@@ -76,8 +76,7 @@
 
 						{% else %}
 
-						<img class="img-fluid"
-							src="{{ asset('img/Logo.png') }}" alt='' />
+						<p>Aucune image de couverture..</p>
 
 						{% endif %}
 					</div>

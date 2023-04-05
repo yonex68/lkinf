@@ -95,13 +95,13 @@
 				<!-- Réalisations liée à ce service -->
 				{% include "microservice/composants/_realisations.html.twig" %}
 
-				<!-- Avis -->
-				{% include "microservice/composants/_avis.html.twig" %}
-
 				<!-- Personaliser le service et commander -->
 				{% if microservice.categorie.slug == 'Ingenieur-son' %}{% else %}
 				{% include "microservice/composants/_custom_form.html.twig" %}
 				{% endif %}
+
+				<!-- Avis -->
+				{% include "microservice/composants/_avis.html.twig" %}
 
 			</div>
 			<div class="col-sm-4 right">
