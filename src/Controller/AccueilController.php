@@ -26,7 +26,7 @@ class AccueilController extends AbstractController
             'method' => 'GET',
         ]);
 
-        $microservices = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 6);
+        $microservices = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 8);
         $vendeurs = $userRepository->findBy(['compte' => 'vendeur'], ['created' => 'DESC'], 6);
 
         return $this->render('accueil/index.html.twig', [

@@ -841,7 +841,7 @@ p.help-block li {
      font-size: 15px;
      color: #62646a;
      position: relative;
-     padding-left: 30px;
+     padding-left: 0;
 }
  .about-section ul li:last-child {
      padding-bottom: 0px;

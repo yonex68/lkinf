@@ -529,3 +529,6 @@ body.responsive {
    border-radius: 10px;
    background-color: #080679;
 }
+.bg-lightgray{
+   background: #f0f5f7;
+}
