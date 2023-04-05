@@ -5,8 +5,8 @@
 	{% if app.user.endRegister == true %}
 
 	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3">
-			<h6 class="m-0 h6">Tableau de Bord</h6>
+		<div class="box-title border-bottom p-3 bg-dark">
+			<h6 class="m-0 h6 text-light">Tableau de Bord</h6>
 		</div>
 		<div class="box-body">
 			<div class="bg-white rounded shadow-sm">
@@ -14,7 +14,7 @@
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_dashboard' ? 'active' : '' }}"
 						href="{{ path('vendeur_dashboard') }}">
-						<i class="text-muted fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord
+						<i class="text-muted fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Accueil
 					</a>
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_emplois_temps_index' ? 'active' : '' }}"
@@ -56,8 +56,8 @@
 	{% else %}
 
 	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3">
-			<h6 class="m-0 h6">Tableau de Bord</h6>
+		<div class="box-title border-bottom p-3 bg-dark">
+			<h6 class="m-0 h6 text-light">Tableau de Bord</h6>
 		</div>
 		<div class="box-body">
 			<div class="bg-white rounded shadow-sm">
@@ -87,8 +87,8 @@
 	{% if app.user.endRegister == true %}
 
 	<div class="box shadow-sm  rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3">
-			<h6 class="m-0 h6">Mon portefeuille</h6>
+		<div class="box-title border-bottom p-3 bg-dark">
+			<h6 class="m-0 h6 text-light">Mon portefeuille</h6>
 		</div>
 		<div class="box-body">
 			<div class="bg-white rounded shadow-sm">
@@ -128,8 +128,8 @@
 
 
 	<div class="box shadow-sm  rounded bg-white">
-		<div class="box-title border-bottom p-3">
-			<h6 class="m-0 h6">Paramètres {{ is_granted('ROLE_VENDEUR') ? 'de vente' : '' }}</h6>
+		<div class="box-title border-bottom p-3 bg-dark">
+			<h6 class="m-0 h6 text-light">Paramètres {{ is_granted('ROLE_VENDEUR') ? 'de vente' : '' }}</h6>
 		</div>
 		<div class="box-body">
 			<div class="bg-white rounded shadow-sm">

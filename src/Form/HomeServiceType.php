@@ -21,7 +21,7 @@ class HomeServiceType extends AbstractType
                 'required'  =>  false,
                 'attr'  =>  [
                     'placeholder'   =>  'De quoi avez-vous besoin?',
-                    'class' => 'form-control border-0 form-control-lg shadow-sm',
+                    'class' => 'form-control border-0 form-control-lg border-0 bg-transparent',
                 ]
             ])
             /*->add('categories', EntityType::class, [

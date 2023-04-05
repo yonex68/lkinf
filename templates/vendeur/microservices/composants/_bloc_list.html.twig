@@ -1,5 +1,5 @@
-<div class="card mb-2 shadow-sm">
-	<div class="card-body p-2">
+<div class="card mb-2 shadow-none">
+	<div class="card-body p-0">
 		<div class="row align-items-center">
 			<div class="col-4">
 				{% if microservice.medias|length > 0 %}
@@ -34,13 +34,13 @@
 
 				{% endif %}
 
-				<a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="text-light d-block py-1">
-					<strong class="d-block text-light mb-1">{{ microservice.name }}</strong>
+				<a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="text-dark d-block py-1">
+					<strong class="d-block text-dark mb-1">{{ microservice.name }}</strong>
 				</a>
 
 				<div class="">
 					<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
-						class="badge badge-dark border badge-pill" style="font-size: .9em!important;">
+						class="badge badge-blue border badge-pill" style="font-size: .9em!important;">
 						#{{ microservice.categorie.name }}
 					</a>
 

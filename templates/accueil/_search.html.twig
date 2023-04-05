@@ -1,17 +1,9 @@
 {{ form_start(form, {attr: {class: 'form-noborder'}}) }}
 <div class="form-row">
-   <!--<div class="col-lg-3 col-md-3 col-sm-12 form-group">
-      <div class="location-dropdown">
-         <i class="icofont-location-arrow"></i>
-         <div name="categories" class="custom-select form-control border-0 shadow-sm form-control-lg">
-             form_widget(form.categories) }}
-         </div>
-      </div>
-   </div>-->
-   <div class="col-lg-9 col-md-9 col-sm-12 form-group">
-      <div class="input-group bg-dark border border-light rounded">
+   <div class="col-lg-7 col-md-9 col-sm-12 form-group">
+      <div class="input-group bg-white border border-light rounded">
          <span class="input-group-text border-0 bg-transparent" id="basic-addon1">
-            <i class="fa fa-map-marker text-light"></i>
+            <i class="fa fa-map-marker text-blue"></i>
          </span>
          {{ form_widget(form.q) }}
       </div>
@@ -23,3 +15,12 @@
    </div>
 </div>
 {{ form_end(form) }}
+
+<div class="popular">
+   <span class="text-body-2">Populaire</span>
+   <ul>
+      {% for categorie in categories() %}
+      <li><a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}" class="text-body-2">#{{ categorie.name }}</a></li>
+      {% endfor %}
+   </ul>
+</div>

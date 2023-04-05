@@ -454,8 +454,7 @@ class CommandeController extends AbstractController
 
         if ($this->isCsrfTokenValid('annuler' . $commande->getId(), $request->request->get('_token'))) {
 
-            /** Annulation de la commande remboursement */
-            // Instanciation Stripe
+            /** Annulation de la commande entraine un remboursement Stripe */
             \Stripe\Stripe::setApiKey($this->privateKey);
 
             try {
@@ -471,10 +470,10 @@ class CommandeController extends AbstractController
             }
 
             $remboursement = new Remboursement();
-            $remboursement->setUser($this->getUser());
+            $remboursement->setUser($commande->getClient());
             $remboursement->setCommande($commande);
             $remboursement->setMontant($commande->getMontant());
-            $remboursement->setMotif("Commande annulée");
+            $remboursement->setMotif("Commande annulée par le prestataire");
             $remboursement->setStatut("Annuler");
             $entityManager->persist($remboursement);
             $entityManager->flush();
@@ -484,6 +483,7 @@ class CommandeController extends AbstractController
             if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
 
                 $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
+
             } else {
 
                 $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
@@ -499,7 +499,7 @@ class CommandeController extends AbstractController
             $entityManager->flush();
         }
 
-        $this->addFlash('success', 'Commande annulée!');
+        $this->addFlash('success', 'Commande annulée avec succès!');
 
         return $this->redirectToRoute('commande_details', [
             'id' => $commande->getId(),

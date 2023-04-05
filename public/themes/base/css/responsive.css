@@ -111,4 +111,7 @@
       padding: 20px;
       background-color: transparent;
    }
+   .search{
+      display: none!important;
+   }
 }

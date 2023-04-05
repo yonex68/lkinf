@@ -19,51 +19,12 @@ body {
 .box, .card, table, .navbar-expand-lg{
    background: #23242a!important;
 }*/
-.third-menu {
-   border-color: #1a1b21 !important;
-   background: #1a1b21 !important;
-}
-
-.box-title.border-bottom, .card,
-.border, .dropdown-divider, .osahan-chat .border-right {
-   border-color: #23242a !important;
-}
-
-.border-light {
-   border-color: #fff !important;
-   border-width: 2px !important;
-}
-
-.profile-card .user-profile-image label img,
-.box, .box .box-body .bg-white, .box .box-title,
-.dropdown-menu, .bg-light, .sidebar-page-right,
-.card, .pagination .page-item .page-link,
-.dropdown-menu .dropdown-item, .bg-white,
-.list-group, .list-group-item,
-.market-wrapper .categories-list li, .message-box,
-.inner-wrapper, .select2-results__option[aria-selected], .select2-search--dropdown,
-.btn-icon, .freelancer, .freelancer-footer, .slick-arrow, .main-page .right .tab-content, .nav.nav-tabs,
-.main-page .right .nav-tabs li a, select.form-control option {
-   background: #23242a !important;
-   border-color: #23242a !important;
-   color: white !important;
-}
 
 input[type="checkbox"] {
    background-color: transparent !important;
 }
 
-.modal-content {
-   background: rgba(35, 36, 42, .7) !important;
-}
-
-.main-page .right .nav-tabs li a.active {
-   border-bottom: 3px solid #82a0bc !important;
-}
-
 .btn-icon {
-   background-color: #1a1b21 !important;
-   color: white !important;
    width: 30px !important;
    height: 30px !important;
 }
@@ -71,60 +32,48 @@ input[type="checkbox"] {
 .inner-wrapper .footer {
    border: 0 !important;
 }
-
-.border.border-light {
-   border: 1px solid #888888 !important;
-}
-
 .profile-card .user-profile-image,
 input, select, textarea, .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-   background-color: transparent !important;
-   color: white !important;
+   background-color: white!important;
+   /*color: white !important;*/
 }
 
 .profile-card .user-profile-image .profile-name span a,
 .box .box-body .bg-white .dropdown-menu-show .dropdown-item,
 .dropdown-menu .dropdown-item, .inner-wrapper .seller-name a, ul li span,
 .nav-link, .dropdown button, .text-truncate {
-   color: #a5a5a8 !important;
+   /*color: #a5a5a8 !important;*/
 }
 
 .dropdown-menu .dropdown-item:hover {
-   background-color: #1a1b21 !important;
+   background-color: #080679 !important;
+   color: white!important;
 }
 
 .bg-transparent {
    background-color: transparent !important;
 }
 
-.dropdown-item.active, .dropdown-item:hover {
-   background-color: #1a1b21 !important;
-   color: white !important;
-   ;
-}
-
 footer h2 {
-   color: #a5a5a8 !important;
+   /*color: #a5a5a8 !important;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
    font-family: Grotesk-bold;
-   color: #a5a5a8 !important;
+   /*color: #a5a5a8 !important;*/
 }
 
 /* Navigation */
 .navbar-expand-lg {
    z-index: 900 !important;
-   background: #a5a5a8 !important;
+   background: white !important;
    padding: 0 !important;
-   /*background-color: transparent!important;
-   background-image: linear-gradient(160deg, #FDBAF8 0%, #B0EFEB 100%)!important;*/
 }
 
 .navtop-home {
    z-index: 1000 !important;
-   background: #a5a5a8 !important;
+   background: #fff !important;
    position: absolute !important;
    top: 0;
    right: 0;
@@ -132,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navtop-home .nav-item .nav-link {
-   color: white !important;
+   /*color: white !important;*/
 }
 
 .py-5-home {
@@ -177,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .categorieSection .container h1, .categorieSection .container p {
-   color: white !important;
+   /*color: white !important;*/
 }
 
 .categorieSection {
@@ -191,13 +140,12 @@ h1, h2, h3, h4, h5, h6 {
    left: 0;
    right: 0;
    bottom: 0;
-   background: linear-gradient(transparent, #1a1b21);
+   background: linear-gradient(transparent, #fff);
    z-index: 0;
 }
-
 .bg-degrade {
    background-color: transparent;
-   background-image: linear-gradient(160deg, #1a1b21 0%, #1a1b21 100%);
+   background-image: linear-gradient(160deg, #b1afaf 0%, #b1afaf 100%);
 }
 
 .bg-degrade.home {
@@ -210,7 +158,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .bg-image .container {
    z-index: 2;
-   color: white;
+   /*color: white;*/
    position: inherit;
 }
 
@@ -221,7 +169,7 @@ h1, h2, h3, h4, h5, h6 {
 .count-cart {
    display: inline-block;
    width: 22px;
-   background: #82a0bc;
+   background: #080679;
    color: #fff;
    position: relative;
    top: -10px;
@@ -233,18 +181,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pagination .page-item .page-link.btn-success {
-   background: #82a0bc !important;
-   background: -webkit-linear-gradient(legacy-direction(to right), #82a0bc 0%, #a9a9a9 100%) !important;
-   background: -webkit-gradient(linear, left top, right top, from(#82a0bc), to(#a9a9a9)) !important;
-   background: -webkit-linear-gradient(left, #82a0bc 0%, #a9a9a9 100%) !important;
-   background: -o-linear-gradient(left, #82a0bc 0%, #a9a9a9 100%) !important;
-   background: linear-gradient(to right, #82a0bc 0%, #a9a9a9 100%) !important;
-   border-color: #82a0bc !important;
+   background: #080679 !important;
+   background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
+   background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9)) !important;
+   background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: -o-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: linear-gradient(to right, #080679 0%, #a9a9a9 100%) !important;
+   border-color: #080679 !important;
    border-radius: 20px !important;
+   color: white!important;
 }
-
+#modalLocations .modal-content{
+   background: radial-gradient(black, transparent);
+}
 .bg-siteprimary {
-   background: #82a0bc !important;
+   background: #080679 !important;
 }
 
 .dropdown-item.bg-primary {
@@ -268,7 +219,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .green {
-   color: #82a0bc !important;
+   color: #080679 !important;
    border-width: 3px !important;
 }
 
@@ -364,7 +315,7 @@ h1, h2, h3, h4, h5, h6 {
    left: 0;
    right: 0;
    bottom: 0;
-   background: linear-gradient(transparent, #23242a);
+   background: linear-gradient(transparent, #fff);
    z-index: 0;
 }
 
@@ -386,17 +337,10 @@ h1, h2, h3, h4, h5, h6 {
    margin-top: 0 !important;
 }
 
-.box-title.bg-dark {
-   background: #23242a !important;
-   border-radius: 0 !important;
-   border-bottom-color: #1a1b21 !important;
-}
-
 .avis .nav-pills .nav-item .nav-link {
    font-weight: 500;
    padding: 15px;
    font-size: 1.2em;
-   color: #f8f8f8 !important;
    background-color: tranparent !important;
    margin: 0px;
    border-radius: 0;
@@ -404,7 +348,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .avis .nav-pills .nav-item .nav-link.active {
    background-color: transparent;
-   border-bottom: 2px solid #82a0bc;
+   border-bottom: 2px solid #080679;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
@@ -463,7 +407,6 @@ p {
 .input-group>.input-group-prepend>.input-group-text {
    background: transparent !important;
    border: none !important;
-   color: white !important;
 }
 
 #bannerCarouselIndicators {
@@ -481,7 +424,7 @@ p {
    left: 0;
    right: 0;
    bottom: 0;
-   background: linear-gradient(transparent, #1a1b21);
+   background: linear-gradient(transparent, #fff);
    z-index: 10;
 }
 
@@ -507,16 +450,16 @@ p {
    right: 0;
    bottom: 0;
    left: 0;
-   background: linear-gradient(transparent, #1a1b21);
+   background: linear-gradient(transparent, #fff);
 }
 
 #bannerCarouselIndicators .carousel-inner .carousel-caption h5 {
    color: white !important;
    text-align: left !important;
-   width: 45%;
+   width: 60%;
    font-size: 30px;
    text-transform: uppercase;
-   margin: 5% 0 4%;
+   margin: 3% 0 4%;
    font-weight: bold;
 }
 
@@ -540,7 +483,7 @@ p {
 }
 
 .btn-success:hover {
-   border-color: #82a0bc !important;
+   border-color: #080679 !important;
 }
 
 /** Authenticateur layout **/
@@ -553,8 +496,23 @@ body.responsive {
    position: relative;
    background-attachment: fixed;
 }
+
 .auth-bloc {
    width: 50%;
    z-index: 3;
    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.search {
+   position: relative;
+   top: -200px;
+   margin: auto;
+   z-index: 3;
+}
+.badge-blue{
+   background: #080679!important;
+   color: white!important;
+}
+.text-blue{
+   color: #080679!important;
 }

@@ -2,16 +2,16 @@
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}">
-			<h6 class="text-light font-weight-bold h6 text-uppercase pt-2">{{ appName }}</h6>
+			<h6 class="text-blue font-weight-bold h6 text-uppercase pt-2">{{ appName }}</h6>
 		</a>
 		<!-- Topbar Search -->
-		<form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search"
+		<form class="d-none d-sm-inline-block form-inline border-0 shadow-sm mr-auto my-2 my-md-0 mw-100 navbar-search"
 			style="width: 40%;margin-right: 0!important;" action="{{ path('microservices') }}" method="get">
 			<div class="input-group w-100 rounded bg-white"> <!-- radius -->
-				<input type="text" name="q" class="form-control bg-transparent border-0 shadow-none small" placeholder="Je cherche..."
+				<input type="text" name="q" class="form-control bg-transparent border-0 small" placeholder="Je cherche..."
 					aria-label="Search" aria-describedby="basic-addon2">
 				<div class="input-group-append rounded">
-					<button class="btn rounded bg-transparent text-dark" type="submit">
+					<button class="btn rounded bg-transparent text-blue" type="submit">
 						<i class="fa fa-search fa-sm"></i>
 					</button>
 				</div>
@@ -105,7 +105,7 @@
 					aria-labelledby="navbarDropdownUserImage">
 					<h6 class="dropdown-header d-flex align-items-center">
 						<div class="dropdown-user-details">
-							<div class="dropdown-user-details-name text-light">{{ app.user.nom }}
+							<div class="dropdown-user-details-name text-dark">{{ app.user.nom }}
 								{{ app.user.prenom }}</div>
 							<div class="dropdown-user-details-email">{{ app.user.email }}</div>
 						</div>
@@ -236,7 +236,7 @@
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
-			<span class="fa fa-list p-2 text-light"></span>
+			<span class="fa fa-list p-2 text-dark"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav">
@@ -252,7 +252,7 @@
 		<ul class="navbar-nav align-items-center mx-auto">
 			<li class="nav-item">
 				<a href="{{ path('accueil') }}" class="nav-link">
-					<h6 class="text-light text-uppercase">{{ appName }}</h6>
+					<h6 class="text-blue text-uppercase">{{ appName }}</h6>
 				</a>
 			</li>
 		</ul>
@@ -301,7 +301,7 @@
 					aria-labelledby="navbarDropdownUserImage">
 					<h6 class="dropdown-header d-flex align-items-center">
 						<div class="dropdown-user-details">
-							<div class="dropdown-user-details-name">{{ app.user.nom }}
+							<div class="dropdown-user-details-name text-dark">{{ app.user.nom }}
 								{{ app.user.prenom }}</div>
 							<div class="dropdown-user-details-email">{{ app.user.email }}</div>
 						</div>
