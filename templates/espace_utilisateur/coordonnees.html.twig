@@ -14,12 +14,14 @@
 {% block body %}
 
 <div class="">
-	<div class="card shadow-sm rounded bg-white mb-3">
+	<div class="card bg-light mb-3">
+		<div class="card-header bg-dark">
+			<h4 class="h6 text-light">Mes coordonnées</h4>
+		</div>
 		<div class="card-body">
-			<h4 class="mb-0 h5 pl-2">Mes coordonnées</h4>
 			<div class="row">
-				<div class="col-sm-12 pt-3">
-					<table class="table table-borderless text-muted">
+				<div class="col-sm-12">
+					<table class="table table-borderless">
 						<tbody>
 							<tr>
 								<th>Compte</th>
@@ -59,7 +61,7 @@
 			</div>
 
 			{% if is_granted('ROLE_VENDEUR') %}
-			<div class="text-muted">
+			<div class="text-dark">
 				<h6 class="h6 mb-0 py-2">Coordonnées personnelles</h6>
 				<p>
 					Ces informations servent à éditer les documents de facturation de vos prestations. Celles-ci sont
@@ -69,8 +71,8 @@
 				</p>
 
 				{{ form_start(form) }}
-					{{ form_widget(form) }}
-					<button class="btn btn-dark">Mettre à jour</button>
+				{{ form_widget(form) }}
+				<button class="btn btn-dark">Mettre à jour</button>
 				{{ form_end(form) }}
 			</div>
 			{% endif %}

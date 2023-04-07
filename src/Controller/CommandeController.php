@@ -337,6 +337,7 @@ class CommandeController extends AbstractController
         return $this->render('commande/checkout.html.twig', [
             'intentSecret'    =>  $intent['client_secret'],
             'intent'    => $intent,
+            'intentId'    => $intent['id'],
 
             'microservice' => $microservice,
             'type_offre' => $offre,
@@ -506,8 +507,8 @@ class CommandeController extends AbstractController
         ], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/reservation/{slug}', name: 'commander_microservice_reservation', methods: ['GET', 'POST'])]
-    public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, PaymentService $paymentService): Response
+    #[Route('/reservation/{slug}/{disponibilite}', name: 'commander_microservice_reservation', methods: ['GET', 'POST'])]
+    public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, PaymentService $paymentService, $disponibilite): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
@@ -596,11 +597,48 @@ class CommandeController extends AbstractController
             'intentSecret'    =>  $intent['client_secret'],
             'intent'    => $intent,
             'intentId'    => $intent['id'],
+            'disponibilite'    => $disponibilite,
 
             'microservice' => $microservice,
             'type_offre' => 'reservation',
             'montant' => $totalMontant,
             'clientId' => $sandBoxId,
         ]);
+    }
+
+    #[Route('/save-reservation/{slug}/{offre}/{payment_intent}/{disponibilite}', name: 'save_reservation')]
+    public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent, $disponibilite): Response
+    {
+        $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
+
+        $montant = null;
+
+        foreach ($microservice->getServiceOptions() as $option) {
+            $montant += $option->getMontant();
+        }
+
+        $commande = new Commande();
+        $commande->setMicroservice($microservice);
+        $commande->setDisponibilite($disponibilite);
+        $commande->setPaymentIntent($payment_intent);
+        $commande->setClient($this->getUser());
+        $commande->setVendeur($microservice->getVendeur());
+        $commande->setDestinataire($microservice->getVendeur());
+        $commande->setConfirmationClient(false);
+        $commande->setLu(false);
+        $commande->setStatut('En attente');
+
+        $commande->setMontant($montant);
+        $commande->setOffre($offre);
+        $commande->setValidate(false);
+        $commande->setDeliver(false);
+        $commande->setCancel(false);
+
+        $entityManager->persist($commande);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('commande_success', [
+            'id' => $commande->getId()
+        ], Response::HTTP_SEE_OTHER);
     }
 }

@@ -82,6 +82,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('emploistemps', [$this, 'getVendeurEmploisTemps']),
             new TwigFunction('alertesNonLu', [$this, 'getAlertesNonLu']),
             new TwigFunction('userRemboursements', [$this, 'getUserRemboursements']),
+            new TwigFunction('truncateTitle', [$this, 'truncateTitle']),
         ];
     }
 
@@ -167,5 +168,20 @@ class AppExtension extends AbstractExtension
 
     public function getUserRemboursements($user){
         return $this->remboursementRepository->findBy(['user' => $user, 'statut' => 'En attente'], ['created' => 'DESC']);
+    }
+
+    public function truncateTitle(String $title){
+
+        $array = explode(' ', $title);
+
+        if (count($array) > 4) {
+            $newTitle = "";
+            for ($i=0; $i < 4; $i++) { 
+                $newTitle = $newTitle . ' ' . $array[$i];
+            }
+            return $newTitle;
+        }else {
+            return $title;
+        }
     }
 }

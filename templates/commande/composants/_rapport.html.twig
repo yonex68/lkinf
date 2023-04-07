@@ -1,46 +1,41 @@
 {% if is_granted('microservice_edit', commande.microservice) %}
-
-<div class="card my-4 shadow-sm">
-   <div class="card-header bg-white border-0 pb-0">
-      <h5>Rapport de fin de prestation</h5>
-      <p>
-         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint deserunt minus facilis accusantium doloribus, ex
-         sit, optio nemo dignissimos id laborum nam explicabo reiciendis nostrum omnis quas exercitationem aliquam sed?
-      </p>
-   </div>
-   <div class="card-body p-0">
-
+  <div class="card my-4">
+    <div class="card-header bg-white border-0 pb-0">
+      <h6 class="h6">
+        Rapport de fin de prestation
+      </h6>
+    </div>
+    <div class="card-body p-0">
       {% if commande.deliver == true %}
+        {% if rapport == false %}
+          <p>
+            Pour recevoir les fonds, évrivez votre rapport de fin de prestation
+          </p>
 
-         {% if rapport == false %}
+          <div class="p-3 pt-0">
+            {{ form_start(rapportForm) }}
 
-            <div class="p-3 pt-0">
-               {{ form_start(rapportForm) }}
+            {{ form_widget(rapportForm) }}
 
-               {{ form_widget(rapportForm) }}
-
-               <div class="row">
-                  <div class="col-sm-6">
-                     <button type="submit" class="btn btn-dark btn-block rounded-btn">
-                        <span id="btnFetch" class="w-100"><i class="mdi mdi-send"></i> Envoyer</span>
-                     </button>
-                  </div>
-               </div>
-
-               {{ form_end(rapportForm) }}
+            <div class="row">
+              <div class="col-sm-6 ml-auto">
+                <button type="submit" class="btn btn-dark btn-block">
+                  <span id="btnFetch" class="w-100">
+                    <i class="mdi mdi-send"></i> Envoyer
+                  </span>
+                </button>
+              </div>
             </div>
 
-         {% else %}
-
-            <q class="lead font-italic p-3 bg-light pt-0 d-block rounded">
-               Nous accusons une bonne réception de votre rapport, merci pour votre éventuel collaboration. 
-            </q>
-
-         {% endif %}
-
+            {{ form_end(rapportForm) }}
+          </div>
+        {% else %}
+          <q class="font-italic p-3 bg-light pt-0 d-block rounded">
+            Nous accusons une bonne réception de votre rapport, merci pour votre
+            éventuel collaboration.
+          </q>
+        {% endif %}
       {% endif %}
-
-   </div>
-</div>
-
+    </div>
+  </div>
 {% endif %}

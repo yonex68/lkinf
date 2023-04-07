@@ -123,12 +123,6 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('latitude', HiddenType::class, [
                 'required' => false,
-            ])
-            ->add('agreeLocations', CheckboxType::class, [
-                'mapped' => false,
-                'label' => 'Je souhaite être géolocaliser',
-                'required' => false,
-                'help' => '*Cette case est reserver uniquement pour ceux qui souhaite acheter des prestations'
             ]);
     }
 

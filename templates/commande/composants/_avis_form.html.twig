@@ -2,9 +2,9 @@
 
 {% else %}
 
-<div class="card my-3 shadow-sm">
-   <div class="card-header bg-white">
-      <h3 class="h6">Votre avis sur le service</h3>
+<div class="card my-3">
+   <div class="card-header bg-dark">
+      <h6 class="h6 text-light">Votre avis sur le service</h6>
    </div>
    <div class="card-body">
 
@@ -23,9 +23,11 @@
 
             {{ form_start(avisForm) }}
                {{ form_widget(avisForm) }}
-               <button type="submit" class="btn btn-success btn-rounded btn-block" data-turbo="false">
-                  <span id="btnFetch"><i class="mdi mdi-send"></i> Envoyer</span>
-               </button>
+               <div class="text-right">
+                  <button type="submit" class="btn btn-success btn-rounded" data-turbo="false">
+                     <span id="btnFetch"><i class="mdi mdi-send"></i> Envoyer</span>
+                  </button>
+               </div>
             {{ form_end(avisForm) }}
 
             {% endif %}

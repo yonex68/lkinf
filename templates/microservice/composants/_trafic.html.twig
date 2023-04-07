@@ -38,7 +38,8 @@
       </div>
       <div id="Mixage" class="tab-pane fade">
          <div class="header">
-            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixMixage ~
+            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
+                  microservice.prixMixage ~
                   currency }}</span></h3>
             <p></p>
          </div>
@@ -57,7 +58,8 @@
       </div>
       <div id="Beatmaking" class="tab-pane fade">
          <div class="header">
-            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixBeatmaking ~
+            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
+                  microservice.prixBeatmaking ~
                   currency }}</span></h3>
             <p></p>
          </div>
@@ -77,7 +79,8 @@
       </div>
       <div id="Composition" class="tab-pane fade">
          <div class="header">
-            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{ microservice.prixComposition ~
+            <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
+                  microservice.prixComposition ~
                   currency }}</span></h3>
             <p></p>
          </div>
@@ -99,16 +102,9 @@
          Paiement <strong><i class="fa fa-lock"></i> Sécurisé</strong>
       </p>
    </div>
-   <!-- Ingénieur de son uniquement-->
-
-   {% else %}
-
-   <!-- Planing du vendeur -->
-   {% include "microservice/composants/_vendeur_planning.html.twig" %}
-   
    {% endif %}
 
-   <div class="shadow-sm border rounded bg-white p-0">
+   <div class="border rounded bg-white p-0">
       <div class="profile-card my-4">
          <div class="user-profile-image d-flex shadow-none py-0">
             <label class="profile-pict" for="profile_image">
@@ -125,7 +121,7 @@
                         class="seller-link">{{ microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
                   </span>
                   <div class="seller-level">
-                     <span>{{ microservice.created|ago(locale='fr') }}</span>
+                     <span>{{ microservice.vendeur.compte }} {{ microservice.created|ago(locale='fr') }}</span>
                   </div>
                </div>
             </div>
@@ -163,7 +159,7 @@
 
             <div class="row pt-3" id="packagesTable">
                <div class="col-6">
-                  <a class="btn btn-outline-light btn-block"
+                  <a class="btn btn-outline-dark btn-block"
                      href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter</a>
                </div>
                <div class="col-6">

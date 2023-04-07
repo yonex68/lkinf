@@ -13,41 +13,41 @@
 
 {% block body %}
 
-<div class="">
-	<div class="card shadow-sm rounded bg-white mb-3">
-		<div class="card-body">
-			<h4 class="mb-0 h5 pb-3">Autres informations</h4>
-			{% if is_granted('ROLE_VENDEUR') %}
-			<div class="text-muted">
-				{{ form_start(form) }}
+<div class="card rounded bg-light mb-3">
+	<div class="card-header bg-dark">
+		<h4 class="h6 text-light">Autres informations</h4>
+	</div>
+	<div class="card-body">
+		{% if is_granted('ROLE_VENDEUR') %}
+		<div class="text-dark">
+			{{ form_start(form) }}
 
-				{{ form_row(form.lieuPrestation) }}
+			{{ form_row(form.lieuPrestation) }}
 
-				{{ form_row(form.homeStudio) }}
+			{{ form_row(form.homeStudio) }}
 
-				<div class="row">
-					<div class="col-sm-6">
-						<strong>Photo de couverture</strong>
-						<div class="form-group">
-							{{ form_row(form.couvertureFile) }}
-						</div>
-						{% if is_granted('ROLE_VENDEUR') %}
-						<p>
-							Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
-							démarquer.
-						</p>
-						{% endif %}
+			<div class="row">
+				<div class="col-sm-6">
+					<strong>Photo de couverture</strong>
+					<div class="form-group">
+						{{ form_row(form.couvertureFile) }}
 					</div>
+					{% if is_granted('ROLE_VENDEUR') %}
+					<p>
+						Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
+						démarquer.
+					</p>
+					{% endif %}
 				</div>
-
-				{{ form_rest(form) }}
-
-				<button class="btn btn-dark">Mettre à jour</button>
-
-				{{ form_end(form) }}
 			</div>
-			{% endif %}
+
+			{{ form_rest(form) }}
+
+			<button class="btn btn-dark">Mettre à jour</button>
+
+			{{ form_end(form) }}
 		</div>
+		{% endif %}
 	</div>
 </div>
 

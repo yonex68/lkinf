@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestamp;
 use App\Repository\EmploisTempsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,8 +10,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmploisTempsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class EmploisTemps
 {
+    use Timestamp;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

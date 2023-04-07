@@ -4,11 +4,11 @@
 
 	{% if app.user.endRegister == true %}
 
-	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3 bg-dark">
+	<div class="card mb-3">
+		<div class="card-header bg-dark">
 			<h6 class="m-0 h6 text-light">Tableau de Bord</h6>
 		</div>
-		<div class="box-body">
+		<div class="card-body p-0">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
 
@@ -55,11 +55,11 @@
 
 	{% else %}
 
-	<div class="box shadow-sm rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3 bg-dark">
+	<div class="card mb-3">
+		<div class="card-header bg-dark">
 			<h6 class="m-0 h6 text-light">Tableau de Bord</h6>
 		</div>
-		<div class="box-body">
+		<div class="card-body p-0">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
 
@@ -86,11 +86,11 @@
 
 	{% if app.user.endRegister == true %}
 
-	<div class="box shadow-sm  rounded bg-white mb-3">
-		<div class="box-title border-bottom p-3 bg-dark">
+	<div class="card mb-3">
+		<div class="card-header bg-dark">
 			<h6 class="m-0 h6 text-light">Mon portefeuille</h6>
 		</div>
-		<div class="box-body">
+		<div class="card-body p-0">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
 
@@ -117,8 +117,9 @@
 
 	{% if app.user.endRegister == null %}
 
-	<div class="alert alertflash">
-		<p>Veuillez completter votre profil avant de vendre vos prestations il s'agit de:</p>
+	<div class="alert alert-warning">
+		<p><i class="fa fa-exclamation-triangle"></i> Veuillez completter votre profil avant de vendre vos prestations il
+			s'agit de:</p>
 		<p>1 - Vos coordonnées <br> 2 - Autres infos </p>
 	</div>
 
@@ -127,39 +128,36 @@
 	{% endif %}
 
 
-	<div class="box shadow-sm  rounded bg-white">
-		<div class="box-title border-bottom p-3 bg-dark">
+	<div class="card rounded bg-white">
+		<div class="card-header bg-dark">
 			<h6 class="m-0 h6 text-light">Paramètres {{ is_granted('ROLE_VENDEUR') ? 'de vente' : '' }}</h6>
 		</div>
-		<div class="box-body">
-			<div class="bg-white rounded shadow-sm">
-				<div class="dropdown-menu-show">
+		<div class="card-body p-0">
+			<div class="dropdown-menu-show">
 
-					<a class="dropdown-item py-2 tache-terminer {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
-						href="{{ path('user_profil') }}"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon
-						profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
-						<i class="fa fa-check-circle float-right"></i>
-					</a>
+				<a class="dropdown-item py-2 tache-terminer {{ app.request.attributes.get('_route') == 'user_profil' ? 'active' : '' }}"
+					href="{{ path('user_profil') }}"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Mon
+					profil {{ is_granted('ROLE_VENDEUR') ? 'public' : '' }}
+					<i class="fa fa-check-circle float-right"></i>
+				</a>
 
-					{% if is_granted('ROLE_VENDEUR') %}
+				{% if is_granted('ROLE_VENDEUR') %}
 
-					<a class="dropdown-item py-2 {{ app.user.statut ? 'tache-terminer' : 'tache-encours' }} {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
-						href="{{ path('user_coordonnees') }}"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Mes
-						coordonnées
-						<i class="fa fa-check-circle float-right"></i>
-					</a>
+				<a class="dropdown-item py-2 {{ app.user.statut ? 'tache-terminer' : 'tache-encours' }} {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
+					href="{{ path('user_coordonnees') }}"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Mes
+					coordonnées
+					<i class="fa fa-check-circle float-right"></i>
+				</a>
 
-					<a class="dropdown-item py-2 {{ app.user.lieuPrestation ? 'tache-terminer' : 'tache-encours' }} {{ app.user.statut ? '' : 'disabled' }} {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}"
-						href="{{ path('user_categorie') }}"><i
-							class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Autres infos
-						<i class="fa fa-check-circle float-right"></i>
-					</a>
+				<a class="dropdown-item py-2 {{ app.user.lieuPrestation ? 'tache-terminer' : 'tache-encours' }} {{ app.user.statut ? '' : 'disabled' }} {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}"
+					href="{{ path('user_categorie') }}"><i class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Lieu de prestation, couverture..
+					<i class="fa fa-check-circle float-right"></i>
+				</a>
 
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
-						href="{{ path('edit_password') }}"><i class="fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
+				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
+					href="{{ path('edit_password') }}"><i class="fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
 
-					{% endif %}
-				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

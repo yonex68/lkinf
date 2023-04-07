@@ -5,7 +5,7 @@
 
 		<div id="card-errors" class="w-100 text-danger" role="alert"></div>
 
-		<div id="card-elements" class="text-white border rounded" style="color: white!important;"></div>
+		<div id="card-elements" class="text-white rounded" style="color: white!important;"></div>
 
 	</div>
 
@@ -29,39 +29,41 @@
 
 		{% if app_environement == "dev" %}
 
-		var stripeToken = "{{ stripe_public_key_test }}"
+		let stripeToken = "{{ stripe_public_key_test }}"
 
 		{% else %}
 
-		var stripeToken = "{{ stripe_public_key_live }}"
+		let stripeToken = "{{ stripe_public_key_live }}"
 
 		{% endif %}
 
-		var stripe = Stripe(stripeToken);
+		let redirectUrl = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre, payment_intent: intentId}) }}"
 
-		var elements = stripe.elements();
-		var subscription = "{{ microservice.id }}";
-		var clientSecret = "{{ intentSecret }}";
-		var cardholderName = "{{ app.user.nom ~ ' ' ~ app.user.prenom }}";
-		var cardholderEmail = "{{ app.user.email }}";
+		let stripe = Stripe(stripeToken);
+
+		let elements = stripe.elements();
+		let subscription = "{{ microservice.id }}";
+		let clientSecret = "{{ intentSecret }}";
+		let cardholderName = "{{ app.user.nom ~ ' ' ~ app.user.prenom }}";
+		let cardholderEmail = "{{ app.user.email }}";
 
         //Create Form StyleSheet
-        var styleCostom = {
+        let styleCostom = {
         	base: {
         		fontSize: '18px',
         		width: '100%',
         		display: 'block',
-        		color: "#fff"
+        		color: "#000"
         	}
         }
 
         //Create Form with Stripe Object
-        var card = elements.create('card', {style: styleCostom});
+        let card = elements.create('card', {style: styleCostom});
         card.mount("#card-elements");
 
         // Message Error
         card.addEventListener('change', function(event) {
-        	var displayError = document.getElementById('card-errors');
+        	let displayError = document.getElementById('card-errors');
 
         	if (event.error) {
         		displayError.textContent = event.error.message;
@@ -70,7 +72,7 @@
         	}
         });
 
-        var form = document.getElementById('payment-form');
+        let form = document.getElementById('payment-form');
 
         form.addEventListener('submit', function(event) {
         	event.preventDefault();
@@ -92,20 +94,20 @@
                     document.getElementById("card-errors").innerText = result.error.message
                 }else if('paymentIntent' in result){
                 	stripeTokenHandler(result.paymentIntent);
-                	document.location.href = "{{ path('save_commande', {slug: microservice.slug, offre: type_offre, payment_intent: intentId}) }}"
+                	document.location.href = redirectUrl
                 }
             })
         	});
 
         function stripeTokenHandler(intent) {
-        	var inputElement = document.createElement('input');
+        	let inputElement = document.createElement('input');
 
-        	var form = document.getElementById('payment-form');
-        	var InputIntentId = inputElement;
-        	var InputIntentPaymentMethod = inputElement;
-        	var InputIntentStatus = inputElement;
-        	var InputSubscription = inputElement;
-            //var InputAmount = inputElement;
+        	let form = document.getElementById('payment-form');
+        	let InputIntentId = inputElement;
+        	let InputIntentPaymentMethod = inputElement;
+        	let InputIntentStatus = inputElement;
+        	let InputSubscription = inputElement;
+            //let InputAmount = inputElement;
 
             InputIntentId.setAttribute('type', 'hidden');
             InputIntentId.setAttribute('name', 'stripeIntentId');

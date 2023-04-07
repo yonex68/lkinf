@@ -29,35 +29,35 @@ class SearchServiceType extends AbstractType
             ]
          ])
          ->add('jour', ChoiceType::class, [
-             'label' => 'Jours',
-             'expanded' => true,
-             'placeholder' => 'Tout',
-             'required' => false,   
-             'choices' => [
-                 'Lundi' => 'Lundi',
-                 'Mardi' => 'Mardi',
-                 'Mercredi' => 'Mercredi',
-                 'Jeudi' => 'Jeudi',
-                 'Vendredi' => 'Vendredi',
-                 'Samedi' => 'Samedi',
-                 'Dimanche' => 'Dimanche'
-             ]
+            'label' => 'Jours de travail',
+            'expanded' => true,
+            'placeholder' => 'Tout',
+            'required' => false,
+            'choices' => [
+               'Lundi' => 'Lundi',
+               'Mardi' => 'Mardi',
+               'Mercredi' => 'Mercredi',
+               'Jeudi' => 'Jeudi',
+               'Vendredi' => 'Vendredi',
+               'Samedi' => 'Samedi',
+               'Dimanche' => 'Dimanche'
+            ]
          ])
          ->add('heureOuverture', TimeType::class, [
-            'label' => 'Ouverte',
-             'widget' => 'single_text',
-             'required' => false,
+            'label' => 'A partir de',
+            'widget' => 'single_text',
+            'required' => false,
          ])
          ->add('heureCloture', TimeType::class, [
-            'label' => 'Fermer',
-             'widget' => 'single_text',
-             'required' => false,
+            'label' => 'A',
+            'widget' => 'single_text',
+            'required' => false,
          ])
          ->add('ville', TextType::class, [
-            'label' =>  'Ville du profésionnel',
+            'label' =>  'Ville/Lieu de prestation',
             'required'  =>  false,
             'attr'  =>  [
-               'placeholder'   =>  'Ville du profésionnel', 'class' =>  'w-100 shadow-none'
+               'placeholder'   =>  'Ville/Lieu de prestation', 'class' =>  'w-100 shadow-none'
             ]
          ])
          ->add('minPrice', NumberType::class, [

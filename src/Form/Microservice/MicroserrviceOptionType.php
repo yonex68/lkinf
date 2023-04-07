@@ -27,15 +27,6 @@ class MicroserrviceOptionType extends AbstractType
                 'placeholder'     =>  '--Sélectionnez vos réalisations --',
                 'class' => Realisation::class,
             ])
-            ->add('emploiTemps', EntityType::class, [
-                'label' => false,
-                'help' => "Planning",
-                'required' => false,
-                'multiple'     =>  true,
-                'attr' => ['class' => ""],
-                'placeholder'     =>  '-- Sélectionnez les jours --',
-                'class' => EmploisTemps::class,
-            ])
             ->add('promo', CheckboxType::class, [
                 'label' => 'En promootion',
                 'help' => "Cocher pour mettre se service en promotion",

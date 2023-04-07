@@ -16,8 +16,8 @@ class RapportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('contenu', TextareaType::class, [
-                'label' => 'Evrivez votre rapport de fin de prestation*',
+            ->add('contenu', CKEditorType::class, [
+                'label' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Evrivez votre rapport de fin de prestation',
@@ -32,7 +32,7 @@ class RapportType extends AbstractType
                 'download_uri'     =>  false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Evrivez votre rapport de fin de prestation',
+                        'message' => 'Veuillez joindre une pièce justificative',
                     ])
                 ]
             ]);

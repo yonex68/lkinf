@@ -16,7 +16,7 @@ class MessageType extends AbstractType
         $builder
             ->add('contenu', TextareaType::class, [
                 'label' => false,
-                'attr' => ['placeholder' => 'Ecrivez votre message'],
+                'attr' => ['placeholder' => 'Ecrivez votre message', 'class' => 'text-muted bg-light'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ecrivez votre message'

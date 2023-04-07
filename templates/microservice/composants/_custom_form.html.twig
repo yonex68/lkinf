@@ -1,13 +1,12 @@
 <h6 class="my-4">Contenu (Options)</h6>
 
-<div class="accordion" id="serviceOptions">
+<div class="accordion mb-3" id="serviceOptions">
    {% for option in microservice.serviceOptions %}
    <div class="card">
       <div class="card-header" id="heading-{{ option.id }}">
          <h5 class="mb-0">
-            <button class="btn btn-link text-muted btn-block text-left p-0" type="button"
-               data-toggle="collapse" data-target="#collapse-{{ option.id }}" aria-expanded="true"
-               aria-controls="collapse-{{ option.id }}">
+            <button class="btn btn-link text-muted btn-block text-left p-0" type="button" data-toggle="collapse"
+               data-target="#collapse-{{ option.id }}" aria-expanded="true" aria-controls="collapse-{{ option.id }}">
                <i class="text-success fa fa-check-circle mr-2"></i> {{ option.name }}
             </button>
          </h5>
@@ -25,15 +24,66 @@
    {% endfor %}
 </div>
 
-<div class="card rounded-0 mb-3" style="border-bottom-left-radius: 5px!important;border-bottom-right-radius: 5px!important;">
+<div class="card mb-3">
    <div class="card-body">
-      <div class="row d-flex align-items-center">
-         <div class="col-sm-6">
-            <h6 class="text-uppercase">Total: <strong>{{ total ~ currency }}</strong></h6>
+      <div class="row align-items-center">
+         <div class="col-6">
+            <h6 class="text-uppercase">Total</h6>
          </div>
-         <div class="col-sm-6">
-            {% include "microservice/composants/_reservation_btn.html.twig" %}
+         <div class="col-6">
+            <h6 class="font-weight-bold text-right">{{ total ~ currency }}</h6>
          </div>
       </div>
    </div>
 </div>
+
+
+{% if is_granted('microservice_edit', microservice) %}{% else %}
+
+<h6 class="my-4">Réservation</h6>
+
+<div class="card my-3">
+   <div class="card-header bg-white">
+      <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}" class="d-block py-3 text-dark">
+         <div class="media">
+            <img width="60" height="60"
+               src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
+               class="rounded-circle" alt="">
+
+            <div class="media-body pl-3">
+               <h6>{{ microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</h6>
+               <span>{{ microservice.vendeur.compte }} {{ microservice.created|ago(locale='fr') }}</span>
+            </div>
+         </div>
+      </a>
+      <h6><i class="fa fa-calendar"></i> Disponibilité vendeur </h6>
+      <div>
+         {% include "microservice/composants/_vendeur_planning.html.twig" %}
+      </div>
+   </div>
+   <div class="card-body">
+      <h6>Reservé</h6>
+
+      {% for disponibilite in disponibilites %}
+      <h6 class="text-blue h6">{{ disponibilite.jour }}</h6>
+      <div class="row">
+         <div class="col-6">
+            <a href="{{ path('commander_microservice_reservation', {slug: microservice.slug, disponibilite: disponibilite.jour ~ '-' ~ disponibilite.heureOuverture|date('H:i') }) }}">
+               <button type="" class="btn btn-outline-success h5 btn-lg btn-block" id="btnFetch">
+                  <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}
+               </button>
+            </a>
+         </div>
+         <div class="col-6">
+            <a href="{{ path('commander_microservice_reservation', {slug: microservice.slug, disponibilite: disponibilite.jour ~ '-' ~ disponibilite.heureCloture|date('H:i') }) }}">
+               <button type="" class="btn btn-outline-success h5 btn-lg btn-block" id="btnFetch">
+                  <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}
+               </button>
+            </a>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>
+
+{% endif %}

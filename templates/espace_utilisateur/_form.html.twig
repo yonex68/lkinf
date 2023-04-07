@@ -1,12 +1,12 @@
 {{ form_start(form) }}
 
-<div class="box shadow-sm rounded bg-white mb-3">
-   <div class="box-title p-3 text-left bg-light rounded">
-      <h4 class="mb-0 h5">
+<div class="card mb-3 bg-light">
+   <div class="card-header bg-dark">
+      <h4 class="mb-0 h6 text-light">
          Mon profil {% if is_granted('ROLE_VENDEUR') %}public{% endif %}
       </h4>
    </div>
-   <div class="box-body p-3">
+   <div class="card-body">
       {% if is_granted('ROLE_VENDEUR') %}
       <p>
          En tant que vendeur, vous disposez d’un profil public présentant vos services en vente. Complétez-le avec
@@ -64,7 +64,7 @@
       </div>
 
       <div class="form-group">
-         <label class="d-block">Biographie</label>
+         <strong class="d-block">Biographie</strong>
          {% if is_granted('ROLE_VENDEUR') %}
          <p>
             Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.
@@ -76,12 +76,8 @@
          {{ form_widget(form.apropos) }}
          {{ form_errors(form.apropos) }}
       </div>
-      <div class="row">
-         <div class="col-sm-6">
-            <div class="form-group">
-               <button type="submit" formnovalidate class="btn btn-dark btn-block rounded-btn">Mettre à jour</button>
-            </div>
-         </div>
+      <div class="form-group">
+         <button type="submit" formnovalidate class="btn btn-dark">Mettre à jour</button>
       </div>
    </div>
 </div>

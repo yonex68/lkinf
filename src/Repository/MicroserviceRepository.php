@@ -64,10 +64,10 @@ class MicroserviceRepository extends ServiceEntityRepository
     private function getSearcheQuery(SearchService $search) //: QueryBuilder
     {
         $query = $this->createQueryBuilder('m')
-            ->select('v', 'm')
+            ->select('d', 'm')
             ->select('c', 'm')
             ->select('e', 'm')
-            ->leftjoin('m.vendeur', 'v')
+            ->leftjoin('m.disponibilites', 'd')
             ->leftjoin('m.categorie', 'c')
             ->leftjoin('m.emploitemps', 'e')
             ->orderBy('m.created', 'DESC')
@@ -81,18 +81,18 @@ class MicroserviceRepository extends ServiceEntityRepository
         }
         if (!empty($search->jour)) {
             $query = $query
-                ->andWhere('e.jour = :jour')
+                ->andWhere('d.jour = :jour')
                 ->setParameter('jour', $search->jour);
         }
         if (!empty($search->heureOuverture)) {
             $query = $query
-                ->andWhere('e.heureOuverture >= :heureOuverture')
+                ->andWhere('d.heureOuverture >= :heureOuverture')
                 ->setParameter('heureOuverture', $search->heureOuverture);
         }
 
         if (!empty($search->heureCloture)) {
             $query = $query
-                ->andWhere('e.heureCloture <= :heureCloture')
+                ->andWhere('d.heureCloture <= :heureCloture')
                 ->setParameter('heureCloture', $search->heureCloture);
         }
         if (!empty($search->ville)) {

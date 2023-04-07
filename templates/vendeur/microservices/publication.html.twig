@@ -9,62 +9,59 @@
 {% endblock %}
 
 {% block body %}
+<div class="card rounded">
 
-
-    <div class="p-3 text-left bg-dark rounded border-bottom">
-        <h4 class="mb-0 h6 text-light rounded">
-            Nouveau service
-        </h4>
-    </div>
-
-<div class="p-3 shadow-sm">
-	{{ form_start(form) }}
-
-	<div class="form-group">
+	<div class="card-body">
 		<h6 class="font-weight-bold">Publication</h6>
-		<p class="text-muted">
-			Vous y êtes presque ! Avant qu’un membre de notre équipe de modération ne relise votre service, nous vous
-			invitons à jeter un dernier coup d’œil à celui-ci avec le bouton aperçu ci-dessus. Vous pouvez également
-			revenir sur les étapes précédentes pour effectuer une modification, et même le garder en brouillon jusqu’à
-			ce que vous soyez prêt à le soumettre.
 
-			Une fois en attente de validation, nous vous inviterons à patienter : cela ne prend jamais plus de 24
-			heures.
+		{{ form_start(form) }}
 
-			J'atteste…
-		</p>
+		<div class="form-group">
+			<p class="text-muted">
+				Vous y êtes presque ! Avant qu’un membre de notre équipe de modération ne relise votre service, nous vous
+				invitons à jeter un dernier coup d’œil à celui-ci avec le bouton aperçu ci-dessus. Vous pouvez également
+				revenir sur les étapes précédentes pour effectuer une modification, et même le garder en brouillon jusqu’à
+				ce que vous soyez prêt à le soumettre.
 
-		<div class="text-muted{{ microservice.online == true ? 'bloc-masquer' : '' }}">
+				Une fois en attente de validation, nous vous inviterons à patienter : cela ne prend jamais plus de 24
+				heures.
 
-			<div class="my-3">
-				{{ form_row(form.question1) }}
-			</div>
-			<div class="my-3">
-				{{ form_row(form.question2) }}
-			</div>
-			<div class="my-3">
-				{{ form_row(form.question3) }}
-			</div>
-			<div class="my-3">
-				{{ form_row(form.question4) }}
-			</div>
-			<div class="my-3">
-				{{ form_row(form.question5) }}
+				J'atteste…
+			</p>
+
+			<div class="text-muted{{ microservice.online == 1 ? 'bloc-masquer' : '' }}">
+
+				<div class="my-3">
+					{{ form_row(form.question1) }}
+				</div>
+				<div class="my-3">
+					{{ form_row(form.question2) }}
+				</div>
+				<div class="my-3">
+					{{ form_row(form.question3) }}
+				</div>
+				<div class="my-3">
+					{{ form_row(form.question4) }}
+				</div>
+				<div class="my-3">
+					{{ form_row(form.question5) }}
+				</div>
+
+				<div class="">
+					<button class="btn btn-dark" formnovalidate>
+						<span id="btnFetch">
+							{{ button_label|default('Enregistrer et suivant') }}
+						</span>
+					</button>
+				</div>
+
 			</div>
 
-			<div class="">
-				<button class="btn btn-dark" formnovalidate>
-					<span id="btnFetch">
-						{{ button_label|default('Enregistrer et suivant') }}
-					</span>
-				</button>
-			</div>
-			
 		</div>
 
+		{{ form_end(form) }}
 	</div>
 
-	{{ form_end(form) }}
 </div>
 
 {% endblock %}

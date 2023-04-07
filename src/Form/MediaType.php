@@ -33,7 +33,7 @@ class MediaType extends AbstractType
                 'attr' => ['class' => ''],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ est requis',
+                        'message' => 'Une image est requise pour votre service',
                     ]),
                 ],
             ]);

@@ -2,12 +2,11 @@
    <a href="{{ path('microservice_details', {slug: similaire.slug}) }}">
       {% if similaire.medias|length > 0 %}
 
-      <img class="img-fluid"
-         src="{{ vich_uploader_asset(similaire.medias[0], 'imageFile') | imagine_filter('medium_size') }}" />
+      <img class="img-fluid" src="{{ vich_uploader_asset(similaire.medias[0], 'imageFile') | imagine_filter('medium_size') }}" alt="{{ similaire.name }} France" />
 
       {% else %}
 
-      <img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" />
+      <img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" alt="{{ similaire.name }} France"  />
 
       {% endif %}
 
@@ -31,7 +30,7 @@
                <div class="rating-wrapper">
                   <span class="gig-rating text-body-2">
                      <a href="{{ path('microservices_categories', {slug: similaire.categorie.slug}) }}?categories%5B%5D={{ similaire.categorie.id }}"
-                        class="badge badge-dark border badge-pill my-2" style="font-size: .9em!important;">
+                        class="badge badge-blue badge-pill my-2" style="font-size: .9em!important;">
                         #{{ similaire.categorie.name }}
                      </a>
                   </span>

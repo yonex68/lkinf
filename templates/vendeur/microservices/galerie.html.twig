@@ -14,14 +14,9 @@
 
 {% block body %}
 
-<div class="bg-white shadow-sm">
-    <div class="p-3 text-left bg-dark rounded border-bottom">
-        <h4 class="mb-0 h6 text-light rounded">
-            Nouveau service
-        </h4>
-    </div>
+<div class="card">
 
-    <div class="p-3 shadow-sm">
+    <div class="card-body">
         <div class="form-group">
             <h6 class="font-weight-bold">Galerie</h6>
             <p class="text-muted">
@@ -82,7 +77,10 @@
         {% endif %}
 
         <!-- Si le nombre maximal d'image pour un service est 2 -->
-        {% if microservice.medias|length <= 10 %} {{ form_start(mediaForm) }} <div class="row mt-3">
+        {% if microservice.medias|length <= 5 %} 
+        
+        {{ form_start(mediaForm) }} 
+        <div class="row mt-3">
             <div class="col-sm-6">
                 <div class="form-group">
                     {{ form_row(mediaForm.imageFile) }}
@@ -108,10 +106,10 @@
 {% if microservice.medias|length > 0 %}
 <!-- Form collection -->
 
-<div class="card mt-4 bg-white shadow-sm">
-    <div class="card-header bg-dark py-3">
+<div class="card mt-4 bg-white">
+    <div class="card-header border-0 py-3 bg-white">
         <div class="text-left rounded">
-            <h4 class="mb-0 text-light h6">
+            <h4 class="mb-0 h6">
                 Editer la galérie
             </h4>
         </div>

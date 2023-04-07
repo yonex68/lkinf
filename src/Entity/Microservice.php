@@ -85,6 +85,9 @@ class Microservice
     #[ORM\Column]
     private ?bool $offline = null;
 
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Disponibilite::class)]
+    private Collection $disponibilites;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -95,6 +98,7 @@ class Microservice
         $this->realisations = new ArrayCollection();
         $this->serviceSignales = new ArrayCollection();
         $this->emploitemps = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -510,6 +514,36 @@ class Microservice
     public function setOffline(bool $offline): self
     {
         $this->offline = $offline;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Disponibilite>
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites->add($disponibilite);
+            $disponibilite->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getService() === $this) {
+                $disponibilite->setService(null);
+            }
+        }
 
         return $this;
     }

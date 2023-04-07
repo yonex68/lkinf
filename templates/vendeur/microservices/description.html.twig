@@ -14,12 +14,6 @@ Prix, description et delai
 
 {% block body %}
 
-    <div class="p-3 text-left bg-dark rounded border-bottom">
-        <h4 class="mb-0 h6 text-light rounded">
-            Nouveau service
-        </h4>
-    </div>
-
 {% if microservice.categorie.slug == 'Ingenieur-son' %}
 
     {% include "vendeur/microservices/form/_ingenieur_son.html.twig" %}

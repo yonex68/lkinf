@@ -19,26 +19,56 @@
 
       </div>
       <div class="col-sm-4">
-         <div class="list-group shadow-sm mb-4">
 
-            <div
-               class="list-group-item d-flex justify-content-between align-items-center border-bottom border-bottom-light">
-               <h5 class="h6">Suivis commande</h5>
-               <span class="badge badge-dark badge-pill">N° {{ commande.id }}</span>
+         <div class="card mb-4">
+            <div class="card-header bg-dark">
+               <h5 class="h6 text-light">Suivis commande</h5>
             </div>
+            <div class="card-body">
+               <h6 class="h6 text-capitalize">{{ commande.offre }}</h6>
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted">Reservé pour</p>
+                  <span class="text-dark mb-0 mt-0 ml-auto">
+                     <i class="fa fa-calendar"></i> {{ commande.disponibilite }} {{ commande.created|date('Y') }}
+                  </span>
+               </div>
+               <div class="d-flex align-items-top mb-2">
+                  <p class="mb-0 text-muted">TOTAL PAYE</p>
+                  <h6 class="text-dark font-weight-bold mb-0 mt-0 ml-auto">
+                     {{ commande.montant ~ currency }}
+                  </h6>
+               </div>
+               <h6 class="h6 text-capitalize">Service</h6>
+               <div class="media mb-2 p-2 shadow-sm rounded">
+                  {% if commande.microservice.medias|length > 0 %}
 
-            <div class="list-group-item">
+                  <img class="img-fluid rounded"
+                     src="{{ vich_uploader_asset(commande.microservice.medias[0], 'imageFile') | imagine_filter('medium_avatar') }}" />
 
-               <ul class="list-group py-3 pt-0">
-                  <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-2">
-                     <span class="h6 text-capitalize">{{ commande.offre }}</span>
-                     <span class="badge badge-dark badge-pill">{{ commande.montant ~ currency }}</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center p-0 pb-2">
+                  {% else %}
+
+                  <img class="img-fluid rounded"
+                     src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" />
+
+                  {% endif %}
+                  <div class="media-body pl-3">
+                     <span>{{ commande.microservice.created|ago(locale='fr') }}</span>
+                     <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}"
+                        class="text-dark ml-auto">
+                        {{ commande.microservice.name }}
+                     </a> <br>
                      <a href="{{ path('microservices_categories', {slug: commande.microservice.categorie.slug}) }}?categories%5B%5D={{ commande.microservice.categorie.id }}"
-                        class="badge badge-dark rounded-pill">#{{ commande.microservice.categorie.name }}</a>
-                  </li>
-               </ul>
+                        class="badge badge-blue rounded-pill">
+                        #{{ commande.microservice.categorie.name }}
+                     </a>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+
+         <div class="card mb-4">
+            <div class="card-body">
 
                <div class="">
                   <h3 class="h6">1 - Commande payée</h3>
@@ -121,18 +151,4 @@
       </div>
    </div>
 </section>
-
-{% endblock %}
-
-{% block javascripts %}
-
-{{ parent() }}
-
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#rapport_contenu' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
 {% endblock %}

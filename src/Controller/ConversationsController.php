@@ -203,6 +203,11 @@ class ConversationsController extends AbstractController
         $conversation = new Conversation();
 
         $message = new Message();
+        
+        $messageParDefaut = "Bonjour, je suis intéressé par votre service. Avant de passer commande, êtes-vous disponible pour me renseigner ?";
+
+        $message->setContenu($messageParDefaut);
+        
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 

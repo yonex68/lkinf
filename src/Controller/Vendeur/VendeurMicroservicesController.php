@@ -2,16 +2,20 @@
 
 namespace App\Controller\Vendeur;
 
+use App\Entity\Disponibilite;
 use App\Entity\Media;
 use App\Entity\Microservice;
 use App\Form\MediaType;
 use App\Form\Microservice\DescriptionType;
+use App\Form\Microservice\DisponibiliteType;
 use App\Form\Microservice\IngenieurSonType;
 use App\Form\Microservice\MicroserrviceOptionType;
 use App\Form\Microservice\MicroserviceGalerieType;
 use App\Form\Microservice\MicroservicePublierType;
 use App\Form\Microservice\MicroserviceTitreType;
 use App\Form\Microservice\MicroserviceType;
+use App\Form\MicroserviceDisponibiliteType;
+use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\SuivisRepository;
 use App\Service\MailerService;
@@ -243,7 +247,7 @@ class VendeurMicroservicesController extends AbstractController
 
             $this->addFlash('success', 'Le contenu a bien été cré');
 
-            return $this->redirectToRoute('vendeur_microservices_galerie', [
+            return $this->redirectToRoute('vendeur_microservices_disponibilite', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -252,6 +256,62 @@ class VendeurMicroservicesController extends AbstractController
             'microservice' => $microservice,
             'form' => $form->createView(),
             'mediaForm' => $mediaForm->createView(),
+        ]);
+    }
+
+    #[Route('/{id}/disponibilite', name: 'vendeur_microservices_disponibilite', methods: ['GET', 'POST'])]
+    public function planning(Request $request, EntityManagerInterface $entityManager, Microservice $microservice, DisponibiliteRepository $disponibiliteRepository): Response
+    {
+        $this->denyAccessUnlessGranted('microservice_edit', $microservice);
+        
+        $form = $this->createForm(MicroserviceDisponibiliteType::class, $microservice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+
+            return $this->redirectToRoute('vendeur_microservices_publication', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        $disponibilite = new Disponibilite();
+        $disponibiliteForm = $this->createForm(DisponibiliteType::class, $disponibilite);
+        $disponibiliteForm->handleRequest($request);
+
+        if ($disponibiliteForm->isSubmitted() && $disponibiliteForm->isValid()) {
+
+            $jour = $disponibiliteForm->get('jour')->getData();
+            $ordre = $this->getOrdre($jour);
+            $findDisponibilite = $disponibiliteRepository->findOneBy([
+                'jour' => $jour, 'service' => $microservice
+            ]);
+
+            if ($findDisponibilite) {
+                $disponibilite = $findDisponibilite;
+            }
+            
+            $disponibilite->setService($microservice);
+            $disponibilite->setOrdre($ordre);
+            $entityManager->persist($disponibilite);
+            $entityManager->flush();
+
+            $this->addFlash('success', "La disponibilité pour ce service a bien été mise à jour sur ce service");
+
+            return $this->redirectToRoute('vendeur_microservices_disponibilite', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('vendeur/microservices/disponibilite.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form->createView(),
+            'disponibiliteForm' => $disponibiliteForm->createView(),
+            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);
     }
 
@@ -332,5 +392,28 @@ class VendeurMicroservicesController extends AbstractController
         }
 
         return $this->redirectToRoute('vendeur_microservices_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getOrdre($jour){
+
+        $ordre = 0;
+
+        if ($jour == 'Lundi') {
+            $ordre = 1;
+        }elseif ($jour == 'Mardi') {
+            $ordre = 2;
+        }elseif ($jour == 'Mercredi') {
+            $ordre = 3;
+        }elseif ($jour == 'Jeudi') {
+            $ordre = 4;
+        }elseif ($jour == 'Vendredi') {
+            $ordre = 5;
+        }elseif ($jour == 'Samedi') {
+            $ordre = 6;
+        }elseif ($jour == 'Dimanche') {
+            $ordre = 7;
+        }
+
+        return $ordre;
     }
 }

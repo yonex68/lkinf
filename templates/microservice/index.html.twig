@@ -1,29 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-  ({{ microservices.getTotalItemCount }}) Microservices
-{% endblock %}
+{% block title %}{{ appName }} catégories, studio, ingénieur de son, vidéastes{% endblock %}
+
+{% block alternatiflink %}https://links-infinity.com/microservices{% endblock %}
 
 {% block meta %}
   <meta name="author" content="{{ appName }} catégories" />
-  <meta name="keywords" content="{{ appName }} : Links infinity catégories, studio, ingénieur de son, vidéastes" />
-  <meta name="description" content=" Links Infinity vous propose des centaines de freelances disponibles et qualifiés proches de chez vous, pour vous accompagner dans votre projet." />
+  <meta name="keywords" content="{{ appName }} catégories, studio, ingénieur de son, vidéastes" />
+  <meta name="description" content="{{ appName }} vous propose des centaines de freelances disponibles et qualifiés proches de chez vous, pour vous accompagner dans votre projet." />
 {% endblock %}
 
 {% block body %}
   <!-- Inner Header -->
-  <section class="py-5 inner-header bg-degrade">
+  <section class="inner-header categorieSection" style="background-image: url({{ asset('img/login.jpg') | imagine_filter('very_large_size') }})">
     <div class="container">
       <div class="row">
         <div class="col-md-9 text-left">
-          <h1 class="mt-0 mb-3 text-light">
+          <h1 class="mt-0 mb-3 text-dark font-weight-bold">
             Microservices ({{ microservices.getTotalItemCount }})
           </h1>
           <div class="breadcrumbs">
-            <p class="mb-0 text-muted font-weight-light"
+            <p class="mb-0 text-dark font-weight-bold"
               style="font-size: 1.2em;">
               Pour tous vos travaux vidéo et audio, le site {{ appName }} vous propose
-              des centaines de freelances disponibles et qualifiés, pour vous accompagner
+              des centaines de freelances disponibles et qualifiés, pour <a href="" class="text-blue">Lire plus</a>
+            </p>
+            <p class="d-none">
+              vous accompagner
               dans votre projet. Spécialiste des services, vous trouverez en ligne
               tout ce dont vous rêvez : animation de logo, réalisation de vidéo
             </p>
@@ -32,6 +35,7 @@
         </div>
       </div>
     </div>
+    <div class="caption"></div>
   </section>
   <!-- End Inner Header -->
 

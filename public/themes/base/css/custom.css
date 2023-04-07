@@ -239,12 +239,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-message {
-   position: relative;
-   top: -10px;
-   left: -20px;
-   height: 15px;
-   line-height: 10px;
-   color: white !important;
+   position: absolute;
+   top: 0;
+   right: -5px;
+   width: 18px;
+   height: 18px;
+   line-height: 14px;
+   font-size: .7em;
+   border-radius: 8px;
+   text-align: center;
+   margin-left: auto;
 }
 
 .rounded-btn {
@@ -275,8 +279,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bloc-masquer {
-   visibility: hidden !important;
-   height: 1px !important;
+   visibility: hidden!important;
+   height: 1px!important;
 }
 
 .select2-container--default .select2-selection--multiple {
@@ -373,27 +377,11 @@ h1, h2, h3, h4, h5, h6 {
    padding-top: 10§ !important;
 }
 
-p {
-   color: #6c757d !important;
-}
-
 .alertflash {
    background-color: #0D1117 !important;
    border-color: #58A6FF !important;
    border-radius: 0 !important;
    padding: 16px !important;
-}
-
-.form-control, .input-group, .dropdown-filters .dropdown button {
-   border: 1px solid #6c757d !important;
-}
-
-.input-group .form-control {
-   border-color: transparent !important;
-}
-
-.border-bottom.osahan-post-header, .message-form.border-top {
-   border: 1px solid #23242a !important;
 }
 
 .main-page .right .nav-tabs li a {
@@ -420,6 +408,7 @@ p {
 
 .homeBanner {
    position: relative;
+   height: 100vh;
 }
 
 .homeBanner .caption {
@@ -528,6 +517,20 @@ body.responsive {
    text-align: center;
    border-radius: 10px;
    background-color: #080679;
+}
+.osahan-post-header:hover,
+.bg-blue{
+   background: #080679!important;
+   border-color: #080679!important;
+   color: #fff!important;
+}
+.border-blue{
+   border: 1px solid #080679!important;
+}
+.bg-blue a, 
+.osahan-post-header:hover a,
+.bg-blue a:hover{
+   color: #fff!important;
 }
 .bg-lightgray{
    background: #f0f5f7;

@@ -9,8 +9,10 @@
 {% endblock %}
 
 {% block text %}Nouveau sur
-{{ appName }}? crée gratuitement votre compte
+{{ appName }}? <br> Crée gratuitement votre compte
 {% endblock %}
+
+{% block alternatiflink %}https://links-infinity.com/inscription{% endblock %}
 
 {% block imgBg %}{{ asset('img/register.png') }}{% endblock %}
 
@@ -37,7 +39,7 @@
 		<div class="form-group">
 			<label class="mb-1">Nom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute"></i>
+				<i class="mdi mdi-account position-absolute text-blue"></i>
 				{{ form_widget(registrationForm.nom) }}
 			</div>
 			{{ form_errors(registrationForm.nom) }}
@@ -47,7 +49,7 @@
 		<div class="form-group">
 			<label class="mb-1">Prénom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute"></i>
+				<i class="mdi mdi-account position-absolute text-blue"></i>
 				{{ form_widget(registrationForm.prenom) }}
 			</div>
 			{{ form_errors(registrationForm.prenom) }}
@@ -62,9 +64,9 @@
 </div>
 
 <div class="form-group">
-	<label class="mb-1">Adresse</label>
+	<label class="mb-1">Lieu de prestation de service</label>
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-map position-absolute"></i>
+		<i class="mdi mdi-map position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.adresse) }}
 	</div>
 	{{ form_errors(registrationForm.adresse) }}
@@ -81,7 +83,7 @@
 <div class="form-group">
 	<label class="mb-1">Email</label>
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-email-outline position-absolute"></i>
+		<i class="mdi mdi-email-outline position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.email) }}
 	</div>
 	{{ form_errors(registrationForm.email) }}
@@ -90,13 +92,9 @@
 <div class="form-group">
 	<label class="mb-1">Mot de passe</label>
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-key-variant position-absolute"></i>
+		<i class="mdi mdi-key-variant position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.plainPassword) }}
 	</div>
-</div>
-
-<div class="form-group">
-	{{ form_row(registrationForm.agreeLocations) }}
 </div>
 
 <div class="mb-3">

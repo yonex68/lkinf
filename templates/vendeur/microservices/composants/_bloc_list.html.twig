@@ -1,7 +1,7 @@
-<div class="card mb-2 shadow-none">
-	<div class="card-body p-0">
+<div class="card mb-3 border-0">
+	<div class="card-body p-2">
 		<div class="row align-items-center">
-			<div class="col-4">
+			<div class="col-sm-4">
 				{% if microservice.medias|length > 0 %}
 
 				<img class="img-fluid rounded w-100 h-100"
@@ -14,7 +14,7 @@
 
 				{% endif %}
 			</div>
-			<div class="col-8">
+			<div class="col-sm-8">
 
 				<small class="text-muted">{{ microservice.created|ago(locale='fr') }}</small>
 

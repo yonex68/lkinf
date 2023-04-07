@@ -89,6 +89,9 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Remboursement::class)]
     private Collection $remboursements;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $disponibilite = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -440,6 +443,18 @@ class Commande
                 $remboursement->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDisponibilite(): ?string
+    {
+        return $this->disponibilite;
+    }
+
+    public function setDisponibilite(?string $disponibilite): self
+    {
+        $this->disponibilite = $disponibilite;
 
         return $this;
     }

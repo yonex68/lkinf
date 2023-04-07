@@ -1,22 +1,13 @@
-<div class="card mb-3">
-   <div class="card-body">
-      <h6 class="h6 py-2"><i class="fa fa-calendar"></i> Disponibilité vendeur</h6>
-      <div class="mb-3">
-         {% for emplois_temp in emploistemps(microservice.vendeur) %}
-         <div class="d-flex align-items-top mb-2">
-            <p class="mb-0 text-muted">{{ emplois_temp.jour }}</p>
-            <p class="text-muted mb-0 mt-0 ml-auto text-left">
-               {{ emplois_temp.heureOuverture ? emplois_temp.heureOuverture|date('H:i') : '' }} -
-               {{ emplois_temp.heureCloture ? emplois_temp.heureCloture|date('H:i') : '' }}
-            </p>
-         </div>
-         {% else %}
-         <div class="d-flex align-items-top mb-2">
-            <p class="mb-0 text-muted">Aucun planning disponible pour l'instant</p>
-         </div>
-         {% endfor %}
-      </div>
-      
-      {% include "microservice/composants/_reservation_btn.html.twig" %}
-   </div>
+{% for emplois_temp in emploistemps(microservice.vendeur) %}
+<div class="d-flex align-items-top mb-2">
+   <p class="mb-0 text-muted">{{ emplois_temp.jour }}</p>
+   <p class="text-muted mb-0 mt-0 ml-auto text-left">
+      {{ emplois_temp.heureOuverture ? emplois_temp.heureOuverture|date('H:i') : '' }} -
+      {{ emplois_temp.heureCloture ? emplois_temp.heureCloture|date('H:i') : '' }}
+   </p>
 </div>
+{% else %}
+<div class="d-flex align-items-top mb-2">
+   <p class="mb-0 text-muted">Aucun planning disponible pour l'instant</p>
+</div>
+{% endfor %}

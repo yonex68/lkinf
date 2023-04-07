@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>
-		{% block title %}{{ appName }} des services pour tout vos besoins{% endblock %}
+		{% block title %}{{ appName }} trouvez un studio, ingénieur de son, vidéaste,{% endblock %}
 	</title>
 
 	{% block meta %}
@@ -15,7 +15,8 @@
 	{% endblock %}
 
 	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />
-	
+	<link rel="alternate" hreflang="fr-fr" href="{% block alternatiflink %}https://links-infinity.com{% endblock %}" />
+
 	<!-- Favicon Icon -->
 	<link rel="icon" type="{{ asset('img/Logo.png') }}" href="images/fav.svg">
 	<!-- Bootstrap core CSS -->

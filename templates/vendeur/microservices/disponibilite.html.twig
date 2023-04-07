@@ -1,0 +1,97 @@
+{% extends 'vendeur.html.twig' %}
+
+{% block title %}Disponibilités{% endblock %}
+
+{% block colleft %}4{% endblock %}
+
+{% block colright %}8{% endblock %}
+
+{% block sidebar %}
+{% include "vendeur/microservices/composants/_step.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="card rounded">
+    <div class="card-body">
+
+        <div class="form-group">
+            <h6 class="font-weight-bold">Disponibilités</h6>
+            <p class="text-muted">
+                Afin de compléter et personnaliser votre service, vous pouvez ajouter des disponibilités en relation
+                directe avec ce dernier pour permettre aux clients de prendre des rendez-vous avec vous.
+            </p>
+        </div>
+
+        <div class="row my-3">
+            {% for disponibilite in disponibilites %}
+            <div class="col-sm-6">
+                <div class="media rounded shadow-sm p-2 pt-3 mb-3">
+                    <span class="realisation-icon">
+                        <i class="fa fa-calendar fa-2x"></i>
+                    </span>
+                    <div class="media-body pl-2">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+
+                                <strong>{{ disponibilite.jour }}</strong>
+                                <p>De {{disponibilite.heureOuverture|date('H:i') }} à
+                                    {{disponibilite.heureCloture|date('H:i') }}</p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <form method="post" class="d-inline"
+                                    action="{{ path('vendeur_services_disponibilite_delete', {'id': disponibilite.id}) }}"
+                                    onsubmit="return confirm('Voulez-vous vraiment cette disponibilité?');">
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token('delete' ~ disponibilite.id) }}">
+                                    <button class="btn btn-outline-danger btn-sm">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {{ form_start(disponibiliteForm) }}
+        {{ form_row(disponibiliteForm.jour) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(disponibiliteForm.heureOuverture) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(disponibiliteForm.heureCloture) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-dark">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+        {{ form_end(disponibiliteForm) }}
+
+    </div>
+</div>
+
+{% if disponibilites|length > 0 %}
+<div class="card mt-4">
+    <div class="card-header bg-white border-0">
+        <h6>Mettre à jour votre disponibilité pour ce service</h6>
+    </div>
+    <div class="card-body">
+        <!-- Formulaire de  -->
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <div class="form-group text-right">
+            <button class="btn btn-dark">{{ button_label|default('Enregistrer et suivant') }}</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

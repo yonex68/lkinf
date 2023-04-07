@@ -24,7 +24,7 @@ class DescriptionType extends AbstractType
                 'required' => false,
                 'attr' => ['rows' => 8, 'class' => 'font-weight-bold text-muted', 'placeholder' => 'Description'], 'constraints' => [
                     new NotBlank([
-                        'message' => 'Ce champ est requis',
+                        'message' => 'Une description est requise',
                     ]),
                 ],
             ]);

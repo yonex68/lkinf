@@ -5,7 +5,7 @@
 			<h6 class="text-blue font-weight-bold h6 text-uppercase pt-2">{{ appName }}</h6>
 		</a>
 		<!-- Topbar Search -->
-		<form class="d-none d-sm-inline-block form-inline border-0 shadow-sm mr-auto my-2 my-md-0 mw-100 navbar-search"
+		<form class="d-none d-sm-inline-block form-inline bg-light border rounded border-blue mr-auto my-2 my-md-0 mw-100 navbar-search"
 			style="width: 40%;margin-right: 0!important;" action="{{ path('microservices') }}" method="get">
 			<div class="input-group w-100 rounded bg-white"> <!-- radius -->
 				<input type="text" name="q" class="form-control bg-transparent border-0 small" placeholder="Je cherche..."
@@ -46,7 +46,7 @@
 			</li>
 
 			{% if app.user %}
-			<li class="nav-item dropdown no-arrow no-caret mr-3 dropdown-notifications">
+			<li class="nav-item dropdown no-arrow no-caret mr-3 dropdown-notifications position-relative">
 				<a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts"
 					href="{{ path('commandes_chats') }}">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
@@ -57,13 +57,13 @@
 					</svg>
 				</a>
 				{% if getCommandeNonLu(app.user)|length > 0 %}
-				<span class="badge badge-danger badge-pill font-weight-light badge-message">
+				<span class="badge badge-danger font-weight-light badge-message">
 					{{ getCommandeNonLu(app.user)|length }}</span>
 				{% endif %}
 			</li>
 
 			<!-- Messages -->
-			<li class="nav-item dropdown no-arrow no-caret dropdown-notifications mr-3">
+			<li class="nav-item dropdown no-arrow no-caret dropdown-notifications mr-3 position-relative">
 				<a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages"
 					href="{{ path('conversations') }}">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
@@ -74,7 +74,7 @@
 					</svg>
 				</a>
 				{% if getMessageNonLu(app.user)|length > 0 %}
-				<span class="badge badge-danger badge-pill font-weight-light badge-message">
+				<span class="badge badge-danger font-weight-light badge-message">
 					{{ getMessageNonLu(app.user)|length }}
 				</span>
 				{% endif %}
@@ -216,8 +216,7 @@
 			{% else %}
 			<li class="nav-item">
 				<a href="{{ path('app_login') }}" class="nav-link">
-					<button
-						class="btn {{ app.request.attributes.get('_route') == 'accueil' ? 'btn-outline-light' : 'btn-outline-dark' }} btn-padding font-weight-bold">Connexion</button>
+					<button class="btn {{ app.request.attributes.get('_route') == 'accueil' ? 'btn-outline-dark' : 'btn-outline-dark' }} btn-padding font-weight-bold">Connexion</button>
 				</a>
 			</li>
 			<li class="nav-item">
@@ -233,10 +232,10 @@
 <!-- Navigation -->
 <nav class="navbar d-block d-sm-none navbar-expand-lg navbar-light bg-white osahan-nav-mid px-0 border-top shadow-sm">
 	<div class="container">
-		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+		<button class="navbar-toggler navbar-toggler-right pl-2" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
-			<span class="fa fa-list p-2 text-dark"></span>
+			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav">
@@ -252,13 +251,29 @@
 		<ul class="navbar-nav align-items-center mx-auto">
 			<li class="nav-item">
 				<a href="{{ path('accueil') }}" class="nav-link">
-					<h6 class="text-blue text-uppercase">{{ appName }}</h6>
+					<h6 class="text-blue text-uppercase pt-2">{{ appName }}</h6>
 				</a>
 			</li>
 		</ul>
 
 		<ul class="navbar-nav align-items-center ml-auto">
 			{% if app.user %}
+			<li class="nav-item dropdown no-arrow no-caret dropdown-notifications mr-3 position-relative">
+				<a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages"
+					href="{{ path('conversations') }}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
+						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="feather feather-mail">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+						<polyline points="22,6 12,13 2,6"></polyline>
+					</svg>
+				</a>
+				{% if getMessageNonLu(app.user)|length > 0 %}
+				<span class="badge badge-danger font-weight-light badge-message">
+					{{ getMessageNonLu(app.user)|length }}
+				</span>
+				{% endif %}
+			</li>
 			<li class="nav-item dropdown no-arrow no-caret mr-3 dropdown-notifications">
 				<a class="btn btn-icon btn-transparent-dark dropdown-toggle miblie-notif" id="navbarDropdownAlerts"
 					href="{{ path('commandes_chats') }}">
@@ -275,7 +290,7 @@
 					{{ getCommandeNonLu(app.user)|length }}</span>
 				{% endif %}
 			</li>
-			<li class="nav-item dropdown no-arrow no-caret dropdown-user">
+			<li class="nav-item dropdown no-arrow no-caret dropdown-user pr-2">
 				<a class="btn btn-icon btn-transparent-dark dropdown-toggle miblie-notif" id="navbarDropdownUserImage"
 					href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
@@ -381,8 +396,8 @@
 
 			{% else %}
 			<li class="nav-item">
-				<a href="{{ path('app_login') }}" class="nav-link text-light">
-					Vendre / connexion
+				<a href="{{ path('app_login') }}" class="nav-link text-blue">
+					<button class="btn btn-success btn-sm nav-auth-btn">Vendre / Connexion</button>
 				</a>
 			</li>
 			{% endif %}

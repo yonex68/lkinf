@@ -1,36 +1,38 @@
-<div class="p-3 shadow-sm">
-   {{ form_start(form) }}
+<div class="card">
+   <div class="card-body">
+      {{ form_start(form) }}
 
-   <div class=" mb-4">
-      <div class="">
+      <div class=" mb-4">
          <div class="">
-            <h6 class="font-weight-bold">
-               Description
-            </h6>
-            <p class="text-muted">
-               C’est la partie la plus importante de votre service, alors
-               soignez-la ! Rédigez un texte original, présentez-vous, vérifiez
-               attentivement votre orthographe, rassurez vos futurs clients sur vos
-               compétences, détaillez ce que vous faites pour le prix de départ
-               ainsi que dans vos options, définissez des limites, et bien sûr
-               appliquez nos conseils (disponibles sur l’aide) pour que votre
-               service soit validé par notre équipe de modération.
-            </p>
-         </div>
-         <div>
-            {{ form_widget(form.description) }}
-            {{ form_errors(form.description) }}
+            <div class="">
+               <h6 class="font-weight-bold">
+                  Description
+               </h6>
+               <p class="text-muted">
+                  C’est la partie la plus importante de votre service, alors
+                  soignez-la ! Rédigez un texte original, présentez-vous, vérifiez
+                  attentivement votre orthographe, rassurez vos futurs clients sur vos
+                  compétences, détaillez ce que vous faites pour le prix de départ
+                  ainsi que dans vos options, définissez des limites, et bien sûr
+                  appliquez nos conseils (disponibles sur l’aide) pour que votre
+                  service soit validé par notre équipe de modération.
+               </p>
+            </div>
+            <div>
+               {{ form_widget(form.description) }}
+               {{ form_errors(form.description) }}
+            </div>
          </div>
       </div>
-   </div>
 
-   <div class="py-4">
       <div class="">
-         <button class="btn btn-dark">
-            {{ button_label|default('Enregistrer et suivant') }}
-         </button>
+         <div class="text-right">
+            <button class="btn btn-dark">
+               {{ button_label|default('Enregistrer et suivant') }}
+            </button>
+         </div>
       </div>
-   </div>
 
-   {{ form_end(form) }}
+      {{ form_end(form) }}
+   </div>
 </div>

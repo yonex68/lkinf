@@ -13,6 +13,7 @@ use App\Form\SearchServiceType;
 use App\Form\ServiceSignaleType;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
 use App\Repository\ServiceOptionRepository;
@@ -92,7 +93,7 @@ class MicroserviceController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
-    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository, ServiceSignaleRepository $serviceSignaleRepository): Response
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository, ServiceSignaleRepository $serviceSignaleRepository, DisponibiliteRepository $disponibiliteRepository): Response
     {
 
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
@@ -130,6 +131,7 @@ class MicroserviceController extends AbstractController
             'options' => $options,
             'total' => $totalMontant,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
+            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);
     }
 }

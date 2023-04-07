@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ microservice.name }}{% endblock %}
+{% block title %}{{ microservice.name|u.truncate(60, '...') }}{% endblock %}
+
+{% block alternatiflink %}https://links-infinity.com/microservices/{{ microservice.name }}{% endblock %}
 
 {% block meta %}
-  <meta name="author" content="{{ microservice.name|u.truncate(4, '...') }}" />
-  <meta name="keywords" content="{{ microservice.name|u.truncate(59, '...') }}: Commander" />
-  <meta name="description" content="{{ microservice.name|u.truncate(60, '...') }}: {{ (microservice.description|raw)|u.truncate(100, '...') }}" />
+  <meta name="author" content="{{ appName }}" />
+  <meta name="keywords" content="{{ truncateTitle(microservice.name) }}" />
+  <meta name="description" content="{{ microservice.name|u.truncate(150, '...') }}: {{ (microservice.description|raw)|u.truncate(100, '...') }}" />
 {% endblock %}
 
 {% block serviceBlocNavigation %}
-<div class="third-menu bg-light border-top">
+<div class="third-menu border-top">
 	<div class="container">
 		<div class="row d-flex align-items-center justify-content-between">
 			<div class="col-lg-9 left">
@@ -18,10 +20,7 @@
 						<a href="#description">Description</a>
 					</li>
 					<li class="nav-aboutSeller">
-						<a href="#aboutSeller">Personnaliser</a>
-					</li>
-					<li class="nav-packagesTable">
-						<a href="#packagesTable">Contacter</a>
+						<a href="#serviceOptions">Réservation</a>
 					</li>
 					<li class="nav-recommendations">
 						<a href="#recommendations">Autres services</a>
@@ -65,7 +64,7 @@
 				<div id="overview" class="seller-overview d-flex align-items-center">
 					<div class="user-profile-image d-flex">
 						<label class="profile-pict" for="profile_image">
-							<img src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}" class="profile-pict-img" width="40" height="40" alt="{{ microservice.vendeur.nom ~ ' '  ~ microservice.vendeur.prenom }}">
+							<img src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}" class="profile-pict-img" width="40" height="40" alt="{{ appName }} {{ microservice.vendeur.nom ~ ' '  ~ microservice.vendeur.prenom }}">
 						</label>
 						<div class="profile-name">
 							<div class="seller-level">
@@ -135,7 +134,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header border-0">
-						<h5 class="modal-title" id="serivesignaleModalLabel">Signalez ce service</h5>
+						<h6 class="h6" id="serivesignaleModalLabel">Signalez ce service</h6>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
