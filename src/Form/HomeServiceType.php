@@ -7,6 +7,7 @@ use App\Entity\SearchService;
 use App\Repository\CategorieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,13 +17,18 @@ class HomeServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('q', TextType::class, [
+            ->add('adresse', TextType::class, [
                 'label' =>  false,
                 'required'  =>  false,
+                'mapped'  =>  false,
                 'attr'  =>  [
-                    'placeholder'   =>  'De quoi avez-vous besoin?',
+                    'placeholder'   =>  'Votre ville',
                     'class' => 'form-control border-0 form-control-lg border-0 bg-transparent',
                 ]
+            ])
+            ->add('ville', HiddenType::class, [
+                'label' =>  false,
+                'required'  =>  false,
             ])
             /*->add('categories', EntityType::class, [
                 'label' => False,
@@ -39,8 +45,7 @@ class HomeServiceType extends AbstractType
                     'class' => '', 
                     'placeholder' => 'Catégorie'
                 ]
-            ])*/
-        ;
+            ])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

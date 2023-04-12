@@ -13,7 +13,7 @@
 
 							{% if userconversation.user2.avatar %}
 
-								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
 							{% else %}
 
@@ -29,7 +29,7 @@
 
 							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
 
-								{{ userconversation.user2.nom }} {{ userconversation.user2.prenom }}
+								{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}
 
 							</a>
 
@@ -49,7 +49,7 @@
 
 							{% if userconversation.user1.avatar %}
 
-								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
 							{% else %}
 
@@ -65,7 +65,7 @@
 
 							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
 
-								{{ userconversation.user1.nom }} {{ userconversation.user1.prenom }}
+								{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}
 
 							</a>
 
@@ -103,7 +103,7 @@
 
 							{% if userconversation.user2.avatar %}
 
-								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+								<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
 							{% else %}
 
@@ -119,8 +119,7 @@
 
 							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
 
-								{{ userconversation.user2.nom }}
-								{{ userconversation.user2.prenom }}
+								{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}
 
 							</a>
 
@@ -140,7 +139,7 @@
 
 							{% if userconversation.user1.avatar %}
 
-								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border">
+								<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}" class="rounded-circle border" alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
 							{% else %}
 
@@ -155,9 +154,8 @@
 						<div class="text-truncate">
 
 							<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
-
-								{{ userconversation.user1.nom }}
-								{{ userconversation.user1.prenom }}
+							
+								{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}
 
 							</a>
 

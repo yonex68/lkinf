@@ -64,10 +64,12 @@ class MicroserviceRepository extends ServiceEntityRepository
     private function getSearcheQuery(SearchService $search) //: QueryBuilder
     {
         $query = $this->createQueryBuilder('m')
+            ->select('v', 'm')
             ->select('d', 'm')
             ->select('c', 'm')
             ->select('e', 'm')
             ->leftjoin('m.disponibilites', 'd')
+            ->leftjoin('m.vendeur', 'v')
             ->leftjoin('m.categorie', 'c')
             ->leftjoin('m.emploitemps', 'e')
             ->orderBy('m.created', 'DESC')
@@ -95,10 +97,10 @@ class MicroserviceRepository extends ServiceEntityRepository
                 ->andWhere('d.heureCloture <= :heureCloture')
                 ->setParameter('heureCloture', $search->heureCloture);
         }
-        if (!empty($search->ville)) {
+        if (!empty($search->getVille())) {
             $query = $query
                 ->andWhere('v.ville LIKE :ville')
-                ->setParameter('ville', "%{$search->ville}%");
+                ->setParameter('ville', "%{$search->getVille()}%");
         }
 
         if (!empty($search->minPrice)) {
@@ -233,16 +235,17 @@ class MicroserviceRepository extends ServiceEntityRepository
         }
     }
 
-    public function findBylocation($userAdresse): array
+    public function findBylocation($userville): array
     {
         return $this->createQueryBuilder('m')
             ->select('v', 'm')
             ->leftjoin('m.vendeur', 'v')
             ->orderBy('m.created', 'DESC')
-            ->andWhere('m.online = 1')
-            ->andWhere('v.adresse = :adresse')
-            ->setParameter('adresse', $userAdresse)
-            ->setMaxResults(10)
+            ->where('m.online = 1')
+            ->andWhere('v.ville LIKE :ville')
+            ->andWhere('m.offline = 0')
+            ->setParameter('ville', "%{$userville}%")
+            ->setMaxResults(20)
             ->getQuery()
             ->getResult();
     }
@@ -255,6 +258,7 @@ class MicroserviceRepository extends ServiceEntityRepository
             ->leftjoin('m.vendeur', 'v')
             ->orderBy('m.created', 'DESC')
             ->andWhere('m.online = 1')
+            ->andWhere('m.offline = 0')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();

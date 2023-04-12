@@ -18,6 +18,7 @@ class RetraitType extends AbstractType
     {
         $builder
             ->add('montant', MoneyType::class, [
+                'currency' => 'EUR',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peux pas être vide',

@@ -4,22 +4,78 @@
 
 {% include "accueil/_banner_slider.html.twig" %}
 
-<section class="pb-0 mt-sm-5">
+<section class="py-4 best-selling">
 	<div class="view_slider recommended">
 		<div class="container">
+			<h3 class="font-weight-bold {{ microservices|length == 0 ? 'text-center' : '' }}">
+				{{ ville ? 'Services à proximité' : 'Services les plus réscents' }}
+			</h3>
 			<div class="row">
-				<div class="col-lg-12">
-					<h3>Les plus rescents</h3>
-					<div class="view recent-slider recommended-slider">
-						{% for microservice in lastedServices() %}
-						{{ include('microservice/composants/_bloc.html.twig') }}
-						{% endfor %}
-					</div>
+				{% for microservice in microservices %}
+				<div class="col-6 col-sm-3 d-flex align-items-stretch paddingless">
+					{{ include('microservice/composants/_bloc.html.twig') }}
 				</div>
+				{% else %}
+				<div class="col-sm-6 mx-auto">
+					<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">Aucun service disponible dans cette zone: <strong>{{
+							ville }}</strong></p>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
 </section>
+
+<div class="freelance-projects pb-5">
+	<div class="container">
+		<h3 class="font-weight-bold pb-3 h5 {{ vendeurs|length == 0 ? 'text-center' : '' }}">
+			{{ ville ? 'Profésionnels à proximité' : 'Les profésionnels à votre service' }}
+		</h3>
+		{% if vendeurs|length > 0 %}
+
+		<div class="row freelance-slider">
+			{% for vendeur in vendeurs %}
+
+			<div class="col">
+				<div class="freelancer">
+					{% if vendeur.couverture %}
+					<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
+						class="img-fluid" alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+					{% else %}
+
+					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
+
+					{% endif %}
+					<div class="freelancer-footer">
+
+						{% if vendeur.avatar %}
+						<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
+							class="img-fluid" alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+						{% else %}
+
+						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+
+						{% endif %}
+						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="pl-2 pt-2 text-dark">
+							<strong class="">{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			{% endfor %}
+		</div>
+
+		{% else %}
+
+		<div>
+			<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">Aucun profésinnels disponible dans cette zone: <strong>{{ ville
+					}}</strong></p>
+		</div>
+
+		{% endif %}
+	</div>
+</div>
 
 <div class="market-wrapper py-5">
 	<div class="container">
@@ -27,7 +83,7 @@
 		<ul class="categories-list mb-0">
 			{% for categorie in categories %}
 			<li class="my-3">
-				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}">
+				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}">
 					{% if categorie.icone %}
 
 					<img src="{{ vich_uploader_asset(categorie, 'iconeFile') | imagine_filter('small_avatar') }}"
@@ -49,7 +105,7 @@
 	</div>
 </div>
 
-<section class="bg-lightgray">
+<section class="bg-lightgray" id="how-works">
 	<div class="container py-5">
 		<div class="about-section">
 			<div class="row align-items-center">
@@ -91,86 +147,7 @@
 	</div>
 </section>
 
-<section class="py-4 best-selling">
-	<div class="view_slider recommended">
-		<div class="container">
-			<h3>Services à proximité</h3>
-			<div class="row">
-				{% for microservice in microservices %}
-				<div class="col-6 col-sm-3 d-flex align-items-stretch paddingless">
-					{{ include('microservice/composants/_bloc.html.twig') }}
-				</div>
-				{% endfor %}
-			</div>
-		</div>
-	</div>
-</section>
-
-<div class="freelance-projects pb-5">
-	<div class="container">
-		<h3 class="font-weight-bold pb-3">
-			Profésionnels à proximité
-		</h3>
-		<div class="row freelance-slider">
-			{% for vendeur in vendeurs %}
-
-			<div class="col">
-				<div class="freelancer">
-					{% if vendeur.couverture %}
-					<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
-						class="img-fluid" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
-					{% else %}
-
-					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
-
-					{% endif %}
-					<div class="freelancer-footer">
-
-						{% if vendeur.avatar %}
-						<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
-							class="img-fluid" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
-						{% else %}
-
-						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
-
-						{% endif %}
-						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="py-2 pl-2 text-muted">
-							<strong class="">{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
-						</a>
-					</div>
-				</div>
-			</div>
-
-			{% endfor %}
-		</div>
-	</div>
-</div>
-
-<!--<div class="container py-5">
-	<div class="pro-section">
-		<div class="pro-text">
-			<span>Try</span>
-			<h3>Unrivaled experts, trusted by the world's biggest brands</h3>
-			<a class="fit-btn" href="#">Explore Pro Services</a>
-		</div>
-	</div>
-</div>
-
-<section class="container py-3">
-	<div class="" style="position: relative;">
-		<div class="sidebar">
-			<div class="heading">
-				<h3>Prestataires à proximité de vous</h3>
-			</div>
-			<div id="listings" class="listings"></div>
-		</div>
-		<div id='map' style='width: 100%; height: 550px;'></div>
-	</div>
-</section>-->
-
-
-
-<div class="modal fade" id="modalLocations" tabindex="-1" aria-labelledby="modalLocationsLabel" aria-hidden="true">
+<div class="modal fade" id="{{ ville ? '' : 'modalLocations' }}" tabindex="-1" aria-labelledby="modalLocationsLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
 			<div class="modal-header border-0 text-center">
@@ -178,15 +155,43 @@
 					<span class="text-light" aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body text-center">
-				<h5 class="modal-title text-center text-light" id="modalLocationsLabel">Professionnels autour de vous</h5>
+			<div class="modal-body">
+				<h5 class="modal-title text-center text-light" id="modalLocationsLabel">Professionnels et services <br> autour de vous</h5>
 				<p class="text-center text-light">
-					{{ appName }} souhaite accéder à votre position!
+					Indiquez votre ville
 				</p>
-				<button id="button-location" class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">Continuer / Autoriser l'accès à votre position</button>
-			</div>
-			<div class="modal-footer border-0">
-				<button type="button" class="btn btn-outline-light btn-lg" data-dismiss="modal">Fermer</button>
+				<div class="row">
+					<div class="col-sm-10 mx-auto">
+						<form method="post">
+							<div class="position-relative location">
+								<div class="form-group">
+									<div class="input-group bg-white rounded shadow-sm">
+										<div class="input-group-prepend">
+											<span class="input-group-text bg-transparent border-0">
+												<i class="fa fa-map-marker text-blue"></i>
+											</span>
+										</div>
+										<input type="text" name="adresse" placeholder="Votre ville" value="{{ ville ?? '' }}" class="form-control rounded border-0"
+											id="registration_form_adresse">
+										<input type="hidden" name="ville" id="registration_form_ville">
+										<input type="hidden" name="pays" id="registration_form_pays">
+									</div>
+								</div>
+
+								<div class="w-100 addresses" id="addresses">
+									<ul class="list-group text-dark" id="adresse-liste">
+									</ul>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" id="button-location"
+									class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">
+									Continuer
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -199,60 +204,11 @@
 {{ parent() }}
 
 <script src="{{ asset('js/favoris.js') }}"></script>
+{% include "partials/_location_script.html.twig" %}
 
 <script>
-
-	$("#button-location").click(function () {
-
-		function getLocation(position) {
-			//console.log(position)
-
-			$.ajax({
-				method: "POST",
-				url: "{{ path('app_service') }}",
-				data: {
-					longitude: position.coords.longitude,
-					latitude: position.coords.latitude
-				},
-				success: function (response) {
-					//alert("Soumis");
-					console.log(response)
-				},
-				error: function (error) {
-					alert("Erreur");
-				}
-			});
-		}
-
-		function failedToGet() {
-			console.log('Il y a eu une erreur')
-		}
-
-		const result = navigator.geolocation.getCurrentPosition(getLocation, failedToGet)
-
-
+	$("#adresse").click(function () {
+		$("#modalLocations").modal('show')
 	});
-
 </script>
-
-<script>
-	window.onload = function () {     // Array of Images
-		var backgroundImg = [
-			"{{ asset('img/home-1.png') }}",
-			"{{ asset('img/home-2.png') }}",
-			"{{ asset('img/home-3.png') }}",
-			"{{ asset('img/home-4.png') }}",
-			"{{ asset('img/home-5.png') }}",
-			"{{ asset('img/home-6.png') }}",
-		]
-		setInterval(changeImage, 5000);
-		function changeImage() {
-			var i = Math.floor((Math.random() * 3));
-
-			document.getElementById("home-banner").style.backgroundImage = "url('" + backgroundImg[i] + "')";
-
-		}
-	}
-</script>
-
 {% endblock %}

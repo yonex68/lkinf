@@ -31,14 +31,14 @@
 
 				<span class="seller-name">
 					<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
-						{{ microservice.name|u.truncate(25, '...') }}
+						{{ microservice.name|u.truncate(60, '...') }}
 					</a>
 				</span>
-				
+
 			</div>
 
 			<div class="content-info">
-				
+
 
 				<a href="{{ path('favoris_new', {id: microservice.id}) }}">
 					<div class="rating-wrapper">
@@ -50,14 +50,19 @@
 						</span>
 					</div>
 				</a>
-				
+
 				<div class="rating-wrapper">
 					<span class="gig-rating text-body-2">
-						{% include "microservice/composants/_etoilles.html.twig" %}						
+						{% include "microservice/composants/_etoilles.html.twig" %}
 						<span>({{ serviceAvis(microservice) }})</span>
 					</span>
 				</div>
 			</div>
+
+			<span class="level hint--top level-one-seller">
+				<i class="fa fa-map-marker text-blue"></i>
+				{{ microservice.vendeur.ville }}
+			</span>
 
 			<div class="footer">
 

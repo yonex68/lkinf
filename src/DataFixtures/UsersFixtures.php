@@ -47,6 +47,8 @@ class UsersFixtures extends Fixture
 
             $user->setPrenom($faker->firstName());
             $user->setNom($faker->lastName());
+            $user->setPseudo($faker->userName());
+            $user->setUsePseudo($faker->numberBetween(0, 1));
             $user->setGenre($faker->randomElement(['Masculin', 'Feminin']));
             $user->setNameUrl($faker->firstName() . '-' . $faker->lastName());
             $user->setApropos($faker->realText(150));

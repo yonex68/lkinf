@@ -20,6 +20,7 @@ use App\Repository\MessageRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PrixRepository;
 use App\Repository\RapportRepository;
+use App\Service\MailerService;
 use App\Service\PaymentService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\TextUI\Command;
@@ -65,6 +66,23 @@ class CommandeController extends AbstractController
         return $this->render('commande/chat.html.twig', [
             'usercommandes' => $commandes,
             'commande' => null,
+        ]);
+    }
+
+    #[Route('/details/{id}', name: 'commandes_pack_show')]
+    public function show(CommandeRepository $commandeRepository, $id): Response
+    {
+        $commande = $commandeRepository->findOneBy([
+            'id' => $id, 
+            'client' => $this->getUser()
+        ]);
+
+        if (!$commande) {
+            return $this->redirectToRoute('commandes_chats');
+        }
+
+        return $this->render('commande/show.html.twig', [
+            'commande' => $commande,
         ]);
     }
 
@@ -347,7 +365,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/save-commande/{slug}/{offre}/{payment_intent}', name: 'save_commande')]
-    public function save(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent): Response
+    public function save(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent, MailerService $mailer): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
@@ -385,6 +403,30 @@ class CommandeController extends AbstractController
 
         $entityManager->persist($commande);
         $entityManager->flush();
+
+        $user = $this->getUser();
+
+        /** Envoie du mail au client */
+        $mailer->sendCommandMail(
+            'contact@links-infinity.com',
+            $commande->getClient()->getEmail(),
+            'Nouvelle commande',
+            'mails/_client.html.twig',
+            $commande->getClient(),
+            $commande->getVendeur(),
+            $commande
+        );
+
+        /** Envoie du mail au vendeur */
+        $mailer->sendCommandMail(
+            'contact@links-infinity.com',
+            $commande->getVendeur()->getEmail(),
+            'Nouvelle commande',
+            'mails/_vendeur.html.twig',
+            $commande->getClient(),
+            $commande->getVendeur(),
+            $commande
+        );
 
         return $this->redirectToRoute('commande_success', [
             'id' => $commande->getId()

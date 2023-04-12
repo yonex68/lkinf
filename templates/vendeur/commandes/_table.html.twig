@@ -1,9 +1,10 @@
 <div class="table-responsive">
-   <table class="table text-muted table-borderless">
+
+   <table class="table text-dark table-borderless">
       <thead>
          <tr>
             <th>Service</th>
-            <th class="text-center">{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' :
+            <th>{{ app.request.attributes.get('_route') == 'vendeur_commandes_index' ? 'Client' :
                'Vendeur' }}</th>
             <th>Statut</th>
             <th>Date</th>
@@ -12,6 +13,10 @@
       </thead>
       <tbody>
          {% for commande in commandes %}
+
+
+         {% if commande.microservice %}
+
          <tr>
             <td>
                <div class="media">
@@ -28,9 +33,10 @@
                   {% endif %}
                   <div class="media-body pl-3">
                      <strong>{{ commande.montant ~ currency }}</strong>
-                     <span class="badge badge-light border badge-pill text-capitalize">{{ commande.offre }}</span>
+                     <span class="badge badge-blue badge-pill text-capitalize">{{ commande.offre }}</span>
                      <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}"
-                        class="d-block text-light font-weight-bold" target="_blank">{{ commande.microservice.name|u.truncate(30, '...') }}</a>
+                        class="d-block text-dark font-weight-bold" target="_blank">{{
+                        commande.microservice.name|u.truncate(30, '...') }}</a>
                   </div>
                </div>
             </td>
@@ -53,7 +59,8 @@
                   {% endif %}
 
                   <div class="text-center">
-                     <strong class="d-block text-muted">{{ commande.client.nom }} {{ commande.client.prenom }}</strong>
+                     <strong class="d-block text-muted small">{{ commande.client.nom }} {{ commande.client.prenom
+                        }}</strong>
                   </div>
                </div>
 
@@ -75,7 +82,7 @@
 
                      {% endif %}
 
-                     <div class="text-center text-muted">
+                     <div class="text-center text-muted small">
                         <strong>{{ commande.vendeur.nom }} {{ commande.vendeur.prenom }}</strong>
                      </div>
                   </div>
@@ -85,8 +92,11 @@
 
             </td>
             <td>
-               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ?
-                  'Livré' : 'En cours' }}</span>
+               {% if commande.microservice %}
+               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ? 'Livré' : 'En cours' }}</span>
+               {% else %}
+               <span class="badge badge-pill badge-success">Validé</span>
+               {% endif %}
             </td>
             <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
             <td>
@@ -94,9 +104,40 @@
                   target="_blank">Suivi</a>
             </td>
          </tr>
+
+         {% else %}
+
+         <tr>
+            <td>{{ commande.pack.name }}</td>
+            <td>{{ appName }}</td>
+            <td>
+               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ?
+                  'Livré' : 'En cours' }}</span>
+            </td>
+            <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
+            <td>
+               {% if commande.microservice %}
+
+               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-dark">Suivre</a>
+
+               {% else %}
+
+               <a href="{{ path('commandes_pack_show', {id: commande.id}) }}" class="btn btn-dark">Détails</a>
+
+               {% endif %}
+            </td>
+         </tr>
+
+         {% endif %}
+
          {% else %}
          <tr>
-            <td colspan="7" class="text-center">Aucune commande</td>
+            <td colspan="7" class="text-center">
+               Aucune commande
+               <div class="py-4">
+                  <i class="fa fa-search fa-3x text-muted"></i>
+               </div>
+            </td>
          </tr>
          {% endfor %}
       </tbody>

@@ -184,6 +184,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $endRegister = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pseudo = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $usePseudo = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -1139,6 +1145,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setEndRegister(?bool $endRegister): self
     {
         $this->endRegister = $endRegister;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function isUsePseudo(): ?bool
+    {
+        return $this->usePseudo;
+    }
+
+    public function setUsePseudo(?bool $usePseudo): self
+    {
+        $this->usePseudo = $usePseudo;
 
         return $this;
     }

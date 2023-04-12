@@ -83,6 +83,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('alertesNonLu', [$this, 'getAlertesNonLu']),
             new TwigFunction('userRemboursements', [$this, 'getUserRemboursements']),
             new TwigFunction('truncateTitle', [$this, 'truncateTitle']),
+            new TwigFunction('ville', [$this, 'getUserVille']),
         ];
     }
 
@@ -183,5 +184,12 @@ class AppExtension extends AbstractExtension
         }else {
             return $title;
         }
+    }
+
+    public function getUserVille()
+    {
+        $ville = isset($_COOKIE['LINKS-VILLE']) ? $_COOKIE['LINKS-VILLE'] : '';
+
+        return $ville;
     }
 }

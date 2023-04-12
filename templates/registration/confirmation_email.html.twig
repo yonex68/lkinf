@@ -1,15 +1,18 @@
-<h1>Bonjour Mr/Mme,</h1>
+<div>
+	<h1>Bonjour Mr/Mme,</h1>
 
-<p>
+	<p>
 
-	Vous venez de créer un compte sur <strong>{{ appName }}</strong>. Avant de pouvoir utiliser votre compte, vous devez vérifier que cette adresse e-mail est bien la vôtre en cliquant ici :
-	<a href="{{ signedUrl }}">Confirmer mon e-mail</a>.
-		
-    Ce lien expirera dans
-	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+		Vous venez de créer un compte sur <strong>{{ appName }}</strong>. Avant de pouvoir utiliser votre compte, vous
+		devez vérifier que cette adresse e-mail est bien la vôtre en cliquant ici :
+		<a href="{{ signedUrl }}">Confirmer mon e-mail</a>.
 
-</p>
+		Ce lien expirera dans
+		{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
 
-<p>
-	Cordialement, <strong>{{ appName }}</strong>!
-</p>
+	</p>
+
+	<p>
+		Cordialement, <strong>{{ appName }}</strong>!
+	</p>
+</div>

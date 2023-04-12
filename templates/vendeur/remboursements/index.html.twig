@@ -4,16 +4,17 @@
 
 {% block body %}
 
-<div class="card shadow-sm w-100 mb-4">
-    <div class="card-body">
+<div class="card w-100 mb-4">
+    <div class="card-header bg-dark">
         <div class="row d-block d-sm-flex align-items-center">
             <div class="col-sm-6">
-                <h2 class="h5 mb-3">Remboursements</h2>
+                <h2 class="h6 text-light">Remboursements</h2>
             </div>
         </div>
-
+    </div>
+    <div class="card-body">
         <div class="table-responsible">
-            <table class="table table-borderless text-muted">
+            <table class="table table-borderless text-dark">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -32,13 +33,16 @@
                         </td>
                         <td>{{ remboursement.created ? remboursement.created|date('d/m/Y') : '' }}</td>
                         <td>
-                            <span class="badge badge-{% if remboursement.statut == 'En attente' %}warning{% elseif remboursement.statut == 'Accepter' %}success{% else %}danger{% endif %} badge-pill">{{ remboursement.statut }}</span>
+                            <span
+                                class="badge badge-{% if remboursement.statut == 'En attente' %}warning{% elseif remboursement.statut == 'Accepter' %}success{% else %}danger{% endif %} badge-pill">{{
+                                remboursement.statut }}</span>
                         </td>
                         <td>
                             {% if remboursement.statut == 'En attente' %}
                             ...
                             {% else %}
-                            <a href="{{ path('app_vendeur_remboursements_show', {'id': remboursement.id}) }}" class="btn btn-dark">Détails</a>
+                            <a href="{{ path('app_vendeur_remboursements_show', {'id': remboursement.id}) }}"
+                                class="btn btn-dark">Détails</a>
                             {% endif %}
                         </td>
                     </tr>

@@ -14,7 +14,7 @@ class AbonnementsFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for($abonnements = 1; $abonnements <= 3; $abonnements++){
+        /*for($abonnements = 1; $abonnements <= 3; $abonnements++){
             $user = $this->getReference('user_'. $faker->numberBetween(1, 50));
             $stripe = $this->getReference('stripe_'. $faker->numberBetween(1, 3));
 
@@ -37,7 +37,7 @@ class AbonnementsFixtures extends Fixture implements DependentFixtureInterface
             }
         }
 
-        $manager->flush();
+        $manager->flush();*/
     }
 
     public function getDependencies()

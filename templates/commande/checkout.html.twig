@@ -10,11 +10,11 @@
 
 <section class="py-5">
 	<div class="container">
-		<h4 class="py-3 h5">Nouvelle commande</h4>
 		<div class="row">
-			<div class="col-sm-7">
+			<div class="col-sm-6">
 				<div class="card mb-3">
 					<div class="card-body">
+						<h4 class="py-3 h5">Nouvelle commande</h4>
 						{% include "commande/composants/_stripe.html.twig" %}
 
 						<div>
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="col-sm-5">
-				{{ include('vendeur/microservices/composants/_bloc.html.twig') }}
+				{{ include('microservice/composants/_bloc.html.twig') }}
 			</div>
 		</div>
 	</div>

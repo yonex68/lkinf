@@ -807,8 +807,7 @@ p.help-block li {
      position: absolute;
      left: 15px;
      top: 15px;
-     font-size: 20px;
-     font-weight: bold;
+     font-size: 1em;
      text-transform: capitalize;
      color: #fff;
 }
@@ -823,7 +822,7 @@ p.help-block li {
      font-weight: bold;
      text-align: left;
      line-height: 38px;
-     padding-bottom: 24px;
+     padding-bottom: 15px;
 }
  .about-section ul li span img {
      position: absolute;
@@ -1050,50 +1049,51 @@ p.help-block li {
 /* testimonials */
 /* pro section */
  .pro-section {
-     height: 300px;
+     height: auto;
+     padding: 3% 3% 0;
      display: -webkit-box;
      display: -ms-flexbox;
      display: flex;
      position: relative;
      overflow: hidden;
-     background: url(../images/pro_banner_1400px-2x.png) center top no-repeat;
+     background: center top no-repeat;
      background-size: cover;
 }
  .pro-text {
      z-index: 1;
-     width: 50%;
+     width: 100%;
      padding-left: 5%;
+     padding-right: 5%;
      -ms-flex-item-align: center;
      align-self: center;
 }
- .pro-text span {
+ .pro-section span {
      color: #fff;
-     font-weight: 500;
+     font-weight: bold;
      font-size: 15px;
      padding-bottom: 10px;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     height: 30px;
-     line-height: 23px;
 }
- .pro-text span:after {
-     content: "";
-     background: url(../images/logo.svg) no-repeat 0 0/90px 16px transparent;
-     width: 50%;
+.pro-section h3 {
+    font-weight: bold;
+    color: #fff;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 28px;
+    text-transform: uppercase;
 }
- .pro-text h3 {
-     font-weight: 700;
-     color: #fff;
-     padding-bottom: 30px;
-     font-size: 28px;
+.pro-section .hr {
+    background-color: #fff!important;
+    height: 1px!important;
+    display: inline-block;
 }
- .pro-text .fit-btn {
+.pro-section .fit-btn {
      display: inline-block;
+     margin-top: 30px;
      padding: 12px 24px;
-     border: 1px solid #02c2a9;
+     border: 1px solid #fff;
+     background-color: #fff;
      border-radius: 4px;
-     font-weight: 600;
+     font-weight: 700;
      font-size: 16px;
      line-height: 100%;
      text-decoration: none;
@@ -1102,8 +1102,7 @@ p.help-block li {
      -webkit-transition: .15s ease-in-out;
      -o-transition: .15s ease-in-out;
      transition: .15s ease-in-out;
-     background: none;
-     color: #02c2a9;
+     color: #000;
 }
 /* pro section */
 /* guide wrapper */
@@ -1177,8 +1176,8 @@ p.help-block li {
 }
  .c-border-btn {
      background: none;
-     border-color: #02c2a9;
-     color: #02c2a9;
+     border-color: #080679;
+     color: #080679;
 }
 /* get started */
  .get-started {

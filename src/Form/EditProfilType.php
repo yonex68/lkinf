@@ -46,6 +46,22 @@ class EditProfilType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('usePseudo', CheckboxType::class, [
+                'label' => 'Utilisé le pseudonyme comme votre nom public',
+                'help' => "Au lieu que votre nom et pénom soit afficher sur le site, c'est votre pseudonyme  qui sera concideré comme votre nom public",
+                'required' => false
+            ])
+            ->add('pseudo', TextType::class, [
+                'label' => 'Pseudonyme',
+                'attr' => ['placeholder' => 'Pseudonyme'],
+                'required' => false,
+                'help' => "Un pseudonyme est un nom d'emprunt adopté par une ou plusieurs personnes pour exercer une activité sous un autre nom que celui de son identité officielle.",
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
+            ])
             ->add('genre', ChoiceType::class, [
                 'label' => 'Genre*',
                 'choices'  => [

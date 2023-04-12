@@ -24,13 +24,6 @@
                </a>
             </li>
 
-            <li>
-               <a href="{{ path('app_admin_services_signale_index') }}" class=" waves-effect">
-                  <i class="mdi mdi-bell"></i>
-                  <span>Alertes</span> <span class="badge bg-danger rounded-pill ml-auto">{{ alertesNonLu()|length }}</span>
-               </a>
-            </li>
-
             <!-- Catégories -->
             <li>
                <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -41,6 +34,20 @@
                   <li><a href="{{ path('app_admin_categories_index') }}">Liste</a></li>
                   <li><a href="{{ path('app_admin_categories_new') }}">Ajouter</a></li>
                </ul>
+            </li>
+
+            <li>
+               <a href="{{ path('app_admin_services_signale_index') }}" class=" waves-effect">
+                  <i class="mdi mdi-bell"></i>
+                  <span>Alertes</span> <span class="badge bg-danger rounded-pill ml-auto">{{ alertesNonLu()|length }}</span>
+               </a>
+            </li>
+
+            <li>
+               <a href="{{ path('app_admin_offres_index') }}" class=" waves-effect">
+                  <i class="mdi mdi-briefcase-variant-outline"></i>
+                  <span>Packs</span>
+               </a>
             </li>
 
             <li>

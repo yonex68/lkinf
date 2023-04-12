@@ -46,13 +46,13 @@
 				<h2>Besoin d'aide?</h2>
 				<ul class="list">
 					<li>
-						<a href="#">Comment ça marche?</a>
+						<a href="{{ path('accueil') }}#how-works">Comment ça marche?</a>
 					</li>
 					<li>
-						<a href="#">FAQS</a>
+						<a href="{{ path('page_faqs') }}">FAQS</a>
 					</li>
 					<li>
-						<a href="#">Contacter-nous</a>
+						<a href="mailto:{{ appEmail }}">Contacter-nous</a>
 					</li>
 				</ul>
 			</div>
@@ -65,14 +65,14 @@
 					</li>
 					{% endif %}
 					<li>
-						<a href="#">Politique de confidentialité</a>
+						<a href="{{ path('page_politiques') }}">Politique de confidentialité</a>
 					</li>
 					<li>
-						<a href="#">CGU et CGV
+						<a href="{{ path('page_faqs') }}">CGU et CGV
 						</a>
 					</li>
 					<li>
-						<a href="#">Mentions légales
+						<a href="{{ path('page_mentions') }}">Mentions légales
 						</a>
 					</li>
 				</ul>

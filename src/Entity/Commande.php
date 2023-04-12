@@ -33,6 +33,7 @@ class Commande
     private $client;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: true)]
     private $vendeur;
 
     #[ORM\Column(type: 'boolean')]
@@ -91,6 +92,9 @@ class Commande
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $disponibilite = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Offre $pack = null;
 
     public function __construct()
     {
@@ -455,6 +459,18 @@ class Commande
     public function setDisponibilite(?string $disponibilite): self
     {
         $this->disponibilite = $disponibilite;
+
+        return $this;
+    }
+
+    public function getPack(): ?Offre
+    {
+        return $this->pack;
+    }
+
+    public function setPack(?Offre $pack): self
+    {
+        $this->pack = $pack;
 
         return $this;
     }

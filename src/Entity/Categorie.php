@@ -66,10 +66,14 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Offre::class, mappedBy: 'categorie')]
+    private Collection $offres;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,7 +131,7 @@ class Categorie
 
     public function __toString()
     {
-        return $this->name;
+        return $this->getName();
     }
 
     /**
@@ -247,6 +251,33 @@ class Categorie
             if ($user->getCategorie() === $this) {
                 $user->setCategorie(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Offre>
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres->add($offre);
+            $offre->addCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            $offre->removeCategorie($this);
         }
 
         return $this;

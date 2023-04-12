@@ -61,14 +61,14 @@ class SearchServiceType extends AbstractType
             ]
          ])
          ->add('minPrice', NumberType::class, [
-            'label' => 'Min.(Mastering)',
+            'label' => 'Min',
             'required' => false,
             'attr' => [
                'placeholder' => 'Minimum',
             ]
          ])
          ->add('maxPrice', NumberType::class, [
-            'label' => 'Min.(Beatmaking)',
+            'label' => 'Min',
             'required' => false,
             'attr' => [
                'placeholder' => 'Maximum',

@@ -19,7 +19,7 @@ liip_imagine:
         medium_size:
             filters:
                 thumbnail:
-                    size: [800, 400]
+                    size: [300, 300]
                     mode: outbound
 
         midle_size:

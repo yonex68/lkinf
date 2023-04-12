@@ -76,7 +76,6 @@ class SearchService {
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->villes = new ArrayCollection();
     }
 
     /**
@@ -96,18 +95,40 @@ class SearchService {
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getVilles(): ArrayCollection
+     * Set the value of q
+     *
+     * @param  string  $q
+     *
+     * @return  self
+     */ 
+    public function setQ(?string $q)
     {
-        return $this->villes;
+        $this->q = $q;
+
+        return $this;
     }
 
     /**
-     * @param ArrayCollection $Villes
-     */
-    public function setVilles(ArrayCollection $Villes): void
+     * Get the value of ville
+     *
+     * @return  string
+     */ 
+    public function getVille()
     {
-        $this->villes = $Villes;
+        return $this->ville;
+    }
+
+    /**
+     * Set the value of ville
+     *
+     * @param  string  $ville
+     *
+     * @return  self
+     */ 
+    public function setVille(?string $ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
     }
 }

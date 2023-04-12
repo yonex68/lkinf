@@ -12,12 +12,11 @@
 
 			{% endif %}
 		</div>
-		<div class="p-3 pb-0 border-top border-bottom bg-light">
-			<h5 class="h6 text-light mb-1 mt-0 text-left">{{ app.user.nom }}
+		<div class="p-3 pb-0">
+			<h5 class="h6 text-dark mb-1 mt-0 text-left">{{ app.user.nom }}
 				{{ app.user.prenom }}</h5>
 			<p class="mb-0 text-muted text-left">{{ app.user.apropos|raw }}</p>
 		</div>
-		<hr>
 
 		<div class="p-3 pt-0">
 			{% if is_granted('ROLE_VENDEUR') %}

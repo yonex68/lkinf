@@ -20,9 +20,8 @@
                             <th></th>
                             <th>Offre</th>
                             <th>Montant</th>
-                            <th>Statut</th>
                             <th>Date</th>
-                            <th>actions</th>
+                            <th>Statut</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +39,7 @@
                                     {% else %}
 
                                     {% if commande.client.avatar %}
-                                    <img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('small_avatar') }}"
+                                    <img src="{{ vich_uploader_asset(commande.client, 'imageFile') | imagine_filter('small_avatar') }}"
                                         class="img-fluid rounded-circle" alt="{{ commande.client.prenom }}">
                                     {% else %}
 
@@ -105,15 +104,11 @@
                             <td><strong>{{ commande.microservice.name|u.truncate(30, '...') }}</strong></td>
                             <td><span class="badge bg-secondary rounded-pill">{{ commande.offre }}</span></td>
                             <td><strong>{{ commande.montant ~ currency }}</strong></td>
+                            <td>{{ commande.created ? commande.created|ago(locale='fr') : '' }}</td>
                             <td>
                                 <span
                                     class="badge rounded-pill bg-{{ commande.statut == 'Livrer' ? 'success' : 'warning' }}">{{
                                     commande.statut }}</span>
-                            </td>
-                            <td>{{ commande.created ? commande.created|ago(locale='fr') : '' }}</td>
-                            <td>
-                                <a href="{{ path('app_admin_commandes_show', {'id': commande.id}) }}"
-                                    class="btn btn-light border">Détails</a>
                             </td>
                         </tr>
                         {% else %}

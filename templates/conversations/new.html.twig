@@ -13,24 +13,26 @@
 			<div class="card-body">
 
 				<div class="row">
+
 					<div class="col-sm-7 mx-auto">
-						<div class="row">
+						<h3 class="text-center h6 pb-3">Nouvelle conversation</h3>
+						<div class="row pb-3">
 							<div class="col-4 col-sm-3 ml-auto d-flex justify-content-center">
 								<div class="text-center">
 
 									{% if app.user.avatar %}
 									<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('large_avatar') }}"
-										class="rounded-circle img-fluid" alt="{{ app.user.nom ~ ' ' ~ app.user.prenom }}">
+										class="rounded-circle img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 
 									{% else %}
 
 									<img class="rounded-circle img-fluid"
 										src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-										alt='{{ app.user.nom ~ ' ' ~ app.user.prenom }}' />
+										alt='{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}' />
 
 									{% endif %}
 
-									<h6 class="py-3">{{ app.user.nom ~ ' ' ~ app.user.prenom }}</h6>
+									<strong class="py-3">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</strong>
 								</div>
 							</div>
 							<div class="col-4 col-sm-2 text-center">
@@ -41,17 +43,17 @@
 
 									{% if vendeur.avatar %}
 									<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('large_avatar') }}"
-										class="rounded-circle img-fluid" alt="{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+										class="rounded-circle img-fluid" alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
 
 									{% else %}
 
 									<img class="rounded-circle img-fluid"
 										src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-										alt='{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}' />
+										alt='{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}' />
 
 									{% endif %}
 
-									<h6 class="py-3">{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</h6>
+									<strong class="py-3">{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
 								</div>
 							</div>
 						</div>
@@ -59,7 +61,7 @@
 						{% if microservice %}
 
 						<p class="text-center">Contacter
-							<strong>{{ vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
+							<strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
 							pour ce service
 						</p>
 						<div class="list-group my-3">

@@ -8,15 +8,17 @@
 {% block body %}
 
 <div class="card w-100 mb-4">
-	<div class="card-body">
-		<div class="row d-block d-sm-flex align-items-center mb-4">
+	<div class="card-header bg-dark">
+		<div class="row d-block d-sm-flex align-items-center">
 			<div class="col-sm-6">
-				<h2 class="h5 mb-3">Mes services</h2>
+				<h2 class="h6 mb-3 text-light">Mes services</h2>
 			</div>
 			<div class="col-sm-6 text-right">
 				<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-dark">Nouveau service</a>
 			</div>
 		</div>
+	</div>
+	<div class="card-body">
 		<div class="p-0">
 			<div class="">
 				{% for microservice in microservices %}

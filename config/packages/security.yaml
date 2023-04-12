@@ -53,6 +53,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/commandes, roles: ROLE_USER }
+        - { path: ^/pack/commande, roles: ROLE_USER }
         - { path: ^/favoris, roles: ROLE_USER }
         - { path: ^/suivis, roles: ROLE_USER }
         - { path: ^/espace-utilisateur, roles: ROLE_USER }

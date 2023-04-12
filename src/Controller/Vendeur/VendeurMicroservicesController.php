@@ -90,7 +90,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->flush();
 
             // Liste des clients qui le suivent
-            $vendeur = $this->getUser();
+            /*$vendeur = $this->getUser();
             $suivis = $suivisRepository->findBy(['vendeur' => $vendeur]);
             //dd($suivis);
 
@@ -109,7 +109,7 @@ class VendeurMicroservicesController extends AbstractController
                         );
                     }
                 }
-            }
+            }*/
 
             $this->addFlash('success', 'Le contenu a bien été cré');
 

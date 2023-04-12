@@ -15,6 +15,7 @@ use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
+use App\Repository\OffreRepository;
 use App\Repository\PrixRepository;
 use App\Repository\ServiceOptionRepository;
 use App\Repository\ServiceSignaleRepository;
@@ -32,12 +33,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/microservices')]
 class MicroserviceController extends AbstractController
 {
-    #[Route('/', name: 'microservices', methods: ['GET'])]
-    public function index(MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request, CategorieRepository $categorieRepository): Response
+    #[Route('/', name: 'microservices', methods: ['GET', 'POST'])]
+    public function index(MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request, CategorieRepository $categorieRepository, OffreRepository $offreRepository): Response
     {
         $search = new SearchService();
         $search->page = $request->get('page', 1);
-
+        $ville = isset($_COOKIE['LINKS-VILLE']) ? $_COOKIE['LINKS-VILLE'] : '';
+        $search->setVille($ville);
         $form = $this->createForm(SearchServiceType::class, $search);
         $form->handleRequest($request);
 
@@ -58,16 +60,19 @@ class MicroserviceController extends AbstractController
             'microservices' => $microservices,
             'categories' => $categories,
             'form' => $form,
+            'ville' => $ville,
             'query' => $search->q,
+            'packs' => $offreRepository->findBy(['online' => 1], ['created' => 'DESC']),
         ]);
     }
 
-    #[Route('/categories/{slug}', name: 'microservices_categories')]
+    #[Route('/categories/{slug}', name: 'microservices_categories', methods: ['GET', 'POST'])]
     public function categories(MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request, CategorieRepository $categorieRepository, $slug): Response
     {
         $search = new SearchService();
         $search->page = $request->get('page', 1);
-
+        $ville = isset($_COOKIE['LINKS-VILLE']) ? $_COOKIE['LINKS-VILLE'] : '';
+        $search->setVille($ville);
         $form = $this->createForm(SearchServiceType::class, $search);
         $form->handleRequest($request);
 
@@ -84,10 +89,11 @@ class MicroserviceController extends AbstractController
             ]);
         }
 
-        return $this->render('microservice/categories.html.twig', [
+        return $this->renderForm('microservice/categories.html.twig', [
             'microservices' => $microservices,
             'categories' => $categories,
-            'form' => $form->createView(),
+            'ville' => $ville,
+            'form' => $form,
             'categorie' => $categorieRepository->findOneBy(['slug' => $slug]),
         ]);
     }

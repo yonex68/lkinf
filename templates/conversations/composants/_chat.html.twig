@@ -4,8 +4,7 @@
 	</div>
 	<div class="card-body p-0">
 		<div class="row m-0">
-			<div
-				class="border-right col-md-4 col-xl-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'conversations_show' ? 'd-none d-lg-block' : '' }}">
+			<div class="border-right col-md-4 col-xl-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'conversations_show' ? 'd-none d-lg-block' : '' }}">
 				<div class="osahan-chat-left">
 
 					{% include "conversations/composants/_user_conversations.html.twig" %}
@@ -13,7 +12,7 @@
 				</div>
 			</div>
 			<div
-				class="col-md-8 col-xl-8 px-0 {{ app.request.attributes.get('_route') == 'commandes_chats' ? 'd-none d-lg-block' : '' }}">
+				class="col-md-8 col-xl-8 px-0 {{ app.request.attributes.get('_route') == 'conversations' ? 'd-none d-lg-block' : '' }}">
 				{% if app.request.attributes.get('_route') == 'conversations_show' %}
 				<div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
 					<div class="font-weight-bold mr-1 overflow-hidden">
@@ -24,12 +23,12 @@
 
 							{% if conversation.user2.avatar %}
 							<img src="{{ vich_uploader_asset(conversation.user2) | imagine_filter('small_avatar') }}"
-								alt="{{ conversation.user2.prenom ?? '' }}" class="rounded-circle border">
+								alt="{{ conversation.user2.prenom ?? '' }}" class="rounded-circle border" alt="{{ conversation.user2.usePseudo == 1 ? conversation.user2.pseudo : conversation.user2.nom ~ ' ' ~ conversation.user2.prenom }}">
 							{% else %}
 							<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
 							{% endif %}
 
-							{{ conversation.user2.nom ~ ' ' ~ conversation.user2.prenom }}
+							{{ conversation.user2.usePseudo == 1 ? conversation.user2.pseudo : conversation.user2.nom ~ ' ' ~ conversation.user2.prenom }}
 
 						</div>
 
@@ -38,13 +37,17 @@
 						<div class="text-truncate">
 
 							{% if conversation.user1.avatar %}
+
 							<img src="{{ vich_uploader_asset(conversation.user1) | imagine_filter('small_avatar') }}"
-								alt="{{ conversation.user1.prenom ?? '' }}" class="rounded-circle border">
+								alt="{{ conversation.user1.usePseudo == 1 ? conversation.user1.pseudo : conversation.user1.nom ~ ' ' ~ conversation.user1.prenom }}" class="rounded-circle border">
+
 							{% else %}
+
 							<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+
 							{% endif %}
 
-							{{ conversation.user1.nom ~ ' ' ~ conversation.user1.prenom }}
+							{{ conversation.user1.usePseudo == 1 ? conversation.user1.pseudo : conversation.user1.nom ~ ' ' ~ conversation.user1.prenom }}
 
 						</div>
 

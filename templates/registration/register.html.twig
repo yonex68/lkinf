@@ -63,13 +63,20 @@
 	{{ form_errors(registrationForm.compte) }}
 </div>
 
-<div class="form-group">
-	<label class="mb-1">Lieu de prestation de service</label>
-	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-map position-absolute text-blue"></i>
-		{{ form_widget(registrationForm.adresse) }}
+<div class="location">
+	<div class="form-group">
+		<label class="mb-1">Lieu de prestation de service</label>
+		<div class="position-relative icon-form-control">
+			<i class="fa fa-map-marker position-absolute text-blue"></i>
+			{{ form_widget(registrationForm.adresse) }}
+		</div>
+		{{ form_errors(registrationForm.adresse) }}
 	</div>
-	{{ form_errors(registrationForm.adresse) }}
+
+	<div class="w-100 addresses" id="addresses">
+		<ul class="list-group text-dark" id="adresse-liste">
+		</ul>
+	</div>
 </div>
 
 <div style="visibility: hidden;height:1px;">

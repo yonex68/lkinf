@@ -116,13 +116,13 @@
             </label>
             <div class="right">
                <div class="profile-name">
+                  <div class="seller-level">
+                     <span>{{ microservice.vendeur.compte }}</span>
+                  </div>
                   <span class="user-status">
                      <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}"
-                        class="seller-link">{{ microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
+                        class="seller-link">{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
                   </span>
-                  <div class="seller-level">
-                     <span>{{ microservice.vendeur.compte }} {{ microservice.created|ago(locale='fr') }}</span>
-                  </div>
                </div>
             </div>
          </div>

@@ -48,4 +48,25 @@ class MailerService {
 		return $this->mailer->send($email);
 	}
 
+	public function sendCommandMail($from, $to, $subjet, $template = null, $client, $vendeur, $commande){
+
+		if (!isset($template)) {
+			$template = 'mails/_default.html.twig';
+		}
+		
+		$email = (new TemplatedEmail())
+			->from($from)
+			->to($to)
+			->subject($subjet)
+			->htmlTemplate($template)
+			->context([
+				'client' => $client,
+				'vendeur' => $vendeur,
+				'commande'   =>  $commande
+			])
+		;
+
+		return $this->mailer->send($email);
+	}
+
 }

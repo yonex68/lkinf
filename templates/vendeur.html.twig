@@ -53,24 +53,44 @@
 
 	{{ include('partials/base/_navbars.html.twig') }}
 
-	{{ include('partials/_flash_message.html.twig') }}
-
 	{% block filters %}{% endblock %}
 
 	<section class="py-5">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-{% block colleft %}3{% endblock %}">
+				<div class="col-md-{% block colleft %}4{% endblock %} d-none d-sm-block">
 					<div class="sidebar-fix">
 						{% block sidebar %}
 							{% include "partials/vendeur/_sidebar.html.twig" %}
 						{% endblock %}
 					</div>
 				</div>
-				<div class="col-md-{% block colright %}9{% endblock %}">
+				<div class="col-md-{% block colright %}8{% endblock %}">
 
 					<div class="bg-{% block bg %}shadow-sm{% endblock %} rounded sidebar-page-right">
 						<div>
+						
+							{{ include('partials/_flash_message.html.twig') }}
+							
+							{% if is_granted('ROLE_VENDEUR') %}
+
+								{% if app.user.endRegister == null %}
+
+								<div class="alert alert-warning">
+									<p><i class="fa fa-exclamation-triangle"></i> Veuillez completter votre profil avant de vendre vos prestations il s'agit de:</p>
+									<ol class="pl-3">
+										{% if app.user.statut == null %}
+										<li>Vos coordonnées et</li>
+										{% endif %}
+										{% if app.user.categorie == null %}
+										<li>Vos informations supplémentaires</li>
+										{% endif %}
+									</ol>
+								</div>
+
+								{% endif %}
+
+							{% endif %}
 
 							{% block body %}{% endblock %}
 
@@ -101,7 +121,8 @@
 	<script src="{{ asset('themes/base/vendor/select2/js/select2.min.js') }}"></script>
 	<!-- Custom -->
 	<script src="{{ asset('themes/base/js/custom.js') }}"></script>
-	<script src="{{ asset('themes/base/js/dropdown.js') }}"></script>
+	<script src="{{ asset('js/dropdown.js') }}"></script>
+	<script src="{{ asset('js/favoris.js') }}"></script>
 	<script src="{{ asset('js/btnloader.js') }}"></script>
 	<script>
 		// Add the following code if you want the name of the file appear on select

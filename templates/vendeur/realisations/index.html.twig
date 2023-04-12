@@ -7,17 +7,18 @@
 
 {% block body %}
 
-<div class="card shadow-sm w-100 mb-4">
-    <div class="card-body">
-        <div class="row d-block d-sm-flex align-items-center mb-3">
+<div class="card w-100 mb-4">
+    <div class="card-header bg-dark">
+        <div class="row d-block d-sm-flex align-items-center">
             <div class="col-sm-6">
-                <h2 class="h5 mb-3">Mes réalisations</h2>
+                <h2 class="h6 text-light">Mes réalisations</h2>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ path('app_vendeur_realisation_new') }}" class="btn btn-dark">Ajouter une réalisation</a>
             </div>
         </div>
-
+    </div>
+    <div class="card-body">
         {% for realisation in realisations %}
         <div class="card mb-3">
             <div class="card-body">

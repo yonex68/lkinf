@@ -22,6 +22,7 @@
 			<!-- Catégories -->
 			{% include "partials/base/_nav_categorie.html.twig" %}
 		</ul>
+		
 		<ul class="navbar-nav align-items-center ml-auto">
 			<li class="nav-item dropdown no-arrow no-caret mr-3 dropdown-notifications d-sm-none">
 				<a class="btn btn-icon btn-transparent-dark dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -86,13 +87,13 @@
 
 					{% if app.user.reseauAvatar %}
 
-					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.prenom }}">
+					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 
 					{% else %}
 
 					{% if app.user.avatar %}
 					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('small_avatar') }}"
-						class="img-fluid" alt="{{ app.user.prenom }}">
+						class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 					{% else %}
 
 					<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt='' />
@@ -105,23 +106,15 @@
 					aria-labelledby="navbarDropdownUserImage">
 					<h6 class="dropdown-header d-flex align-items-center">
 						<div class="dropdown-user-details">
-							<div class="dropdown-user-details-name text-dark">{{ app.user.nom }}
-								{{ app.user.prenom }}</div>
+							<div class="dropdown-user-details-name text-dark">
+								{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}
+							</div>
 							<div class="dropdown-user-details-email">{{ app.user.email }}</div>
 						</div>
 					</h6>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ path('user_profil') }}">
-						<div class="dropdown-item-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
-								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-								class="feather feather-settings">
-								<circle cx="12" cy="12" r="3"></circle>
-								<path
-									d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-								</path>
-							</svg>
-						</div>
+						<i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;
 						Mon compte
 					</a>
 
@@ -140,60 +133,13 @@
 
 					{% if app.user.endRegister == true %}
 
-					<a class="dropdown-item" href="{{ path('vendeur_dashboard') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-dashboard"></i>
-						</div>
-						Tableau de bord
-					</a>
-
-					<a class="dropdown-item" href="{{ path('vendeur_microservices_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-briefcase"></i>
-						</div>
-						Mes services
-					</a>
-
-					<a class="dropdown-item" href="{{ path('vendeur_commandes_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-cart-plus"></i>
-						</div>
-						Mes ventes
-					</a>
+						{% include "partials/vendeur/_menu.html.twig" %}
 
 					{% endif %}
 
-					{% endif %}
-
-					<a class="dropdown-item" href="{{ path('vendeur_achats_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-opencart"></i>
-						</div>
-						Mes achats
-					</a>
-
-					<a class="dropdown-item" href="{{ path('favoris_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-heart"></i>
-						</div>
-						Favoris
-					</a>
-
-					<a class="dropdown-item" href="{{ path('suivis_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-plus"></i>
-						</div>
-						Suivis
-					</a>
-
-					{% if is_granted('ROLE_CLIENT') %}
-
-					<a class="dropdown-item" href="{{ path('app_devenir_vendeur') }}">
-						<button class="btn rounded-btn btn-success w-100" style="color: white!important;">
-							<i class="fa fa-user"></i>
-							Devenir vendeur
-						</button>
-					</a>
+					{% else %}
+						
+						{% include "partials/base/_user_menu.html.twig" %}
 
 					{% endif %}
 
@@ -229,10 +175,10 @@
 	</div>
 </nav>
 
-<!-- Navigation -->
+<!-- Navigation mobile -->
 <nav class="navbar d-block d-sm-none navbar-expand-lg navbar-light bg-white osahan-nav-mid px-0 border-top shadow-sm">
 	<div class="container">
-		<button class="navbar-toggler navbar-toggler-right pl-2" type="button" data-toggle="collapse"
+		<button class="navbar-toggler navbar-toggler-right ml-2" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -241,6 +187,8 @@
 			<ul class="navbar-nav">
 				<!-- Catégories -->
 				{% include "partials/base/_nav_categorie.html.twig" %}
+
+				{% include "partials/base/_navmobile_links.html.twig" %}
 			</ul>
 		</div>
 
@@ -297,13 +245,13 @@
 
 					{% if app.user.reseauAvatar %}
 
-					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.prenom }}">
+					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 
 					{% else %}
 
 					{% if app.user.avatar %}
 					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('small_avatar') }}"
-						class="img-fluid" alt="{{ app.user.prenom }}">
+						class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 					{% else %}
 
 					<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt='' />
@@ -316,23 +264,13 @@
 					aria-labelledby="navbarDropdownUserImage">
 					<h6 class="dropdown-header d-flex align-items-center">
 						<div class="dropdown-user-details">
-							<div class="dropdown-user-details-name text-dark">{{ app.user.nom }}
-								{{ app.user.prenom }}</div>
+							<div class="dropdown-user-details-name text-dark">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</div>
 							<div class="dropdown-user-details-email">{{ app.user.email }}</div>
 						</div>
 					</h6>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ path('user_profil') }}">
-						<div class="dropdown-item-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none"
-								stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-								class="feather feather-settings">
-								<circle cx="12" cy="12" r="3"></circle>
-								<path
-									d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-								</path>
-							</svg>
-						</div>
+						<i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;
 						Mon compte
 					</a>
 
@@ -349,35 +287,17 @@
 
 					{% if is_granted('ROLE_VENDEUR') %}
 
-					<a class="dropdown-item" href="{{ path('vendeur_dashboard') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-dashboard"></i>
-						</div>
-						Tableau de bord
-					</a>
+					{% if app.user.endRegister == true %}
 
-					<a class="dropdown-item" href="{{ path('vendeur_microservices_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-briefcase"></i>
-						</div>
-						Mes services
-					</a>
+						{% include "partials/vendeur/_menu.html.twig" %}
 
 					{% endif %}
 
-					<a class="dropdown-item" href="{{ path('favoris_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-heart"></i>
-						</div>
-						Service Favoris
-					</a>
+					{% else %}
+						
+						{% include "partials/base/_user_menu.html.twig" %}
 
-					<a class="dropdown-item" href="{{ path('suivis_index') }}">
-						<div class="dropdown-item-icon">
-							<i class="fa fa-plus"></i>
-						</div>
-						Suivi
-					</a>
+					{% endif %}
 
 					<a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
 						<div class="dropdown-item-icon">

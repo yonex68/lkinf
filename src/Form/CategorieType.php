@@ -22,10 +22,10 @@ class CategorieType extends AbstractType
             ->add('name', ChoiceType::class, [
                 'label' => 'Désignation',
                 'choices' => [
-                    'Ingénieur de son' => 'Ingenieur-son',
-                    'Studio' => 'Studio',
-                    'Videaste' => 'Videaste',
-                    'Figurant' => 'Figurant',
+                    'Ingénieur de son' => 'ingenieur-son',
+                    'Studio' => 'studio',
+                    'Videaste' => 'sideaste',
+                    'Figurant - danseur' => 'figurant-danseur',
                 ],
                 'constraints' => [
                     new NotBlank([

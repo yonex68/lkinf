@@ -35,7 +35,7 @@ $(document).ready(function () {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 				}
 			}
 
@@ -62,14 +62,14 @@ $(document).ready(function () {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 				}
 			}
 
 		]
 	});
 	$('.service-slider').slick({
-		slidesToShow: 5,
+		slidesToShow: 3,
 		slidesToScroll: 1,
 		arrows: true,
 		fade: false,
@@ -88,7 +88,7 @@ $(document).ready(function () {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: 1,
+					slidesToShow: 2,
 				}
 			}
 

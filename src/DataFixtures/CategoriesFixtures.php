@@ -32,56 +32,8 @@ class CategoriesFixtures extends Fixture
                 'name' => 'Ingénieur son',
             ],
             4 => [
-                'name' => 'Danseur',
+                'name' => 'Figurant Danseur',
             ],
-            5 => [
-                'name' => 'Figurant',
-            ],
-            /*6 => [
-                'name' => 'Emo',
-            ],
-            7 => [
-                'name' => 'Hip-Hop',
-            ],
-            8 => [
-                'name' => 'Indie',
-            ],
-            9 => [
-                'name' => 'Jazz',
-            ],
-            10 => [
-                'name' => 'Latin',
-            ],
-            11 => [
-                'name' => 'Metal',
-            ],
-            12 => [
-                'name' => 'Pop',
-            ],
-            13 => [
-                'name' => 'Pop punk',
-            ],
-            14 => [
-                'name' => 'Punk',
-            ],
-            /*15 => [
-                'name' => 'Reggae',
-            ],
-            16 => [
-                'name' => 'R&B',
-            ],
-            17 => [
-                'name' => 'Rock',
-            ],
-            18 => [
-                'name' => 'Soul',
-            ],
-            19 => [
-                'name' => 'World',
-            ],
-            20 => [
-                'name' => 'Country',
-            ],*/
         ];
 
         foreach($categories as $key => $value){

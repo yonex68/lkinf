@@ -25,7 +25,7 @@ class MicroservicesFixtures extends Fixture implements DependentFixtureInterface
 
         for($microservices = 1; $microservices <= 500; $microservices++){
             $user = $this->getReference('user_'. $faker->numberBetween(1, 50));
-            $categories = $this->getReference('categorie_'. $faker->numberBetween(1, 5));
+            $categories = $this->getReference('categorie_'. $faker->numberBetween(1, 4));
 
             $microservice = new Microservice();
 
