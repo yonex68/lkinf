@@ -56,6 +56,10 @@
 
 						{% endif %}
 					</div>
+					<div class="form-group">
+						<strong>Nom public</strong>
+						<h6 class="h6 mb-0">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</h6>
+					</div>
 				</div>
 
 				{% if is_granted('ROLE_VENDEUR') %}

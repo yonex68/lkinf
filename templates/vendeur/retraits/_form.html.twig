@@ -1,38 +1,32 @@
 {{ form_start(form) }}
 
-<div class="p-3 rounded">
-    <h4 class="mb-0 text-light">
-        Nouveau retrait
-    </h4>
-    <p class="text-muted">
-        Faites vos retraits de fonds en toute sécurité sur {{ appName }}
-    </p>
+<p>
+    Faites vos retraits de fonds en toute sécurité sur {{ appName }}
+</p>
 
-
-    <div class="form-group">
-        {{ form_row(form.montant) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_row(form.modePaiement) }}
-    </div>
-
-    <h6 class="font-weight-bold">Informations de la carte</h6>
-    <div class="row">
-        <div class="col-sm-6">
-            {{ form_row(form.nomsurCarte) }}
-        </div>
-        <div class="col-sm-6">
-            {{ form_row(form.numeroCarte) }}
-        </div>
-    </div>
-
-    {{ form_row(form.dateExpiration) }}
-
-    <h6 class="font-weight-bold">Informations Paymal</h6>
-    {{ form_row(form.adressePaypal) }}
-
-    <button class="btn btn-dark p-2 w-100 shadow-sm">{{ button_label|default('Envoyer') }}</button>
-
+<div class="form-group">
+    {{ form_row(form.montant) }}
 </div>
+
+<div class="form-group">
+    {{ form_row(form.modePaiement) }}
+</div>
+
+<h6 class="h6">Informations Bancaire</h6>
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.nomsurCarte) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.numeroCarte) }}
+    </div>
+</div>
+
+{{ form_row(form.dateExpiration) }}
+
+<h6 class="h6">Informations Paypal</h6>
+{{ form_row(form.adressePaypal) }}
+
+<button class="btn btn-dark">{{ button_label|default('Envoyer') }}</button>
+
 {{ form_end(form) }}

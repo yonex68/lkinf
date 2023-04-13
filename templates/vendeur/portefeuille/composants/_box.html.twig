@@ -5,13 +5,12 @@
             <h5 class="h6">Revenu disponible</h5>
             <div>
                <span class="h2 font-weight-bold">
-                  {{ portefeuille(app.user).soldeEnCours }}
+                  {{ portefeuille(app.user).soldeDisponible }}
                </span>
                <span class="lead">{{ currency }}</span>
             </div>
             <span>
-               {{ portefeuille(app.user).soldeEnCours ~ currency }}
-               au total
+               {{ portefeuille(app.user).soldeEnCours ~ currency }} en cours
             </span>
          </div>
          <img src="{{ asset('img/wallet.png') }}" width="50" alt="">
@@ -20,16 +19,12 @@
    <div class="p-2 bg-dark flex-fill">
       <div class="media p-4 text-light">
          <div class="media-body">
-            <h5 class="h6">Vente en cours</h5>
+            <h5 class="h6">Vente éffectuées</h5>
             <div>
                <span class="h2 font-weight-bold">
                   {{ ventes(app.user)|length }}
                </span>
             </div>
-            <span>
-               {{ portefeuille(app.user).soldeDisponible ~ currency }}
-               au total
-            </span>
          </div>
          <i class="fa fa-opencart fa-4x"></i>
       </div>

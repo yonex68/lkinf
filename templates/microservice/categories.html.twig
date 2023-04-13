@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}({{ microservices.getTotalItemCount }}) {{ categorie.name }} {% endblock %}
+{% block title %}{{ categorie.name }} : trouver plus proche de vous{% endblock %}
 
 {% block alternatiflink %}https://links-infinity.com/microservices/categories/{{ categorie.name }}{% endblock %}
 
 {% block meta %}
 <meta name="author" content="{{ categorie.name }}" />
 <meta name="keywords" content="{{ categorie.name }}: trouver plus proche de vous" />
-<meta name="description"
-   content="{{ categorie.name }}: trouvez dès maintenant votre Le nom de la catégorie plus proche de chez vous pour vous accompagner dans votre projet." />
+<meta name="description" content="{{ categorie.name }}: trouvez dès maintenant votre {{ categorie.name }} plus proche de chez vous pour vous accompagner dans votre projet." />
 {% endblock %}
 
 {% block body %}

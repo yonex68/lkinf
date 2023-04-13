@@ -50,6 +50,14 @@
                     <th>Date de la demande</th>
                     <td>Le {{ retrait.created|date('d/m/Y') }}</td>
                 </tr>
+                    <tr>
+                        <th>Réponse de {{ appName }}</th>
+                        <td><p>{{ retrait.reponse }}</p></td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>Le {{ retrait.updated|date('d/m/Y') }}</td>
+                    </tr>
             </tbody>
         </table>
     </div>

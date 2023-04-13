@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Retrait;
 use App\Form\Retrait1Type;
 use App\Repository\RetraitRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,13 +58,26 @@ class AdminRetraitsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_retraits_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Retrait $retrait, RetraitRepository $retraitRepository): Response
+    public function edit(Request $request, Retrait $retrait, RetraitRepository $retraitRepository, MailerService $mailer): Response
     {
         $form = $this->createForm(Retrait1Type::class, $retrait);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $retraitRepository->save($retrait, true);
+
+            /** Envoie de mail au vendeur */
+            $mailer->sendDemandeMail(
+                'contact@links-infinity.com',
+                $retrait->getVendeur()->getEmail(),
+                'Links infinity - retrait rejeté',
+                'mails/_retrait_rejeter.html.twig',
+                $retrait->getVendeur(),
+                $retrait,
+                $retrait
+            );
+
+            $this->addFlash('success', 'Le contenu a bien été enregistrer');
 
             return $this->redirectToRoute('app_admin_retraits_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -87,11 +101,26 @@ class AdminRetraitsController extends AbstractController
     }
 
     #[Route('/valider/{id}', name: 'app_admin_retraits_valider', methods: ['POST'])]
-    public function valider(Request $request, Retrait $retrait, EntityManagerInterface $entityManager): Response
+    public function valider(Request $request, Retrait $retrait, EntityManagerInterface $entityManager, MailerService $mailer): Response
     {
         if ($this->isCsrfTokenValid('valider'.$retrait->getId(), $request->request->get('_token'))) {
+            
+            /** Soustraction des revenus du vendeur suite à un retrait */
+            $portfeuille = $retrait->getVendeur()->getPortefeuille();
+            $portfeuille->setSoldeDisponible($portfeuille->getSoldeDisponible() - $retrait->getMontant());
             $retrait->setStatut('Valider');
             $entityManager->flush();
+
+            /** Envoie de mail au vendeur */
+            $mailer->sendDemandeMail(
+                'contact@links-infinity.com',
+                $retrait->getVendeur()->getEmail(),
+                'Links infinity - retrait validée',
+                'mails/_retrait_valider.html.twig',
+                $retrait->getVendeur(),
+                $retrait,
+                $retrait
+            );
 
             $this->addFlash('success', 'La demande à bien été validée');
         }
@@ -100,15 +129,14 @@ class AdminRetraitsController extends AbstractController
     }
 
     #[Route('/rejeter/{id}', name: 'app_admin_retraits_rejeter', methods: ['POST'])]
-    public function rejeter(Request $request, Retrait $retrait, EntityManagerInterface $entityManager): Response
+    public function rejeter(Request $request, Retrait $retrait, EntityManagerInterface $entityManager, MailerService $mailer): Response
     {
         if ($this->isCsrfTokenValid('rejeter'.$retrait->getId(), $request->request->get('_token'))) {
             $retrait->setStatut('Rejeter');
             $entityManager->flush();
-
-            $this->addFlash('success', 'La demande à bien été rejetée');
+            $this->addFlash('success', "La demande à bien été rejetée, indiquez une raison si possible afin d'informer le vendeur");
         }
 
-        return $this->redirectToRoute('app_admin_retraits_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_retraits_edit', ['id' => $retrait->getId()], Response::HTTP_SEE_OTHER);
     }
 }

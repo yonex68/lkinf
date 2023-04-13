@@ -1,40 +1,48 @@
-{% if is_granted('microservice_edit', commande.microservice) %}
-
-{% else %}
-
 <div class="card my-3">
    <div class="card-header bg-dark">
-      <h6 class="h6 text-light">Votre avis sur le service</h6>
+      <h6 class="h6 text-light">Avis du client sur le service</h6>
    </div>
    <div class="card-body">
 
-      {% if userserviceAvis > 0 %}
+      {% if commande.avis %}
+      <div class="media" id="{{ commande.avis.client.nameUrl }}">
+         {% if commande.avis.client.avatar %}
+         <img src="{{ vich_uploader_asset(commande.avis.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+            class="rounded-circle mr-3" alt="{{ commande.avis.client.prenom }}">
+         {% else %}
 
-         {% for avis in app.user.avis %}
-            <div class="rounded bg-light border">
-               <i class="d-block">{{ avis.created|date('d/m/Y') }}</i>
-               <q>{{ avis.contenu }}</q>
-            </div>
-         {% endfor %}
+         <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}" alt='' />
+
+         {% endif %}
+         <div class="media-body">
+            <strong class="mt-0 mb-1 d-block h6 font-weight-bold">{{ commande.client.usePseudo ? commande.client.pseudo : commande.avis.client.nom ~ ' ' ~
+               commande.avis.client.prenom }}</strong>
+            {{ commande.avis.contenu }}
+
+            <span class="text-muted d-block text-italic py-2">
+               <i class="fa fa-clock-o"></i> {{ commande.avis.created|ago(locale='fr') }}</span>
+         </div>
+      </div>
 
       {% else %}
 
-         {% if commande.deliver == 1 %}
+      <q>Aucun avis pour l'instant...</q>
+      
+      <!-- Formulaire pour laisser un avis -->
+      {% if is_granted('microservice_edit', commande.microservice) %}{% else %}
 
-            {{ form_start(avisForm) }}
-               {{ form_widget(avisForm) }}
-               <div class="text-right">
-                  <button type="submit" class="btn btn-success btn-rounded" data-turbo="false">
-                     <span id="btnFetch"><i class="mdi mdi-send"></i> Envoyer</span>
-                  </button>
-               </div>
-            {{ form_end(avisForm) }}
+      {{ form_start(avisForm) }}
+      {{ form_widget(avisForm) }}
+      <div class="text-left">
+         <button type="submit" class="btn btn-success btn-rounded" data-turbo="false">
+            <span id="btnFetch"><i class="mdi mdi-send"></i> Envoyer</span>
+         </button>
+      </div>
+      {{ form_end(avisForm) }}
 
-            {% endif %}
+      {% endif %}
 
       {% endif %}
 
    </div>
 </div>
-
-{% endif %}

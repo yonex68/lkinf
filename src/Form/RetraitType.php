@@ -26,22 +26,43 @@ class RetraitType extends AbstractType
                 ],
             ])
             ->add('nomsurCarte', TextType::class, [
-                'label' => 'Nom du titulaire de la carte'
+                'label' => 'Nom du titulaire de la carte',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peux pas être vide',
+                    ]),
+                ],
             ])
             ->add('numeroCarte', TextType::class, [
-                'label' => 'IBAN'
+                'label' => 'IBAN',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peux pas être vide',
+                    ]),
+                ],
             ])
             ->add('dateExpiration', DateType::class, [
                 'label' => "Date d'expiration",
                 'widget' => 'single_text',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peux pas être vide',
+                    ]),
+                ],
             ])
             ->add('adressePaypal', TextType::class, [
                 'label' => "Adresse de paiement Paypal",
+                'required' => false,
             ])
             ->add('modePaiement', ChoiceType::class, [
                 'choices'  => [
                     'Paypal' => 'Paypal',
                     'Virement Bancaire' => 'Virement Bancaire',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peux pas être vide',
+                    ]),
                 ],
                 'expanded' => true,
             ]);

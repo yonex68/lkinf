@@ -1,0 +1,22 @@
+<div style="background-color: #f3f3f3;padding: 30px;font-size: 13px;">
+   <div style="margin: auto;background: #fff;padding: 20px;">
+      <p>Bonjour <strong>{{ client.usePseudo == 1 ? client.pseudo : client.usePseudo == 1 ? client.pseudo : client.nom ~ ' ' ~ client.prenom }}</strong>,</p>
+
+      <p>
+         Bonne nouvelle !<br> Votre commande d'un montant de <strong>{{ commande.montant ~ currency }}</strong> pour le pack <strong>{{ commande.pack.name }}</strong> a été prise en
+         compte par <strong>{{ appName }}</strong>.
+      </p>
+
+      <p>
+         Besoin d'aide ? Consultez la <a href="{{ path('page_faqs') }}">FAQ</a>.
+         <a href="{{ path('page_politiques') }}">Conditions générales</a>
+      </p>
+
+      <p>
+         Cordialement, <br>
+         L'équipe {{ appName }}
+      </p>
+
+      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
+   </div>
+</div>

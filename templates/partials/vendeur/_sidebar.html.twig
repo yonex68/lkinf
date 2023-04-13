@@ -54,7 +54,7 @@
 
 	{% if app.user.endRegister == true %}
 
-	<div class="card mb-3">
+	<!--<div class="card mb-3">
 		<div class="card-header bg-dark">
 			<h6 class="m-0 h6 text-light">Mon portefeuille</h6>
 		</div>
@@ -64,18 +64,15 @@
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_portefeuille' ? 'active' : '' }}"
 						href="{{ path('vendeur_portefeuille') }}"><i
-							class="text-muted fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Mes revenus</a>
+							class="text-muted fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Mes revenus</a>-->
 
-					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'app_vendeur_retraits_index' ? 'active' : '' }}"
-						href="{{ path('app_vendeur_retraits_index') }}"><i
-							class="text-muted fa fa-user-circle"></i>&nbsp;&nbsp;&nbsp;Retraits</a>
 					<!--<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'stripe_abonnement_services' ? 'active' : '' }}"
 						href="{{ path('stripe_abonnement_services') }}"><i
-							class="text-muted fa fa-globe"></i>&nbsp;&nbsp;&nbsp;Mon abonnement</a>-->
+							class="text-muted fa fa-globe"></i>&nbsp;&nbsp;&nbsp;Mon abonnement</a>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 
 	{% endif %}
 

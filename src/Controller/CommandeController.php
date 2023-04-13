@@ -73,7 +73,7 @@ class CommandeController extends AbstractController
     public function show(CommandeRepository $commandeRepository, $id): Response
     {
         $commande = $commandeRepository->findOneBy([
-            'id' => $id, 
+            'id' => $id,
             'client' => $this->getUser()
         ]);
 
@@ -93,7 +93,7 @@ class CommandeController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         CommandeMessageRepository $commandeMessageRepository,
-        MailerInterface $mailerInterface,
+        MailerService $mailer,
         RapportRepository $rapportRepository,
         AvisRepository $avisRepository
     ): Response {
@@ -132,12 +132,37 @@ class CommandeController extends AbstractController
 
         if ($avisForm->isSubmitted() && $avisForm->isValid()) {
 
-            $commande->setRapportValidate(true);
             $avis->setVendeur($commande->getMicroservice()->getVendeur());
             $avis->setMicroservice($commande->getMicroservice());
             $avis->setClient($user);
             $entityManager->persist($avis);
             $entityManager->flush();
+
+            $commande->setRapportValidate(true);
+            $commande->setAvis($avis);
+            $entityManager->flush();
+            
+            /** Envoie du mail au client */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getClient()->getEmail(),
+                'Votre avis sur la commande du service : ' . $commande->getMicroservice()->getName(),
+                'mails/client/_avis.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
+            
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
+                'Avis du client sur la commande du service : ' . $commande->getMicroservice()->getName(),
+                'mails/_avis.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
 
             $this->addFlash('success', "Votre avis à bien été soumis");
 
@@ -203,21 +228,6 @@ class CommandeController extends AbstractController
             $portefeuille->setSoldeEncours($difference);
             $entityManager->flush();
 
-            // Envoie de mail
-            $email = (new TemplatedEmail())
-                ->from('contact@links-infinity.com')
-                ->to($commande->getVendeur()->getEmail())
-                ->subject('LINKS INFINITY - COMMANDE LIVREE')
-                ->htmlTemplate('commande/composants/_livraison_mail.html.twig')
-                ->context([
-                    'useremail'  =>  $commande->getVendeur()->getEmail(),
-                    'montantRecu'   =>  $commande->getMontant(),
-                    'soldedispo' => $somme,
-                    'destinataire' => $commande->getClient()->getEmail()
-                ]);
-
-            $mailerInterface->send($email);
-
             $rapport->setCommande($commande);
             $entityManager->persist($rapport);
             $entityManager->flush();
@@ -226,6 +236,17 @@ class CommandeController extends AbstractController
             $commande->setRapportValidate(true);
             $commande->setRapportValidateAt(new \DateTimeImmutable());
             $entityManager->flush();
+            
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
+                'Commande livrée',
+                'mails/_rapport_livrer.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
 
             $this->addFlash('success', 'Rapport envoyé avec succès');
             return $this->redirectToRoute('commande_details', [
@@ -437,7 +458,7 @@ class CommandeController extends AbstractController
     public function vendeurValiderCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id,
+        $id, MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -455,6 +476,17 @@ class CommandeController extends AbstractController
             $commande->setCancel(false);
             $commande->setValidateAt(new \DateTimeImmutable());
             $entityManager->flush();
+            
+            /** Envoie du mail au client */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getClient()->getEmail(),
+                'Commande validée',
+                'mails/_commande_valider.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
         }
 
         $this->addFlash('success', 'Commande validée!');
@@ -468,7 +500,7 @@ class CommandeController extends AbstractController
     public function vendeurLivrerCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id,
+        $id, MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -478,7 +510,18 @@ class CommandeController extends AbstractController
             $commande->setDeliver(true);
             $commande->setDeliverAt(new \DateTimeImmutable());
             $entityManager->flush();
-            $this->addFlash('success', 'Commande validée!');
+            $this->addFlash('success', 'Commande livrée!');
+
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
+                'Commande livrée',
+                'mails/_commande_livrer.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
         }
 
         return $this->redirectToRoute('commande_details', [
@@ -490,7 +533,7 @@ class CommandeController extends AbstractController
     public function vendeurAnnulerCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id,
+        $id, MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -526,7 +569,6 @@ class CommandeController extends AbstractController
             if ($commande->getMontant() >= $portefeuille->getSoldeEncours()) {
 
                 $difference = $commande->getMontant() - $portefeuille->getSoldeEncours();
-
             } else {
 
                 $difference = $portefeuille->getSoldeEncours() - $commande->getMontant();
@@ -540,6 +582,17 @@ class CommandeController extends AbstractController
             $commande->setValidate(false);
             $commande->setCancelAt(new \DateTimeImmutable());
             $entityManager->flush();
+
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
+                'Commande annulée',
+                'mails/_commande_annuler.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
         }
 
         $this->addFlash('success', 'Commande annulée avec succès!');
@@ -649,7 +702,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/save-reservation/{slug}/{offre}/{payment_intent}/{disponibilite}', name: 'save_reservation')]
-    public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent, $disponibilite): Response
+    public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent, $disponibilite, MailerService $mailer): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
 
@@ -678,6 +731,28 @@ class CommandeController extends AbstractController
 
         $entityManager->persist($commande);
         $entityManager->flush();
+
+        /** Envoie du mail au client */
+        $mailer->sendCommandMail(
+            'contact@links-infinity.com',
+            $commande->getClient()->getEmail(),
+            'Nouvelle commande',
+            'mails/_client.html.twig',
+            $commande->getClient(),
+            $commande->getVendeur(),
+            $commande
+        );
+
+        /** Envoie du mail au vendeur */
+        $mailer->sendCommandMail(
+            'contact@links-infinity.com',
+            $commande->getVendeur()->getEmail(),
+            'Nouvelle commande',
+            'mails/_vendeur.html.twig',
+            $commande->getClient(),
+            $commande->getVendeur(),
+            $commande
+        );
 
         return $this->redirectToRoute('commande_success', [
             'id' => $commande->getId()

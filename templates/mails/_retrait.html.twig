@@ -1,0 +1,19 @@
+<div style="background-color: #f3f3f3;padding: 30px;font-size: 13px;">
+   <div style="margin: auto;background: #fff;padding: 20px;">
+      <p>Bonjour <strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>,</p>
+
+      <p>Votre demande de retrait de <strong>{{ demande.montant ~ currency }}</strong> est en cours de traitement.</p>
+
+      <p>
+         Besoin d'aide ? Consultez la <a href="{{ path('page_faqs') }}">FAQ</a>.
+         <a href="{{ path('page_politiques') }}">Conditions générales</a>
+      </p>
+
+      <p>
+         Cordialement, <br>
+         L'équipe {{ appName }}
+      </p>
+
+      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
+   </div>
+</div>

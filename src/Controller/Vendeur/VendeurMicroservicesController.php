@@ -235,7 +235,7 @@ class VendeurMicroservicesController extends AbstractController
 
             $this->addFlash('success', "L'image a bien été téléchargée");
 
-            return $this->redirectToRoute('vendeur_microservices_publication', [
+            return $this->redirectToRoute('vendeur_microservices_disponibilite', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -247,7 +247,7 @@ class VendeurMicroservicesController extends AbstractController
 
             $this->addFlash('success', 'Le contenu a bien été cré');
 
-            return $this->redirectToRoute('vendeur_microservices_disponibilite', [
+            return $this->redirectToRoute('vendeur_microservices_galerie', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }

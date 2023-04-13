@@ -42,6 +42,9 @@ class Retrait
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $reponse = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +142,18 @@ class Retrait
     public function setStatut(?string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getReponse(): ?string
+    {
+        return $this->reponse;
+    }
+
+    public function setReponse(?string $reponse): self
+    {
+        $this->reponse = $reponse;
 
         return $this;
     }

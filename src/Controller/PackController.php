@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Offre;
 use App\Repository\OffreRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,7 +123,7 @@ class PackController extends AbstractController
     }
 
     #[Route('/save-pack/{slug}/{payment_intent}', name: 'save_pack')]
-    public function save(EntityManagerInterface $entityManager, $slug, $payment_intent, OffreRepository $offreRepository): Response
+    public function save(EntityManagerInterface $entityManager, $slug, $payment_intent, OffreRepository $offreRepository, MailerService $mailer): Response
     {
         $pack = $offreRepository->findOneBy(['slug' => $slug]);
         $commande = new Commande();
@@ -141,6 +142,16 @@ class PackController extends AbstractController
 
         $entityManager->persist($commande);
         $entityManager->flush();
+
+        /** Envoie du mail au client */
+        $mailer->sendPackMail(
+            'contact@links-infinity.com',
+            $commande->getClient()->getEmail(),
+            'Nouvelle commande',
+            'mails/client/_pack.html.twig',
+            $commande->getClient(),
+            $commande
+        );
 
         return $this->redirectToRoute('commande_success', [
             'id' => $commande->getId()

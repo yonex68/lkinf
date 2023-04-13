@@ -4,14 +4,14 @@
 
 			{% if media.imageName %}
 
-				<a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}">
-					<img class="img-fluid" src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}" alt="{{ microservice.name }} France"/>
+				<a href="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('rectangle_size') }}">
+					<img class="img-fluid" src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('rectangle_size') }}" alt="{{ microservice.name }} France"/>
 				</a>
 
 			{% else %}
 
-				<a href="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}">
-					<img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" alt="{{ microservice.name }} France"/>
+				<a href="{{ asset('themes/base/images/list/v1.png') | imagine_filter('rectangle_size') }}">
+					<img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('rectangle_size') }}" alt="{{ microservice.name }} France"/>
 				</a>
 
 			{% endif %}

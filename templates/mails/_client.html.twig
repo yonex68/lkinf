@@ -4,13 +4,15 @@
             ' ' ~ client.prenom }}</strong>,</p>
 
       <p>
-         Bonne nouvelle !<br> Votre commande d'un montant de <strong>{{ commande.montant ~ currency }}</strong> a été
-         prise
-         en
-         compte par le prestataire <strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>.
+         Bonne nouvelle !<br> Votre commande d'un montant de <strong>{{ commande.montant ~ currency }}</strong> a été prise en compte par le prestataire <strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>.
       </p>
 
-      Mettre le résumer de la commande
+      {% if commande.disponibilite %}
+      <p>
+         Disponibilité: <strong>{{ commande.disponibilite }}</strong>
+      </p>
+      {% endif %}
+      
 
       <p>
          Lorsque la commande sera terminée par le prestataire <strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo :
@@ -37,6 +39,6 @@
          L'équipe {{ appName }}
       </p>
 
-      <p style="text-align: center;">©Links infinity - Tous droits réservés</p>
+      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
    </div>
 </div>

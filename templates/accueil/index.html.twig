@@ -17,7 +17,8 @@
 				</div>
 				{% else %}
 				<div class="col-sm-6 mx-auto">
-					<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">Aucun service disponible dans cette zone: <strong>{{
+					<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">Aucun service disponible dans cette zone:
+						<strong>{{
 							ville }}</strong></p>
 				</div>
 				{% endfor %}
@@ -40,7 +41,8 @@
 				<div class="freelancer">
 					{% if vendeur.couverture %}
 					<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
-						class="img-fluid" alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+						class="img-fluid"
+						alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
 					{% else %}
 
 					<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
@@ -50,14 +52,16 @@
 
 						{% if vendeur.avatar %}
 						<img src="{{ vich_uploader_asset(vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
-							class="img-fluid" alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+							class="img-fluid"
+							alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
 						{% else %}
 
 						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
 
 						{% endif %}
 						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}" class="pl-2 pt-2 text-dark">
-							<strong class="">{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>
+							<strong class="">{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom
+								}}</strong>
 						</a>
 					</div>
 				</div>
@@ -69,7 +73,8 @@
 		{% else %}
 
 		<div>
-			<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">Aucun profésinnels disponible dans cette zone: <strong>{{ ville
+			<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">Aucun profésinnels disponible dans cette zone:
+				<strong>{{ ville
 					}}</strong></p>
 		</div>
 
@@ -83,7 +88,8 @@
 		<ul class="categories-list mb-0">
 			{% for categorie in categories %}
 			<li class="my-3">
-				<a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}">
+				<a
+					href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}">
 					{% if categorie.icone %}
 
 					<img src="{{ vich_uploader_asset(categorie, 'iconeFile') | imagine_filter('small_avatar') }}"
@@ -147,7 +153,8 @@
 	</div>
 </section>
 
-<div class="modal fade" id="{{ ville ? '' : 'modalLocations' }}" tabindex="-1" aria-labelledby="modalLocationsLabel" aria-hidden="true">
+<div class="modal fade {{ ville ? '' : 'modal-location' }}" id="modalLocations" tabindex="-1" aria-labelledby="modalLocationsLabel"
+	aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
 			<div class="modal-header border-0 text-center">
@@ -156,7 +163,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<h5 class="modal-title text-center text-light" id="modalLocationsLabel">Professionnels et services <br> autour de vous</h5>
+				<h5 class="modal-title text-center text-light" id="modalLocationsLabel">Professionnels et services <br>
+					autour de vous</h5>
 				<p class="text-center text-light">
 					Indiquez votre ville
 				</p>
@@ -171,8 +179,8 @@
 												<i class="fa fa-map-marker text-blue"></i>
 											</span>
 										</div>
-										<input type="text" name="adresse" placeholder="Votre ville" value="{{ ville ?? '' }}" class="form-control rounded border-0"
-											id="registration_form_adresse">
+										<input type="text" name="adresse" placeholder="Votre ville" value="{{ ville ?? '' }}"
+											class="form-control rounded border-0" id="registration_form_adresse">
 										<input type="hidden" name="ville" id="registration_form_ville">
 										<input type="hidden" name="pays" id="registration_form_pays">
 									</div>
@@ -207,8 +215,15 @@
 {% include "partials/_location_script.html.twig" %}
 
 <script>
+	$(document).ready(function () {
+		$('.modal-location').modal('show')
+	})
+</script>
+
+<script>
 	$("#adresse").click(function () {
 		$("#modalLocations").modal('show')
 	});
 </script>
+
 {% endblock %}

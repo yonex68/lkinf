@@ -1,41 +1,36 @@
 {% if is_granted('microservice_edit', commande.microservice) %}
-  <div class="card my-4">
-    <div class="card-header bg-white border-0 pb-0">
-      <h6 class="h6">
-        Rapport de fin de prestation
+{% if commande.deliver == true %}
+<div class="card my-4" id="rapport">
+   <div class="card-header bg-dark">
+      <h6 class="h6 text-light">
+         Rapport de fin de prestation de service
       </h6>
-    </div>
-    <div class="card-body p-0">
-      {% if commande.deliver == true %}
-        {% if rapport == false %}
-          <p>
-            Pour recevoir les fonds, évrivez votre rapport de fin de prestation
-          </p>
+   </div>
+   <div class="card-body">
+      {% if rapport == false %}
+      <p>
+         Pour recevoir les fonds, rédigez votre rapport de fin de prestation
+      </p>
+      <div class="pt-0">
+         {{ form_start(rapportForm) }}
 
-          <div class="p-3 pt-0">
-            {{ form_start(rapportForm) }}
+         {{ form_widget(rapportForm) }}
 
-            {{ form_widget(rapportForm) }}
+         <button type="submit" class="btn btn-dark">
+            <span id="btnFetch" class="w-100">
+               <i class="mdi mdi-send"></i> Envoyer
+            </span>
+         </button>
 
-            <div class="row">
-              <div class="col-sm-6 ml-auto">
-                <button type="submit" class="btn btn-dark btn-block">
-                  <span id="btnFetch" class="w-100">
-                    <i class="mdi mdi-send"></i> Envoyer
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {{ form_end(rapportForm) }}
-          </div>
-        {% else %}
-          <q class="font-italic p-3 bg-light pt-0 d-block rounded">
-            Nous accusons une bonne réception de votre rapport, merci pour votre
-            éventuel collaboration.
-          </q>
-        {% endif %}
+         {{ form_end(rapportForm) }}
+      </div>
+      {% else %}
+      <q class="font-italic p-3 bg-light pt-0 d-block rounded">
+         Nous accusons une bonne réception de votre rapport, merci pour votre
+         éventuel collaboration.
+      </q>
       {% endif %}
-    </div>
-  </div>
+   </div>
+</div>
+{% endif %}
 {% endif %}

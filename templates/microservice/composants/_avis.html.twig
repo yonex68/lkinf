@@ -1,4 +1,4 @@
-<div class="card avis">
+<div class="card avis" id="avis">
    <div class="card-header p-0 bg-transparent border-0">
       <ul class="nav nav-pills mb-3" id="avisTab" role="tablist">
          <li class="nav-item w-50">
@@ -20,7 +20,7 @@
             <ul class="list-unstyled">
                {% for avisPositif in serviceAvisPositifs(microservice) %}
 
-               <li class="media">
+               <li class="media" id="{{ avisPositif.client.nameUrl }}">
                   {% if avisPositif.client.avatar %}
                   <img src="{{ vich_uploader_asset(avisPositif.client, 'imageFile') | imagine_filter('midle_avatar') }}"
                      class="rounded-circle mr-3" alt="{{ avisPositif.client.prenom }}">

@@ -5,6 +5,7 @@ namespace App\Controller\Vendeur;
 use App\Entity\Retrait;
 use App\Form\RetraitType;
 use App\Repository\RetraitRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class VendeurRetraitsController extends AbstractController
     }
 
     #[Route('/nouveau-retrait', name: 'app_vendeur_retraits_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, RetraitRepository $retraitRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, RetraitRepository $retraitRepository, MailerService $mailer): Response
     {
         $retrait = new Retrait();
         $form = $this->createForm(RetraitType::class, $retrait);
@@ -36,13 +37,33 @@ class VendeurRetraitsController extends AbstractController
         $retraitsenattente = $retraitRepository->findBy(['vendeur' => $vendeur, 'statut' => 'En attente']);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $redirectUrl = $this->redirectToRoute('app_vendeur_retraits_index', [], Response::HTTP_SEE_OTHER);
+            $montant = $form->get('montant')->getData();
+            $soldeVendeur = $vendeur->getPortefeuille()->getSoldeDisponible();
+
+            if ($montant > $soldeVendeur) {
+                $this->addFlash('danger', "Votre demande n'a pas été envoyée, vous solde est insuffisant $soldeVendeur €, pour effectuer une demande de fond de $montant €.");
+                return $this->redirectToRoute('app_vendeur_retraits_new', [], Response::HTTP_SEE_OTHER);
+            }
+
             $retrait->setVendeur($vendeur);
             $retrait->setStatut('En attente');
             $entityManager->persist($retrait);
             $entityManager->flush();
+            
+            /** Envoie du mail au vendeur */
+            $mailer->sendDemandeMail(
+                'contact@links-infinity.com',
+                $retrait->getVendeur()->getEmail(),
+                'Links infinity - Nouveau retrait',
+                'mails/_retrait.html.twig',
+                $retrait->getVendeur(),
+                $retrait
+            );
 
             $this->addFlash('success', 'Votre demande a bien été envoyée');
-            return $this->redirectToRoute('app_vendeur_retraits_index', [], Response::HTTP_SEE_OTHER);
+            return $redirectUrl;
         }
 
         return $this->renderForm('vendeur/retraits/new.html.twig', [

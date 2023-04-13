@@ -69,4 +69,40 @@ class MailerService {
 		return $this->mailer->send($email);
 	}
 
+	public function sendDemandeMail($from, $to, $subjet, $template = null, $vendeur, $retrait){
+
+		if (!isset($template)) {
+			$template = 'mails/_default.html.twig';
+		}
+		
+		$email = (new TemplatedEmail())
+			->from($from)
+			->to($to)
+			->subject($subjet)
+			->htmlTemplate($template)
+			->context([
+				'vendeur' => $vendeur,
+				'demande'   =>  $retrait
+			])
+		;
+
+		return $this->mailer->send($email);
+	}
+
+	public function sendPackMail($from, $to, $subjet, $template = null, $client, $commande){
+		
+		$email = (new TemplatedEmail())
+			->from($from)
+			->to($to)
+			->subject($subjet)
+			->htmlTemplate($template)
+			->context([
+				'client' => $client,
+				'commande'   =>  $commande
+			])
+		;
+
+		return $this->mailer->send($email);
+	}
+
 }

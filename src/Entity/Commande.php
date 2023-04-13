@@ -96,6 +96,9 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Offre $pack = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Avis $avis = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -471,6 +474,18 @@ class Commande
     public function setPack(?Offre $pack): self
     {
         $this->pack = $pack;
+
+        return $this;
+    }
+
+    public function getAvis(): ?Avis
+    {
+        return $this->avis;
+    }
+
+    public function setAvis(?Avis $avis): self
+    {
+        $this->avis = $avis;
 
         return $this;
     }

@@ -1,13 +1,11 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Edit Retrait{% endblock %}
+{% block title %}Gestion des retraits{% endblock %}
+
+{% block pageTitle %}Réponse au vendeur{% endblock %}
 
 {% block body %}
-    <h1>Edit Retrait</h1>
 
-    {{ include('admin_retraits/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('admin/admin_retraits/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
-    <a href="{{ path('app_admin_retraits_index') }}">back to list</a>
-
-    {{ include('admin_retraits/_delete_form.html.twig') }}
 {% endblock %}
