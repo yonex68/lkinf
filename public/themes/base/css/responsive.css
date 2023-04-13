@@ -65,7 +65,7 @@
 
    .form-search .dropdown-menu,
    .form-search .dropdown-menu.show {
-      min-width: 400px !important;
+      min-width: 360px !important;
    }
 
    #bannerCarouselIndicators {
@@ -129,5 +129,8 @@
 
    .dropdown-notifications {
       position: relative;
+   }
+   .form-key-word{
+      width: 300px!important;
    }
 }
