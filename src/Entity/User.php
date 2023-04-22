@@ -31,10 +31,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $nom;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $prenom;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $avatar;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     private $email;
 
     #[ORM\Column(type: 'string')]
@@ -131,8 +131,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?int $facebookId = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $googleId = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $googleId = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $etat = null;
@@ -190,6 +190,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $usePseudo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $instagramId = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -219,7 +222,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -284,7 +287,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -296,7 +299,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -862,12 +865,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this;
     }
 
-    public function getGoogleId(): ?int
+    public function getGoogleId(): ?string
     {
         return $this->googleId;
     }
 
-    public function setGoogleId(?int $googleId): self
+    public function setGoogleId(?string $googleId): self
     {
         $this->googleId = $googleId;
 
@@ -1169,6 +1172,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setUsePseudo(?bool $usePseudo): self
     {
         $this->usePseudo = $usePseudo;
+
+        return $this;
+    }
+
+    public function getInstagramId(): ?string
+    {
+        return $this->instagramId;
+    }
+
+    public function setInstagramId(?string $instagramId): self
+    {
+        $this->instagramId = $instagramId;
 
         return $this;
     }

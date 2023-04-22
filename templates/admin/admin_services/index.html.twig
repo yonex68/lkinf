@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="card">
-    <div class="card-header bg-white">
+    <div class="card-header bg-white p-2">
         {{ form_start(form, {attr: {class: 'filter js-filter-form container'}}) }}
         <div class="row my-3">
             <div class="col-sm-9">
@@ -79,10 +79,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-sm-6">
-                <div class="row">
+                <div class="row pt-3">
 
                     <div class="col-sm-6 ml-auto">
                         <div class="form-group">
@@ -101,7 +100,8 @@
 
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <a href="{{ path('app_admin_services_new') }}" class="btn btn-success border border-success w-100">Ajouter
+                            <a href="{{ path('app_admin_services_new') }}"
+                                class="btn btn-success border border-success w-100">Ajouter
                             </a>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                             <th>Prix Mastering</th>
                             <th>Signalé</th>
                             <th>Statut</th>
-                            <th>actions</th>
+                            <th style="text-align: right;">actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,7 +180,8 @@
 
                             </td>
                             <td><strong>{{ microservice.prixMastering ~ currency }}</strong></td>
-                            <td><span class="badge bg-secondary rounded-pill">{{ microservice.serviceSignales|length }}</span></td>
+                            <td><span class="badge bg-secondary rounded-pill">{{ microservice.serviceSignales|length
+                                    }}</span></td>
                             <td>
 
                                 {% if microservice.offline == 1 %}
@@ -189,19 +190,21 @@
 
                                 {% else %}
 
-                                <span class="badge bg-{{ microservice.online == true ? 'success' : 'light' }} rounded-pill">
+                                <span
+                                    class="badge bg-{{ microservice.online == true ? 'success' : 'light' }} rounded-pill">
                                     {{ microservice.online == true ? 'En ligne' : 'Hors ligne' }}
                                 </span>
 
                                 {% endif %}
                             </td>
-                            <td>
+                            <td style="text-align: right;">
                                 <a href="{{ path('microservice_details', {'slug': microservice.slug}) }}"
                                     class="btn btn-light" target="_blank">Details</a>
-                                    
+
                                 <a href="{{ path('app_admin_services_titre', {'id': microservice.id}) }}"
                                     class="btn btn-light">Modifier</a>
                                 {% include "admin/admin_services/_delete_form.html.twig" %}
+                            </td>
                         </tr>
                         {% else %}
                         <tr>

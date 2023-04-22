@@ -4,9 +4,7 @@
 {{ appName }}
 {% endblock %}
 
-{% block titre %}Créer un compte
-{{ appName }}
-{% endblock %}
+{% block titre %}Créer un compte{% endblock %}
 
 {% block text %}Nouveau sur
 {{ appName }}? <br> Crée gratuitement votre compte
@@ -63,9 +61,9 @@
 	{{ form_errors(registrationForm.compte) }}
 </div>
 
-<div class="location">
+<div class="location position-relave" id="doing">
 	<div class="form-group">
-		<label class="mb-1">Lieu de prestation de service</label>
+		<label class="mb-1">Lieu de la prestation de service</label>
 		<div class="position-relative icon-form-control">
 			<i class="fa fa-map-marker position-absolute text-blue"></i>
 			{{ form_widget(registrationForm.adresse) }}
@@ -73,7 +71,7 @@
 		{{ form_errors(registrationForm.adresse) }}
 	</div>
 
-	<div class="w-100 addresses" id="addresses">
+	<div class="addresses position-absolute" id="addresses">
 		<ul class="list-group text-dark" id="adresse-liste">
 		</ul>
 	</div>
@@ -96,8 +94,8 @@
 	{{ form_errors(registrationForm.email) }}
 </div>
 
-<div class="form-group">
-	<label class="mb-1">Mot de passe</label>
+<div class="form-group mb-0">
+	{% include "security/_password.html.twig" %}
 	<div class="position-relative icon-form-control">
 		<i class="mdi mdi-key-variant position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.plainPassword) }}
@@ -108,9 +106,9 @@
 	{{ form_widget(registrationForm.agreeTerms) }}
 	<label for="registration_form_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
 		J'accepte les
-		<a href="">termes</a>
+		<a href="" class="text-primary">termes</a>
 		et
-		<a href="">conditions d'utilisation</a>
+		<a href="" class="text-primary">conditions d'utilisation</a>
 	</label>
 </div>
 
@@ -120,6 +118,19 @@
 
 {% endblock %}
 
+{% block stylesheets %}
+<style>
+	#doing {
+		display: none;
+	}
+
+	input[type=radio]:checked~#doing {
+		display: block;
+	}
+
+</style>
+{% endblock %}
+
 {% block javascripts %}
 
 {{ parent() }}
@@ -127,27 +138,15 @@
 {% include "espace_utilisateur/composants/_mapbox_script.html.twig" %}
 
 <script>
-
-	$("#registration_form_agreeLocations").on('change', async function (e) {
-
-		function getLocation(position) {
-
-			console.log(position.coords)
-
-			const longitude = position.coords.longitude
-			const latitude = position.coords.latitude
-
-			$("#registration_form_longitude").val(longitude)
-			$("#registration_form_latitude").val(latitude)
-		}
-
-		function failedToGet() {
-			console.log('Une erreur est survenu lors de la confirmation de votre localisation')
-		}
-
-		const result = navigator.geolocation.getCurrentPosition(getLocation, failedToGet)
+	$('#registration_form_compte_1').change(function () {
+		$('#doing').slideToggle();
 	})
-
+	$('#registration_form_compte_2').change(function () {
+		$('#doing').slideUp();
+	})
+	$('#registration_form_compte_0').change(function () {
+		$('#doing').slideUp();
+	})
 </script>
 
 {% endblock %}

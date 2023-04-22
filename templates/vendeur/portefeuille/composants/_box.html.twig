@@ -11,6 +11,9 @@
             </div>
             <span>
                {{ portefeuille(app.user).soldeEnCours ~ currency }} en cours
+            </span> <br>
+            <span>
+               {{ portefeuille(app.user).soldeEnCours ~ currency }} retrait au total
             </span>
          </div>
          <img src="{{ asset('img/wallet.png') }}" width="50" alt="">

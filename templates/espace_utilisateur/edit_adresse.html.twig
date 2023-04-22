@@ -15,18 +15,25 @@
 
 {{ form_start(form) }}
 
-<div class="box shadow-sm rounded bg-white mb-3">
-   <div class="box-title p-3 text-left bg-dark rounded">
-      <h4 class="mb-0 text-light">
+<div class="card bg-white mb-3">
+   <div class="card-header bg-dark">
+      <h6 class="mb-0 text-light">
          Profil utilisateur
-      </h4>
+      </h6>
    </div>
    <div class="box-body p-3">
 
       {% include "espace_utilisateur/composants/_position.html.twig" %}
 
-      <div class="form-group">
-         {{ form_row(form.adresse) }}
+      <div>
+         <div class="form-group">
+            <label class="mb-1">Lieu de la prestation de service</label>
+            <div class="position-relative icon-form-control">
+               <i class="fa fa-map-marker position-absolute text-blue"></i>
+               {{ form_widget(form.adresse) }}
+            </div>
+            {{ form_errors(form.adresse) }}
+         </div>
       </div>
 
       <div style="visibility: hidden;height:1px;">

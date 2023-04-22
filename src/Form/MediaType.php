@@ -17,25 +17,21 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextareaType::class, [
-                'label' => 'Comment décrivez-vous ce media?',
-                'help' => "Exemple: Studio d'enregistrement",
-                'required' => false
-            ])
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Joindre une image',
-                'help' => '(Png, jpg et jpeg)',
+                'help' => "Joindre jusqu'à 10 images (une par une)",
                 'allow_delete' =>  false,
+                'label' =>  'Image (Png, jpg et jpeg)',
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'large_avatar',
                 'attr' => ['class' => ''],
+                'required' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Une image est requise pour votre service',
-                    ]),
-                ],
+                        'message' => 'Ce champ ne peut pas être vide'
+                    ])
+                ]
             ]);
     }
 

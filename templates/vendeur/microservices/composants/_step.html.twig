@@ -17,8 +17,8 @@
             href="{{ path('vendeur_microservices_description', {id: microservice.id}) }}">
             2. Prix, description et délai &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
          </a>
-
-         <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_options' ? 'active' : 'tache-terminer' }} {{ microservice.serviceOptions|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
+         
+         <a class="dropdown-item p-2 {{ app.request.attributes.get('_route') == 'vendeur_microservices_options' ? 'active' : 'tache-terminer' }} {{ microservice.serviceOptions|length > 0 ? 'tache-terminer' : 'tache-encours' }} {{ microservice.realisations|length > 0 ? 'tache-terminer' : 'tache-encours' }}"
             href="{{ path('vendeur_microservices_options', {id: microservice.id}) }}">
             3. Options supplémentaire &nbsp;&nbsp;&nbsp;<i class="text-muted fa fa-check-circle float-right"></i>
          </a>

@@ -56,7 +56,17 @@ class VendeurRetraitsController extends AbstractController
             $mailer->sendDemandeMail(
                 'contact@links-infinity.com',
                 $retrait->getVendeur()->getEmail(),
-                'Links infinity - Nouveau retrait',
+                'Links Infinity - Nouveau retrait',
+                'mails/_retrait.html.twig',
+                $retrait->getVendeur(),
+                $retrait
+            );
+            
+            /** Envoie du mail à l'auteur */
+            $mailer->sendDemandeMail(
+                'contact@links-infinity.com',
+                'contact@links-infinity.com',
+                'Links Infinity - Nouveau retrait',
                 'mails/_retrait.html.twig',
                 $retrait->getVendeur(),
                 $retrait

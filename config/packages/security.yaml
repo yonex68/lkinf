@@ -30,6 +30,7 @@ security:
                 - App\Security\LoginFormAuthenticator
                 - App\Security\GoogleAuthenticator
                 - App\Security\FacebookAuthenticator
+                - App\Security\InstagramAuthenticator
 
             entry_point: App\Security\LoginFormAuthenticator
 
@@ -58,8 +59,8 @@ security:
         - { path: ^/suivis, roles: ROLE_USER }
         - { path: ^/espace-utilisateur, roles: ROLE_USER }
         - { path: ^/conversations, roles: ROLE_USER }
-        - { path: ^/admin, roles: ROLE_USER }
-        - { path: ^/vendeur, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/vendeur, roles: ROLE_VENDEUR }
 
 when@test:
     security:

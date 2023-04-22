@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/vendeur')]
 class VendeurDisponibilitesController extends AbstractController
 {
     #[Route('/service-disponibilite-delete/{id}', name: 'vendeur_services_disponibilite_delete', methods: ['POST'])]

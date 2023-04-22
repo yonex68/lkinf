@@ -15,4 +15,13 @@ knpu_oauth2_client:
             client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
             redirect_route: connect_google_check
-            redirect_params: {}
+            redirect_params:
+                service_google: google
+
+        instagram:
+            type: instagram
+            client_id: '%env(FACEBOOK_INSTAGRAM_ID)%'
+            client_secret: '%env(FACEBOOK_INSTAGRAM_SECRET)%'
+            redirect_route: connect_instagram_check
+            redirect_params:
+                service_instagram: instagram

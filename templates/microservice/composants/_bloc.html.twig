@@ -17,16 +17,24 @@
 			<div class="d-flex align-items-center">
 
 				<span class="seller-image">
-					{% if microservice.vendeur.avatar %}
-					<img class="img-fluid"
-						src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
-						alt='' />
+
+					{% if microservice.vendeur.reseauAvatar %}
+
+					<img src="{{ microservice.vendeur.reseauAvatar }}" class="img-fluid" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}">
 
 					{% else %}
 
-					<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+						{% if microservice.vendeur.avatar %}
+						<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}"
+							class="img-fluid" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}">
+						{% else %}
+
+						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+
+						{% endif %}
 
 					{% endif %}
+
 				</span>
 
 				<span class="seller-name">

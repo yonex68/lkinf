@@ -1,0 +1,110 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Disponibilités{% endblock %}
+
+{% block body %}
+
+<div class="row">
+   <div class="col-12">
+      <!-- Left sidebar -->
+      {% include "admin/admin_services/composants/_step.html.twig" %}
+
+      <!-- Right Sidebar -->
+      <div class="email-rightbar">
+
+         <div class="card rounded">
+            <div class="card-body">
+
+               <div class="form-group">
+                  <h6 class="font-weight-bold">Disponibilités du vendeur</h6>
+                  <p class="text-muted">
+                     Afin de compléter et personnaliser votre service, vous pouvez indiquez des disponibilités en
+                     relation directe avec ce service pour permettre aux clients de prendre des rendez-vous avec vous.
+                  </p>
+               </div>
+
+               <div class="row my-3">
+                  {% for disponibilite in disponibilites %}
+                  <div class="col-sm-6">
+
+                     <div class="card">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-3 align-self-center">
+                                 <div class="icon-info">
+                                    <i class="mdi mdi-calendar text-dark"></i>
+                                 </div>
+                              </div>
+                              <div class="col-6 align-self-center text-center">
+                                 <div class="ms-2 text-end">
+                                    <p class="mb-1 text-muted font-size-13">
+                                       De {{disponibilite.heureOuverture|date('H:i') }} à
+                                       {{disponibilite.heureCloture|date('H:i') }}
+                                    </p>
+                                    <h4 class="mb-1 font-size-20">{{ disponibilite.jour }}</h4>
+                                 </div>
+                              </div>
+                              <div class="col-3 align-self-center text-center">
+                                 <div class="ms-2 text-end">
+                                    <form method="post" class="d-inline"
+                                       action="{{ path('app_admin_services_disponibilite_delete', {'id': disponibilite.id}) }}"
+                                       onsubmit="return confirm('Voulez-vous vraiment cette disponibilité?');">
+                                       <input type="hidden" name="_token"
+                                          value="{{ csrf_token('delete' ~ disponibilite.id) }}">
+                                       <button class="btn btn-outline-danger btn-sm">
+                                          <i class="fa fa-trash"></i>
+                                       </button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+                  {% endfor %}
+               </div>
+
+               {{ form_start(disponibiliteForm) }}
+               {{ form_row(disponibiliteForm.jour) }}
+               <div class="row">
+                  <div class="col-6">
+                     {{ form_row(disponibiliteForm.heureOuverture) }}
+                  </div>
+                  <div class="col-6">
+                     {{ form_row(disponibiliteForm.heureCloture) }}
+                  </div>
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-dark">{{ button_label|default('Enregistrer') }}</button>
+               </div>
+               {{ form_end(disponibiliteForm) }}
+
+            </div>
+         </div>
+
+         {% if disponibilites|length > 0 %}
+         <div class="card mt-4">
+            <div class="card-header bg-white border-bottom">
+               <h5>Mettre à jour votre disponibilité pour ce service</h5>
+            </div>
+            <div class="card-body">
+               <!-- Formulaire de  -->
+               {{ form_start(form) }}
+
+               {{ form_widget(form) }}
+
+               <div class="form-group text-right">
+                  <button class="btn btn-primary">{{ button_label|default('Enregistrer et suivant') }}</button>
+               </div>
+
+               {{ form_end(form) }}
+            </div>
+         </div>
+         {% endif %}
+
+      </div> <!-- end Col -->
+   </div>
+</div><!-- End row -->
+
+{% endblock %}

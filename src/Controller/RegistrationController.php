@@ -88,14 +88,11 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('linksinfinity@domanine.com', 'links infinity'))
+                    ->from(new Address('contact@links-infinity.com', 'links infinity'))
                     ->to($user->getEmail())
                     ->subject('Veuillez confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
-            // do anything else you need here, like send an email
-            $this->addFlash('success', "Mail d'activation de compte envoyer, consulter votre e-mail à tout moment pour activer votre compte");
 
             return $this->redirectToRoute('app_register_mail_send', [
                 'name_url' => $user->getNameUrl()

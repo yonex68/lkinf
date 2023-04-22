@@ -21,7 +21,7 @@
 		<div class="form-group">
 			<label class="mb-1">Nom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute"></i>
+				<i class="text-blue mdi mdi-account position-absolute"></i>
 				{{ form_widget(devenirVendeur.nom) }}
 			</div>
 			{{ form_errors(devenirVendeur.nom) }}
@@ -31,7 +31,7 @@
 		<div class="form-group">
 			<label class="mb-1">Prénom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute"></i>
+				<i class="text-blue mdi mdi-account position-absolute"></i>
 				{{ form_widget(devenirVendeur.prenom) }}
 			</div>
 			{{ form_errors(devenirVendeur.prenom) }}
@@ -42,31 +42,34 @@
 <div class="form-group">
 	<label class="mb-1">Email</label>
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-email-outline position-absolute"></i>
+		<i class="text-blue mdi mdi-email-outline position-absolute"></i>
 		{{ form_widget(devenirVendeur.email) }}
 	</div>
 	{{ form_errors(devenirVendeur.email) }}
 </div>
 
-<!--<div class="form-group">
-	<label class="mb-1">Adresse</label>
-	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-map position-absolute"></i>
-		 form_widget(devenirVendeur.adresse) }}
+<div class="location">
+	<div class="form-group">
+		<label class="mb-1">Lieu de prestation de service</label>
+		<div class="position-relative icon-form-control">
+			<i class="fa fa-map-marker position-absolute text-blue"></i>
+			{{ form_widget(devenirVendeur.adresse) }}
+		</div>
+		{{ form_errors(devenirVendeur.adresse) }}
 	</div>
-	 form_errors(devenirVendeur.adresse) }}
+
+	<div class="w-100 addresses" id="addresses">
+		<ul class="list-group text-dark" id="adresse-liste">
+		</ul>
+	</div>
 </div>
 
 <div style="visibility: hidden;height:1px;">
-	 form_row(devenirVendeur.ville) }}
+	{{ form_row(devenirVendeur.ville) }}
 
-	 form_row(devenirVendeur.etat) }}
+	{{ form_row(devenirVendeur.etat) }}
 
-	 form_row(devenirVendeur.pays) }}
-</div>-->
-
-<div class="form-group border p-3 rouned shadow-sm mb-0">
-	{{ form_row(devenirVendeur.agreeLocations) }}
+	{{ form_row(devenirVendeur.pays) }}
 </div>
 
 <div class="mb-3">
@@ -79,8 +82,6 @@
 	</label>
 </div>
 
-{{ form_rest(devenirVendeur) }}
-
 <button type="submit" formnovalidate class="btn btn-success btn-block text-uppercase">Envoyer</button>
 
 {{ form_end(devenirVendeur) }}
@@ -92,27 +93,129 @@
 {{ parent() }}
 
 <script>
+   $(document).mouseup(function (e) {
+      var container = $("#addresses, #devenir_vendeur_adresse");
 
-	$("#devenir_vendeur_agreeLocations").on('change', async function (e) {
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+         $("#addresses").hide();
+      }
+   });
 
-		function getLocation(position) {
+   // TO MAKE THE EXAMPLE WORK YOU MUST
+   // ADD YOUR ACCESS TOKEN FROM
+   // https://account.mapbox.com
 
-			console.log(position.coords)
+   const ACCESS_TOKEN = '{{ map_box_token }}'
 
-			const longitude = position.coords.longitude
-			const latitude = position.coords.latitude
+   $("#devenir_vendeur_adresse").on('click', function (e) {
+      const query = $(this).val();
+      if (query.length > 3) {
+         $("#addresses").css('display', 'block')
+      } else {
+         $("#addresses").css('display', 'none')
+      }
+   });
 
-			$("#devenir_vendeur_longitude").val(longitude)
-			$("#devenir_vendeur_latitude").val(latitude)
-		}
+   $("#devenir_vendeur_adresse").on('keyup', function (e) {
 
-		function failedToGet() {
-			console.log('Une erreur est survenu lors de la confirmation de votre localisation')
-		}
+      const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
+      const query = e.target.value
 
-		const result = navigator.geolocation.getCurrentPosition(getLocation, failedToGet)
-	})
+      if (query.length > 3) {
+         $("#addresses").css('display', 'block')
+      } else {
+         $("#addresses").css('display', 'none')
+      }
 
+      $("#adresse-liste").html("");
+
+      fetch(`${url}${query}.json?access_token=${ACCESS_TOKEN}`)
+         .then((response) => response.json())
+         .then((data) => {
+            console.log(data)
+            const features = data.features
+
+            if (features.length > 0) {
+               for (let i = 0; i < features.length; i++) {
+                  const feature = features[i];
+                  const addresse = features[i].place_name;
+                  const context = features[i].context;
+                  let pays = "";
+                  let ville = "";
+
+                  for (let j = 0; j < context.length; j++) {
+                     const elt = context[j];
+
+                     if (elt.id.includes("country")) {
+                        pays = elt.text
+                     }
+
+                     if (elt.id.includes("region")) {
+                        ville = elt.text
+                     }
+                  }
+
+                  let li = `<li class="list-group-item address-item">
+                     <strong class="d-block addresse-line">${addresse}</strong>
+                     <span class="ville-line">${ville}</span>,
+                     <span class="pays-line">${pays}</span>
+                  </li>`;
+
+                  $("#adresse-liste").append(li);
+                  $(".address-item").click(function () {
+                     let adr = $(this).find(".addresse-line").html();
+                     let vil = $(this).find(".ville-line").html();
+                     let pys = $(this).find(".pays-line").html();
+
+                     $("#devenir_vendeur_adresse").val(adr);
+                     $("#devenir_vendeur_ville").val(vil);
+                     $("#devenir_vendeur_pays").val(pys);
+                     $("#addresses").hide();
+                  });
+               }
+            }
+            /*const longitude = data.features[0].geometry.coordinates[0];
+            const latitude = data.features[0].geometry.coordinates[1];
+
+            $("#devenir_vendeur_longitude").val(longitude)
+            $("#devenir_vendeur_latitude").val(latitude)
+
+            console.log(longitude, latitude)*/
+         });
+
+      console.log('form has changed', e.target.value);
+   })
+
+   /*const script = document.getElementById('search-js');
+   script.onload = () => {
+      // Add search box to input
+      const collection = mapboxsearch.autofill({
+         accessToken: ACCESS_TOKEN,
+         options: { country: 'fr' }
+      });
+
+      // Configure minimap
+      const minimap = document.querySelector('mapbox-address-minimap');
+      minimap.accessToken = ACCESS_TOKEN;
+      minimap.defaultMapStyle = ['mapbox', 'outdoors-v11'];
+      minimap.theme = {
+         variables: { border: '13px solid #bbb', borderRadius: '18px', boxShadow: '0 2px 8px #000' }
+      }
+
+      minimap.onSaveMarkerLocation = (coordinate) => { console.log(coordinate); }
+      minimap.feature = {
+         type: 'Feature',
+         geometry: { type: 'Point', coordinates: [-73.981872, 40.768037] },
+         properties: {}
+      };
+
+      // Set minimap feature on search box selection
+      collection.addEventListener('retrieve', (e) => {
+         minimap.feature = e.detail.features[0];
+         console.log(minimap.feature)
+      })
+   };*/
 </script>
 
 {% endblock %}

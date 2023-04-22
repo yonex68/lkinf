@@ -16,20 +16,13 @@
 					{{ form_start(form) }}
 					<h6 class="font-weight-bold">Publication</h6>
 					<p class="text-muted">
-						Vous y êtes presque ! Avant qu’un membre de notre équipe de modération ne relise votre service,
-						nous vous
-						invitons à jeter un dernier coup d’œil à celui-ci avec le bouton aperçu ci-dessus. Vous pouvez
-						également
-						revenir sur les étapes précédentes pour effectuer une modification, et même le garder en brouillon
-						jusqu’à
-						ce que vous soyez prêt à le soumettre.
-
-						Une fois en attente de validation, nous vous inviterons à patienter : cela ne prend jamais plus de
-						24
-						heures.
-
-						J'atteste…
-					</p>
+				{% if microservice.online == 1 %}
+					Ce servise est déjà publié sur <strong>{{ appName }}</strong>.
+					Vous pouvez également revenir sur les étapes précédentes pour effectuer une modification.
+				{% else %}
+					Vous y êtes presque ! Avant qu’un membre de notre équipe de modération ne relise votre service, nous vous invitons à jeter un dernier coup d’œil à celui-ci. Vous pouvez également revenir sur les étapes précédentes pour effectuer une modification. J'atteste…
+				{% endif %}
+				</p>
 
 					<div class="{{ microservice.online == true ? 'bloc-masquer' : '' }}">
 
@@ -50,7 +43,7 @@
 						</div>
 
 						<div class="">
-							<button class="btn btn-dark" formnovalidate>
+							<button class="btn btn-primary" formnovalidate>
 								{{ button_label|default('Enregistrer et suivant') }}
 							</button>
 						</div>

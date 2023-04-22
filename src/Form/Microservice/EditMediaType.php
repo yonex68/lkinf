@@ -18,19 +18,13 @@ class EditMediaType extends AbstractType
     {
         $builder
             ->add('imageFile', VichImageType::class, [
-                'help' => '(Png, jpg et jpeg)',
                 'allow_delete' =>  false,
-                'label' =>  'Choisir une autre image',
+                'label' =>  'Format (Png, jpg et jpeg)',
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'large_avatar',
                 'attr' => ['class' => ''],
-                'required' => false
-            ])
-            ->add('name', TextareaType::class, [
-                'label' => 'Comment décrivez-vous ce media?',
-                'help' => "Exemple: Studio d'enregistrement",
                 'required' => false
             ]);
     }

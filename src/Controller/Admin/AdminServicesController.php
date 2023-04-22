@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Disponibilite;
 use App\Entity\Media;
 use App\Entity\Microservice;
 use App\Entity\SearchService;
@@ -9,13 +10,16 @@ use App\Form\AdminSearchServiceType;
 use App\Form\MediaType;
 use App\Form\Microservice\AdminMicroserviceTitreType;
 use App\Form\Microservice\DescriptionType;
+use App\Form\Microservice\DisponibiliteType;
 use App\Form\Microservice\IngenieurSonType;
 use App\Form\Microservice\MicroserrviceOptionType;
 use App\Form\Microservice\MicroserviceGalerieType;
 use App\Form\Microservice\MicroservicePublierType;
 use App\Form\Microservice\MicroserviceTitreType;
+use App\Form\MicroserviceDisponibiliteType;
 use App\Form\MicroserviceType;
 use App\Form\SearchServiceType;
+use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\SuivisRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,7 +125,7 @@ class AdminServicesController extends AbstractController
     {
         $formType = DescriptionType::class;
 
-        if ($microservice->getCategorie()->getSlug() == 'Ingenieur-son') {
+        if ($microservice->getCategorie()->getSlug() == 'ingenieur-son') {
 
             $formType = IngenieurSonType::class;
 
@@ -191,7 +195,7 @@ class AdminServicesController extends AbstractController
 
             $this->addFlash('success', "L'image a bien été téléchargée");
 
-            return $this->redirectToRoute('app_admin_services_publication', [
+            return $this->redirectToRoute('app_admin_services_disponibilite', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -212,6 +216,60 @@ class AdminServicesController extends AbstractController
             'microservice' => $microservice,
             'form' => $form->createView(),
             'mediaForm' => $mediaForm->createView(),
+        ]);
+    }
+
+    #[Route('/{id}/disponibilite', name: 'app_admin_services_disponibilite', methods: ['GET', 'POST'])]
+    public function planning(Request $request, EntityManagerInterface $entityManager, Microservice $microservice, DisponibiliteRepository $disponibiliteRepository): Response
+    {        
+        $form = $this->createForm(MicroserviceDisponibiliteType::class, $microservice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+
+            return $this->redirectToRoute('app_admin_services_publication', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        $disponibilite = new Disponibilite();
+        $disponibiliteForm = $this->createForm(DisponibiliteType::class, $disponibilite);
+        $disponibiliteForm->handleRequest($request);
+
+        if ($disponibiliteForm->isSubmitted() && $disponibiliteForm->isValid()) {
+
+            $jour = $disponibiliteForm->get('jour')->getData();
+            $ordre = $this->getOrdre($jour);
+            $findDisponibilite = $disponibiliteRepository->findOneBy([
+                'jour' => $jour, 'service' => $microservice
+            ]);
+
+            if ($findDisponibilite) {
+                $disponibilite = $findDisponibilite;
+            }
+            
+            $disponibilite->setService($microservice);
+            $disponibilite->setOrdre($ordre);
+            $entityManager->persist($disponibilite);
+            $entityManager->flush();
+
+            $this->addFlash('success', "La disponibilité pour ce service a bien été mise à jour sur ce service");
+
+            return $this->redirectToRoute('app_admin_services_disponibilite', [
+                'id' => $microservice->getId()
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/admin_services/disponibilite.html.twig', [
+            'microservice' => $microservice,
+            'form' => $form->createView(),
+            'disponibiliteForm' => $disponibiliteForm->createView(),
+            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);
     }
 
@@ -240,7 +298,7 @@ class AdminServicesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_services_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'app_admin_services_show', methods: ['GET'])]
     public function show(Microservice $microservice): Response
     {
         return $this->render('admin/admin_services/show.html.twig', [
@@ -276,5 +334,45 @@ class AdminServicesController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_services_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/service-disponibilite-delete/{id}', name: 'app_admin_services_disponibilite_delete', methods: ['POST'])]
+    public function deleteDisponibilite(Request $request, Disponibilite $disponibilite, 
+    EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$disponibilite->getId(), $request->request->get('_token'))) {
+            $service = $disponibilite->getService();
+            $entityManager->remove($disponibilite);
+            $entityManager->flush();
+
+            $this->addFlash('success', "La disponibilité pour ce service a bien été supprimer");
+        }
+
+        return $this->redirectToRoute('app_admin_services_disponibilite', [
+            'id' => $service->getId(),
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getOrdre($jour){
+
+        $ordre = 0;
+
+        if ($jour == 'Lundi') {
+            $ordre = 1;
+        }elseif ($jour == 'Mardi') {
+            $ordre = 2;
+        }elseif ($jour == 'Mercredi') {
+            $ordre = 3;
+        }elseif ($jour == 'Jeudi') {
+            $ordre = 4;
+        }elseif ($jour == 'Vendredi') {
+            $ordre = 5;
+        }elseif ($jour == 'Samedi') {
+            $ordre = 6;
+        }elseif ($jour == 'Dimanche') {
+            $ordre = 7;
+        }
+
+        return $ordre;
     }
 }

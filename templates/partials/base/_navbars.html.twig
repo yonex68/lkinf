@@ -1,4 +1,4 @@
-<nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top px-0">
+<nav class="navbar d-none d-sm-block navbar-expand-xl navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top px-0">
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}">
@@ -87,7 +87,7 @@
 
 					{% if app.user.reseauAvatar %}
 
-					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+					<img src="{{ app.user.reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 
 					{% else %}
 
@@ -245,18 +245,18 @@
 
 					{% if app.user.reseauAvatar %}
 
-					<img src="{{ reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+					<img src="{{ app.user.reseauAvatar }}" class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 
 					{% else %}
 
-					{% if app.user.avatar %}
-					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('small_avatar') }}"
-						class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
-					{% else %}
+						{% if app.user.avatar %}
+						<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('small_avatar') }}"
+							class="img-fluid" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+						{% else %}
 
-					<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt='' />
+						<img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt='' />
 
-					{% endif %}
+						{% endif %}
 
 					{% endif %}
 				</a>
@@ -316,8 +316,8 @@
 
 			{% else %}
 			<li class="nav-item">
-				<a href="{{ path('app_login') }}" class="nav-link text-blue">
-					<button class="btn btn-success btn-sm nav-auth-btn">Vendre / Connexion</button>
+				<a href="{{ path('app_register') }}" class="nav-link text-blue">
+					<button class="btn btn-success btn-sm nav-auth-btn">Vendre</button>
 				</a>
 			</li>
 			{% endif %}

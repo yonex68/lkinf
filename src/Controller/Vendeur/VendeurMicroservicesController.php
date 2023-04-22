@@ -44,7 +44,7 @@ class VendeurMicroservicesController extends AbstractController
         $user = $this->getUser();
 
         if (empty($user->getAdresse())) {
-            $this->addFlash('warning', 'Veuillez indiquer votre adresse pour completer votre compte');
+            $this->addFlash('warning', 'Veuillez indiquer votre lieu de la prestation de service pour completer votre compte');
             return $this->redirectToRoute('user_edit_adresse');
         }
 
@@ -65,9 +65,9 @@ class VendeurMicroservicesController extends AbstractController
         /** Verification de l'abonnement de l'utilisateur */
         $user = $this->getUser();
         
-        if ($verifyAbonnementService->verifyAbonnement($user) === false) {
+        /*if ($verifyAbonnementService->verifyAbonnement($user) === false) {
             return $this->redirectToRoute('stripe_abonnement_services');
-        }
+        }*/
 
         $microservice = new Microservice();
         $form = $this->createForm(MicroserviceTitreType::class, $microservice);
@@ -161,7 +161,7 @@ class VendeurMicroservicesController extends AbstractController
 
         $formType = DescriptionType::class;
 
-        if ($microservice->getCategorie()->getSlug() == 'Ingenieur-son') {
+        if ($microservice->getCategorie()->getSlug() == 'ingenieur-son') {
 
             $formType = IngenieurSonType::class;
 

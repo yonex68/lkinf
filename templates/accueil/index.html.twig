@@ -10,6 +10,9 @@
 			<h3 class="font-weight-bold {{ microservices|length == 0 ? 'text-center' : '' }}">
 				{{ ville ? 'Services à proximité' : 'Services les plus réscents' }}
 			</h3>
+			{% if ville %}
+			<p class="pt-0" style="margin-top: -10px!important;"><i class="fa fa-map-marker text-blue"></i> {{ ville }}</p>
+			{% endif %}
 			<div class="row">
 				{% for microservice in microservices %}
 				<div class="col-6 col-sm-3 d-flex align-items-stretch paddingless">
@@ -19,7 +22,8 @@
 				<div class="col-sm-6 mx-auto">
 					<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">Aucun service disponible dans cette zone:
 						<strong>{{
-							ville }}</strong></p>
+							ville }}</strong>
+					</p>
 				</div>
 				{% endfor %}
 			</div>
@@ -29,9 +33,14 @@
 
 <div class="freelance-projects pb-5">
 	<div class="container">
-		<h3 class="font-weight-bold pb-3 h5 {{ vendeurs|length == 0 ? 'text-center' : '' }}">
-			{{ ville ? 'Profésionnels à proximité' : 'Les profésionnels à votre service' }}
+		<h3 class="font-weight-bold pb-1 mb-1 h5 {{ vendeurs|length == 0 ? 'text-center' : '' }}">
+			{{ ville ? 'Professionnels à proximité' : 'Les professionnels à votre service' }}
 		</h3>
+		{% if ville %}
+		<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">
+			<i class="fa fa-map-marker text-blue"></i> {{ ville }}
+		</p>
+		{% endif %}
 		{% if vendeurs|length > 0 %}
 
 		<div class="row freelance-slider">
@@ -73,9 +82,9 @@
 		{% else %}
 
 		<div>
-			<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">Aucun profésinnels disponible dans cette zone:
-				<strong>{{ ville
-					}}</strong></p>
+			<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">
+				Aucun profésinnels disponible dans cette zone
+			</p>
 		</div>
 
 		{% endif %}
@@ -153,8 +162,8 @@
 	</div>
 </section>
 
-<div class="modal fade {{ ville ? '' : 'modal-location' }}" id="modalLocations" tabindex="-1" aria-labelledby="modalLocationsLabel"
-	aria-hidden="true">
+<div class="modal fade {{ ville ? '' : 'modal-location' }}" id="modalLocations" tabindex="-1"
+	aria-labelledby="modalLocationsLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
 			<div class="modal-header border-0 text-center">
@@ -212,18 +221,13 @@
 {{ parent() }}
 
 <script src="{{ asset('js/favoris.js') }}"></script>
+
 {% include "partials/_location_script.html.twig" %}
 
 <script>
 	$(document).ready(function () {
 		$('.modal-location').modal('show')
 	})
-</script>
-
-<script>
-	$("#adresse").click(function () {
-		$("#modalLocations").modal('show')
-	});
 </script>
 
 {% endblock %}

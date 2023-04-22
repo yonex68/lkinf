@@ -65,8 +65,8 @@ class IngenieurSonType extends AbstractType
                 ],
             ])->add('delai', ChoiceType::class, [
                 'label' => false,
+                'help' => 'Facultatif',
                 'placeholder' => 'Choisir un délai de livraison',
-                'empty_data' => 'Aucun',
                 'choices'  => [
                     '1 jour' =>  1,
                     '2 jours' =>  2,
@@ -101,6 +101,7 @@ class IngenieurSonType extends AbstractType
                 ],
                 'expanded' => false,
                 'multiple' => false,
+                'required' => false,
             ]);
     }
 

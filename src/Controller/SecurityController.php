@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connect/facebook", name="facebook_connect")
+     * @Route("/facebook/connect", name="facebook_connect")
      */
     public function connect(ClientRegistry $clientRegistry){
         /** @var FacebookClient $client */
@@ -39,13 +39,24 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connect/google", name="google_connect")
+     * @Route("/google/connect", name="google_connect")
      */
     public function googleConnect(ClientRegistry $clientRegistry){
         /** @var GoogleClient $client */
         $client = $clientRegistry->getClient('google');
         return $client->redirect([
             'profile', 'email'
+        ]);
+    }
+
+    /**
+     * @Route("/instagram/connect", name="instagram_connect")
+     */
+    public function instagramConnect(ClientRegistry $clientRegistry){
+        /** @var InstagramClient $client */
+        $client = $clientRegistry->getClient('instagram');
+        return $client->redirect([
+            'user_profile', 'user_media'
         ]);
     }
 

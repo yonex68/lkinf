@@ -27,18 +27,12 @@
                         La 1re image, principale, sera utilisée dans la recherche, les catégories, et sur
                         votre profil. C’est la
                         plus importante. Afin que votre service se démarque des autres, privilégiez une
-                        miniature lisible en
-                        format
-                        réduit, en rapport direct avec ce que vous faites dans votre service basique, et
+                        image lisible en rapport direct avec ce que vous faites dans votre service, et
                         surtout : de votre
                         création. <br>
 
                         Les autres images, optionnelles, serviront à montrer des exemples de votre travail
-                        ou illustrer plus
-                        précisément ce que vous vendez. Vous pouvez également joindre une vidéo que vous
-                        aurez hébergée sur
-                        YouTube
-                        ou Vimeo.
+                        ou illustrer plus précisément ce que vous vendez.
                     </p>
 
                     {% if microservice.medias|length > 0 %}
@@ -50,12 +44,12 @@
                                 <div class="carousel-item {{ microservice.medias[0].id == media.id ? 'active' : '' }}">
                                     {% if media.imageName %}
                                     <img class="d-block img-fluid"
-                                        src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('medium_size') }}"
+                                        src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('rectangle_size') }}"
                                         alt="First slide">
 
                                     {% else %}
                                     <img class="d-block img-fluid"
-                                        src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}"
+                                        src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('rectangle_size') }}"
                                         alt="First slide">
 
                                     {% endif %}
@@ -88,9 +82,10 @@
                                     action="{{ path('app_admin_services_medias_delete', {'id': media.id}) }}"
                                     onsubmit="return confirm('Voulez-vous vraiment supprimer cette image?');">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                    <button class="btn btn-outline-danger my-2 btn-sm"><i class="fa fa-trash"></i> Supprimer</button>
+                                    <button class="btn btn-outline-danger my-2 btn-sm"><i class="fa fa-trash"></i>
+                                        Supprimer</button>
                                 </form>
-                                
+
                             </div>
 
                             {% endfor %}
@@ -100,26 +95,22 @@
                     {% endif %}
 
                     <!-- Si le nombre maximal d'image pour un service est 2 -->
-                    {% if microservice.medias|length <= 10 %} {{ form_start(mediaForm) }} <div class="row mt-3">
-                        <div class="col-sm-6">
-                            <div class="form-group py-1">
-                                {{ form_row(mediaForm.imageFile) }}
-                            </div>
-                        </div>
+                    {% if microservice.medias|length <= 10 %} 
+                    {{ form_start(mediaForm) }} 
+                    
+                    <div>
+                        {{ form_row(mediaForm.imageFile) }}
+                    </div>
+
+                    <div class="">
+                        <button type="submit" class="btn btn-dark mb-4">Télécharger</button>
+                    </div>
+
+                    {{ form_end(mediaForm) }}
+
+                    {% endif %}
+
                 </div>
-
-                <div class="form-group py-1">
-                    {{ form_row(mediaForm.name) }}
-                </div>
-
-                <div class="">
-                    <button type="submit" class="btn btn-dark mb-4">Télécharger</button>
-                </div>
-
-                {{ form_end(mediaForm) }}
-
-                {% endif %}
-            </div>
 
             {% if microservice.medias|length > 0 %}
             <!-- Form collection -->

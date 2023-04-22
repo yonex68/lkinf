@@ -8,13 +8,12 @@
    }
 }
 
-@media(min-width:767px) {
+@media(max-width: 800px) {
+   
    .bg-image {
       background-position-y: 0;
    }
-}
 
-@media(max-width: 600px) {
    .py-5, .py-4, .pb-5 {
       padding: 20px 1px !important;
    }
@@ -111,15 +110,10 @@
       font-size: 1em !important;
    }
 
-   body.responsive {
-      background: #1a1b21 !important;
-   }
-
    .auth-bloc {
       width: 100%;
       margin: auto;
       padding: 20px;
-      background-color: transparent;
    }
 
    .nav-auth-btn {

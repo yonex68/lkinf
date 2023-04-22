@@ -43,6 +43,8 @@ class AdminMicroserviceTitreType extends AbstractType
                 'help' => "A qui appartient ce service?",
                 'class' => User::class,
                 'expanded' => false,
+                'attr' => ['class' => "p-0 m-0 rounded border-0"],
+                'autocomplete' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',

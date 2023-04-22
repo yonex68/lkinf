@@ -26,6 +26,8 @@ class CategorieType extends AbstractType
                     'Studio' => 'studio',
                     'Videaste' => 'sideaste',
                     'Figurant - danseur' => 'figurant-danseur',
+                    'Photographe' => 'photographe',
+                    'Beatmaker' => 'beatmaker',
                 ],
                 'constraints' => [
                     new NotBlank([

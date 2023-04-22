@@ -40,71 +40,101 @@
 	{% endblock %}
 </head>
 
-<body data-turbo="false" class="responsive text-light"
-	style="background-image: url('{{ asset('img/register.png') }}');">
+<body data-turbo="false" class="text-light responsive"
+	style="background-image: url('{{ asset('img/danceur.jpg') }}');">
 
-	<div class="p-md-3 auth-bloc ml-auto">
+	<div class="container">
 		<div class="row">
-			<div class="col-sm-9 mx-auto">
-				<div class="pt-4">
-					<a href="{{ path('accueil') }}" class="btn btn-dark shadow-sm"><i class="mdi mdi-arrow-left"></i>
-						Retournez
-						vers accueil</a>
-				</div>
-				
-				{{ include('partials/_flash_message.html.twig') }}
+			<div class="col-sm-5 mx-auto">
 
-				<div class="osahan-login py-3">
-					<div class="text-center mb-4">
-						<a href="{{ path('accueil') }}">
-							<h5 class="text-uppercase text-light pt-3">{{ appName }}</h5>
-						</a>
-						<h5 class="font-weight-bold mt-3 text-light">
-							{% block titre %}Inscription
+				<div class="card auth-bloc shadow-sm">
+					<div class="card-header p-0">
+						<div class="row">
+							<div class="col-5 pr-0 align-items-center">
+								<a href="{{ path('accueil') }}">
+									<h1 class="text-uppercase text-light">{{ appName }}</h1>
+								</a>
+							</div>
+							<div class="col-7 text-right align-items-center">
+								<a href="{{ path('accueil') }}" class="text-light small p-0"><i class="mdi mdi-arrow-left"></i> Retournez vers accueil</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="osahan-login pt-3">
+							<div class="text-center mb-4">
+								<h5 class="text-light pt-3">{% block titre %}Inscription{% endblock %}</h5>
+								<p class="text-light"> {% block text %}{% endblock %}
+								</p>
+							</div>
+
+							{% for type, messages in app.flashes %}
+								{% for message in messages %}
+									<div class="alert alert-{{ type }} alertflash alert-dismissible fade show mb-3 border border-{{ type }}" role="alert" style="text-align: left!important;">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										<strong class="my-0 text-{{ type }}">
+												{% if type == 'danger' %}
+												<i class="fa fa-exclamation-triangle"></i> Echec!
+												{% elseif type == 'warning' %}
+												<i class="fa fa-exclamation-triangle"></i> Attention!
+											{% elseif type =='info' %}
+												<i class="fa fa-check"></i> En cours de validation!
+											{% elseif type =='success' %}
+												<i class="fa fa-check"></i> Succès!
+											{% endif %}
+											</strong> -
+											<p>{{ message }}</p>
+									</div>
+								{% endfor %}
+							{% endfor %}
+
+							{% block body %}{% endblock %}
+
+							{% block footer %}
+							<div class="pt-3 text-muted text-center m-0">
+
+									{% if app.request.attributes.get('_route') == 'app_register' %}
+
+									<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}" class="text-primary">connectez-vous</a></p>
+
+									{% elseif app.request.attributes.get('_route') == 'app_login' %}
+
+									<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-primary">créer un compte</a></p>
+
+									{% else %}
+
+									<a href="{{ path('app_login') }}" class="text-primary">Connexion</a>&nbsp;
+
+									<a href="{{ path('app_register') }}" class="text-primary">Créer un compte</a>
+
+									{% endif %}
+								</span>
+							</div>
 							{% endblock %}
-						</h5>
-						<p class="text-light"> {% block text %}{% endblock %}
-						</p>
+						</div>
 					</div>
-					{% block body %}{% endblock %}
-
-					{% block space %}
-					<div style="height: 50px;" class="d-none d-sm-block"></div>
-					{% endblock %}
-
-					{% block footer %}
-					<div class="py-3 d-flex align-item-center">
-						<a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié!</a>
-						<span class="ml-auto">
-							{% if app.request.attributes.get('_route') == 'app_register' %}
-
-							<a href="{{ path('app_login') }}">Connexion</a>
-
-							{% elseif app.request.attributes.get('_route') == 'app_login' %}
-
-							<a href="{{ path('app_register') }}">Créer un compte</a>
-
-							{% else %}
-
-							<a href="{{ path('app_login') }}">Connexion</a>&nbsp;
-
-							<a href="{{ path('app_register') }}">Créer un compte</a>
-
-							{% endif %}
-						</span>
+					<div class="card-footer">
+						<ul class="nav justify-content-center p-0 m-0">
+							<li class="nav-item">
+								<a class="nav-link" href="#">Conditons générales</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Mentions légales</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Politique de confidentialité</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Politique de confidentialité</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-primary" href="#">Besoin d'aide?</a>
+							</li>
+						</ul>
 					</div>
-
-					<div class="py-3 text-center">
-						<a class="mr-1" href="#">Besoin d'aide?</a>
-					</div>
-
-					<div class="py-3">
-						<a class="text-muted mr-1" href="#">Conditons générales</a>
-						<a class="text-muted mr-1" href="#">Mentions légales</a>
-						<a class="text-muted mr-1" href="#">Politique de confidentialité</a>
-					</div>
-					{% endblock %}
 				</div>
+
 			</div>
 		</div>
 	</div>

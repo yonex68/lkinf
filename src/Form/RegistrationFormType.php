@@ -44,9 +44,9 @@ class RegistrationFormType extends AbstractType
             ->add('compte', ChoiceType::class, [
                 'label' => 'Que souhaitez vous?',
                 'choices'  => [
-                    'Vendre des prestations'    =>  'Vendeur',
                     'Acheter des prestations' =>  'Client',
-                    'Le deux' =>  'Vendeur',
+                    'Vendre des prestations'    =>  'Vendeur',
+                    'Les deux' =>  'Vendeur',
                 ],
                 'expanded' => true,
                 'multiple' => false,

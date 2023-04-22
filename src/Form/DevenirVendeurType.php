@@ -49,7 +49,7 @@ class DevenirVendeurType extends AbstractType
                     ]),
                 ],
             ])
-            /*->add('adresse', TextType::class, [
+            ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'help' => 'Exemple (N° Ruelle/Avenue)',
                 'attr' => ['placeholder' => 'Adresse', 'autocomplete' => "address-line1"],
@@ -72,23 +72,12 @@ class DevenirVendeurType extends AbstractType
                 'help' => 'Etat de residence actuelle',
                 'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
                 'required' => false,
-            ])*/
+            ])
             ->add('longitude', HiddenType::class, [
                 'required' => false,
             ])
             ->add('latitude', HiddenType::class, [
                 'required' => false,
-            ])
-            ->add('agreeLocations', CheckboxType::class, [
-                'mapped' => false,
-                'label' => 'Je souhaite être géolocaliser',
-                'required' => false,
-                'help' => '*Cette case est obligatoire',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ]),
-                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
