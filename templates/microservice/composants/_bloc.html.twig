@@ -25,7 +25,7 @@
 					{% else %}
 
 						{% if microservice.vendeur.avatar %}
-						<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}"
+						<img src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}"
 							class="img-fluid" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}">
 						{% else %}
 
