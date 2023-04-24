@@ -12,13 +12,14 @@ body {
    font-family: Grotesk !important;
 }
 
-/*body, div, footer, nav, section, .bg-white{
-   background: #1a1b21!important;
-   color: white!important;
+.large-icone i{
+   font-size: 1.2em!important;
 }
-.box, .card, table, .navbar-expand-lg{
-   background: #23242a!important;
-}*/
+.box-title h4{
+   font-size: 1.5em!important;
+   font-weight: bold!important;
+}
+
 .text-gray{
    color: #ededed;
 }

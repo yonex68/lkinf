@@ -31,13 +31,16 @@
 	<link href="{{ asset('themes/base/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/base/css/custom.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/base/css/responsive.css') }}" rel="stylesheet">
+
+	{% block stylesheets %}
+		{{ encore_entry_link_tags('app') }}
+		{{ encore_entry_link_tags('style') }}
+		{{ encore_entry_link_tags('custom') }}
+		{{ encore_entry_link_tags('responsive') }}
+	{% endblock %}
 	<!-- map box -->
 	<script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.14/web.js">
 	</script>
-
-	{% block stylesheets %}
-	{{ encore_entry_link_tags('app') }}
-	{% endblock %}
 </head>
 
 <body data-turbo="false" class="text-light responsive"
@@ -143,15 +146,11 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="{{ asset('themes/base/vendor/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('themes/base/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-	<script src="{{ asset('themes/base/js/dropdown.js') }}"></script>
-	<script src="{{ asset('js/btnloader.js') }}"></script>
-	<!-- Contact form JavaScript -->
-	<!-- Do not edit these files! In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
-	<!-- Custom -->
-	<script src="{{ asset('themes/base/js/custom.js') }}"></script>
-
 	{% block javascripts %}
-	{{ encore_entry_script_tags('app') }}
+		{{ encore_entry_script_tags('app') }}
+		{{ encore_entry_script_tags('jscustom') }}
+		{{ encore_entry_script_tags('dropdown') }}
+		{{ encore_entry_script_tags('btnloader') }}
 	{% endblock %}
 
 	<!-- Google tag (gtag.js) -->
