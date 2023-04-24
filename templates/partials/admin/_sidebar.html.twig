@@ -39,7 +39,8 @@
             <li>
                <a href="{{ path('app_admin_services_signale_index') }}" class=" waves-effect">
                   <i class="mdi mdi-bell"></i>
-                  <span>Alertes</span> <span class="badge bg-danger rounded-pill ml-auto">{{ alertesNonLu()|length }}</span>
+                  <span class="badge rounded-pill bg-danger float-end">{{ alertesNonLu()|length }}</span>
+                  <span>Alertes</span>
                </a>
             </li>
 
@@ -78,9 +79,7 @@
                </a>
                <ul class="sub-menu" aria-expanded="false">
                   <li><a href="{{ path('app_admin_users_index') }}">Tout les comptes</a></li>
-                  <li><a href="{{ path('app_admin_users_admin') }}">Administrateurs</a></li>
-                  <li><a href="{{ path('app_admin_users_client') }}">Clients</a></li>
-                  <li><a href="{{ path('app_admin_users_vendeur') }}">Vendeurs</a></li>
+                  <li><a href="{{ path('app_admin_users_new') }}">Crée un compte</a></li>
                </ul>
             </li>
 

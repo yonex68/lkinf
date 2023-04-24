@@ -12,25 +12,6 @@
 
 {% block body %}
 
-<div class="card">
-    <div class="card-body p-0">
-
-        <div class="table-rep-plugin">
-            <div class="table-responsive mb-0" data-bs-pattern="priority-columns">
-
-                {% include "admin/admin_users/_table.html.twig" %}
-
-            </div>
-        </div>
-    </div>
-
-    <div class="card-footer bg-white">
-        {{ knp_pagination_render(users, null, {}, {
-        'align': 'right',
-        'size': 'medium',
-        'rounded': true,
-        }) }}
-    </div>
-</div>
+{% include "admin/admin_users/_table.html.twig" %}
 
 {% endblock %}

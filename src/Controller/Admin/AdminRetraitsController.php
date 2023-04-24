@@ -70,7 +70,7 @@ class AdminRetraitsController extends AbstractController
             $mailer->sendDemandeMail(
                 'contact@links-infinity.com',
                 $retrait->getVendeur()->getEmail(),
-                'Links infinity - retrait rejeté',
+                'Links Infinity - retrait rejeté',
                 'mails/_retrait_rejeter.html.twig',
                 $retrait->getVendeur(),
                 $retrait,
@@ -115,7 +115,7 @@ class AdminRetraitsController extends AbstractController
             $mailer->sendDemandeMail(
                 'contact@links-infinity.com',
                 $retrait->getVendeur()->getEmail(),
-                'Links infinity - retrait validée',
+                'Links Infinity - retrait validée',
                 'mails/_retrait_valider.html.twig',
                 $retrait->getVendeur(),
                 $retrait,

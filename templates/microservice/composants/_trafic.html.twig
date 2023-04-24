@@ -1,12 +1,26 @@
 <div class="sticky"><!-- sticky -->
 
+   {% if is_granted('microservice_edit', microservice) %}{% else %}
+
    {% if microservice.categorie.slug == 'ingenieur-son' %}
    <!-- Ingénieur de son uniquement-->
    <ul class="nav nav-tabs bg-light small">
+   
+      {% if microservice.prixMastering > 0 %}
       <li><a class="active" data-toggle="tab" href="#Mastering" class="bg-dark">Mastering</a></li>
+      {% endif %}
+
+      {% if microservice.prixMixage > 0 %}
       <li><a data-toggle="tab" href="#Mixage">Mixage</a></li>
+      {% endif %}
+
+      {% if microservice.prixBeatmaking > 0 %}
       <li><a data-toggle="tab" href="#Beatmaking">Beatmaking</a></li>
+      {% endif %}
+
+      {% if microservice.prixComposition > 0 %}
       <li><a data-toggle="tab" href="#Composition">Composition</a></li>
+      {% endif %}
    </ul>
    <div class="tab-content mb-0 pb-1 mb-3">
       <article>
@@ -16,6 +30,7 @@
                de réalisation</b>
          </div>
       </article>
+
       <div id="Mastering" class="tab-pane fade show active">
          <div class="header">
             <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">
@@ -36,6 +51,7 @@
 
          {% endif %}
       </div>
+
       <div id="Mixage" class="tab-pane fade">
          <div class="header">
             <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
@@ -56,6 +72,7 @@
 
          {% endif %}
       </div>
+
       <div id="Beatmaking" class="tab-pane fade">
          <div class="header">
             <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
@@ -77,6 +94,7 @@
          {% endif %}
 
       </div>
+
       <div id="Composition" class="tab-pane fade">
          <div class="header">
             <h3 class="h6"><b class="title">{{ microservice.name }}</b><span class="price badge">{{
@@ -98,10 +116,13 @@
          {% endif %}
 
       </div>
+
       <p class="pt-4 pb-0 text-center p-0">
          Paiement <strong><i class="fa fa-lock"></i> Sécurisé</strong>
       </p>
    </div>
+   {% endif %}
+
    {% endif %}
 
    <div class="border rounded bg-white p-0">
@@ -109,9 +130,21 @@
          <div class="user-profile-image d-flex shadow-none py-0">
             <label class="profile-pict" for="profile_image">
                <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}">
-                  <img width="80" height="80"
-                     src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-                     class="profile-pict-img img-fluid" alt="">
+                  {% if microservice.vendeur.reseauAvatar %}
+
+                  <img src="{{ microservice.vendeur.reseauAvatar }}" class="img-fluid" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}" width="80">
+
+                  {% else %}
+
+                     {% if microservice.vendeur.avatar %}
+                     <img src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('large_avatar') }}" class="img-fluid" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}" width="80">
+                     {% else %}
+
+                     <img class="img-fluid" src="{{ asset('img/user.jpg') | imagine_filter('large_avatar') }}" alt="{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}" width="80" />
+
+                     {% endif %}
+
+                  {% endif %}
                </a>
             </label>
             <div class="right">
@@ -121,13 +154,14 @@
                   </div>
                   <span class="user-status">
                      <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}"
-                        class="seller-link">{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo : microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
+                        class="seller-link">{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo :
+                        microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</a>
                   </span>
                </div>
             </div>
          </div>
 
-         <div class="pl-4 pr-4 pt-4 bg-white">
+         <div class="pl-4 pr-4 pt-2 bg-white">
 
             <div class="mb-3 text-muted">
                {{ microservice.vendeur.apropos|raw }}
@@ -157,6 +191,7 @@
                </div>
             </div>
 
+            {% if is_granted('microservice_edit', microservice) %}{% else %}
             <div class="row pt-3" id="packagesTable">
                <div class="col-6">
                   <a class="btn btn-outline-dark btn-block"
@@ -167,7 +202,7 @@
                      class="btn btn-dark btn-block">Voir le profil</a>
                </div>
             </div>
-
+            {% endif %}
          </div>
 
       </div>

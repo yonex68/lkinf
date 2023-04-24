@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'help' => 'Exemple (N° Ruelle/Avenue)',
-                'attr' => ['placeholder' => 'Adresse', 'autocomplete' => "address-line1"],
+                'attr' => ['placeholder' => 'Ville', 'autocomplete' => "address-line1"],
                 'required' => false,
             ])
             ->add('ville', TextType::class, [

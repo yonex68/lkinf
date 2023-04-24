@@ -11,6 +11,7 @@ use App\Repository\EmploisTempsRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PortefeuilleRepository;
 use App\Repository\RemboursementRepository;
+use App\Repository\RetraitRepository;
 use App\Repository\ServiceSignaleRepository;
 use App\Repository\SuivisRepository;
 use Twig\Extension\AbstractExtension;
@@ -41,8 +42,10 @@ class AppExtension extends AbstractExtension
 
     private $remboursementRepository;
 
+    private $retraitRepository;
+
     public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository, ServiceSignaleRepository $serviceSignaleRepository
-    , RemboursementRepository $remboursementRepository){
+    , RemboursementRepository $remboursementRepository, RetraitRepository $retraitRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -55,6 +58,7 @@ class AppExtension extends AbstractExtension
         $this->emploisTempsRepository = $emploisTempsRepository;
         $this->serviceSignaleRepository = $serviceSignaleRepository;
         $this->remboursementRepository = $remboursementRepository;
+        $this->retraitRepository = $retraitRepository;
 
     }
 
@@ -84,6 +88,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('userRemboursements', [$this, 'getUserRemboursements']),
             new TwigFunction('truncateTitle', [$this, 'truncateTitle']),
             new TwigFunction('ville', [$this, 'getUserVille']),
+            new TwigFunction('retraits', [$this, 'getVendeurRetraits']),
         ];
     }
 
@@ -95,16 +100,20 @@ class AppExtension extends AbstractExtension
         return $this->abonnementRepository->findOneBy(['user' => $vendeur]);
     }
 
+    public function getVendeurRetraits($vendeur){
+        return $this->retraitRepository->findTotal($vendeur);
+    }
+
     public function getVendeurPortefeuille($vendeur){
         return $this->portefeuilleRepository->findOneBy(['vendeur' => $vendeur]);
     }
 
     public function getVendeurAvisPositif($vendeur){
-        return $this->avisRepository->findOneBy(['vendeur' => $vendeur, 'type' => 'Positif']);
+        return $this->avisRepository->findBy(['vendeur' => $vendeur, 'type' => 'Positif']);
     }
 
     public function getVendeurAvisNegatif($vendeur){
-        return $this->avisRepository->findOneBy(['vendeur' => $vendeur, 'type' => 'Negatif']);
+        return $this->avisRepository->findBy(['vendeur' => $vendeur, 'type' => 'Negatif']);
     }
 
     public function getServiceAvisPositif($service){
@@ -132,7 +141,7 @@ class AppExtension extends AbstractExtension
     }
     
     public function getVendeurTotalVente($user) {
-        return $this->commandeRepository->findBy(['vendeur' => $user, 'validate' => true]);
+        return $this->commandeRepository->findBy(['vendeur' => $user, 'deliver' => true]);
     }
     
     public function getVendeurCommandesEncours($user) {

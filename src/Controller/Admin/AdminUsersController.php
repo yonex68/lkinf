@@ -2,13 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\SearchUser;
 use App\Entity\User;
 use App\Form\AdminEditUserType;
+use App\Form\SearchUserType;
 use App\Form\UserType;
 use App\Repository\MicroserviceRepository;
 use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mime\Address;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,66 +24,81 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/users')]
 class AdminUsersController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
     private $sluger;
 
-    public function __construct(SluggerInterface $sluger)
+    public function __construct(EmailVerifier $emailVerifier, SluggerInterface $sluger)
     {
+        $this->emailVerifier = $emailVerifier;
         $this->sluger = $sluger;
     }
 
     #[Route('/', name: 'app_admin_users_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
-        $users = $paginator->paginate(
-            $userRepository->findBy([], ['created' => 'DESC']),
-            $request->query->getInt('page', 1),
-            20
-        );
+        $search = new SearchUser();
+        $search->page = $request->get('page', 1);
+
+        $form = $this->createForm(SearchUserType::class, $search);
+        $form->handleRequest($request);
+
+        $users = $userRepository->findSearch($search);
 
         return $this->render('admin/admin_users/index.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/clients', name: 'app_admin_users_client', methods: ['GET'])]
     public function clients(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $paginator->paginate(
-            $userRepository->findByRole('ROLE_CLIENT'),
-            $request->query->getInt('page', 1),
-            20
-        );
+        $search = new SearchUser();
+        $search->page = $request->get('page', 1);
+
+        $form = $this->createForm(SearchUserType::class, $search);
+        $form->handleRequest($request);
+
+        $users = $userRepository->findSearch($search);
 
         return $this->render('admin/admin_users/client.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/vendeurs', name: 'app_admin_users_vendeur', methods: ['GET'])]
     public function vendeurs(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $paginator->paginate(
-            $userRepository->findByRole('ROLE_VENDEUR'),
-            $request->query->getInt('page', 1),
-            20
-        );
+        $search = new SearchUser();
+        $search->page = $request->get('page', 1);
+
+        $form = $this->createForm(SearchUserType::class, $search);
+        $form->handleRequest($request);
+
+        $users = $userRepository->findSearch($search);
 
         return $this->render('admin/admin_users/vendeur.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/administrateurs', name: 'app_admin_users_admin', methods: ['GET'])]
     public function administrateur(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $paginator->paginate(
-            $userRepository->findByRole('ROLE_ADMIN'),
-            $request->query->getInt('page', 1),
-            20
-        );
+        $search = new SearchUser();
+        $search->page = $request->get('page', 1);
+
+        $form = $this->createForm(SearchUserType::class, $search);
+        $form->handleRequest($request);
+
+        $users = $userRepository->findSearch($search);
 
         return $this->render('admin/admin_users/admin.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -106,6 +126,17 @@ class AdminUsersController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                (new TemplatedEmail())
+                    ->from(new Address('contact@links-infinity.com', 'links Infinity'))
+                    ->to($user->getEmail())
+                    ->subject('Veuillez confirmer votre email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
 
             $this->addFlash('success', 'Compte ' . $user->getCompte() . ' crée avec succès');
 

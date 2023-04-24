@@ -557,6 +557,7 @@ class CommandeController extends AbstractController
 
             $remboursement = new Remboursement();
             $remboursement->setUser($commande->getClient());
+            $remboursement->setVendeur($commande->getVendeur());
             $remboursement->setCommande($commande);
             $remboursement->setMontant($commande->getMontant());
             $remboursement->setMotif("Commande annulée par le prestataire");

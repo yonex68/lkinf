@@ -36,6 +36,9 @@ class Remboursement
     #[ORM\ManyToOne(inversedBy: 'remboursements')]
     private ?Commande $commande = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vendeursremboursements')]
+    private ?User $vendeur = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +112,18 @@ class Remboursement
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getVendeur(): ?User
+    {
+        return $this->vendeur;
+    }
+
+    public function setVendeur(?User $vendeur): self
+    {
+        $this->vendeur = $vendeur;
 
         return $this;
     }

@@ -11,7 +11,7 @@
 				{{ ville ? 'Services à proximité' : 'Services les plus réscents' }}
 			</h3>
 			{% if ville %}
-			<p class="pt-0" style="margin-top: -10px!important;"><i class="fa fa-map-marker text-blue"></i> {{ ville }}</p>
+			<p class="{{ microservices|length == 0 ? 'text-center' : '' }}" style="margin-top: -10px!important;"><i class="fa fa-map-marker text-blue"></i> {{ ville }}</p>
 			{% endif %}
 			<div class="row">
 				{% for microservice in microservices %}
@@ -162,20 +162,20 @@
 	</div>
 </section>
 
-<div class="modal fade {{ ville ? '' : 'modal-location' }}" id="modalLocations" tabindex="-1"
-	aria-labelledby="modalLocationsLabel" aria-hidden="true">
+<div class="modal hide fade {{ ville ? '' : 'modal-location' }}" id="modalLocations" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLocationsLabel" aria-hidden="true">
+
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content" style="border-radius: 10px;">
-			<div class="modal-header border-0 text-center">
+			<!--<div class="modal-header border-0 text-center">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span class="text-light" aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>-->
 			<div class="modal-body">
-				<h5 class="modal-title text-center text-light" id="modalLocationsLabel">Professionnels et services <br>
-					autour de vous</h5>
+				<h6 class="modal-title text-center text-light" id="modalLocationsLabel">{{ appName }} met à votre disposition <br> Les professionnels et services <br>
+					autour de vous</h6>
 				<p class="text-center text-light">
-					Indiquez votre ville
+					Indiquez votre ville pour continuer
 				</p>
 				<div class="row">
 					<div class="col-sm-10 mx-auto">
@@ -226,7 +226,11 @@
 
 <script>
 	$(document).ready(function () {
-		$('.modal-location').modal('show')
+		$('.modal-location').modal({
+         backdrop: 'static',
+         keyboard: true, 
+         show: true
+      }); 
 	})
 </script>
 

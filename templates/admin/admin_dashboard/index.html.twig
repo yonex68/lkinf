@@ -204,7 +204,7 @@
 <script>
    var serviceCategorie = document.getElementById('serviceCategories').getContext('2d');
    var serviceCategories = new Chart(serviceCategorie, {
-      type: 'bar',
+      type: 'pie',
       data: {
          labels: {{ categorieNames| raw }},
    datasets: [{
@@ -227,7 +227,7 @@
 
    var offreStripe = document.getElementById('offreStripe').getContext('2d');
    var offreStripes = new Chart(offreStripe, {
-      type: 'pie',
+      type: 'bar',
       data: {
          labels: {{ stripeNames| raw }},
    datasets: [{

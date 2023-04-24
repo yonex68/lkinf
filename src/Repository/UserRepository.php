@@ -2,12 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\SearchUser;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,9 +20,90 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, User::class);
+
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * Recupère les annonces en lien avec une recherche
+     * @return PaginationInterface
+     */
+    public function findSearch(SearchUser $search): PaginationInterface
+    {
+        $query = $this->getSearcheQuery($search)->getQuery();
+
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            16
+        );
+    }
+
+    /**
+     * //@return QueryBuilder
+     */
+    private function getSearcheQuery(SearchUser $search) //: QueryBuilder
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('c', 'u')
+            ->leftJoin('u.categorie', 'c')
+            ->orderBy('u.created', 'DESC');
+
+        if (!empty($search->getName())) {
+            $query = $query
+                ->andWhere('u.nom LIKE :nom')
+                ->orWhere('u.prenom LIKE :prenom')
+                ->setParameters([
+                    'nom' => "%{$search->getName()}%",
+                    'prenom' => "%{$search->getName()}%"
+                ]);
+        }
+
+        if (!empty($search->getEmail())) {
+            $query = $query
+                ->andWhere('u.email LIKE :email')
+                ->setParameter('email', "%{$search->getEmail()}%");
+        }
+
+        if (!empty($search->getGenre())) {
+            $query = $query
+                ->andWhere('u.genre LIKE :genre')
+                ->setParameter('genre', "%{$search->getGenre()}%");
+        }
+
+        if (!empty($search->getCompte())) {
+            $query = $query
+                ->andWhere('u.compte LIKE :compte')
+                ->setParameter('compte', "%{$search->getCompte()}%");
+        }
+
+        if (!empty($search->getVille())) {
+            $query = $query
+                ->andWhere('u.ville LIKE :ville')
+                ->setParameter('ville', "%{$search->getVille()}%");
+        }
+
+        if ($search->getCategories()->count() > 0) {
+            $query = $query
+                ->andWhere('c.id IN (:cat)')
+                ->setParameter('cat', $search->categories);
+        }
+
+        if (!empty($search->getIsVerified())) {
+            $query = $query
+                ->andWhere('u.isVerified = :isVerified')
+                ->setParameter('isVerified', $search->getIsVerified());
+        }
+
+        return $query;
     }
 
     /**

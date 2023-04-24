@@ -39,6 +39,21 @@ class RemboursementRepository extends ServiceEntityRepository
         }
     }
 
+    public function findTotal($vendeur)
+    {
+        return $this->createQueryBuilder('r')
+            ->select("SUM(r.montant) as total")
+            ->andWhere('r.statut = :statut')
+            ->andWhere('r.vendeur = :vendeur')
+            ->setParameters([
+                'statut' => 'Annuler',
+                'vendeur' => $vendeur,
+                ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Remboursement[] Returns an array of Remboursement objects
 //     */

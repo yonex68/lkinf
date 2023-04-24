@@ -19,7 +19,9 @@ body {
 .box, .card, table, .navbar-expand-lg{
    background: #23242a!important;
 }*/
-
+.text-gray{
+   color: #ededed;
+}
 input[type="checkbox"] {
    background-color: transparent !important;
 }

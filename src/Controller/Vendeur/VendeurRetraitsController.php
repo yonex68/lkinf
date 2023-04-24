@@ -21,7 +21,7 @@ class VendeurRetraitsController extends AbstractController
         $vendeur = $this->getUser();
         
         return $this->render('vendeur/retraits/index.html.twig', [
-            'retraits' => $retraitRepository->findAll(),
+            'retraits' => $retraitRepository->findBy(['vendeur' => $vendeur]),
             'retraitEnattente' => $retraitRepository->findBy(['vendeur' => $vendeur, 'statut' => 'En attente'])
         ]);
     }
@@ -43,7 +43,7 @@ class VendeurRetraitsController extends AbstractController
             $soldeVendeur = $vendeur->getPortefeuille()->getSoldeDisponible();
 
             if ($montant > $soldeVendeur) {
-                $this->addFlash('danger', "Votre demande n'a pas été envoyée, vous solde est insuffisant $soldeVendeur €, pour effectuer une demande de fond de $montant €.");
+                $this->addFlash('danger', "Votre demande n'a pas été envoyée, votre solde est insuffisant $soldeVendeur €, pour effectuer un retrait de fond de $montant €.");
                 return $this->redirectToRoute('app_vendeur_retraits_new', [], Response::HTTP_SEE_OTHER);
             }
 

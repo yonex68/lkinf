@@ -66,9 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -193,6 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $instagramId = null;
 
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Remboursement::class)]
+    private Collection $vendeursremboursements;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -210,6 +211,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->emploisTemps = new ArrayCollection();
         $this->serviceSignales = new ArrayCollection();
         $this->remboursements = new ArrayCollection();
+        $this->vendeursremboursements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1184,6 +1186,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setInstagramId(?string $instagramId): self
     {
         $this->instagramId = $instagramId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Remboursement>
+     */
+    public function getVendeursremboursements(): Collection
+    {
+        return $this->vendeursremboursements;
+    }
+
+    public function addVendeursremboursement(Remboursement $vendeursremboursement): self
+    {
+        if (!$this->vendeursremboursements->contains($vendeursremboursement)) {
+            $this->vendeursremboursements->add($vendeursremboursement);
+            $vendeursremboursement->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVendeursremboursement(Remboursement $vendeursremboursement): self
+    {
+        if ($this->vendeursremboursements->removeElement($vendeursremboursement)) {
+            // set the owning side to null (unless already changed)
+            if ($vendeursremboursement->getVendeur() === $this) {
+                $vendeursremboursement->setVendeur(null);
+            }
+        }
 
         return $this;
     }
