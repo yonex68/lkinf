@@ -12,8 +12,7 @@
 
 						{% if usercommande.vendeur.id == app.user.id %}
 
-						<div
-							class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
+						<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
 							<div class="dropdown-list-image mr-3">
 
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}">
@@ -28,8 +27,12 @@
 							</div>
 							<div class="font-weight-bold mr-1 overflow-hidden">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-dark">
-									<div class="text-truncate">{{ usercommande.client.nom ~ ' ' ~ usercommande.client.prenom }}
+									<div class="text-truncate d-inline">
+										{{ usercommande.client.nom ~ ' ' ~ usercommande.client.prenom }}
 									</div>
+									<small class="small">
+										{{ usercommande.created|ago(locale='fr') }}
+									</small>
 								</a>
 								<div class="small text-truncate overflow-hidden text-black-50">
 									<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-muted">
@@ -37,11 +40,6 @@
 									</a>
 								</div>
 							</div>
-							<span class="ml-auto mb-auto">
-								<div class="text-right text-muted pt-1 small">
-									{{ usercommande.created|ago(locale='fr') }}
-								</div>
-							</span>
 						</div>
 
 						{% else %}
@@ -61,8 +59,12 @@
 							</div>
 							<div class="font-weight-bold mr-1 overflow-hidden">
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-dark">
-									<div class="text-truncate">{{ usercommande.vendeur.nom ~ ' ' ~ usercommande.vendeur.prenom }}
+									<div class="text-truncate d-inline">
+										{{ usercommande.vendeur.nom ~ ' ' ~ usercommande.vendeur.prenom }}
 									</div>
+									<small class="text-right small">
+										{{ usercommande.created|ago(locale='fr') }}
+									</small>
 								</a>
 								<div class="small text-truncate overflow-hidden text-black-50">
 									<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="text-muted">
@@ -70,11 +72,6 @@
 									</a>
 								</div>
 							</div>
-							<span class="ml-auto mb-auto">
-								<div class="text-right text-muted pt-1 small">
-									{{ usercommande.created|ago(locale='fr') }}
-								</div>
-							</span>
 						</div>
 
 						{% endif %}

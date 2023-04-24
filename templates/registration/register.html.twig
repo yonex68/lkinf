@@ -119,6 +119,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+{{ parent() }}
 <style>
 	#doing {
 		display: none;
@@ -127,7 +128,6 @@
 	input[type=radio]:checked~#doing {
 		display: block;
 	}
-
 </style>
 {% endblock %}
 

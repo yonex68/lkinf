@@ -16,10 +16,10 @@
          </div>-->
 
          <div class="sorting-div d-flex align-items-center justify-content-between">
-             <p class="mb-2">({{ microservices.getTotalItemCount }}) Service{{ microservices.getTotalItemCount > 0 ?
-                    's'
-                    : ''}} à proximité
-                </p>
+             <p class="mb-2">
+               ({{ microservices.getTotalItemCount }})
+               {{ ville == null ? 'Services disponible' : 'Services à proximités' }}
+            </p>
          </div>
 
          <h3>

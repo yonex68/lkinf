@@ -127,4 +127,14 @@
    .form-key-word{
       width: 300px!important;
    }
+   .form-noborder{
+      width: 85%;
+      margin: auto;
+   }
+}
+
+@media(max-width: 500px){
+   .text-logo{
+      font-size: .9em!important;
+   }
 }

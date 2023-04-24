@@ -99,6 +99,21 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Avis $avis = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $reservationDate = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $reservationStartAt = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $reservationEndAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $payed = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $tauxHoraire = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -486,6 +501,66 @@ class Commande
     public function setAvis(?Avis $avis): self
     {
         $this->avis = $avis;
+
+        return $this;
+    }
+
+    public function getReservationDate(): ?\DateTimeInterface
+    {
+        return $this->reservationDate;
+    }
+
+    public function setReservationDate(?\DateTimeInterface $reservationDate): self
+    {
+        $this->reservationDate = $reservationDate;
+
+        return $this;
+    }
+
+    public function getReservationStartAt(): ?\DateTimeInterface
+    {
+        return $this->reservationStartAt;
+    }
+
+    public function setReservationStartAt(?\DateTimeInterface $reservationStartAt): self
+    {
+        $this->reservationStartAt = $reservationStartAt;
+
+        return $this;
+    }
+
+    public function getReservationEndAt(): ?\DateTimeInterface
+    {
+        return $this->reservationEndAt;
+    }
+
+    public function setReservationEndAt(?\DateTimeInterface $reservationEndAt): self
+    {
+        $this->reservationEndAt = $reservationEndAt;
+
+        return $this;
+    }
+
+    public function isPayed(): ?bool
+    {
+        return $this->payed;
+    }
+
+    public function setPayed(?bool $payed): self
+    {
+        $this->payed = $payed;
+
+        return $this;
+    }
+
+    public function getTauxHoraire(): ?\DateInterval
+    {
+        return $this->tauxHoraire;
+    }
+
+    public function setTauxHoraire(?\DateInterval $tauxHoraire): self
+    {
+        $this->tauxHoraire = $tauxHoraire;
 
         return $this;
     }

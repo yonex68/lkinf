@@ -2,128 +2,141 @@
 
 <h6 class="my-4">Réservation</h6>
 
-<form action="" name="reservation">
-   <div class="card my-3">
-      <div class="card-header bg-white">
-         <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}" class="d-block py-3 text-dark">
-            <div class="media">
-               <img width="60" height="60"
-                  src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
-                  class="rounded-circle" alt="">
+{{ form_start(commandeForm, {attr: {class: 'commande-form'} }) }}
+<div class="card my-3">
+   <div class="card-header bg-white">
+      <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl}) }}" class="d-block py-3 text-dark">
+         <div class="media">
+            <img width="60" height="60"
+               src="{{ microservice.vendeur.avatar ? vich_uploader_asset(microservice.vendeur, 'imageFile') : asset('img/user.jpg') | imagine_filter('large_avatar') }}"
+               class="rounded-circle" alt="">
 
-               <div class="media-body pl-3 pt-3">
-                  <h6>{{ microservice.vendeur.compte }}</h6>
-                  <strong class="d-block">{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo :
-                     microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</strong>
-               </div>
+            <div class="media-body pl-3 pt-3">
+               <h6>{{ microservice.vendeur.compte }}</h6>
+               <strong class="d-block">{{ microservice.vendeur.usePseudo == 1 ? microservice.vendeur.pseudo :
+                  microservice.vendeur.nom ~ ' ' ~ microservice.vendeur.prenom }}</strong>
             </div>
-         </a>
-         <div class="pb-3">
-            <h6><i class="fa fa-calendar"></i> Planning</h6>
-            {% include "microservice/composants/_vendeur_planning.html.twig" %}
          </div>
-
-         <div>
-            <h6><i class="fa fa-calendar"></i> Disponibilité</h6>
-            {% for disponibilite in disponibilites %}
-            <div class="pb-3">
-               <strong>{{ disponibilite.jour }}</strong>
-
-               <div>
-                  De <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}
-                  à <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}
-               </div>
-            </div>
-            {% endfor %}
-         </div>
+      </a>
+      <div class="pb-3">
+         <h6><i class="fa fa-calendar"></i> Planning</h6>
+         {% include "microservice/composants/_vendeur_planning.html.twig" %}
       </div>
-      <div class="card-body">
-         <h6>Faites votre reservation</h6>
 
-         {% for disponibilite in disponibilites %}
-         <div class="row py-3">
-            <div class="col-sm-8">
-
-               <div class="form-group">
-                  <input type="date" class="form-control">
-               </div>
-
-               <div class="row">
-                  <div class="col-sm-6">
-                     <input type="time" class="form-control">
-                  </div>
-                  <div class="col-sm-6">
-                     <input type="time" class="form-control">
-                  </div>
-               </div>
-            </div>
-         </div>
-         {% endfor %}
-         <!-- 
-      <h6>Reservé</h6>
-
-      {% for disponibilite in disponibilites %}
-      <h6 class="text-blue h6">{{ disponibilite.jour }}</h6>
-      <div class="row">
-         <div class="col-6">
-            <a
-               href="{{ path('commander_microservice_reservation', {slug: microservice.slug, disponibilite: disponibilite.jour ~ '-' ~ disponibilite.heureOuverture|date('H:i') }) }}">
-               <button type="" class="btn btn-outline-success h5 btn-lg btn-block" id="btnFetch">
-                  <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}
-               </button>
-            </a>
-         </div>
-         <div class="col-6">
-            <a
-               href="{{ path('commander_microservice_reservation', {slug: microservice.slug, disponibilite: disponibilite.jour ~ '-' ~ disponibilite.heureCloture|date('H:i') }) }}">
-               <button type="" class="btn btn-outline-success h5 btn-lg btn-block" id="btnFetch">
-                  <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}
-               </button>
-            </a>
-         </div>
-      </div>
-      {% endfor %}
-
-      -->
-
-         {% if microservice.serviceOptions %}
-         <h6 class="my-4">Options</h6>
-
-         <table class="table table-borderless">
-            <tbody>
-               {% for option in microservice.serviceOptions %}
-               <tr class="p-0 m-0">
-                  <td style="width: 20px;" class="p-1">
-                     <input type="checkbox" name="" id="option-{{ option.id }}" value="{{ option.montant }}">
-                  </td>
-                  <td class="p-1">
-                     <label for="option-{{ option.id }}" class="font-weight-bold h6 d-block">
-                        {{ option.name }}
-                     </label>
-                  </td>
-                  <td class="text-right">
-                     <strong>{{ option.montant ~ currency }}</strong>
-                  </td>
+      <div>
+         <h6><i class="fa fa-calendar"></i> Disponibilité pour ce service</h6>
+         <table class="table table-bordered">
+            <thead>
+               <tr>
+                  <td>Jours</td>
+                  <td>De</td>
+                  <td>A</td>
                </tr>
+            </thead>
+            <tbody>
+               {% for disponibilite in disponibilites %}
+                  <tr>
+                     <td>{{ disponibilite.jour }}</td>
+                     <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}</td>
+                     <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}</td>
+                  </tr>
                {% endfor %}
             </tbody>
          </table>
-
-         {% endif %}
-
       </div>
+   </div>
+   <div class="card-body">
+      <h6>Faites votre reservation</h6>
+
+      <div class="row py-3">
+         <div class="col-sm-12">
+
+            <div class="form-group">
+               <div class="input-group mb-3 input-group-sm">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text">Date</span>
+                  </div>
+                  {{ form_widget(commandeForm.reservationDate) }}
+               </div>
+               {{ form_errors(commandeForm.reservationDate) }}
+            </div>
+
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="form-group">
+                     <div class="input-group mb-3 input-group-sm">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text">De </span>
+                        </div>
+                        {{ form_widget(commandeForm.reservationStartAt) }}
+                     </div>
+                     {{ form_errors(commandeForm.reservationStartAt) }}
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="form-group">
+                     <div class="input-group mb-3 input-group-sm">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text">A </span>
+                        </div>
+                        {{ form_widget(commandeForm.reservationEndAt) }}
+                     </div>
+                     {{ form_errors(commandeForm.reservationEndAt) }}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      {{ form_widget(commandeForm.montant,
+      {attr: {'value': microservice.prix is defined ? microservice.prix : 0 }}
+      ) }}
       
-      <div class="card-footer">
-         <div class="row align-items-center">
-            <div class="col-6">
-               <h6 class="text-uppercase">Total</h6>
-            </div>
-            <div class="col-6 text-right">
-               <output name="total" class="h5">{{ microservice.prix }} {{ currency }} </output>
-            </div>
+      {{ form_rest(commandeForm) }}
+
+      {% if microservice.serviceOptions|length > 0 %}
+      
+      <h6 class="my-4">Options</h6>
+
+      <table class="table table-borderless">
+         <tbody>
+            {% for option in microservice.serviceOptions %}
+            <tr class="p-0 m-0">
+               <td style="width: 20px;" class="p-1">
+                  <input type="checkbox" name="" id="option-{{ option.id }}" value="{{ option.montant }}">
+               </td>
+               <td class="p-1">
+                  <label for="option-{{ option.id }}" class="font-weight-bold h6 d-block">
+                     {{ option.name }}
+                  </label>
+               </td>
+               <td class="text-right">
+                  <strong>{{ option.montant ~ currency }}</strong>
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+
+      {% endif %}
+
+      <div class="row align-items-center">
+         <div class="col-6">
+            <h6 class="text-uppercase">Total</h6>
+         </div>
+         <div class="col-6 text-right">
+            <output name="total" class="h5">{{ microservice.prix }} {{ currency }} </output>
          </div>
       </div>
 
    </div>
-</form>
+
+   <div class="card-footer">
+      <button class="btn btn-success btn-lg">
+         Réserver
+      </button>
+   </div>
+
+</div>
+{{ form_end(commandeForm) }}
 {% endif %}

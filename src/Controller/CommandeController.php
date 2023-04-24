@@ -99,6 +99,9 @@ class CommandeController extends AbstractController
     ): Response {
         $user = $this->getUser();
         $commande = $commandeRepository->find($id);
+        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        $somme = $commande->getMontant();
+        $montantTotal = $somme * $tauxHoraire;
 
         $redirect = $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
 
@@ -167,7 +170,7 @@ class CommandeController extends AbstractController
             $this->addFlash('success', "Votre avis à bien été soumis");
 
             return $this->redirectToRoute('commande_details', [
-                'id' => $commande->getId()
+                'id' => $commande->getId(),
             ], Response::HTTP_SEE_OTHER);
         }
 
@@ -267,6 +270,8 @@ class CommandeController extends AbstractController
             ]),
             'messages' => $messages,
             'form' => $form->createView(),
+            'montant' => $montantTotal,
+            'tauxHoraire' => $tauxHoraire,
         ]);
     }
 
@@ -603,10 +608,13 @@ class CommandeController extends AbstractController
         ], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/reservation/{slug}/{disponibilite}', name: 'commander_microservice_reservation', methods: ['GET', 'POST'])]
-    public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, PrixRepository $prixRepository, $slug, PaymentService $paymentService, $disponibilite): Response
+    #[Route('/reservation/{slug}/{commande}', name: 'commander_microservice_reservation', methods: ['GET', 'POST'])]
+    public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, $slug, PaymentService $paymentService, Commande $commande): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
+        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        $somme = $commande->getMontant();
+        $montantTotal = $somme * $tauxHoraire;
 
         $directory = $this->redirectToRoute('microservices');
 
@@ -615,11 +623,6 @@ class CommandeController extends AbstractController
         }
 
         $options = $microservice->getServiceOptions();
-        $totalMontant = 0;
-
-        foreach ($options as $option) {
-            $totalMontant += $option->getMontant();
-        }
 
         $portefeuille = $microservice->getVendeur()->getPortefeuille();
 
@@ -633,13 +636,13 @@ class CommandeController extends AbstractController
         }
 
         // Calcul des taxes
-        $tva = 0.2;
+        /*$tva = 0.2;
         $montantTva = $totalMontant * $tva;
 
         // Frais bancaire
-        $frais = 0.029;
+        $frais = 0.029;*/
 
-        $somme = ($montantTva + $totalMontant) * $frais;
+        //$somme = ($montantTva + $totalMontant) * $frais;
 
         $order = [
             'purchase_units' => [[
@@ -648,14 +651,14 @@ class CommandeController extends AbstractController
                     'name'  =>  $microservice->getName(),
                     'quatity'   =>  1,
                     'unit_amount'   =>  [
-                        'value'     =>  $somme * 100,
+                        'value'     =>  $montantTotal * 100,
                         'currency_code' =>  'EUR',
                     ],
                 ],
 
                 'amount'  =>  [
                     'currency_code' =>  'EUR',
-                    'value'         =>  $somme * 100,
+                    'value'         =>  $montantTotal * 100,
                 ]
             ]]
         ];
@@ -665,13 +668,13 @@ class CommandeController extends AbstractController
         $sandBoxId = $this->paypalkey;
 
         // Stripe payment
-        if ($totalMontant > 0) {
+        if ($montantTotal > 0) {
 
             // Instanciation Stripe
             \Stripe\Stripe::setApiKey($this->privateKey);
 
             $intent = \Stripe\PaymentIntent::create([
-                'amount'    =>  $totalMontant * 100,
+                'amount'    =>  $montantTotal * 100,
                 'currency'  =>  'eur',
                 'payment_method_types'  =>  ['card']
             ]);
@@ -693,44 +696,24 @@ class CommandeController extends AbstractController
             'intentSecret'    =>  $intent['client_secret'],
             'intent'    => $intent,
             'intentId'    => $intent['id'],
-            'disponibilite'    => $disponibilite,
-
+            'commande'    => $commande,
             'microservice' => $microservice,
             'type_offre' => 'reservation',
-            'montant' => $totalMontant,
+            'montant' => $montantTotal,
+            'tauxHoraire' => $tauxHoraire,
             'clientId' => $sandBoxId,
         ]);
     }
 
-    #[Route('/save-reservation/{slug}/{offre}/{payment_intent}/{disponibilite}', name: 'save_reservation')]
-    public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, $offre, PrixRepository $prixRepository, $payment_intent, $disponibilite, MailerService $mailer): Response
+    #[Route('/save-reservation/{slug}/{payment_intent}/{commande}', name: 'save_reservation')]
+    public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, PrixRepository $prixRepository, $payment_intent, Commande $commande, MailerService $mailer): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
-
-        $montant = null;
-
-        foreach ($microservice->getServiceOptions() as $option) {
-            $montant += $option->getMontant();
-        }
-
-        $commande = new Commande();
-        $commande->setMicroservice($microservice);
-        $commande->setDisponibilite($disponibilite);
+        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
         $commande->setPaymentIntent($payment_intent);
-        $commande->setClient($this->getUser());
-        $commande->setVendeur($microservice->getVendeur());
-        $commande->setDestinataire($microservice->getVendeur());
-        $commande->setConfirmationClient(false);
-        $commande->setLu(false);
+        $commande->setMontant($commande->getMontant() * $tauxHoraire);
         $commande->setStatut('En attente');
-
-        $commande->setMontant($montant);
-        $commande->setOffre($offre);
-        $commande->setValidate(false);
-        $commande->setDeliver(false);
-        $commande->setCancel(false);
-
-        $entityManager->persist($commande);
+        $commande->setPayed(true);
         $entityManager->flush();
 
         /** Envoie du mail au client */

@@ -102,7 +102,7 @@
 				{% include "microservice/composants/_realisations.html.twig" %}
 
 				<!-- Personaliser le service et commander -->
-				{% if microservice.categorie.slug == 'Ingenieur-son' %}{% else %}
+				{% if microservice.categorie.slug == 'ingenieur-son' %}{% else %}
 				{% include "microservice/composants/_custom_form.html.twig" %}
 				{% endif %}
 
@@ -170,21 +170,26 @@
 
 <script>
 	
-	const reservationForm = document.forms['reservation'];
+	const commandeForm = document.forms['commande'];
 
-	reservationForm.reset();
+	commandeForm.reset();
 
-	reservationForm.oninput = _ => {
+	commandeForm.oninput = _ => {
 		let sum = {{ microservice.prix }};
 
-		reservationForm.querySelectorAll('input[type=checkbox]').forEach(chkBx => {
+		commandeForm.querySelectorAll('input[type=checkbox]').forEach(chkBx => {
 			if (chkBx.checked) sum += +chkBx.value
 		})
 
-		reservationForm.total.textContent = `${sum} {{ currency }}`
+		commandeForm.total.textContent = `${sum} {{ currency }}`
+		$('#commande_montant').val(sum)
 	}
-	reservationForm.onsubmit = e => {
-		e.preventDefault()  // disable submit
+
+	commandeForm.onsubmit = e => {
+
+		//$('#commande_montant').val(sum)
+		//alert('submit')
+		// e.preventDefault()  // disable submit
 	}
 
 </script>

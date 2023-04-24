@@ -28,10 +28,6 @@
 	<link href="{{ asset('themes/base/vendor/select2/css/select2-bootstrap.css') }}" />
 	<link href="{{ asset('themes/base/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
 	<!-- Custom styles for this template -->
-	<link href="{{ asset('themes/base/css/style.css') }}" rel="stylesheet">
-	<link href="{{ asset('themes/base/css/custom.css') }}" rel="stylesheet">
-	<link href="{{ asset('themes/base/css/responsive.css') }}" rel="stylesheet">
-
 	{% block stylesheets %}
 		{{ encore_entry_link_tags('app') }}
 		{{ encore_entry_link_tags('style') }}
@@ -44,7 +40,7 @@
 </head>
 
 <body data-turbo="false" class="text-light responsive"
-	style="background-image: url('{{ asset('img/danceur.jpg') }}');">
+	style="background-image: url('{{ asset('img/auth-danceur.jpg') }}');">
 
 	<div class="container">
 		<div class="row">

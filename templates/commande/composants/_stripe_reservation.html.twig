@@ -38,10 +38,9 @@
       {% endif %}
 
 		let redirectUrl = `{{ path('save_reservation', {
-         slug: microservice.slug, 
-         offre: type_offre, 
+         slug: microservice.slug,
          payment_intent: intentId, 
-         disponibilite: disponibilite
+         commande: commande.id
       }) }}`
 
 		let stripe = Stripe(stripeToken);

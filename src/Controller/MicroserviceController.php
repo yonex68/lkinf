@@ -5,10 +5,8 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Microservice;
 use App\Entity\SearchService;
-use App\Entity\ServiceOption;
 use App\Entity\ServiceSignale;
 use App\Form\CommandeType;
-use App\Form\CustomServiceType;
 use App\Form\SearchServiceType;
 use App\Form\ServiceSignaleType;
 use App\Repository\AvisRepository;
@@ -16,15 +14,11 @@ use App\Repository\CategorieRepository;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\OffreRepository;
-use App\Repository\PrixRepository;
 use App\Repository\ServiceOptionRepository;
 use App\Repository\ServiceSignaleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use PHPUnit\TextUI\Command;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +40,7 @@ class MicroserviceController extends AbstractController
         $microservices = $microserviceRepository->findSearch($search);
         $categories = $categorieRepository->findBy([], ['created' => 'DESC']);
 
-        if($request->get('ajax')){
+        if ($request->get('ajax')) {
 
             return new JsonResponse([
                 'content' => $this->renderView('microservice/composants/_listing.html.twig', ['microservices' => $microservices]),
@@ -79,7 +73,7 @@ class MicroserviceController extends AbstractController
         $microservices = $microserviceRepository->findSearch($search);
         $categories = $categorieRepository->findBy([], ['created' => 'DESC']);
 
-        if($request->get('ajax')){
+        if ($request->get('ajax')) {
 
             return new JsonResponse([
                 'content' => $this->renderView('microservice/composants/_listing.html.twig', ['microservices' => $microservices]),
@@ -106,7 +100,7 @@ class MicroserviceController extends AbstractController
 
         $options = $microservice->getServiceOptions();
         $totalMontant = 0;
-        
+
         foreach ($options as $option) {
             $totalMontant += $option->getMontant();
         }
@@ -121,7 +115,7 @@ class MicroserviceController extends AbstractController
             $serviceSignale->setMicroservice($microservice);
             $serviceSignaleRepository->save($serviceSignale, true);
             $this->addFlash('success', 'Le service à bien été signalé merci pour votre collaboration');
-            
+
             return $this->redirectToRoute('microservice_details', [
                 'slug' => $microservice->getSlug()
             ], Response::HTTP_SEE_OTHER);
@@ -129,10 +123,44 @@ class MicroserviceController extends AbstractController
             $this->addFlash('success', 'Le contenu a bien été enregistrer');
         }
 
+        $commande = new Commande();
+        $commandeForm = $this->createForm(CommandeType::class, $commande);
+        $commandeForm->handleRequest($request);
+
+        if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
+            $reservationStart = $commandeForm->get('reservationStartAt')->getData();
+            $reservationEnd = $commandeForm->get('reservationEndAt')->getData();
+            $tauxHoraire = date_diff($reservationEnd, $reservationStart);
+
+            $commande->setMicroservice($microservice);
+            //$commande->setDisponibilite($disponibilite);
+            //$commande->setPaymentIntent();
+            $commande->setClient($this->getUser());
+            $commande->setVendeur($microservice->getVendeur());
+            $commande->setTauxHoraire($tauxHoraire);
+            $commande->setDestinataire($microservice->getVendeur());
+            $commande->setConfirmationClient(false);
+            $commande->setLu(false);
+            $commande->setStatut('Non payer');
+            $commande->setOffre('Reservation');
+            $commande->setValidate(false);
+            $commande->setDeliver(false);
+            $commande->setCancel(false);
+
+            $entityManager->persist($commande);
+            $entityManager->flush($commande);
+
+            return $this->redirectToRoute('commander_microservice_reservation', [
+                'slug' => $microservice->getSlug(),
+                'commande' => $commande->getId()
+            ]);
+        }
+
         return $this->render('microservice/details.html.twig', [
             'microservice' => $microservice,
             'similaires' => $similaires,
             'servicesignaleForm' => $servicesignaleForm->createView(),
+            'commandeForm' => $commandeForm->createView(),
             'prix' => $microservice->getPrix(),
             'options' => $options,
             'total' => $totalMontant,

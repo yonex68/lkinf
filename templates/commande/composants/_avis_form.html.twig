@@ -5,28 +5,29 @@
    <div class="card-body">
 
       {% if commande.avis %}
-      <div class="media" id="{{ commande.avis.client.nameUrl }}">
-         {% if commande.avis.client.avatar %}
-         <img src="{{ vich_uploader_asset(commande.avis.client, 'imageFile') | imagine_filter('midle_avatar') }}"
-            class="rounded-circle mr-3" alt="{{ commande.avis.client.prenom }}">
-         {% else %}
 
-         <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}" alt='' />
+         <div class="media" id="{{ commande.avis.client.nameUrl }}">
+            {% if commande.avis.client.avatar %}
+            <img src="{{ vich_uploader_asset(commande.avis.client, 'imageFile') | imagine_filter('midle_avatar') }}"
+               class="rounded-circle mr-3" alt="{{ commande.avis.client.prenom }}">
+            {% else %}
 
-         {% endif %}
-         <div class="media-body">
-            <strong class="mt-0 mb-1 d-block h6 font-weight-bold">{{ commande.client.usePseudo ? commande.client.pseudo : commande.avis.client.nom ~ ' ' ~
-               commande.avis.client.prenom }}</strong>
-            {{ commande.avis.contenu }}
+            <img class="rounded-circle mr-3" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}" alt='' />
 
-            <span class="text-muted d-block text-italic py-2">
-               <i class="fa fa-clock-o"></i> {{ commande.avis.created|ago(locale='fr') }}</span>
+            {% endif %}
+            <div class="media-body">
+               <strong class="mt-0 mb-1 d-block h6 font-weight-bold">{{ commande.client.usePseudo ? commande.client.pseudo : commande.avis.client.nom ~ ' ' ~
+                  commande.avis.client.prenom }}</strong>
+               {{ commande.avis.contenu }}
+
+               <span class="text-muted d-block text-italic py-2">
+                  <i class="fa fa-clock-o"></i> {{ commande.avis.created|ago(locale='fr') }}</span>
+            </div>
          </div>
-      </div>
 
       {% else %}
 
-      <q>Aucun avis pour l'instant...</q>
+      <p>Aucun avis pour l'instant...</p>
       
       <!-- Formulaire pour laisser un avis -->
       {% if is_granted('microservice_edit', commande.microservice) %}{% else %}

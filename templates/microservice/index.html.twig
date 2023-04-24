@@ -19,7 +19,7 @@
       <div class="row">
          <div class="col-md-9 text-left">
             <h1 class="mt-0 mb-3 text-dark font-weight-bold">
-               {{ ville ? 'Services à proximités' : 'Services disponible' }} ({{ microservices.getTotalItemCount }})
+               {{ ville == null ? 'Services disponible' : 'Services à proximités' }}
             </h1>
             <div class="breadcrumbs">
                <p class="mb-0 text-dark font-weight-bold" style="font-size: 1.2em;">

@@ -27,6 +27,21 @@ input[type="checkbox"] {
    background-color: transparent !important;
 }
 
+.commande-form input[type=date],
+.commande-form input[type=time]{
+ height: 50px!important;
+ text-align: right!important;
+ border-left: transparent;
+}
+.commande-form .input-group-prepend{
+   height: auto!important;
+   text-align: center!important;
+   justify-content: center;
+}
+.commande-form .input-group-prepend .input-group-text{
+   background: #fff;
+   text-align: center!important;
+}
 .btn-icon {
    width: 30px !important;
    height: 30px !important;
@@ -520,6 +535,23 @@ body.responsive {
 }
 .osahan-login h5{
    font-size: 1em;
+}
+.p-3.osahan-post-header{
+   padding: 5px!important;
+}
+.overflow-hidden small{
+   color: #6c757d!important;
+   font-style: italic;
+}
+.overflow-hidden.bg-blue small{
+   color: white!important;
+   font-style: italic;
+}
+.custom-size{
+   font-size: 1em!important;
+}
+.categories .btn-light:hover{
+   color: white!important;
 }
 .osahan-login a,
 .osahan-login label,

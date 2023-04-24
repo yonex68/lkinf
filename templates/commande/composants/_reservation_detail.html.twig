@@ -1,0 +1,38 @@
+<div class="">
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted"><i class="fa fa-calendar"></i> Date de reservation</p>
+      <p class="text-muted mb-0 mt-0 ml-auto">
+         {{ commande.reservationDate|date("d/m/Y") }}
+      </p>
+   </div>
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted">Heure debut</p>
+      <p class="text-muted mb-0 mt-0 ml-auto">
+         {{ commande.reservationStartAt|date("H:i") }}
+      </p>
+   </div>
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted">Heure fin</p>
+      <p class="text-muted mb-0 mt-0 ml-auto">
+         {{ commande.reservationEndAt|date("H:i") }}
+      </p>
+   </div>
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted">Taux horaire</p>
+      <p class="text-muted mb-0 mt-0 ml-auto">
+         {{ tauxHoraire }}h
+      </p>
+   </div>
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted">Montant</p>
+      <p class="text-muted mb-0 mt-0 ml-auto">
+         <strong>{{ commande.montant }} {{ currency }}</strong>
+      </p>
+   </div>
+   <div class="d-flex align-items-top mb-2">
+      <p class="mb-0 text-muted">
+         <span>TOTAL <br> (TAUX HORAIRE INCLUS)</span>
+      </p>
+      <strong class="text-muted mb-0 mt-0 ml-auto">{{ montant }} {{ currency }}</strong>
+   </div>
+</div>
