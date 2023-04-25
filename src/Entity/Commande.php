@@ -99,8 +99,8 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Avis $avis = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $reservationDate = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reservationDate = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $reservationStartAt = null;
@@ -505,12 +505,12 @@ class Commande
         return $this;
     }
 
-    public function getReservationDate(): ?\DateTimeInterface
+    public function getReservationDate(): ?string
     {
         return $this->reservationDate;
     }
 
-    public function setReservationDate(?\DateTimeInterface $reservationDate): self
+    public function setReservationDate(?string $reservationDate): self
     {
         $this->reservationDate = $reservationDate;
 

@@ -93,15 +93,25 @@
             </td>
             <td>
                {% if commande.microservice %}
-               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ? 'Livré' : 'En cours' }}</span>
+               
+               <span class="badge badge-pill badge-{% if commande.statut == 'En attente' %}warning{% elseif commande.statut == 'Valider' %}success{% elseif commande.statut == 'Non payer' %}info{% endif %}">
+                  {{ commande.statut }}
+               </span>
                {% else %}
                <span class="badge badge-pill badge-success">Validé</span>
                {% endif %}
             </td>
             <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
             <td>
-               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-dark"
-                  target="_blank">Suivi</a>
+               {% if commande.payed == true %}
+
+               <a href="{{ path('commande_details', {id: commande.id}) }}" class="btn btn-dark">Suivre</a>
+
+               {% else %}
+
+               <a href="{{ path('commander_microservice_reservation', {slug: commande.microservice.slug, commande: commande.id}) }}" class="btn btn-dark">Payer</a>
+
+               {% endif %}
             </td>
          </tr>
 
@@ -111,8 +121,8 @@
             <td>{{ commande.pack.name }}</td>
             <td>{{ appName }}</td>
             <td>
-               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">{{ commande.deliver ?
-                  'Livré' : 'En cours' }}</span>
+               <span class="badge badge-pill badge-{{ commande.deliver ? 'success' : 'warning' }}">
+                  {{ commande.statut }}</span>
             </td>
             <td>{{ commande.created ? commande.created|date('d/m/Y') : '' }}</td>
             <td>
@@ -142,4 +152,8 @@
          {% endfor %}
       </tbody>
    </table>
+
+   <div class="py-3">
+				{{ knp_pagination_render(commandes) }}
+			</div>
 </div>

@@ -19,14 +19,17 @@
          </div>
       </a>
       <div class="pb-3">
-         <h6><i class="fa fa-calendar"></i> Planning</h6>
          {% include "microservice/composants/_vendeur_planning.html.twig" %}
       </div>
 
       <div>
-         <h6><i class="fa fa-calendar"></i> Disponibilité pour ce service</h6>
          <table class="table table-bordered">
             <thead>
+               <tr>
+                  <td colspan="3">
+                     <h6><i class="fa fa-calendar"></i> Disponibilité pour ce service</h6>
+                  </td>
+               </tr>
                <tr>
                   <td>Jours</td>
                   <td>De</td>
@@ -35,49 +38,46 @@
             </thead>
             <tbody>
                {% for disponibilite in disponibilites %}
-                  <tr>
-                     <td>{{ disponibilite.jour }}</td>
-                     <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}</td>
-                     <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}</td>
-                  </tr>
+               <tr>
+                  <td>{{ disponibilite.jour }}</td>
+                  <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}</td>
+                  <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureCloture|date('H:i') }}</td>
+               </tr>
                {% endfor %}
             </tbody>
          </table>
       </div>
    </div>
    <div class="card-body">
-      <h6>Faites votre reservation</h6>
-
       <div class="row py-3">
-         <div class="col-sm-12">
+         <div class="col-sm-12 mx-auto">
+            <h6 class="mb-1">Faites votre reservation</h6>
+            <span class="mb-3 d-block">Choisissez une date</span>
+
+            <div id='calendar'></div>
 
             <div class="form-group">
-               <div class="input-group mb-3 input-group-sm">
-                  <div class="input-group-prepend">
-                     <span class="input-group-text">Date</span>
-                  </div>
-                  {{ form_widget(commandeForm.reservationDate) }}
-               </div>
-               {{ form_errors(commandeForm.reservationDate) }}
+               {{ form_row(commandeForm.reservationDate) }}
             </div>
 
+            <h6 class="pb-2 h6">Horaire</h6>
             <div class="row">
-               <div class="col-sm-6">
+               <div class="col-6 col-sm-6">
                   <div class="form-group">
-                     <div class="input-group mb-3 input-group-sm">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text">De </span>
+                     <div class="input-group mb-3 input-group-sm border">
+                        <div class="input-group-prepend border-0">
+                           <span class="input-group-text border-0">De </span>
                         </div>
                         {{ form_widget(commandeForm.reservationStartAt) }}
                      </div>
                      {{ form_errors(commandeForm.reservationStartAt) }}
                   </div>
                </div>
-               <div class="col-sm-6">
+               <div class="col-6 col-sm-6">
                   <div class="form-group">
-                     <div class="input-group mb-3 input-group-sm">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text">A </span>
+                     <div class="input-group mb-3 input-group-sm border">
+                        <div class="input-group-prepend border-0">
+                           <span class="input-group-text border-0">A </span>
                         </div>
                         {{ form_widget(commandeForm.reservationEndAt) }}
                      </div>
@@ -85,56 +85,53 @@
                   </div>
                </div>
             </div>
+
+            {% if microservice.serviceOptions|length > 0 %}
+            
+            <div class="row">
+               <div class="col-sm-12">
+                  <h6 class="mb-3">Options</h6>
+
+                  <table class="table table-borderless">
+                     <tbody>
+                        {% for option in microservice.serviceOptions %}
+                        <tr class="p-0 m-0">
+                           <td style="width: 20px;" class="p-1">
+                              <input type="checkbox" name="" id="option-{{ option.id }}" value="{{ option.montant }}">
+                           </td>
+                           <td class="p-1">
+                              <label for="option-{{ option.id }}" class="h6 d-block">
+                                 {{ option.name }}
+                              </label>
+                           </td>
+                           <td class="text-right">
+                              <strong>{{ option.montant ~ currency }}</strong>
+                           </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+
+            {% endif %}
+
+            {{ form_widget(commandeForm.montant,
+            {attr: {'value': microservice.prix is defined ? microservice.prix : 0 }}
+            ) }}
+      
+            {{ form_rest(commandeForm) }}
+
+            <div class="row">
+               <div class="col-sm-12">
+                  <button class="btn btn-success btn-lg btn-block pt-2 pb-1">
+                     <span class="float-left">RESERVER</span> <output name="total" class="h6 float-right">{{ microservice.prix }} {{ currency }} </output>
+                  </button>
+               </div>
+            </div>
          </div>
       </div>
 
-      {{ form_widget(commandeForm.montant,
-      {attr: {'value': microservice.prix is defined ? microservice.prix : 0 }}
-      ) }}
-      
-      {{ form_rest(commandeForm) }}
-
-      {% if microservice.serviceOptions|length > 0 %}
-      
-      <h6 class="my-4">Options</h6>
-
-      <table class="table table-borderless">
-         <tbody>
-            {% for option in microservice.serviceOptions %}
-            <tr class="p-0 m-0">
-               <td style="width: 20px;" class="p-1">
-                  <input type="checkbox" name="" id="option-{{ option.id }}" value="{{ option.montant }}">
-               </td>
-               <td class="p-1">
-                  <label for="option-{{ option.id }}" class="font-weight-bold h6 d-block">
-                     {{ option.name }}
-                  </label>
-               </td>
-               <td class="text-right">
-                  <strong>{{ option.montant ~ currency }}</strong>
-               </td>
-            </tr>
-            {% endfor %}
-         </tbody>
-      </table>
-
-      {% endif %}
-
-      <div class="row align-items-center">
-         <div class="col-6">
-            <h6 class="text-uppercase">Total</h6>
-         </div>
-         <div class="col-6 text-right">
-            <output name="total" class="h5">{{ microservice.prix }} {{ currency }} </output>
-         </div>
-      </div>
-
-   </div>
-
-   <div class="card-footer">
-      <button class="btn btn-success btn-lg">
-         Réserver
-      </button>
    </div>
 
 </div>

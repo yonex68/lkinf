@@ -32,4 +32,12 @@ class PagesController extends AbstractController
             
         ]);
     }
+
+    #[Route('/conditions-utilisations', name: 'page_conditions')]
+    public function conditions(): Response
+    {
+        return $this->render('pages/conditions.html.twig', [
+            
+        ]);
+    }
 }

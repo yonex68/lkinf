@@ -32,15 +32,43 @@ input[type="checkbox"] {
  height: 50px!important;
  text-align: right!important;
  border-left: transparent;
+ border: none!important;
+ border-radius: 10px;
+}
+.commande-form .input-group{
+   border-radius: 10px;
 }
 .commande-form .input-group-prepend{
    height: auto!important;
    text-align: center!important;
    justify-content: center;
+   border-radius: 10px;
 }
 .commande-form .input-group-prepend .input-group-text{
    background: #fff;
    text-align: center!important;
+   border-radius: 10px;
+   width: 40px;
+   text-align: center;
+}
+.fc .fc-button-primary{
+   background: #080679 !important;
+   background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
+   background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9)) !important;
+   background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: -o-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: linear-gradient(to right, #080679 0%, #a9a9a9 100%) !important;
+   border-color: #080679 !important;
+}
+.fc-col-header-cell-cushion{
+   text-transform: capitalize;
+}
+.fc .fc-daygrid-day-bg .fc-highlight{
+   background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
+   background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9)) !important;
+   background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: -o-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
+   background: linear-gradient(to right, #080679 0%, #a9a9a9 100%) !important;
 }
 .btn-icon {
    width: 30px !important;
@@ -58,11 +86,8 @@ input, select, textarea, .select2-container--default .select2-selection--single,
    /*color: white !important;*/
 }
 
-.profile-card .user-profile-image .profile-name span a,
-.box .box-body .bg-white .dropdown-menu-show .dropdown-item,
-.dropdown-menu .dropdown-item, .inner-wrapper .seller-name a, ul li span,
-.nav-link, .dropdown button, .text-truncate {
-   /*color: #a5a5a8 !important;*/
+.text-truncate {
+   font-size: .8em;
 }
 
 .dropdown-menu .dropdown-item:hover {
@@ -552,6 +577,11 @@ body.responsive {
 }
 .categories .btn-light:hover{
    color: white!important;
+}
+.fc-toolbar-title{
+   font-size: 1.3em!important;
+   text-transform: capitalize!important;
+   font-weight: 400!important;
 }
 .osahan-login a,
 .osahan-login label,

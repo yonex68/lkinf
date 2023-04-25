@@ -128,6 +128,7 @@ class MicroserviceController extends AbstractController
         $commandeForm->handleRequest($request);
 
         if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
+            //dd($commandeForm->get('reservationDate')->getData());
             $reservationStart = $commandeForm->get('reservationStartAt')->getData();
             $reservationEnd = $commandeForm->get('reservationEndAt')->getData();
             $tauxHoraire = date_diff($reservationEnd, $reservationStart);

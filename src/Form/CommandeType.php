@@ -17,15 +17,7 @@ class CommandeType extends AbstractType
     {
         $builder
         ->add('montant', HiddenType::class)
-        ->add('reservationDate', DateType::class, [
-            'widget' => 'single_text',
-            'attr' => ['class' => ''],
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Champ obligatoire!',
-                ]),
-            ]
-        ])
+        ->add('reservationDate', HiddenType::class)
         ->add('reservationStartAt', TimeType::class, [
             'widget' => 'single_text',
             'attr' => ['class' => ''],

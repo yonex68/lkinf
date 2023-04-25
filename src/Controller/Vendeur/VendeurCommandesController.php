@@ -6,6 +6,7 @@ use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class VendeurCommandesController extends AbstractController
 {
     #[Route('/', name: 'vendeur_commandes_index', methods: ['GET'])]
-    public function index(CommandeRepository $commandeRepository): Response
+    public function index(CommandeRepository $commandeRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $commandes = $commandeRepository->findBy(['vendeur' => $this->getUser()]);
+        $commandes = $paginator->paginate(
+            $commandeRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC']),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('vendeur/commandes/index.html.twig', [
             'commandes' => $commandes,
