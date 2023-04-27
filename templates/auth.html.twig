@@ -95,17 +95,17 @@
 
 									{% if app.request.attributes.get('_route') == 'app_register' %}
 
-									<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}" class="text-primary">connectez-vous</a></p>
+									<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}" class="text-blue">connectez-vous</a></p>
 
 									{% elseif app.request.attributes.get('_route') == 'app_login' %}
 
-									<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-primary">créer un compte</a></p>
+									<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-blue">créer un compte</a></p>
 
 									{% else %}
 
-									<a href="{{ path('app_login') }}" class="text-primary">Connexion</a>&nbsp;
+									<a href="{{ path('app_login') }}" class="text-blue">Connexion</a>&nbsp;
 
-									<a href="{{ path('app_register') }}" class="text-primary">Créer un compte</a>
+									<a href="{{ path('app_register') }}" class="text-blue">Créer un compte</a>
 
 									{% endif %}
 								</span>
@@ -128,7 +128,7 @@
 								<a class="nav-link" href="#">Politique de confidentialité</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-primary" href="#">Besoin d'aide?</a>
+								<a class="nav-link text-blue" href="#">Besoin d'aide?</a>
 							</li>
 						</ul>
 					</div>

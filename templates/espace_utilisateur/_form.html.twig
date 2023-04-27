@@ -91,6 +91,11 @@
          {{ form_widget(form.apropos) }}
          {{ form_errors(form.apropos) }}
       </div>
+
+      <div class="form-group">
+         {{ form_rest(form) }}
+      </div>
+      
       <div class="form-group">
          <button type="submit" formnovalidate class="btn btn-dark">Mettre à jour</button>
       </div>

@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Microservice;
 use App\Entity\SearchService;
+use App\Entity\ServiceOption;
 use App\Entity\ServiceSignale;
 use App\Form\CommandeType;
 use App\Form\SearchServiceType;
 use App\Form\ServiceSignaleType;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\OffreRepository;
@@ -93,17 +95,14 @@ class MicroserviceController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'microservice_details', methods: ['GET', 'POST'])]
-    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository, ServiceSignaleRepository $serviceSignaleRepository, DisponibiliteRepository $disponibiliteRepository): Response
+    public function details(Microservice $microservice, Request $request, EntityManagerInterface $entityManager, MicroserviceRepository $microserviceRepository, AvisRepository $avisRepository, ServiceOptionRepository $serviceOptionRepository, ServiceSignaleRepository $serviceSignaleRepository, DisponibiliteRepository $disponibiliteRepository, CommandeRepository $commandeRepository): Response
     {
 
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
-
+        /** @var ServiceOption $option */
         $options = $microservice->getServiceOptions();
-        $totalMontant = 0;
 
-        foreach ($options as $option) {
-            $totalMontant += $option->getMontant();
-        }
+        $erreurmessage = '';
 
         $serviceSignale = new ServiceSignale();
         $servicesignaleForm = $this->createForm(ServiceSignaleType::class, $serviceSignale);
@@ -128,33 +127,63 @@ class MicroserviceController extends AbstractController
         $commandeForm->handleRequest($request);
 
         if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
-            //dd($commandeForm->get('reservationDate')->getData());
+
+            $reservationDate = $commandeForm->get('reservationDate')->getData();
             $reservationStart = $commandeForm->get('reservationStartAt')->getData();
             $reservationEnd = $commandeForm->get('reservationEndAt')->getData();
             $tauxHoraire = date_diff($reservationEnd, $reservationStart);
-
-            $commande->setMicroservice($microservice);
-            //$commande->setDisponibilite($disponibilite);
-            //$commande->setPaymentIntent();
-            $commande->setClient($this->getUser());
-            $commande->setVendeur($microservice->getVendeur());
-            $commande->setTauxHoraire($tauxHoraire);
-            $commande->setDestinataire($microservice->getVendeur());
-            $commande->setConfirmationClient(false);
-            $commande->setLu(false);
-            $commande->setStatut('Non payer');
-            $commande->setOffre('Reservation');
-            $commande->setValidate(false);
-            $commande->setDeliver(false);
-            $commande->setCancel(false);
-
-            $entityManager->persist($commande);
-            $entityManager->flush($commande);
-
-            return $this->redirectToRoute('commander_microservice_reservation', [
-                'slug' => $microservice->getSlug(),
-                'commande' => $commande->getId()
+            
+            /** @var Commande $reservation Verification de l"existatnce de la resvation */
+            $reservation = $commandeRepository->findOneBy([
+                'reservationDate' => $reservationDate,
+                'vendeur' => $microservice->getVendeur()
             ]);
+
+            if ($reservation) {
+
+                $heureDebutReservee = date_format($reservation->getReservationStartAt(), 'H');
+                $heureFinReservee = date_format($reservation->getReservationEndAt(), 'H');
+                $newReservationStart = date_format($reservationStart, 'H');
+                $newReservationEnd = date_format($reservationEnd, 'H');
+
+                if ($newReservationStart == $heureDebutReservee) {
+
+                    $dateconv = strtotime($reservationDate);
+                    $date = date('d/m/Y', $dateconv);
+
+                    /** Injection de l'erreur */
+                    $erreurmessage = "Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h';
+
+                    //dd("Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h');
+                }
+            }
+
+            /** S'il y a une reservation relative, on notifi l'utilisateur */
+            if ($erreurmessage) {
+                $this->addFlash('warning', $erreurmessage);
+            } else {
+                $commande->setMicroservice($microservice);
+                //$commande->setDisponibilite($disponibilite);
+                //$commande->setPaymentIntent();
+                $commande->setClient($this->getUser());
+                $commande->setVendeur($microservice->getVendeur());
+                $commande->setTauxHoraire($tauxHoraire);
+                $commande->setDestinataire($microservice->getVendeur());
+                $commande->setConfirmationClient(false);
+                $commande->setLu(false);
+                $commande->setStatut('Non payer');
+                $commande->setOffre('Reservation');
+                $commande->setValidate(false);
+                $commande->setDeliver(false);
+                $commande->setCancel(false);
+                $entityManager->persist($commande);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('commander_microservice_reservation', [
+                    'slug' => $microservice->getSlug(),
+                    'commande' => $commande->getId()
+                ]);
+            }
         }
 
         return $this->render('microservice/details.html.twig', [
@@ -164,7 +193,7 @@ class MicroserviceController extends AbstractController
             'commandeForm' => $commandeForm->createView(),
             'prix' => $microservice->getPrix(),
             'options' => $options,
-            'total' => $totalMontant,
+            'erreurmessage' => $erreurmessage,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
             'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);

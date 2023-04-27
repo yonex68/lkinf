@@ -11,6 +11,9 @@
 		<div class="card-body p-0">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
+					<a class="dropdown-item {{ app.request.attributes.get('_route') == 'user_dashboard' ? 'active' : '' }}" href="{{ path('user_dashboard') }}">
+						<i class="fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord
+					</a>
 
 					{% include "partials/vendeur/_menu.html.twig" %}
 					
@@ -25,11 +28,15 @@
 
 	<div class="card mb-3">
 		<div class="card-header bg-dark">
-			<h6 class="m-0 h6 text-light">Tableau de Bord</h6>
+			<h6 class="m-0 h6 text-light">Espace membre</h6>
 		</div>
 		<div class="card-body p-0">
 			<div class="bg-white rounded shadow-sm">
 				<div class="dropdown-menu-show">
+
+					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'user_dashboard' ? 'active' : '' }}"
+						href="{{ path('user_dashboard') }}"><i
+							class="text-muted fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord</a>
 
 					<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'vendeur_achats_index' ? 'active' : '' }}"
 						href="{{ path('vendeur_achats_index') }}"><i

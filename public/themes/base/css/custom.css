@@ -26,7 +26,15 @@ body {
 input[type="checkbox"] {
    background-color: transparent !important;
 }
-
+.dashboard-link div a{
+   color: #0D1117;
+   margin-bottom: 20px;
+   display: block;
+}
+.dashboard-link div .h6{
+   color: #0D1117;
+   font-size: 1em;
+}
 .commande-form input[type=date],
 .commande-form input[type=time]{
  height: 50px!important;
@@ -52,16 +60,21 @@ input[type="checkbox"] {
    text-align: center;
 }
 .fc .fc-button-primary{
-   background: #080679 !important;
-   background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
-   background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9)) !important;
-   background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
-   background: -o-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
-   background: linear-gradient(to right, #080679 0%, #a9a9a9 100%) !important;
-   border-color: #080679 !important;
+   background: #222326!important;
+   border: #fff!important;
+   margin-left: 10px!important;
 }
-.fc-col-header-cell-cushion{
+.fc-button{
+   margin-left: 10px!important;
+   border-radius: 5px!important;
+}
+.fc .fc-col-header-cell-cushion{
    text-transform: capitalize;
+   padding: 10px 4px;
+   width: 100%!important;
+   background: #222326!important;
+   color: white;
+   font-weight: 400;
 }
 .fc .fc-daygrid-day-bg .fc-highlight{
    background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
@@ -241,7 +254,7 @@ h1, h2, h3, h4, h5, h6 {
    color: white !important;
 }
 
-#modalLocations .modal-content {
+.modal .modal-content {
    background: radial-gradient(#080679, transparent);
 }
 
@@ -455,12 +468,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .homeBanner .caption {
    position: absolute;
-   height: 50%;
+   height: 90px;
    left: 0;
    right: 0;
    bottom: 0;
    background: linear-gradient(transparent, #fff);
-   z-index: 10;
+   z-index: 900!important;
 }
 
 #bannerCarouselIndicators .carousel-inner .carousel-item {
@@ -480,12 +493,11 @@ h1, h2, h3, h4, h5, h6 {
    text-align: left;
    padding-left: 9%;
    padding-top: 15%;
-   z-index: 900 !important;
+   z-index: 100 !important;
    top: 0;
    right: 0;
    bottom: 0;
    left: 0;
-   background: linear-gradient(transparent, #fff);
 }
 
 #bannerCarouselIndicators .carousel-inner .carousel-caption h5 {
@@ -578,6 +590,9 @@ body.responsive {
 .categories .btn-light:hover{
    color: white!important;
 }
+.categories .button{
+   background: rgba(255, 255, 255, .5)!important;
+}
 .fc-toolbar-title{
    font-size: 1.3em!important;
    text-transform: capitalize!important;
@@ -595,6 +610,15 @@ body.responsive {
    z-index: 3;
 }
 
+.image-bloc{
+   height: 150px;
+   display: block;
+}
+.image-bloc img{
+   height: 100%;
+   width: 100%;
+   display: block;
+}
 .badge-blue {
    background: #080679 !important;
    color: white !important;

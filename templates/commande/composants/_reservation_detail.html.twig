@@ -8,13 +8,13 @@
    <div class="d-flex align-items-top mb-2">
       <p class="mb-0 text-muted">Heure debut</p>
       <p class="text-muted mb-0 mt-0 ml-auto">
-         {{ commande.reservationStartAt|date("H:i") }}
+         {{ commande.reservationStartAt|date("H") }}h
       </p>
    </div>
    <div class="d-flex align-items-top mb-2">
       <p class="mb-0 text-muted">Heure fin</p>
       <p class="text-muted mb-0 mt-0 ml-auto">
-         {{ commande.reservationEndAt|date("H:i") }}
+         {{ commande.reservationEndAt|date("H") }}h
       </p>
    </div>
    <div class="d-flex align-items-top mb-2">
@@ -30,9 +30,9 @@
       </p>
    </div>
    <div class="d-flex align-items-top mb-2">
-      <p class="mb-0 text-muted">
-         <span>TOTAL <br> (TAUX HORAIRE INCLUS)</span>
+      <p class="mb-0 text-dark">
+         <span>TOTAL <br> (Taux horaire inclus)</span>
       </p>
-      <strong class="text-muted mb-0 mt-0 ml-auto">{{ montant }} {{ currency }}</strong>
+      <strong class="text-dark mb-0 mt-0 ml-auto">{{ montant }} {{ currency }}</strong>
    </div>
 </div>

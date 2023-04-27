@@ -45,20 +45,27 @@
 					</p>
 					{% endif %}
 					<div class="py-2">
-						{% if app.user.avatar %}
-						<img class="img-fluid rounded-circle"
-							src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}" alt='' />
+
+						{% if app.user.reseauAvatar %}
+
+						<img src="{{ app.user.reseauAvatar }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}" width="80">
 
 						{% else %}
 
-						<img class="img-fluid rounded-circle"
-							src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+							{% if app.user.avatar %}
+
+							<img src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+							{% else %}
+
+							<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
+
+							{% endif %}
 
 						{% endif %}
 					</div>
 					<div class="form-group">
-						<strong>Nom public</strong>
-						<h6 class="h6 mb-0">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</h6>
+						<strong>Nom public</strong> <br>
+						<strong class="text-muted mb-0">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</strong>
 					</div>
 				</div>
 
@@ -88,8 +95,8 @@
 				{% endif %}
 			</div>
 			<div class="form-group">
-				<strong>Email</strong>
-				<h6 class="h6 mb-0">{{ app.user.email }}</h6>
+				<strong>Email</strong> <br>
+				<strong class="text-muted mb-0">{{ app.user.email }}</strong>
 			</div>
 			<div class="form-group">
 				<strong class="mb-0">Biographie</strong>
@@ -105,10 +112,18 @@
 			</div>
 
 			<div class="form-group text-left">
-				<a href="{{ path('user_edit_profil') }}" class="btn btn-success">
-					Mettre à jour
-				</a>
+
+				{% if is_granted('ROLE_VENDEUR') %}
+					<a href="{{ path('user_coordonnees') }}" class="btn btn-success">
+						Mettre à jour
+					</a>
+				{% else %}
+					<a href="{{ path('user_edit_profil') }}" class="btn btn-success">
+						Mettre à jour
+					</a>
+				{% endif %}
 			</div>
+
 		</div>
 	</div>
 </div>

@@ -21,12 +21,9 @@ class CategorieUserType extends AbstractType
         $builder
             ->add('lieuPrestation', TextType::class, [
                 'label' => 'Lieu de prestation',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ]),
-                ],
-                'attr' => ['class' => 'font-weight-bold text-muted', 'placeholder' => 'Lieu de prestation'],
+                'help' => 'Ne concerne que les catégories ingénieure son et studio',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Lieu de prestation'],
             ])
             ->add('homeStudio', CheckboxType::class, [
                 'label'     =>  'Home studio',
@@ -54,6 +51,41 @@ class CategorieUserType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ])
                 ],
+            ])
+            ->add('rib', TextType::class, [
+                'label' => 'RIB',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ]),
+                ],
+                'attr' => ['class' => '', 'placeholder' => 'RIB'],
+            ])
+            ->add('iban', TextType::class, [
+                'label' => 'IBAN',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ]),
+                ],
+                'attr' => ['class' => '', 'placeholder' => 'IBAN'],
+            ])
+            ->add('siret', TextType::class, [
+                'label' => 'Numéro Siret',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Numéro Siret'],
+            ])
+            ->add('paypal', TextType::class, [
+                'label' => 'Paypal',
+                'help' => 'Facultatif',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Adresse Paypal'],
+            ])
+            ->add('stripe', TextType::class, [
+                'label' => 'Stripe',
+                'help' => 'Facultatif',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Adresse Stripe'],
             ]);
     }
 

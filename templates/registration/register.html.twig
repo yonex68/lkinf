@@ -106,9 +106,9 @@
 	{{ form_widget(registrationForm.agreeTerms) }}
 	<label for="registration_form_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
 		J'accepte les
-		<a href="" class="text-primary">termes</a>
+		<a href="" class="text-blue">termes</a>
 		et
-		<a href="" class="text-primary">conditions d'utilisation</a>
+		<a href="" class="text-blue">conditions d'utilisation</a>
 	</label>
 </div>
 
@@ -138,14 +138,11 @@
 {% include "espace_utilisateur/composants/_mapbox_script.html.twig" %}
 
 <script>
-	$('#registration_form_compte_1').change(function () {
-		$('#doing').slideToggle();
-	})
-	$('#registration_form_compte_2').change(function () {
-		$('#doing').slideUp();
-	})
 	$('#registration_form_compte_0').change(function () {
 		$('#doing').slideUp();
+	})
+	$('#registration_form_compte_1').change(function () {
+		$('#doing').slideToggle();
 	})
 </script>
 

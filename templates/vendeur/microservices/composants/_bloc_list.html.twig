@@ -1,23 +1,19 @@
-<div class="card mb-3 border-0">
-	<div class="card-body p-2">
-		<div class="row align-items-center">
-			<div class="col-sm-4">
-				{% if microservice.medias|length > 0 %}
+<div class="media mb-2 shadow-sm rounded p-2">
+	{% if microservice.medias|length > 0 %}
 
-				<img class="img-fluid rounded w-100 h-100"
-					src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_size') }}" />
+	<img class="img-fluid rounded mt-2"
+		src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_avatar') }}" />
 
-				{% else %}
+	{% else %}
 
-				<img class="img-fluid rounded w-100 h-100"
-					src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" />
+	<img class="img-fluid rounded mt-2"
+		src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_avatar') }}" />
 
-				{% endif %}
-			</div>
-			<div class="col-sm-8">
+	{% endif %}
 
-				<small class="text-muted">{{ microservice.created|ago(locale='fr') }}</small>
-
+	<div class="media-body ml-3">
+		<div class="row">
+			<div class="col-sm-7">
 				{% if is_granted('microservice_edit', microservice) %}
 
 				{% if microservice.offline == true %}
@@ -34,8 +30,10 @@
 
 				{% endif %}
 
-				<a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="text-dark d-block py-1">
-					<strong class="d-block text-dark mb-1">{{ microservice.name }}</strong>
+				<small class="text-muted">{{ microservice.created|ago(locale='fr') }}</small>
+
+				<a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="text-dark d-block mb-1 mt-0">
+					<strong class="d-block text-dark">{{ microservice.name }}</strong>
 				</a>
 
 				<div class="">
@@ -44,35 +42,35 @@
 						#{{ microservice.categorie.name }}
 					</a>
 
-					<span class="text-muted">A partir de</span>
-					<strong class="h6 mb-1 text-right font-weight-bold">
-						{{ microservice.prixMastering ~ currency }}
-					</strong>
+					<div class="rating-wrapper py-1">
+						<span class="gig-rating text-success">
+							{% include "microservice/composants/_etoilles.html.twig" %}
+							<span class="text-muted">({{ serviceAvis(microservice) }})</span>
+						</span>
+					</div>
 				</div>
-
-				<div class="rating-wrapper py-1">
-					<span class="gig-rating text-success">
-						{% include "microservice/composants/_etoilles.html.twig" %}
-						<span class="text-muted">({{ serviceAvis(microservice) }})</span>
-					</span>
-				</div>
+			</div>
+			<div class="col-sm-5 text-sm-right">
+				<span class="text-muted">A partir de</span>
+				<strong class="h6 mb-1 text-right font-weight-bold">
+					{{ microservice.prixMastering ~ currency }}
+				</strong>
 
 				{% if is_granted('microservice_edit', microservice) %}
 
-				<div class="content-info mb-3 text-left">
-					<a href="{{ path('microservice_details', {'slug': microservice.slug}) }}" class="btn btn-outline-dark"
-						target="_blank">Details</a>
+				<div class="content-info mb-3 text-left pt-2">
+					<a href="{{ path('microservice_details', {'slug': microservice.slug}) }}" class="btn btn-outline-dark btn-sm"
+						target="_blank"><i class="fa fa-file"></i></a>
 					<a href="{{ path('vendeur_microservices_galerie', {'id': microservice.id}) }}"
-						class="btn btn btn-outline-dark">
-						<i class="fa fa-image"></i>&nbsp;Galerie</a>
-					<a href="{{ path('vendeur_microservices_titre', {'id': microservice.id}) }}"
-						class="btn btn-dark">Modifier</a>
+						class="btn btn btn-outline-dark btn-sm">
+						<i class="fa fa-image"></i></a>
+					<a href="{{ path('vendeur_microservices_titre', {'id': microservice.id}) }}" class="btn btn-dark btn-sm"><i class="fa fa-edit"></i></a>
 
 					{% include "vendeur/microservices/_delete_form.html.twig" %}
 				</div>
-
 				{% endif %}
 			</div>
 		</div>
+
 	</div>
 </div>

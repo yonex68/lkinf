@@ -1,29 +1,34 @@
 {{ form_start(form, {attr: {class: 'form-noborder'}}) }}
 <div class="form-row">
-   <div class="col-8 col-lg-7 col-md-9 col-sm-12 form-group">
+   <div class="col-12 col-sm-10 form-group">
       <div class="input-group bg-white border border-light rounded">
          <span class="input-group-text border-0 bg-transparent" id="basic-addon1">
             <i class="fa fa-map-marker text-blue"></i>
          </span>
-         {{ form_widget(form.adresse, {attr: {'value': ville is defined ? ville : null}}) }}
+
+         {{ form_widget(form.adresse, {attr: {'value': ville is defined ? ville : null, 'class': 'shadow-none mt-1 border-0'}}) }}
 
          {{ form_row(form.ville) }}
+         
+         <div class="input-group-append p-0">
+            <span class="input-group-text p-1 bg-transparent border-0">
+               <button type="submit" class="btn btn-success h-100 btn-block btn-lg btn-gradient shadow-sm">
+                  <i class="fa fa-search"></i>
+               </button>
+            </span>
+         </div>
 
       </div>
-   </div>
-   <div class="col-4 col-lg-3 col-md-3 col-sm-12 form-group">
-      <button type="submit" class="btn btn-success h-100 btn-block btn-lg btn-gradient shadow-sm">
-         <i class="fa fa-search"></i>
-      </button>
    </div>
 </div>
 {{ form_end(form) }}
 
 <div class="popular">
-   <span class="text-body-2">Populaire</span>
+   <span class="text-body-2 text-light">Populaire</span>
    <ul class="categories">
       {% for categorie in categories() %}
-      <li><a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}" class="text-body-2 text-blue">#{{ categorie.name }}</a></li>
+      <li><a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}"
+            class="text-body-2 text-blue button">#{{ categorie.name }}</a></li>
       {% endfor %}
    </ul>
 </div>

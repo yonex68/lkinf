@@ -7,21 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class EditProfilType extends AbstractType
 {
@@ -155,6 +148,39 @@ class EditProfilType extends AbstractType
             ])
             ->add('latitude', HiddenType::class, [
                 'required' => false,
+            ])
+            ->add('rib', TextType::class, [
+                'label' => 'RIB',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ]),
+                ],
+                'attr' => ['class' => '', 'placeholder' => 'RIB'],
+            ])
+            ->add('iban', TextType::class, [
+                'label' => 'IBAN',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ]),
+                ],
+                'attr' => ['class' => '', 'placeholder' => 'IBAN'],
+            ])
+            ->add('siret', TextType::class, [
+                'label' => 'Numéro Siret',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Numéro Siret'],
+            ])
+            ->add('paypal', TextType::class, [
+                'label' => 'Paypal',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Adresse Paypal'],
+            ])
+            ->add('stripe', TextType::class, [
+                'label' => 'Stripe',
+                'required' => false,
+                'attr' => ['class' => '', 'placeholder' => 'Adresse Stripe'],
             ])
         ;
     }

@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
-use App\Form\CategorieType;
+use App\Entity\Portefeuille;
+use App\Entity\User;
 use App\Form\CategorieUserType;
 use App\Form\ChangePasswordFormType;
 use App\Form\CoordonneeType;
 use App\Form\EditProfilType;
-use App\Form\LieuPrestationType;
 use App\Form\PositionType;
-use App\Repository\AbonnementRepository;
-use App\Repository\UserRepository;
+use App\Repository\CommandeRepository;
+use App\Repository\MicroserviceRepository;
+use App\Repository\RemboursementRepository;
+use App\Repository\RetraitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/espace-utilisateur')]
 class EspaceUtilisateurController extends AbstractController
 {
+
     #[Route('/', name: 'user_profil')]
     public function profil(): Response
     {
@@ -31,10 +34,61 @@ class EspaceUtilisateurController extends AbstractController
 
         return $this->render('espace_utilisateur/profil.html.twig', []);
     }
+    
+    #[Route('/tableau-de-bord', name: 'user_dashboard')]
+    public function dashboard(EntityManagerInterface $manager, MicroserviceRepository $microserviceRepository, CommandeRepository $commandeRepository, RetraitRepository $retraitRepository, RemboursementRepository $remboursementRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->getCompte() == 'Vendeur') {
+            if (!$user->getPortefeuille()) {
+
+                $portefeuille = new Portefeuille();
+                $portefeuille->setVendeur($user);
+                $portefeuille->setSoldeDisponible(0);
+                $portefeuille->setSoldeEnCours(0);
+
+                $manager->persist($portefeuille);
+                $manager->flush();
+            }
+        }
+
+        return $this->render('espace_utilisateur/dashboard.html.twig', [
+            'services' => count($microserviceRepository->findBy(['vendeur' => $user])),
+            'commandes' => count($commandeRepository->findBy(['vendeur' => $user, 'statut' => 'En attente'])),
+            'retrait' => $retraitRepository->findTotal(['vendeur' => $user]),
+            'retraits' => count($retraitRepository->findBy(['vendeur' => $user])),
+            'remboursement' => $remboursementRepository->findTotal(['vendeur' => $user]),
+            'remboursements' => count($remboursementRepository->findBy(['vendeur' => $user])),
+        ]);
+    }
+
+    #[Route('/coordonnees', name: 'user_coordonnees', methods: ['GET', 'POST'])]
+    public function coordonnees(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(CoordonneeType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->flush();
+            $this->addFlash('success', "Les coordonnées de votre profil ont bien été mise à jour");
+            return $this->redirectToRoute('user_categorie', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('espace_utilisateur/coordonnees.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
     #[Route('/categorie', name: 'user_categorie', methods: ['GET', 'POST'])]
     public function categorie(Request $request, EntityManagerInterface $entityManager): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         $form = $this->createForm(CategorieUserType::class, $user);
@@ -60,7 +114,7 @@ class EspaceUtilisateurController extends AbstractController
                     return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
                 }
             }
-            
+
             if ($user->isEndRegister() == null) {
                 $user->setEndRegister(true);
             }
@@ -75,32 +129,14 @@ class EspaceUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/coordonnees', name: 'user_coordonnees', methods: ['GET', 'POST'])]
-    public function coordonnees(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-
-        $form = $this->createForm(CoordonneeType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->flush();
-            $this->addFlash('success', "Votre profil a bien été mise à jour");
-            return $this->redirectToRoute('user_categorie', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('espace_utilisateur/coordonnees.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     #[Route('/modifier-votre-mot-de-passe', name: 'edit_password', methods: ['GET', 'POST'])]
     public function editPassword(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
     ): Response {
+
+        /** @var User $user */
         $user = $this->getUser();
 
         // The token is valid; allow the user to change their password.

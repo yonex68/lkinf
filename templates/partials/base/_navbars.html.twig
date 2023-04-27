@@ -1,4 +1,4 @@
-<nav class="navbar d-none d-sm-block navbar-expand-xl navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top p-0">
+<nav class="navbar d-none d-sm-block navbar-expand-xl navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top py-1">
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}">
@@ -113,6 +113,9 @@
 						</div>
 					</h6>
 					<div class="dropdown-divider"></div>
+					<a class="dropdown-item {{ app.request.attributes.get('_route') == 'user_dashboard' ? 'active' :'' }}" href="{{ path('user_dashboard') }}">
+						<i class="fa fa-dashboard"></i>&nbsp;&nbsp;&nbsp;Tableau de bord
+					</a>
 					<a class="dropdown-item" href="{{ path('user_profil') }}">
 						<i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;
 						Mon compte
@@ -317,7 +320,7 @@
 			{% else %}
 			<li class="nav-item">
 				<a href="{{ path('app_register') }}" class="nav-link text-blue">
-					<button class="btn btn-success btn-sm nav-auth-btn">Vendre</button>
+					<button class="btn btn-success btn-sm nav-auth-btn">Vendre / connexion</button>
 				</a>
 			</li>
 			{% endif %}

@@ -31,17 +31,25 @@
 					<div class="mb-3"> <!-- sidebar-fix  -->
 						<div class="box mb-3 shadow-sm rounded bg-white profile-box text-center">
 							<div class="p-4">
-								{% if user.avatar %}
-								<img class="img-fluid rounded-circle"
-									src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('identite_size') }}"
-									alt="{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}" />
+
+								{% if user.reseauAvatar %}
+
+								<img src="{{ user.reseauAvatar }}" class="img-fluid rounded-circle" alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}" width="150">
 
 								{% else %}
 
-								<img class="img-fluid rounded-circle"
-									src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}" alt="{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}" />
+									{% if user.avatar %}
 
+									<img src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('small_size') }}" class="img-fluid rounded-circle" alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}">
+
+									{% else %}
+
+									<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('small_size') }}" alt='' />
+
+									{% endif %}
+								
 								{% endif %}
+
 							</div>
 							<div class="p-3">
 								<h5 class="h6 text-dark mb-1 mt-0 text-left">{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}</h5>
@@ -97,13 +105,13 @@
 						</div>
 					</div>
 					
-					<div class="shadow-sm rounded bg-white job-item mb-3">
+					<!--<div class="shadow-sm rounded bg-white job-item mb-3">
 						<div class="p-3 job-item-header border-0">
 							<div class="overflow-hidden mr-2">
 								<h6 class="font-weight-light text-dark mb-0 text-truncate">Abonnés</h6>
 							</div>
 						</div>
-						<div class="d-flex align-items-center bg-white p-3 border-top border-bottom job-item-body">
+						<div class="d-flex align-items-center bg-white p-3 border-0 border-bottom job-item-body">
 							<div class="overlap-rounded-circle">
 								{% for follow in followers(user) %}
 
@@ -134,7 +142,8 @@
 								{{ followers(user)|length - lastFolowers(user)|length }} autres</small>
 							{% endif %}
 						</div>
-					</div>
+					</div>-->
+
 				</aside>
 				<!-- Main Content -->
 				<main class="col col-md-8 order-xl-2 order-lg-2 col-12">
@@ -158,7 +167,7 @@
 										<div class="py-4">
 											<i class="fa fa-search fa-3x text-muted"></i>
 										</div>
-										{% if app.user.id == user.id %}
+										{% if user.id == user.id %}
 										<p>Créez-en un nouveau ou activez-les depuis la page Mes services.</p>
 										<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">
 											Nouveau service

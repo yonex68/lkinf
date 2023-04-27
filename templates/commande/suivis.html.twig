@@ -19,7 +19,15 @@
             <div class="card-body p-0">
 
                <div class="p-3">
+                  {% if commande.offre == 'Reservation' %}
+                     
                   {% include "commande/composants/_reservation_detail.html.twig" %}
+                  
+                  {% else %}
+
+                  {% include "commande/composants/_details.html.twig" %}
+
+                  {% endif %}
                </div>
 
                <hr class="m-0 p-0">
@@ -55,17 +63,17 @@
 
                         {% if commande.vendeur.reseauAvatar %}
 
-                        <img src="{{ commande.vendeur.reseauAvatar }}" class="img-fluid rounded-circle"
-                           alt="{{ commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.nom ~ ' ' ~ commande.vendeur.prenom }}">
+                        <img src="{{ commande.vendeur.reseauAvatar }}" class="rounded-circle"
+                           alt="{{ commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.nom ~ ' ' ~ commande.vendeur.prenom }}" width="60">
 
                         {% else %}
 
                            {% if commande.vendeur.avatar %}
-                           <img src="{{ vich_uploader_asset(commande.vendeur, 'imageFile') | imagine_filter('midle_avatar') }}" class="img-fluid rounded-circle"
+                           <img src="{{ vich_uploader_asset(commande.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}" class="rounded-circle"
                               alt="{{ commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo : commande.vendeur.nom ~ ' ' ~ commande.vendeur.prenom }}">
                            {% else %}
 
-                           <img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('midle_avatar') }}"
+                           <img class="rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}"
                               alt='' />
 
                            {% endif %}
@@ -75,7 +83,9 @@
                         <div class="media-body pl-3 ">
                            <strong class="d-block">{{ commande.vendeur.usePseudo == 1 ? commande.vendeur.pseudo :
                               commande.vendeur.nom ~ ' ' ~ commande.vendeur.prenom }}</strong>
-                           <p class="mb-0 text-muted text-left">{{ commande.vendeur.apropos|u.truncate(60, '...') }}</p>
+                           <p class="mb-0 text-muted text-left">
+                              {{ commande.vendeur.apropos|u.truncate(60, '...') }}
+                           </p>
                         </div>
                      </div>
 

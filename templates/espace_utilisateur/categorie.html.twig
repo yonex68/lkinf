@@ -15,7 +15,7 @@
 
 <div class="card rounded bg-light mb-3">
 	<div class="card-header bg-dark">
-		<h4 class="h6 text-light">Autres informations</h4>
+		<h4 class="h6 text-light">Informations supplémentaire</h4>
 	</div>
 	<div class="card-body">
 		{% if is_granted('ROLE_VENDEUR') %}
@@ -43,7 +43,7 @@
 
 			{{ form_rest(form) }}
 
-			<button class="btn btn-dark">Mettre à jour</button>
+			<button class="btn btn-dark">Enregister</button>
 
 			{{ form_end(form) }}
 		</div>

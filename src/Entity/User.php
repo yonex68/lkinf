@@ -194,6 +194,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Remboursement::class)]
     private Collection $vendeursremboursements;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $iban = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $rib = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paypal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripe = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $siret = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $codePostal = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -1216,6 +1234,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $vendeursremboursement->setVendeur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    public function setIban(?string $iban): self
+    {
+        $this->iban = $iban;
+
+        return $this;
+    }
+
+    public function getRib(): ?string
+    {
+        return $this->rib;
+    }
+
+    public function setRib(?string $rib): self
+    {
+        $this->rib = $rib;
+
+        return $this;
+    }
+
+    public function getPaypal(): ?string
+    {
+        return $this->paypal;
+    }
+
+    public function setPaypal(?string $paypal): self
+    {
+        $this->paypal = $paypal;
+
+        return $this;
+    }
+
+    public function getStripe(): ?string
+    {
+        return $this->stripe;
+    }
+
+    public function setStripe(?string $stripe): self
+    {
+        $this->stripe = $stripe;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }

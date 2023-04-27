@@ -8,6 +8,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\EmploisTempsRepository;
+use App\Repository\FavorisRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\PortefeuilleRepository;
 use App\Repository\RemboursementRepository;
@@ -44,8 +45,10 @@ class AppExtension extends AbstractExtension
 
     private $retraitRepository;
 
+    private $favorisRepository;
+
     public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository, ServiceSignaleRepository $serviceSignaleRepository
-    , RemboursementRepository $remboursementRepository, RetraitRepository $retraitRepository){
+    , RemboursementRepository $remboursementRepository, RetraitRepository $retraitRepository, FavorisRepository $favorisRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -59,6 +62,7 @@ class AppExtension extends AbstractExtension
         $this->serviceSignaleRepository = $serviceSignaleRepository;
         $this->remboursementRepository = $remboursementRepository;
         $this->retraitRepository = $retraitRepository;
+        $this->favorisRepository = $favorisRepository;
 
     }
 
@@ -89,11 +93,26 @@ class AppExtension extends AbstractExtension
             new TwigFunction('truncateTitle', [$this, 'truncateTitle']),
             new TwigFunction('ville', [$this, 'getUserVille']),
             new TwigFunction('retraits', [$this, 'getVendeurRetraits']),
+            new TwigFunction('clientSuivis', [$this, 'getClientSuivis']),
+            new TwigFunction('clientFavoris', [$this, 'getClientFavoris']),
+            new TwigFunction('clientRemboursements', [$this, 'getClientRemboursements']),
         ];
     }
 
     public function getCategories(){
         return $this->categorieRepositorye->findAll([], ['name' => 'ASC']);
+    }
+
+    public function getClientSuivis($client){
+        return $this->suivisRepository->findBy(['client' => $client]);
+    }
+
+    public function getClientRemboursements($user){
+        return $this->remboursementRepository->findBy(['user' => $user]);
+    }
+
+    public function getClientFavoris($client){
+        return $this->favorisRepository->findBy(['client' => $client]);
     }
 
     public function getVendeurAbonnement($vendeur){

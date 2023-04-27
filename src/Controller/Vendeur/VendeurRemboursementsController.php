@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/vendeur/remboursements')]
+#[Route('/remboursements')]
 class VendeurRemboursementsController extends AbstractController
 {
     #[Route('/', name: 'app_vendeur_remboursements_index', methods: ['GET'])]

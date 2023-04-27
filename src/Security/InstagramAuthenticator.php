@@ -127,7 +127,7 @@ class InstagramAuthenticator extends OAuth2Authenticator implements Authenticati
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "accueil" to some route in your app
-        $targetUrl = $this->router->generate('accueil');
+        $targetUrl = $this->router->generate('user_dashboard');
 
         return new RedirectResponse($targetUrl);
 

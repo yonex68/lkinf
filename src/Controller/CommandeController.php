@@ -97,9 +97,12 @@ class CommandeController extends AbstractController
         RapportRepository $rapportRepository,
         AvisRepository $avisRepository
     ): Response {
+
+        /** @var User $user */
         $user = $this->getUser();
+
         $commande = $commandeRepository->find($id);
-        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        $tauxHoraire = $commande->getTauxHoraire() ? $commande->getTauxHoraire()->format('%H') : 1;
         $somme = $commande->getMontant();
         $montantTotal = $somme * $tauxHoraire;
 
@@ -144,7 +147,7 @@ class CommandeController extends AbstractController
             $commande->setRapportValidate(true);
             $commande->setAvis($avis);
             $entityManager->flush();
-            
+
             /** Envoie du mail au client */
             $mailer->sendCommandMail(
                 'contact@links-infinity.com',
@@ -155,7 +158,7 @@ class CommandeController extends AbstractController
                 $commande->getVendeur(),
                 $commande
             );
-            
+
             /** Envoie du mail au vendeur */
             $mailer->sendCommandMail(
                 'contact@links-infinity.com',
@@ -239,7 +242,7 @@ class CommandeController extends AbstractController
             $commande->setRapportValidate(true);
             $commande->setRapportValidateAt(new \DateTimeImmutable());
             $entityManager->flush();
-            
+
             /** Envoie du mail au vendeur */
             $mailer->sendCommandMail(
                 'contact@links-infinity.com',
@@ -463,7 +466,8 @@ class CommandeController extends AbstractController
     public function vendeurValiderCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id, MailerService $mailer,
+        $id,
+        MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -481,7 +485,7 @@ class CommandeController extends AbstractController
             $commande->setCancel(false);
             $commande->setValidateAt(new \DateTimeImmutable());
             $entityManager->flush();
-            
+
             /** Envoie du mail au client */
             $mailer->sendCommandMail(
                 'contact@links-infinity.com',
@@ -505,7 +509,8 @@ class CommandeController extends AbstractController
     public function vendeurLivrerCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id, MailerService $mailer,
+        $id,
+        MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -538,7 +543,8 @@ class CommandeController extends AbstractController
     public function vendeurAnnulerCommande(
         Request $request,
         CommandeRepository $commandeRepository,
-        $id, MailerService $mailer,
+        $id,
+        MailerService $mailer,
         EntityManagerInterface $entityManager
     ): Response {
         $commande = $commandeRepository->find($id);
@@ -613,6 +619,10 @@ class CommandeController extends AbstractController
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
         $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        /** Si taux erreur == 0 taux erreur == 1 */
+        if($tauxHoraire == 0) 
+            $tauxHoraire = 1;
+
         $somme = $commande->getMontant();
         $montantTotal = $somme * $tauxHoraire;
 
@@ -710,33 +720,36 @@ class CommandeController extends AbstractController
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
         $tauxHoraire = $commande->getTauxHoraire()->format('%H');
-        $commande->setPaymentIntent($payment_intent);
-        $commande->setMontant($commande->getMontant() * $tauxHoraire);
-        $commande->setStatut('En attente');
-        $commande->setPayed(true);
-        $entityManager->flush();
 
-        /** Envoie du mail au client */
-        $mailer->sendCommandMail(
-            'contact@links-infinity.com',
-            $commande->getClient()->getEmail(),
-            'Nouvelle commande',
-            'mails/_client.html.twig',
-            $commande->getClient(),
-            $commande->getVendeur(),
-            $commande
-        );
+        if ($commande->isPayed() == false OR $commande->isPayed() == null) {
+            $commande->setPaymentIntent($payment_intent);
+            $commande->setMontant($commande->getMontant() * $tauxHoraire);
+            $commande->setStatut('En attente');
+            $commande->setPayed(true);
+            $entityManager->flush();
 
-        /** Envoie du mail au vendeur */
-        $mailer->sendCommandMail(
-            'contact@links-infinity.com',
-            $commande->getVendeur()->getEmail(),
-            'Nouvelle commande',
-            'mails/_vendeur.html.twig',
-            $commande->getClient(),
-            $commande->getVendeur(),
-            $commande
-        );
+            /** Envoie du mail au client */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getClient()->getEmail(),
+                'Nouvelle commande',
+                'mails/_client.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
+
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
+                'Nouvelle commande',
+                'mails/_vendeur.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
+        }
 
         return $this->redirectToRoute('commande_success', [
             'id' => $commande->getId()

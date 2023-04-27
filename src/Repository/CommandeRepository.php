@@ -18,8 +18,7 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
-
-
+    
     public function findWhereUserIsClientOrVendeur($user)
     {
         return $this->createQueryBuilder('c')

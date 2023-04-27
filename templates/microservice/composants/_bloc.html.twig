@@ -1,13 +1,13 @@
-<div class="bg-white shadow-sm rounded text-muted mb-3 w-100" id="microservice-{{ microservice.id }}">
-	<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
+<div class="bg-white shadow-sm rounded text-muted mb-3 w-100 slider-block" id="microservice-{{ microservice.id }}">
+	<a href="{{ path('microservice_details', {slug: microservice.slug}) }}" class="image-bloc">
 		{% if microservice.medias|length > 0 %}
 
-		<img class="img-fluid"
+		<img class="img-fluid shadow-0"
 			src="{{ vich_uploader_asset(microservice.medias[0], 'imageFile') | imagine_filter('medium_size') }}" />
 
 		{% else %}
 
-		<img class="img-fluid" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" />
+		<img class="img-fluid shadow-0" src="{{ asset('themes/base/images/list/v1.png') | imagine_filter('medium_size') }}" />
 
 		{% endif %}
 	</a>
@@ -39,7 +39,7 @@
 
 				<span class="seller-name">
 					<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
-						{{ microservice.name|u.truncate(60, '...') }}
+						{{ microservice.name|u.truncate(40, '...') }}
 					</a>
 				</span>
 
