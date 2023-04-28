@@ -15,7 +15,7 @@
 <div class="third-menu border-top">
 	<div class="container">
 		<div class="row d-flex align-items-center justify-content-between">
-			<div class="col-8 left">
+			<div class="col-sm-8 left">
 				<ul>
 					<li class="nav-description">
 						<a href="#description">Description</a>
@@ -29,7 +29,7 @@
 				</ul>
 			</div>
 			{% if is_granted('microservice_edit', microservice) %}{% else %}
-			<div class="col-4 right">
+			<div class="col-sm-4 right">
 				<ul class="d-flex align-items-center justify-content-end">
 					<li>
 						<button class="btn btn-sm bg-white border">
@@ -103,8 +103,9 @@
 
 				<!-- Personaliser le service et commander -->
 				{% if microservice.categorie.slug == 'ingenieur-son' %}{% else %}
-				{% include "microservice/composants/_custom_form.html.twig" %}
+				
 				{% endif %}
+				{% include "microservice/composants/_custom_form.html.twig" %}
 
 				<!-- Avis -->
 				{% include "microservice/composants/_avis.html.twig" %}<br>
@@ -138,7 +139,7 @@
 				<div class="modal-content">
 					<div class="modal-header border-0">
 						<h6 class="h6 text-light" id="serivesignaleModalLabel">Signalez ce service</h6>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>

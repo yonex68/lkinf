@@ -19,6 +19,15 @@ class IngenieurSonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('prix', NumberType::class, [
+                'label' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ]),
+                ],
+                'attr' => ['class' => 'border-0 text-right']
+            ])
             ->add('prixMastering', NumberType::class, [
                 'label' => false,
                 'constraints' => [
@@ -26,7 +35,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center']
+                'attr' => ['class' => 'border-0 text-right']
             ])
             ->add('prixMixage', NumberType::class, [
                 'label' => "Mixage",
@@ -35,7 +44,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center']
+                'attr' => ['class' => 'border-0 text-right']
             ])
             ->add('prixBeatmaking', NumberType::class, [
                 'label' => 'Beatmaking',
@@ -44,7 +53,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center']
+                'attr' => ['class' => 'border-0 text-right']
             ])
             ->add('prixComposition', NumberType::class, [
                 'label' => 'Composition',
@@ -53,7 +62,7 @@ class IngenieurSonType extends AbstractType
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-center']
+                'attr' => ['class' => 'border-0 text-right']
             ])
             ->add('description', CKEditorType::class, [
                 'label' => false,

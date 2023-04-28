@@ -69,6 +69,9 @@ class Categorie
     #[ORM\ManyToMany(targetEntity: Offre::class, mappedBy: 'categorie')]
     private Collection $offres;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $position = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -279,6 +282,18 @@ class Categorie
         if ($this->offres->removeElement($offre)) {
             $offre->removeCategorie($this);
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

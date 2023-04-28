@@ -39,7 +39,7 @@
 				<div class="">
 					<a href="{{ path('microservices_categories', {slug: microservice.categorie.slug}) }}?categories%5B%5D={{ microservice.categorie.id }}"
 						class="badge badge-blue border badge-pill" style="font-size: .9em!important;">
-						#{{ microservice.categorie.name }}
+						#{{ microservice.categorie.name|replace({'-': '/'}) }}
 					</a>
 
 					<div class="rating-wrapper py-1">
@@ -58,7 +58,7 @@
 
 				{% if is_granted('microservice_edit', microservice) %}
 
-				<div class="content-info mb-3 text-left pt-2">
+				<div class="content-info mb-3 text-right pt-2">
 					<a href="{{ path('microservice_details', {'slug': microservice.slug}) }}" class="btn btn-outline-dark btn-sm"
 						target="_blank"><i class="fa fa-file"></i></a>
 					<a href="{{ path('vendeur_microservices_galerie', {'id': microservice.id}) }}"

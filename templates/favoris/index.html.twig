@@ -16,7 +16,7 @@
 				{% for favori in favoris %}
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="media d-flex align-items-center shadow-sm p-3 mb-3 rounded bg-white">
+						<div class="media shadow-sm p-3 mb-3 rounded bg-white">
 							{% if favori.microservice.medias|length > 0 %}
 
 							<img class="img-fluid rounded"
@@ -30,24 +30,22 @@
 							{% endif %}
 							<div class="media-body ml-3">
 								<div class="row">
-									<div class="col-sm-6">
-										<a href="{{ path('microservice_details', {slug: favori.microservice.slug}) }}">
-											<h4 class="h6 mb-1">{{ favori.microservice.name }}</h4>
+									<div class="col-9">
+										<a href="{{ path('microservice_details', {slug: favori.microservice.slug}) }}" class="text-dark">
+											<h4 class="h6 mb-1">{{ favori.microservice.name|u.truncate(20, '...') }}</h4>
 										</a>
 										<a href="{{ path('microservices_categories', {slug: favori.microservice.categorie.slug}) }}?categories%5B%5D={{ favori.microservice.categorie.id }}"
-											class="badge badge-light border badge-pill" style="font-size: .9em!important;">
+											class="badge badge-blue badge-pill">
 											#{{ favori.microservice.categorie.name }}
 										</a>
-									</div>
-									<div class="col-sm-3 text-right">
 
-										<span class="text-muted">Mastering</span>
-										<h4 class="h6 mb-1 text-right font-weight-bold">
-											{{ favori.microservice.prixMastering ~ currency }}
-										</h4>
+										<div>
+											<span class="text-muted">A partir de</span>
 
+											<strong>{{ favori.microservice.prixMastering ~ currency }}</strong>
+										</div>
 									</div>
-									<div class="col-sm-3 text-right">
+									<div class="col-3 text-right">
 
 										{% include "favoris/_delete_form.html.twig" %}
 

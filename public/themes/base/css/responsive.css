@@ -9,7 +9,7 @@
 }
 
 @media(max-width: 600px) {
-   
+
    .bg-image {
       background-position-y: 0;
    }
@@ -57,11 +57,6 @@
       height: 30vh !important;
    }
 
-   .search {
-      position: relative;
-      top: -60px;
-   }
-
    .form-search .dropdown-menu,
    .form-search .dropdown-menu.show {
       min-width: 360px !important;
@@ -72,7 +67,7 @@
    }
 
    .carousel-inner {
-      height: 30vh !important;
+      height: 45vh !important;
    }
 
    .carousel-indicators {
@@ -106,10 +101,11 @@
    h2, h3, h4, h6 {
       font-size: 1.1em !important;
    }
-.about-section h2{
-   padding-bottom: 0!important;
-}
-   
+
+   .about-section h2 {
+      padding-bottom: 0 !important;
+   }
+
    h4, h5, h6 {
       font-size: 1em !important;
    }
@@ -128,50 +124,77 @@
    .dropdown-notifications {
       position: relative;
    }
-   .form-key-word{
-      width: 300px!important;
+
+   .form-key-word {
+      width: 300px !important;
    }
-   .form-noborder{
-      width: 70%;
+
+   .search {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: auto;
+   }
+
+   .search-categorie {
+      display: none;
+   }
+
+   .form-noborder {
+      width: 50%;
       margin-left: 8%;
    }
-   .form-noborder button{
+
+   .form-noborder button {
       padding: 0;
       width: 30px;
    }
-   .recent-slider .slick-slide .slider-block{
+
+   .form-noborder .form-control {
+      padding: 0 10px;
+      height: 20px;
+      line-height: 20px;
+   }
+
+   .recent-slider .slick-slide .slider-block {
       padding-bottom: 0;
       margin-bottom: 0;
       height: 100%;
    }
-   .image-bloc{
+
+   .image-bloc {
       height: 100px;
       display: block;
       overflow: hidden;
    }
-   .image-bloc img{
+
+   .image-bloc img {
       height: 100%;
       width: 100%;
       display: block;
    }
-   .recommended a img.img-fluid{
-      box-shadow: none!important;
+
+   .recommended a img.img-fluid {
+      box-shadow: none !important;
    }
-   .seller-name a{
-      font-size: .9em!important;
+
+   .seller-name a {
+      font-size: .9em !important;
    }
-   .freelancer > img{
-      height: 130px!important;
+
+   .freelancer>img {
+      height: 130px !important;
    }
+
    body.responsive {
       background-position: center;
       background-position-x: -1;
       background-position-y: 0;
-  }
+   }
 }
 
-@media(max-width: 500px){
-   .text-logo{
-      font-size: .9em!important;
+@media(max-width: 500px) {
+   .text-logo {
+      font-size: .8em !important;
    }
 }

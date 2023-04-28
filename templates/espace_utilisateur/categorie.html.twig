@@ -15,16 +15,20 @@
 
 <div class="card rounded bg-light mb-3">
 	<div class="card-header bg-dark">
-		<h4 class="h6 text-light">Informations supplémentaire</h4>
+		<h4 class="h6 text-light mb-0">Informations supplémentaire</h4>
 	</div>
 	<div class="card-body">
 		{% if is_granted('ROLE_VENDEUR') %}
 		<div class="text-dark">
 			{{ form_start(form) }}
 
-			{{ form_row(form.lieuPrestation) }}
+			<div class="{{ app.user.categorie.slug == 'videaste' ? 'bloc-masquer' : '' }}">
 
-			{{ form_row(form.homeStudio) }}
+				{{ form_row(form.lieuPrestation) }}
+
+				{{ form_row(form.homeStudio) }}
+			
+			</div>
 
 			<div class="row">
 				<div class="col-sm-6">
@@ -43,7 +47,7 @@
 
 			{{ form_rest(form) }}
 
-			<button class="btn btn-dark">Enregister</button>
+			<button class="btn btn-dark">Suivant</button>
 
 			{{ form_end(form) }}
 		</div>

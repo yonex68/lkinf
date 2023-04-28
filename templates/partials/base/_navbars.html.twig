@@ -1,4 +1,4 @@
-<nav class="navbar d-none d-sm-block navbar-expand-xl navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top py-1">
+<nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top py-1">
 	<div class="container">
 		<!-- Sidebar Toggle (Topbar) -->
 		<a class="navbar-brand" href="{{ path('accueil') }}">

@@ -212,6 +212,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $codePostal = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $recevedPaiement = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeAccountId = null;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -1306,6 +1312,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setCodePostal(?string $codePostal): self
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function isRecevedPaiement(): ?bool
+    {
+        return $this->recevedPaiement;
+    }
+
+    public function setRecevedPaiement(?bool $recevedPaiement): self
+    {
+        $this->recevedPaiement = $recevedPaiement;
+
+        return $this;
+    }
+
+    public function getStripeAccountId(): ?string
+    {
+        return $this->stripeAccountId;
+    }
+
+    public function setStripeAccountId(?string $stripeAccountId): self
+    {
+        $this->stripeAccountId = $stripeAccountId;
 
         return $this;
     }

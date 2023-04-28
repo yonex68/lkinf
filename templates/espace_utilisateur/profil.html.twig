@@ -54,7 +54,7 @@
 
 							{% if app.user.avatar %}
 
-							<img src="{{ vich_uploader_asset(microservice.vendeur, 'imageFile') | imagine_filter('medium_avatar') }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+							<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
 							{% else %}
 
 							<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />

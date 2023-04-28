@@ -100,7 +100,7 @@ class AppExtension extends AbstractExtension
     }
 
     public function getCategories(){
-        return $this->categorieRepositorye->findAll([], ['name' => 'ASC']);
+        return $this->categorieRepositorye->findBy([], ['position' => 'ASC']);
     }
 
     public function getClientSuivis($client){

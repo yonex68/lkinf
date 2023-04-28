@@ -34,6 +34,9 @@ class CategoriesFixtures extends Fixture
             4 => [
                 'name' => 'Figurant Danseur',
             ],
+            5 => [
+                'name' => 'Photographe',
+            ],
         ];
 
         foreach($categories as $key => $value){
@@ -41,7 +44,7 @@ class CategoriesFixtures extends Fixture
             $categorie = new Categorie();
             
             $categorie->setName($value['name']);
-            $categorie->setSlug($this->sluger->slug($value['name']));
+            $categorie->setSlug(strtolower($this->sluger->slug($value['name'])));
             $categorie->setHexColor($faker->hexColor());
             $manager->persist($categorie);
 

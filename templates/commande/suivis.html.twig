@@ -135,10 +135,12 @@
          <div class="card mb-4">
             <div class="card-body">
 
+               {% if commande.payed == true %}
                <div class="">
                   <h3 class="h6 custom-size">1 - Commande payée</h3>
                   <span class="text-muted">{{ commande.created|ago(locale='fr') }}</span>
                </div>
+               {% endif %}
 
                {% if commande.validate == 1 %}
 

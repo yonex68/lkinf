@@ -16,20 +16,12 @@
 <div class="">
 	<div class="card bg-light mb-3">
 		<div class="card-header bg-dark">
-			<h4 class="h6 text-light">Mes coordonnées</h4>
+			<h4 class="h6 text-light mb-0">Coordonnées personnelles</h4>
 		</div>
 		<div class="card-body">
 
 			{% if is_granted('ROLE_VENDEUR') %}
 			<div class="text-dark">
-				<h6 class="h6 mb-0 py-2">Coordonnées personnelles</h6>
-				<p>
-					Ces informations servent à éditer les documents de facturation de vos prestations. Celles-ci sont
-					légalement requises et ne seront pas revendues à des tiers. Veillez à les remplir correctement. Attention
-					: un seul compte par personne ou entité légale est permis. Si vous devez effectuer une modification,
-					cliquez sur le bouton Mettre à jour.
-				</p>
-
 				{{ form_start(form) }}
 				{{ form_widget(form) }}
 				<button class="btn btn-dark">Suivant</button>

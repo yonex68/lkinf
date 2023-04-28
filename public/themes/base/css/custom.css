@@ -128,8 +128,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Navigation */
 .navbar-expand-lg {
    z-index: 900 !important;
+   width: 100%;
+   padding: 0 10px;
    background: white !important;
-   padding: 0 !important;
 }
 
 .navtop-home {
@@ -457,65 +458,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #bannerCarouselIndicators {
-   height: 100vh !important;
    position: relative !important;
 }
-
-.homeBanner {
-   position: relative;
-   height: 100vh;
-}
-
 .homeBanner .caption {
-   position: absolute;
-   height: 90px;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background: linear-gradient(transparent, #fff);
-   z-index: 900!important;
+   width: 100%;
+   height: 100%;
 }
-
-#bannerCarouselIndicators .carousel-inner .carousel-item {
-   height: 100vh !important;
-   background-size: 100%;
-   background-repeat: no-repeat;
-   background-position: center;
-   background-position-y: 0;
-   background-position-x: 0;
-   padding: 10% 0;
-}
-
-#bannerCarouselIndicators .carousel-inner .carousel-caption {
-   width: 100% !important;
-   position: absolute;
-   justify-content: left;
-   text-align: left;
-   padding-left: 9%;
-   padding-top: 15%;
-   z-index: 100 !important;
-   top: 0;
-   right: 0;
-   bottom: 0;
-   left: 0;
-}
-
-#bannerCarouselIndicators .carousel-inner .carousel-caption h5 {
-   color: white !important;
-   text-align: left !important;
-   width: 60%;
-   font-size: 30px;
-   text-transform: uppercase;
-   margin: 3% 0 4%;
-   font-weight: bold;
-}
-
-#bannerCarouselIndicators .carousel-inner .carousel-caption span {
-   font-weight: 400 !important;
-}
-
-#bannerCarouselIndicators .carousel-inner .carousel-caption a {
-   background: #fff !important;
+#bannerCarouselIndicators .carousel-inner .carousel-item img {
+   width: 100%;
+   height: 100%;
 }
 
 #bannerCarouselIndicators .carousel-indicators li {
@@ -604,10 +555,28 @@ body.responsive {
    font-size: 14px;
 }
 .search {
-   position: relative;
-   top: -200px;
+   position: absolute;
+   bottom: 8%;
    margin: auto;
+   width: 100%;
    z-index: 3;
+   left: 10%;
+   width: 35%;
+}
+.search-categorie{
+   padding-bottom: 15px;
+}
+.search-categorie .btn-light{
+   padding: 3px 8px!important;
+   background: #fff!important;
+   margin-right: 5px;
+   margin-bottom: 5px;
+   font-size: .8em;
+   font-weight: 500;
+}
+.search-categorie .btn:hover{
+   color: white!important;
+   background: #080679!important;
 }
 
 .image-bloc{

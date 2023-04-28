@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,6 +40,15 @@ class CoordonneeType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('genre', ChoiceType::class, [
+                'label' => 'Genre*',
+                'choices'  => [
+                    'Homme' =>  'Homme',
+                    'Femme'    =>  'Femme',
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
             ->add('pseudo', TextType::class, [
                 'label' => 'Pseudonyme',
                 'attr' => ['placeholder' => 'Pseudonyme'],
@@ -54,17 +65,8 @@ class CoordonneeType extends AbstractType
                 'help' => "Au lieu que votre nom et pénom soit afficher sur le site, c'est votre pseudonyme  qui sera concideré comme votre nom public",
                 'required' => false
             ])
-            ->add('genre', ChoiceType::class, [
-                'label' => 'Genre*',
-                'choices'  => [
-                    'Homme' =>  'Homme',
-                    'Femme'    =>  'Femme',
-                ],
-                'expanded' => true,
-                'multiple' => false,
-            ])
             ->add('imageFile', VichImageType::class, [
-                'label' => '(Png, jpg et jpeg)',
+                'label' => 'Image de profil (Png, jpg et jpeg)',
                 'required'  =>  false,
                 'allow_delete' =>  false,
                 'download_label'     =>  false,
@@ -72,6 +74,18 @@ class CoordonneeType extends AbstractType
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'small_size',
                 'attr'   =>  ['class' => 'form-control-file'],
+            ])
+            ->add('categorie', EntityType::class, [
+                'label'     =>  'Catégorie de prestataire',
+                'expanded'     =>  true,
+                'attr' => ['class' => ""],
+                'placeholder'     =>  '--Catégorie de prestataire--',
+                'class' => Categorie::class,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est requis',
+                    ])
+                ],
             ])
             ->add('apropos', TextareaType::class, [
                 'label' => 'Biographie',

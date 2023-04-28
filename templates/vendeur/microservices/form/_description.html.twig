@@ -5,11 +5,16 @@
       <div class="mb-4">
          <div class="">
             <h6 class="font-weight-bold">
-               Taux horaire
+               Prix
             </h6>
             <p class="text-muted">
-               Indiquez un taux horaire pour ce service, c’est-à-dire le prix par heure. En fonction de votre offre
-               <strong>{{ appName }}</strong>, vous pouvez le proposer à un tarif supérieur.
+            Indiquez le prix pour ce service, c’est-à-dire le prix 
+               {% if microservice.categorie.slug == "figurant-danseur" %}
+                  journalié.
+               {% else %}
+                  par heure.
+               {% endif %}
+               En fonction de votre offre <strong>{{ appName }}</strong>, vous pouvez le proposer à un tarif supérieur.
             </p>
          </div>
          <div>

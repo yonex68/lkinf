@@ -39,7 +39,7 @@
 
 				<span class="seller-name">
 					<a href="{{ path('microservice_details', {slug: microservice.slug}) }}">
-						{{ microservice.name|u.truncate(40, '...') }}
+						{{ microservice.name|u.truncate(30, '...') }}
 					</a>
 				</span>
 
@@ -60,8 +60,10 @@
 				</a>
 
 				<div class="rating-wrapper">
-					<span class="gig-rating text-body-2">
-						{% include "microservice/composants/_etoilles.html.twig" %}
+					<span class="gig-rating">
+						{% if serviceAvis(microservice)|length > 0 %}
+							{% include "microservice/composants/_etoilles.html.twig" %}
+						{% endif %}
 						<span>({{ serviceAvis(microservice) }})</span>
 					</span>
 				</div>
@@ -78,7 +80,7 @@
 
 				<div class="price small text-capitalize text-muted">
 					A partir de
-					<strong>{{ microservice.prixMastering ~ currency }}</strong>
+					<strong>{{ microservice.prix ~ currency }}</strong>
 				</div>
 
 			</div>

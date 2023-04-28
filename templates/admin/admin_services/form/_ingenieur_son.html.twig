@@ -3,70 +3,74 @@
 
    <div class="mb-2">
       <div class="">
-            <h6 class="font-weight-bold">
-               Prix
-            </h6>
-            <p class="text-muted">
-               Choisissez les prix de votre service <strong>{{ microservice.categorie.name }}</strong>, c’est-à-dire sans options. En fonction de votre
-               offre {{ appName }}.
-            </p>
-         <div class="row">
-            <div class="col-6 py-2">
-               <div class="card shadow-sm border-0 test-muted">
-                  <div class="card-body text-center">
-                     <strong class="text-center d-block h6 pt-3">Mastering</strong>
-                     <div class="input-group mb-3 border border-light rounded">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
-                        </div>
-                        {{ form_widget(form.prixMastering) }}
-                     </div>
-                     {{ form_errors(form.prixMastering) }}
-                  </div>
+         <h6 class="font-weight-bold">
+            Prix
+         </h6>
+         <p class="text-muted">
+            Choisissez le prix de départ de votre service, c’est-à-dire sans options. En fonction de votre offre
+            <strong>{{ microservice.categorie.name }}</strong>, vous pouvez le proposer à un tarif supérieur.
+         </p>
+         <strong class="text-left d-block h6 pt-3">Heure d’enregistrement</strong>
+         <div class="form-group">
+            <div class="input-group mb-3 border border-light rounded">
+               <div class="input-group-prepend">
+                  <span class="input-group-text border-0 bg-white">{{ currency }}</span>
                </div>
+               {{ form_widget(form.prix) }}
             </div>
-            <div class="col-6 py-2">
-               <div class="card shadow-sm border-0">
-                  <div class="card-body text-center">
-                     <strong class="text-center d-block h6 pt-3">Mixage</strong>
-                     <div class="input-group mb-3 border border-light rounded">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
-                        </div>
-                        {{ form_widget(form.prixMixage) }}
-                     </div>
-                     {{ form_errors(form.prixMixage) }}
-                  </div>
+            {{ form_errors(form.prix) }}
+         </div>
+      </div>
+   </div>
+
+   <div class="mb-3">
+      <h6 class="font-weight-bold">
+         Options
+      </h6>
+      <p class="text-muted">
+         Choisissez les prix pour les options de votre service , c’est-à-dire
+         une option est associée à un prix. En fonction de votre offre {{ appName }}.
+      </p>
+      <div class="row mb-2">
+         <div class="col-6 py-2">
+            <strong class="text-left d-block h6">Mastering</strong>
+            <div class="input-group mb-3 border border-light rounded">
+               <div class="input-group-prepend">
+                  <span class="input-group-text border-0 bg-white">{{ currency }}</span>
                </div>
+               {{ form_widget(form.prixMastering) }}
             </div>
-            <div class="col-6 py-2">
-               <div class="card shadow-sm border-0">
-                  <div class="card-body text-center">
-                     <strong class="text-center d-block h6 pt-3">Beatmaking</strong>
-                     <div class="input-group mb-3 border border-light rounded">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
-                        </div>
-                        {{ form_widget(form.prixBeatmaking) }}
-                     </div>
-                     {{ form_errors(form.prixBeatmaking) }}
-                  </div>
+            {{ form_errors(form.prixMastering) }}
+         </div>
+         <div class="col-6 py-2">
+            <strong class="text-left d-block h6">Mixage</strong>
+            <div class="input-group mb-3 border border-light rounded">
+               <div class="input-group-prepend">
+                  <span class="input-group-text border-0 bg-white">{{ currency }}</span>
                </div>
+               {{ form_widget(form.prixMixage) }}
             </div>
-            <div class="col-6 py-2">
-               <div class="card shadow-sm border-0">
-                  <div class="card-body text-center">
-                     <strong class="text-center d-block h6 pt-3">Composition</strong>
-                     <div class="input-group mb-3 border border-light rounded">
-                        <div class="input-group-prepend">
-                           <span class="input-group-text border-0 bg-white">{{ currency }}</span>
-                        </div>
-                        {{ form_widget(form.prixComposition) }}
-                     </div>
-                     {{ form_errors(form.prixComposition) }}
-                  </div>
+            {{ form_errors(form.prixMixage) }}
+         </div>
+         <div class="col-6 py-2">
+            <strong class="text-left d-block h6">Beatmaking</strong>
+            <div class="input-group mb-3 border border-light rounded">
+               <div class="input-group-prepend">
+                  <span class="input-group-text border-0 bg-white">{{ currency }}</span>
                </div>
+               {{ form_widget(form.prixBeatmaking) }}
             </div>
+            {{ form_errors(form.prixBeatmaking) }}
+         </div>
+         <div class="col-6 py-2">
+            <strong class="text-left d-block h6">Composition</strong>
+            <div class="input-group mb-3 border border-light rounded">
+               <div class="input-group-prepend">
+                  <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+               </div>
+               {{ form_widget(form.prixComposition) }}
+            </div>
+            {{ form_errors(form.prixComposition) }}
          </div>
       </div>
    </div>
@@ -94,12 +98,10 @@
       </div>
    </div>
 
-   <div class="py-4">
-      <div class="">
-         <button class="btn btn-primary">
-            {{ button_label|default('Enregistrer et suivant') }}
-         </button>
-      </div>
+   <div class="text-right">
+      <button class="btn btn-primary">
+         {{ button_label|default('Enregistrer et suivant') }}
+      </button>
    </div>
 
    {{ form_end(form) }}

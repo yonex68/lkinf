@@ -18,9 +18,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Position</th>
                             <th>Titre</th>
-                            <th>Slug</th>
                             <th>Arrière plan</th>
                             <th>Avant plan</th>
                             <th>Hexa decimal</th>
@@ -32,9 +31,8 @@
                     <tbody>
                         {% for categorie in categories %}
                         <tr>
-                            <td>{{ categorie.id }}</td>
+                            <td>{{ categorie.position }}</td>
                             <td>{{ categorie.name }}</td>
-                            <td>{{ categorie.slug }}</td>
                             <td>
 
                                 {% if categorie.image %}

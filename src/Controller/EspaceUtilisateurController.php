@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Portefeuille;
 use App\Entity\User;
-use App\Form\CategorieUserType;
+use App\Form\InformationUserType;
 use App\Form\ChangePasswordFormType;
 use App\Form\CoordonneeType;
 use App\Form\EditProfilType;
 use App\Form\PositionType;
+use App\Form\UserMethodePaymentType;
 use App\Repository\CommandeRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\RemboursementRepository;
@@ -85,25 +86,25 @@ class EspaceUtilisateurController extends AbstractController
         ]);
     }
 
-    #[Route('/categorie', name: 'user_categorie', methods: ['GET', 'POST'])]
+    #[Route('/informations-supplementaires', name: 'user_categorie', methods: ['GET', 'POST'])]
     public function categorie(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        $form = $this->createForm(CategorieUserType::class, $user);
+        $form = $this->createForm(InformationUserType::class, $user);
         $form->handleRequest($request);
-        $route = 'user_profil';
+        $route = 'user_methode_payment';
         $message = "Votre profil a bien été mise à jour";
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** Obliger les studios à joindre une image de couverture */
-            $categorie = $form->get('categorie')->getData()->getName();
+            //$categorie = $form->get('categorie')->getData()->getName();
             $imageCouverture = $form->get('couvertureFile')->getData();
             //dd($imageCouverture);
 
-            if ($categorie == 'Studio' && empty($imageCouverture)) {
+            /*if ($categorie == 'Studio' && empty($imageCouverture)) {
 
                 if ($user->getCouverture() == null) {
 
@@ -113,7 +114,7 @@ class EspaceUtilisateurController extends AbstractController
                     $this->addFlash('warning', $message);
                     return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
                 }
-            }
+            }*/
 
             if ($user->isEndRegister() == null) {
                 $user->setEndRegister(true);
@@ -125,6 +126,50 @@ class EspaceUtilisateurController extends AbstractController
         }
 
         return $this->render('espace_utilisateur/categorie.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/methode-paiement', name: 'user_methode_payment', methods: ['GET', 'POST'])]
+    public function methodeDePaiement(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserMethodePaymentType::class, $user);
+        $form->handleRequest($request);
+        $route = 'user_methode_payment';
+        $message = "Votre profil a bien été mise à jour";
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** Obliger les studios à joindre une image de couverture */
+            //$categorie = $form->get('categorie')->getData()->getName();
+            $imageCouverture = $form->get('couvertureFile')->getData();
+            //dd($imageCouverture);
+
+            /*if ($categorie == 'Studio' && empty($imageCouverture)) {
+
+                if ($user->getCouverture() == null) {
+
+                    $route = 'user_categorie';
+                    $message = "Vous avez choisi l'option studio, veuillez joindre une image de couverture pour votre studio";
+
+                    $this->addFlash('warning', $message);
+                    return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+                }
+            }*/
+
+            if ($user->isEndRegister() == null) {
+                $user->setEndRegister(true);
+            }
+            $entityManager->flush();
+
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('espace_utilisateur/methode_paiement.html.twig', [
             'form' => $form->createView(),
         ]);
     }

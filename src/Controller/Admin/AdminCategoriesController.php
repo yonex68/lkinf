@@ -27,7 +27,7 @@ class AdminCategoriesController extends AbstractController
     public function index(CategorieRepository $categorieRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $categories = $paginator->paginate(
-            $categorieRepository->findBy([], ['created' => 'DESC']),
+            $categorieRepository->findBy([], ['position' => 'ASC']),
             $request->query->getInt('page', 1),
             20
         );

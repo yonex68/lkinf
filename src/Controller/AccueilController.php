@@ -60,7 +60,7 @@ class AccueilController extends AbstractController
             'vendeurs' => $vendeurs,
             'form' => $form->createView(),
             'ville' => $ville,
-            'categories' => $categorieRepository->findBy([], ['created' => 'DESC'], 6)
+            'categories' => $categorieRepository->findBy([], ['position' => 'ASC'], 6)
         ]);
     }
 }

@@ -7,6 +7,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,12 +23,11 @@ class CategorieType extends AbstractType
             ->add('name', ChoiceType::class, [
                 'label' => 'Désignation',
                 'choices' => [
-                    'Ingénieur de son' => 'ingenieur-son',
-                    'Studio' => 'studio',
-                    'Videaste' => 'sideaste',
-                    'Figurant - danseur' => 'figurant-danseur',
-                    'Photographe' => 'photographe',
-                    'Beatmaker' => 'beatmaker',
+                    'Ingénieur de son' => 'Ingenieur son',
+                    'Studio' => 'Studio',
+                    'Videaste Photographe' => 'Vidéaste Photographe',
+                    'Figurant Danseur' => 'Figurant danseur',
+                    'Photographe' => 'Photographe',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -55,6 +55,15 @@ class CategorieType extends AbstractType
             ])
             ->add('description', CKEditorType::class, [
                 'required' => false,
+            ])
+            ->add('position', NumberType::class, [
+                'label' => "Position",
+                'help' => "Ordre d'affichage",
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ est obligatoir',
+                    ])
+                ]
             ])
             ->add('hexColor', ColorType::class, [
                 'label' => 'Couleur hexadecimal',

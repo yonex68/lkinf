@@ -32,11 +32,11 @@
 
                   {% endif %}
                   <div class="media-body pl-3">
-                     <strong>{{ commande.montant ~ currency }}</strong>
-                     <span class="badge badge-blue badge-pill text-capitalize">{{ commande.offre }}</span>
                      <a href="{{ path('microservice_details', {slug: commande.microservice.slug}) }}"
                         class="d-block text-dark font-weight-bold" target="_blank">{{
                         commande.microservice.name|u.truncate(30, '...') }}</a>
+                     <strong>{{ commande.montant ~ currency }}</strong>
+                     <span class="badge badge-blue badge-pill text-capitalize">{{ commande.offre }}</span>
                   </div>
                </div>
             </td>
@@ -45,18 +45,6 @@
                {% if app.request.attributes.get('_route') == 'vendeur_commandes_index' %}
 
                <div class="text-center shadow border rounded p-2">
-
-                  {% if commande.client.avatar %}
-
-                  <img class="rounded-circle"
-                     src="{{ vich_uploader_asset(commande.client, 'imageFile') | imagine_filter('small_avatar') }}">
-
-                  {% else %}
-
-                  <img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="40" height="40"
-                     class="rounded-circle" alt="">
-
-                  {% endif %}
 
                   <div class="text-center">
                      <strong class="d-block text-muted small">{{ commande.client.nom }} {{ commande.client.prenom
@@ -69,18 +57,6 @@
                <a href="{{ path('vendeur_profil', {nameUrl: commande.vendeur.nameUrl}) }}" target="_blank">
 
                   <div class="text-center">
-
-                     {% if commande.vendeur.avatar %}
-
-                     <img class="rounded-circle"
-                        src="{{ vich_uploader_asset(commande.vendeur, 'imageFile') | imagine_filter('small_avatar') }}">
-
-                     {% else %}
-
-                     <img src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" width="40" height="40"
-                        class="rounded-circle" alt="">
-
-                     {% endif %}
 
                      <div class="text-center text-muted small">
                         <strong>{{ commande.vendeur.nom }} {{ commande.vendeur.prenom }}</strong>

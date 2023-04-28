@@ -677,29 +677,23 @@ class CommandeController extends AbstractController
         $userTest = 'sb-rw3oo17429039@personal.example.com';
         $sandBoxId = $this->paypalkey;
 
-        // Stripe payment
-        if ($montantTotal > 0) {
+        // Instanciation Stripe
+        \Stripe\Stripe::setApiKey($this->privateKey);
 
-            // Instanciation Stripe
-            \Stripe\Stripe::setApiKey($this->privateKey);
+        $intent = \Stripe\PaymentIntent::create([
+            'amount'    =>  $montantTotal * 100,
+            'currency'  =>  'eur',
+            'payment_method_types'  =>  ['card']
+        ]);
+        // Traitement du formulaire Stripe
+        //dd($intent['id']);
 
-            $intent = \Stripe\PaymentIntent::create([
-                'amount'    =>  $montantTotal * 100,
-                'currency'  =>  'eur',
-                'payment_method_types'  =>  ['card']
-            ]);
-            // Traitement du formulaire Stripe
-            //dd($intent['id']);
+        if ($request->getMethod() === "POST") {
 
-            if ($request->getMethod() === "POST") {
+            if ($intent['status'] === "requires_payment_method") {
+                // TODO
 
-                if ($intent['status'] === "requires_payment_method") {
-                    // TODO
-
-                }
             }
-        } else {
-            //dd('aucun prix');
         }
 
         return $this->render('commande/reservation.html.twig', [
