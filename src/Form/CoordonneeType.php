@@ -97,7 +97,6 @@ class CoordonneeType extends AbstractType
                 'label' => 'Adresse',
                 'help' => 'Exemple (N° Ruelle/Avenue)',
                 'attr' => ['placeholder' => 'Adresse', 'autocomplete' => "address-line1"],
-                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide',
@@ -165,17 +164,6 @@ class CoordonneeType extends AbstractType
                         'message' => 'Veuillez saisir une adresse email valide',
                     ]),
                 ],
-            ])
-            ->add('statut', ChoiceType::class, [
-                'label' => 'Statut',
-                'choices'  => [
-                    'Particulier' =>  'Particulier',
-                    'Auto-entreprise ou entreprise individuelle'    =>  'Auto-entreprise ou entreprise individuelle',
-                    'Société (France uniquement)'    =>  'Société (France uniquement)',
-                    'Société (Autres pays)'    =>  'Société (Autres pays)',
-                ],
-                'expanded' => true,
-                'multiple' => false,
             ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +19,7 @@ class InformationUserType extends AbstractType
         $builder
             ->add('lieuPrestation', TextType::class, [
                 'label' => 'Lieu de prestation',
-                'help' => 'Ne concerne que les catégories ingénieure son et studio',
+                'help' => 'Exemple: studio privé',
                 'required' => false,
                 'attr' => ['class' => '', 'placeholder' => 'Lieu de prestation'],
             ])
@@ -36,6 +37,17 @@ class InformationUserType extends AbstractType
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'rectangle_avatar',
                 'attr'   =>  ['class' => 'form-control-file'],
+            ])
+            ->add('statut', ChoiceType::class, [
+                'label' => 'Statut',
+                'choices'  => [
+                    'Particulier' =>  'Particulier',
+                    'Auto-entreprise ou entreprise individuelle'    =>  'Auto-entreprise ou entreprise individuelle',
+                    'Société (France uniquement)'    =>  'Société (France uniquement)',
+                    'Société (Autres pays)'    =>  'Société (Autres pays)',
+                ],
+                'expanded' => true,
+                'multiple' => false,
             ])
             /*->add('recevedPaiement', CheckboxType::class, [
                 'label' => "Recevoir les paiements",

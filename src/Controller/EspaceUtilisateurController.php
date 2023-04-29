@@ -94,35 +94,13 @@ class EspaceUtilisateurController extends AbstractController
 
         $form = $this->createForm(InformationUserType::class, $user);
         $form->handleRequest($request);
-        $route = 'user_methode_payment';
-        $message = "Votre profil a bien été mise à jour";
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            /** Obliger les studios à joindre une image de couverture */
-            //$categorie = $form->get('categorie')->getData()->getName();
-            $imageCouverture = $form->get('couvertureFile')->getData();
-            //dd($imageCouverture);
-
-            /*if ($categorie == 'Studio' && empty($imageCouverture)) {
-
-                if ($user->getCouverture() == null) {
-
-                    $route = 'user_categorie';
-                    $message = "Vous avez choisi l'option studio, veuillez joindre une image de couverture pour votre studio";
-
-                    $this->addFlash('warning', $message);
-                    return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
-                }
-            }*/
-
-            if ($user->isEndRegister() == null) {
-                $user->setEndRegister(true);
-            }
+            
             $entityManager->flush();
 
-            $this->addFlash('success', $message);
-            return $this->redirectToRoute($route, [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', "Vos informations supplémentaires ont bien été mise à jour");
+            return $this->redirectToRoute('user_methode_payment', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('espace_utilisateur/categorie.html.twig', [
@@ -138,14 +116,14 @@ class EspaceUtilisateurController extends AbstractController
 
         $form = $this->createForm(UserMethodePaymentType::class, $user);
         $form->handleRequest($request);
-        $route = 'user_methode_payment';
+        $route = 'user_profil';
         $message = "Votre profil a bien été mise à jour";
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** Obliger les studios à joindre une image de couverture */
             //$categorie = $form->get('categorie')->getData()->getName();
-            $imageCouverture = $form->get('couvertureFile')->getData();
+            //$imageCouverture = $form->get('couvertureFile')->getData();
             //dd($imageCouverture);
 
             /*if ($categorie == 'Studio' && empty($imageCouverture)) {

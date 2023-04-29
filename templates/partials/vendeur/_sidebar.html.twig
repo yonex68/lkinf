@@ -100,13 +100,13 @@
 
 				{% if is_granted('ROLE_VENDEUR') %}
 
-				<a class="dropdown-item py-2 {{ app.user.statut ? 'tache-terminer' : 'tache-encours' }} {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
+				<a class="dropdown-item py-2 {{ app.user.categorie ? 'tache-terminer' : 'tache-encours' }} {{ app.request.attributes.get('_route') == 'user_coordonnees' ? 'active' : '' }}"
 					href="{{ path('user_coordonnees') }}"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Mes
 					coordonnées
 					<i class="fa fa-check-circle float-right"></i>
 				</a>
 
-				<a class="dropdown-item py-2 {{ app.user.rib ? 'tache-terminer' : 'tache-encours' }} {{ app.user.statut ? '' : 'disabled' }} {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}"
+				<a class="dropdown-item py-2 {{ app.user.statut ? 'tache-terminer' : 'tache-encours' }} {{ app.user.statut ? '' : 'disabled' }} {{ app.request.attributes.get('_route') == 'user_categorie' ? 'active' : '' }}"
 					href="{{ path('user_categorie') }}"><i class="text-muted fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp;Informations supplémentaires
 					<i class="fa fa-check-circle float-right"></i>
 				</a>

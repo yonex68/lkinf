@@ -22,10 +22,8 @@
 						{{ include('microservice/composants/_bloc.html.twig') }}
 						{% else %}
 						<div>
-							<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">Aucun service disponible dans cette
-								zone:
-								<strong>{{
-									ville }}</strong>
+							<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">
+								Nous arrivons très prochainement près de chez vous ! renseigné votre mail afin d'être prévenu. <strong>{{ ville }}</strong>
 							</p>
 						</div>
 						{% endfor %}
