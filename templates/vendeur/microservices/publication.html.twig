@@ -1,12 +1,8 @@
-{% extends 'vendeur.html.twig' %}
+{% extends 'service.html.twig' %}
 
 {% block colleft %}4{% endblock %}
 
 {% block colright %}8{% endblock %}
-
-{% block sidebar %}
-{% include "vendeur/microservices/composants/_step.html.twig" %}
-{% endblock %}
 
 {% block body %}
 <div class="card rounded">
@@ -29,25 +25,13 @@
 			<div class="text-muted {{ microservice.online == 1 ? 'bloc-masquer' : '' }}">
 
 				<div class="my-3">
-					{{ form_row(form.question1) }}
-				</div>
-				<div class="my-3">
-					{{ form_row(form.question2) }}
-				</div>
-				<div class="my-3">
-					{{ form_row(form.question3) }}
-				</div>
-				<div class="my-3">
-					{{ form_row(form.question4) }}
-				</div>
-				<div class="my-3">
-					{{ form_row(form.question5) }}
+					{{ form_widget(form) }}
 				</div>
 
 				<div class="">
 					<button class="btn btn-dark" formnovalidate>
 						<span id="btnFetch">
-							{{ button_label|default('Enregistrer et suivant') }}
+							{{ button_label|default('Publier') }}
 						</span>
 					</button>
 				</div>

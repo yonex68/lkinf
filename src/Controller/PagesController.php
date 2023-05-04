@@ -40,4 +40,12 @@ class PagesController extends AbstractController
             
         ]);
     }
+
+    #[Route('/comment-ca-marche', name: 'page_cmarche')]
+    public function cmarche(): Response
+    {
+        return $this->render('pages/cmarche.html.twig', [
+            
+        ]);
+    }
 }

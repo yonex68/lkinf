@@ -1,4 +1,4 @@
-{{ form_start(form, {attr: {class: 'form-noborder'}}) }}
+{{ form_start(form, {attr: {class: 'form-noborder', id: 'registration_form_adresse'}}) }}
 <div class="input-group bg-white border border-light rounded">
    <span class="input-group-text border-0 bg-transparent" id="basic-addon1">
       <i class="fa fa-map-marker text-blue"></i>
@@ -18,11 +18,16 @@
    </div>
 
 </div>
+<div class="w-100 addresses" id="addresses">
+   <ul class="list-group text-dark" id="adresse-liste">
+   </ul>
+</div>
 {{ form_end(form) }}
 
 <div class="search-categorie pt-3">
    <span class="btn text-light p-1">Populaire</span>
    {% for categorie in categories() %}
-   <a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}" class="btn btn-light text-blue button">#{{ categorie.name }}</a>
+   <a href="{{ path('microservices_categories', {slug: categorie.slug}) }}?categories%5B%5D={{ categorie.id }}&ville={{ ville() }}"
+      class="btn btn-light text-blue button">#{{ categorie.name }}</a>
    {% endfor %}
 </div>

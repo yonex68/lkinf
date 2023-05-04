@@ -19,9 +19,20 @@ body {
    font-size: 1.5em!important;
    font-weight: bold!important;
 }
-
 .text-gray{
    color: #ededed;
+}
+.dashboard-link i{
+   opacity: .4;
+}
+.osahan-chat-list a{
+   color: #343a40!important;
+}
+.osahan-chat-list .bg-blue .last-message span{
+   color: #ededed!important;
+}
+.dashboard-link .text-success{
+   color: rgb(58, 189, 58)!important;
 }
 input[type="checkbox"] {
    background-color: transparent !important;
@@ -315,10 +326,15 @@ h1, h2, h3, h4, h5, h6 {
 .rounded-btn {
    border-radius: 5px !important;
 }
-
-.tache-terminer i {
-   color: #080679 !important;
-   font-weight: bold !important;
+.dropdown-item.active a{
+   color: #fff!important;
+   font-weight: 400!important;
+}
+.tache-terminer{
+   color: #333!important;
+}
+.tache-terminer i.fa-check-circle {
+   color: #33c55f !important;
 }
 
 .tache-terminer.active i {
@@ -326,8 +342,15 @@ h1, h2, h3, h4, h5, h6 {
    font-weight: bold !important;
 }
 
-.tache-encours i.text-muted {
-   color: #e2e1e1 !important;
+a.tache-encours{
+ pointer-events: none!important;
+}
+a.tache-edit{
+   pointer-events: inherit!important;
+}
+.tache-encours, 
+.tache-encours i {
+   color: #bdbdbd !important;
 }
 
 .miblie-notif {
@@ -568,7 +591,8 @@ body.responsive {
 }
 .search-categorie .btn-light{
    padding: 3px 8px!important;
-   background: #fff!important;
+   background: transparent!important;
+   color: white!important;
    margin-right: 5px;
    margin-bottom: 5px;
    font-size: .8em;

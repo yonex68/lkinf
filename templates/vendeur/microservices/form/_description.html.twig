@@ -18,8 +18,13 @@
             </p>
          </div>
          <div>
-            {{ form_widget(form.prix) }}
-            {{ form_errors(form.prix) }}
+         <div class="input-group mb-3 border border-light rounded p-0">
+                  {{ form_widget(form.prix) }}
+                  <div class="input-group-append">
+                     <span class="input-group-text border-0 bg-white">{{ currency }}</span>
+                  </div>
+               </div>
+               {{ form_errors(form.prix) }}
          </div>
       </div>
 
@@ -47,7 +52,7 @@
       </div>
 
       <div class="">
-         <div class="text-right">
+         <div class="text-left">
             <button class="btn btn-dark">
                {{ button_label|default('Enregistrer et suivant') }}
             </button>

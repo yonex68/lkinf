@@ -10,11 +10,11 @@ use App\Form\Microservice\DescriptionType;
 use App\Form\Microservice\DisponibiliteType;
 use App\Form\Microservice\IngenieurSonType;
 use App\Form\Microservice\MicroserrviceOptionType;
+use App\Form\Microservice\MicroserviceDisponibiliteType;
 use App\Form\Microservice\MicroserviceGalerieType;
 use App\Form\Microservice\MicroservicePublierType;
 use App\Form\Microservice\MicroserviceTitreType;
 use App\Form\Microservice\MicroserviceType;
-use App\Form\MicroserviceDisponibiliteType;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\MicroserviceRepository;
 use App\Repository\SuivisRepository;
@@ -233,7 +233,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'image a bien été téléchargée");
+            $this->addFlash('success', "La galérie a bien mise à jour");
 
             return $this->redirectToRoute('vendeur_microservices_disponibilite', [
                 'id' => $microservice->getId()

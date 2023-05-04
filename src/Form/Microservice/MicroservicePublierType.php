@@ -30,14 +30,6 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question3', CheckboxType::class, [
-                'label' => "Que celui-ci est conforme et respecte les CGU de Links Infinity",
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis!',
-                    ]),
-                ],
-            ])
-            ->add('question4', CheckboxType::class, [
                 'label' => "Toujours rester professionnel et courtois avec mes clients",
                 'constraints' => [
                     new NotBlank([
@@ -45,7 +37,7 @@ class MicroservicePublierType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('question5', CheckboxType::class, [
+            ->add('question4', CheckboxType::class, [
                 'label' => "Et ne jamais leur proposer de discuter ou de me payer en dehors de Links Infinity",
                 'constraints' => [
                     new NotBlank([

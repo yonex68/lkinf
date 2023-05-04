@@ -79,7 +79,7 @@ class EspaceUtilisateurController extends AbstractController
             /** Obliger les studios à joindre une image de couverture */
             //$categorie = $form->get('categorie')->getData()->getName();
             //$imageCouverture = $form->get('couvertureFile')->getData();
-            //dd($imageCouverture);
+            //dd($imageCouverture); dans
 
             /*if ($categorie == 'Studio' && empty($imageCouverture)) {
 

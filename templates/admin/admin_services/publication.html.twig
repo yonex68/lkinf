@@ -27,24 +27,12 @@
 					<div class="{{ microservice.online == true ? 'bloc-masquer' : '' }}">
 
 						<div class="my-3 font-weight-bold">
-							{{ form_row(form.question1) }}
-						</div>
-						<div class="my-3 font-weight-bold">
-							{{ form_row(form.question2) }}
-						</div>
-						<div class="my-3 font-weight-bold">
-							{{ form_row(form.question3) }}
-						</div>
-						<div class="my-3 font-weight-bold">
-							{{ form_row(form.question4) }}
-						</div>
-						<div class="my-3 font-weight-bold">
-							{{ form_row(form.question5) }}
+							{{ form_widget(form) }}
 						</div>
 
 						<div class="">
 							<button class="btn btn-primary" formnovalidate>
-								{{ button_label|default('Enregistrer et suivant') }}
+								{{ button_label|default('Publier') }}
 							</button>
 						</div>
 

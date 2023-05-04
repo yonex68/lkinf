@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Microservice;
 
 use App\Entity\Microservice;
 use App\Form\Microservice\DisponibiliteType;

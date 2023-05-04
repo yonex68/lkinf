@@ -105,13 +105,13 @@ class MicroserviceRepository extends ServiceEntityRepository
 
         if (!empty($search->minPrice)) {
             $query = $query
-                ->andWhere('m.prixMastering >= :minPrice')
+                ->andWhere('m.prix >= :minPrice')
                 ->setParameter('minPrice', $search->minPrice);
         }
 
         if (!empty($search->maxPrice)) {
             $query = $query
-                ->andWhere('m.prixBeatmaking <= :maxPrice')
+                ->andWhere('m.prix <= :maxPrice')
                 ->setParameter('maxPrice', $search->maxPrice);
         }
 

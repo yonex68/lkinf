@@ -22,6 +22,7 @@ class ConversationsController extends AbstractController
     public function index(ConversationRepository $conversationsRepository): Response
     {
         return $this->render('conversations/index.html.twig', [
+            'conversation' => null,
             'conversations' => $conversationsRepository->findByParticipation($this->getUser()),
         ]);
     }

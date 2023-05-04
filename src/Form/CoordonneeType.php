@@ -135,17 +135,6 @@ class CoordonneeType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('etat', TextType::class, [
-                'label' => 'Etat',
-                'help' => 'Etat de residence actuelle',
-                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
-                'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
-            ])
             ->add('telephone', TextType::class, [
                 'help' => 'Facultatif',
                 'label' => 'Téléphone',

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -20,12 +21,15 @@ class DescriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prix', MoneyType::class, [
+            ->add('prix', NumberType::class, [
                 'label' => 'Taux horaire',
-                'currency' => 'EUR',
+                'attr' => ['class' => 'border-0'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide'
+                    ]),
+                    new GreaterThan([
+                        'value' => 0,
                     ])
                 ]
             ])

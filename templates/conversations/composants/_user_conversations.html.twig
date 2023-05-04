@@ -3,7 +3,7 @@
 
 		{% for userconversation in conversations %}
 
-			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}" id="conversation-{{ userconversation.id }}">
 
 				{% if userconversation.user1.id == app.user.id %}
 
@@ -93,7 +93,7 @@
 
 		{% for userconversation in conversations %}
 
-			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden" id="conversation-{{ userconversation.id }}">
+			<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}" id="conversation-{{ userconversation.id }}">
 
 				{% if userconversation.user1.id == app.user.id %}
 

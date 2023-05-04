@@ -1,6 +1,6 @@
 {% if userconversation.lastmessage %}
 
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center last-message">
     {% if userconversation.lastmessage.destinataire.id == app.user.id and userconversation.lastmessage.lu == 0 %}
     	<span class="p-0 m-0 font-italic font-weight-bold">
     		{{ userconversation.lastmessage.auteur.id == app.user.id ? 'Vous:' : ''}}

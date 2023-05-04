@@ -4,7 +4,7 @@
 	</div>
 	<div class="card-body p-0">
 		<div class="row m-0">
-			<div class="border-right col-lg-5 col-xl-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'commande_details' ? 'd-none d-lg-block' : '' }}">
+			<div class="border-right col-sm-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'commande_details' ? 'd-none d-sm-block' : '' }}">
 				<div class="osahan-chat-left">
 					<div class="osahan-chat-list">
 
@@ -88,7 +88,7 @@
 				</div>
 			</div>
 
-			<div class="col-lg-7 col-xl-8 px-0 {{ app.request.attributes.get('_route') == 'commandes_chats' ? 'd-none d-lg-block' : '' }}">
+			<div class="col-sm-8 px-0 {{ app.request.attributes.get('_route') == 'commandes_chats' ? 'd-none d-sm-block' : '' }}">
 
 				{% if app.request.attributes.get('_route') == 'commande_details' %}
 

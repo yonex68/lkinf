@@ -160,8 +160,8 @@ p.help-block li {
     flex-direction: column;
 }
 .dropdown-item.active, .dropdown-item:active {
-    color: #fff;
-    background: #080679;
+    color: #fff!important;
+    background: #080679!important;
     text-decoration: none;
 }
 .btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
@@ -2040,7 +2040,6 @@ p.help-block li {
  .view_slider h3 {
      font-size: 20px;
      padding-bottom: 25px;
-     font-weight: 700;
      margin: 0;
      padding-top: 0px;
 }
@@ -3069,7 +3068,7 @@ p.help-block li {
          float: none;
     }
      .osahan-nav-top, .osahan-nav-mid {
-         padding: 9px 15px !important;
+         padding: 9px 3px !important;
     }
      .navbar-toggler {
          border: none;

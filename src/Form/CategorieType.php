@@ -25,7 +25,7 @@ class CategorieType extends AbstractType
                 'choices' => [
                     'Ingénieur de son' => 'Ingenieur son',
                     'Studio' => 'Studio',
-                    'Videaste Photographe' => 'Vidéaste Photographe',
+                    'Videaste' => 'Vidéaste',
                     'Figurant Danseur' => 'Figurant danseur',
                     'Photographe' => 'Photographe',
                 ],

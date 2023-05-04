@@ -96,33 +96,12 @@ class EditProfilType extends AbstractType
                 'help' => 'Ville de residence actuelle',
                 'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level2"],
                 'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
             ])
             ->add('pays', TextType::class, [
                 'label' => 'Pays',
                 'help' => 'Ville de residence actuelle',
                 'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "country"],
                 'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
-            ])
-            ->add('etat', TextType::class, [
-                'label' => 'Etat',
-                'help' => 'Etat de residence actuelle',
-                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
-                'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
             ])
             ->add('telephone', TextType::class, [
                 'help' => 'Facultatif',
@@ -148,39 +127,6 @@ class EditProfilType extends AbstractType
             ])
             ->add('latitude', HiddenType::class, [
                 'required' => false,
-            ])
-            ->add('rib', TextType::class, [
-                'label' => 'RIB',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ]),
-                ],
-                'attr' => ['class' => '', 'placeholder' => 'RIB'],
-            ])
-            ->add('iban', TextType::class, [
-                'label' => 'IBAN',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ]),
-                ],
-                'attr' => ['class' => '', 'placeholder' => 'IBAN'],
-            ])
-            ->add('siret', TextType::class, [
-                'label' => 'Numéro Siret',
-                'required' => false,
-                'attr' => ['class' => '', 'placeholder' => 'Numéro Siret'],
-            ])
-            ->add('paypal', TextType::class, [
-                'label' => 'Paypal',
-                'required' => false,
-                'attr' => ['class' => '', 'placeholder' => 'Adresse Paypal'],
-            ])
-            ->add('stripe', TextType::class, [
-                'label' => 'Stripe',
-                'required' => false,
-                'attr' => ['class' => '', 'placeholder' => 'Adresse Stripe'],
             ])
         ;
     }

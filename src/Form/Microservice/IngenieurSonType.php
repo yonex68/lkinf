@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,6 +26,9 @@ class IngenieurSonType extends AbstractType
                     new NotBlank([
                         'message' => 'Ce champ est requis',
                     ]),
+                    new GreaterThan([
+                        'value' => 0,
+                    ])
                 ],
                 'attr' => ['class' => 'border-0 text-right']
             ])

@@ -35,7 +35,7 @@
                   </span>
                </div>
             </div>
-            <i class="fa fa-briefcase fa-3x text-gray"></i>
+            <i class="fa fa-briefcase fa-3x text-primary"></i>
          </div>
       </div>
       <div class="col-sm-6">
@@ -48,13 +48,47 @@
                   </span>
                </div>
             </div>
-            <i class="fa fa-cart-plus fa-3x text-gray"></i>
+            <i class="fa fa-cart-plus fa-3x text-secondary"></i>
          </div>
       </div>
    </div>
    <br>
    <div class="row">
       <div class="col-sm-6">
+         <a href="{{ path('favoris_index') }}">
+            <div class="media p-4 shadow-sm rounded">
+               <div class="media-body">
+                  <h5 class="h6">Favoris</h5>
+                  <div>
+                     <span class="h5 font-weight-light">
+                        {{ clientFavoris(app.user)|length }}
+                     </span>
+                  </div>
+               </div>
+               <i class="fa fa-heart fa-3x text-success"></i>
+            </div>
+         </a>
+      </div>
+
+      <div class="col-sm-6">
+         <a href="{{ path('suivis_index') }}">
+            <div class="media p-4 shadow-sm rounded">
+               <div class="media-body">
+                  <h5 class="h6">Suivis</h5>
+                  <div>
+                     <span class="h5 font-weight-light">
+                        {{ clientSuivis(app.user)|length }}
+                     </span>
+                  </div>
+               </div>
+               <i class="fa fa-plus fa-3x text-info"></i>
+            </div>
+         </a>
+      </div>
+   </div>
+   <br>
+   <div class="row">
+      <div class="col-6">
          <div class="media p-4 shadow-sm rounded">
             <div class="media-body">
                <h5 class="h6">Avis positif</h5>
@@ -64,10 +98,10 @@
                   </span>
                </div>
             </div>
-            <i class="fa fa-thumbs-up fa-3x text-gray"></i>
+            <i class="fa fa-thumbs-up fa-3x text-success"></i>
          </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-6">
          <div class="media p-4 shadow-sm rounded">
             <div class="media-body">
                <h5 class="h6">Avis négatifs</h5>
@@ -77,7 +111,7 @@
                   </span>
                </div>
             </div>
-            <i class="fa fa-thumbs-down fa-3x text-gray"></i>
+            <i class="fa fa-thumbs-down fa-3x text-danger"></i>
          </div>
       </div>
    </div>
@@ -96,7 +130,7 @@
                   {{ retrait.total > 0 ? retrait.total|number_format(2, ',', ' ') : 0 }} {{ currency }} au total
                </span>
             </div>
-            <i class="fa fa-credit-card fa-3x text-gray"></i>
+            <i class="fa fa-credit-card fa-3x text-info"></i>
          </div>
       </div>
       <div class="col-sm-6">
@@ -113,7 +147,7 @@
                   total
                </span>
             </div>
-            <i class="fa fa-backward fa-3x text-gray"></i>
+            <i class="fa fa-backward fa-3x text-danger"></i>
          </div>
       </div>
    </div>
@@ -133,7 +167,7 @@
                      </span>
                   </div>
                </div>
-               <i class="fa fa-opencart fa-3x text-gray"></i>
+               <i class="fa fa-opencart fa-3x text-secondary"></i>
             </div>
          </a>
       </div>
@@ -148,7 +182,7 @@
                      </span>
                   </div>
                </div>
-               <i class="fa fa-opencart fa-3x text-gray"></i>
+               <i class="fa fa-opencart fa-3x text-success"></i>
             </div>
          </a>
       </div>
@@ -163,7 +197,7 @@
                      </span>
                   </div>
                </div>
-               <i class="fa fa-heart fa-3x text-gray"></i>
+               <i class="fa fa-heart fa-3x text-info"></i>
             </div>
          </a>
       </div>
@@ -179,10 +213,11 @@
                      </span>
                   </div>
                </div>
-               <i class="fa fa-plus fa-3x text-gray"></i>
+               <i class="fa fa-plus fa-3x text-success"></i>
             </div>
          </a>
       </div>
+
       <div class="col-sm-6">
          <a href="{{ path('app_vendeur_remboursements_index') }}">
             <div class="media p-4 shadow-sm rounded">
@@ -194,7 +229,7 @@
                      </span>
                   </div>
                </div>
-               <i class="fa fa-backward fa-3x text-gray"></i>
+               <i class="fa fa-backward fa-3x text-danger"></i>
             </div>
          </a>
       </div>

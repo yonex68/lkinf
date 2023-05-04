@@ -1,3 +1,5 @@
+{% if microservice.prix > 0 %}
+
 {% if is_granted('microservice_edit', microservice) %}{% else %}
 
 <h6 class="my-4">Réservation</h6>
@@ -27,7 +29,7 @@
             <thead>
                <tr class="text-light bg-dark">
                   <td colspan="3">
-                     <h6><i class="fa fa-calendar"></i> Disponibilité pour ce service</h6>
+                     <h6><i class="fa fa-calendar"></i> Disponibilité du vendeur pour ce service</h6>
                   </td>
                </tr>
                <tr>
@@ -141,4 +143,7 @@
 
 </div>
 {{ form_end(commandeForm) }}
+
+{% endif %}
+
 {% endif %}

@@ -1,18 +1,19 @@
 <div class="card rounded bg-white border mb-3 osahan-chat">
 	<div class="card-header bg-dark ">
-		<h5 class="h6 text-light">Conversation</h5>
+		<h5 class="h6 text-light">Conversations</h5>
 	</div>
 	<div class="card-body p-0">
 		<div class="row m-0">
-			<div class="border-right col-md-4 col-xl-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'conversations_show' ? 'd-none d-lg-block' : '' }}">
+			<div class="border-right col-md-4 col-xl-4 px-0 bg-white {{ app.request.attributes.get('_route') == 'conversations_show' ? 'd-none d-sm-block' : '' }}">
 				<div class="osahan-chat-left">
 
 					{% include "conversations/composants/_user_conversations.html.twig" %}
 
 				</div>
 			</div>
-			<div
-				class="col-md-8 col-xl-8 px-0 {{ app.request.attributes.get('_route') == 'conversations' ? 'd-none d-lg-block' : '' }}">
+
+			<!-- Partie droite -->
+			<div class="col-md-8 col-xl-8 px-0 {{ app.request.attributes.get('_route') == 'conversations' ? 'd-none d-sm-block' : '' }}">
 				{% if app.request.attributes.get('_route') == 'conversations_show' %}
 				<div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
 					<div class="font-weight-bold mr-1 overflow-hidden">
