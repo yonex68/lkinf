@@ -10,10 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/vendeurs')]
 class VendeurController extends AbstractController
 {
-    #[Route('/', name: 'vendeur')]
+    #[Route('/vendeurs', name: 'vendeur')]
     public function index(): Response
     {
         return $this->render('vendeur/index.html.twig', [
@@ -21,7 +20,7 @@ class VendeurController extends AbstractController
         ]);
     }
 
-    #[Route('/{nameUrl}', name: 'vendeur_profil')]
+    #[Route('/compte/vendeurs/{nameUrl}', name: 'vendeur_profil')]
     public function profil(User $user, MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $microservices = $paginator->paginate(

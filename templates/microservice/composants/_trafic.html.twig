@@ -190,19 +190,19 @@
                   <p class="text-muted mb-0 mt-0 ml-auto">{{ microservice.vendeur.created|ago(locale='fr') }}</p>
                </div>
             </div>
-
-            {% if is_granted('microservice_edit', microservice) %}{% else %}
+            
             <div class="row pt-3" id="packagesTable">
+            {% if is_granted('microservice_edit', microservice) %}{% else %}
                <div class="col-6">
                   <a class="btn btn-outline-dark btn-block"
                      href="{{ path('microservice_conversations', {vendeurNameUrl: microservice.vendeur.nameUrl, microserviceId: microservice.id }) }}">Contacter</a>
                </div>
+            {% endif %}
                <div class="col-6">
                   <a href="{{ path('vendeur_profil', {nameUrl: microservice.vendeur.nameUrl }) }}"
                      class="btn btn-dark btn-block">Voir le profil</a>
                </div>
             </div>
-            {% endif %}
          </div>
 
       </div>

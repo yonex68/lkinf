@@ -12,7 +12,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-7 text-left">
-					<h1 class="mt-0 mb-3 text-dark">{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}</h1>
+					<h1 class="mt-0 mb-3 text-dark">{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}
+					</h1>
 					<div class="breadcrumbs text-dark">
 						<span class="badge badge-dark rounded-btn">{{ user.compte }}</span>
 						{{ user.created|ago(locale='fr') }}
@@ -34,25 +35,31 @@
 
 								{% if user.reseauAvatar %}
 
-								<img src="{{ user.reseauAvatar }}" class="img-fluid rounded-circle" alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}" width="150">
+								<img src="{{ user.reseauAvatar }}" class="img-fluid rounded-circle"
+									alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}"
+									width="150">
 
 								{% else %}
 
-									{% if user.avatar %}
+								{% if user.avatar %}
 
-									<img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('small_size') }}" class="img-fluid rounded-circle" alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}">
+								<img src="{{ vich_uploader_asset(user, 'imageFile') | imagine_filter('small_size') }}"
+									class="img-fluid rounded-circle"
+									alt="{{ user.usePseudo == 1 ? user.pseudo : user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}">
 
-									{% else %}
+								{% else %}
 
-									<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('small_size') }}" alt='' />
+								<img class="img-fluid rounded-circle"
+									src="{{ asset('img/user.jpg') | imagine_filter('small_size') }}" alt='' />
 
-									{% endif %}
-								
+								{% endif %}
+
 								{% endif %}
 
 							</div>
 							<div class="p-3">
-								<h5 class="h6 text-dark mb-1 mt-0 text-left">{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ ' ' ~ user.prenom }}</h5>
+								<h5 class="h6 text-dark mb-1 mt-0 text-left">{{ user.usePseudo == 1 ? user.pseudo : user.nom ~ '
+									' ~ user.prenom }}</h5>
 								<p class="mb-0 text-muted text-left">{{ user.apropos|raw }}</p>
 							</div>
 
@@ -83,20 +90,21 @@
 
 							<div class="p-3">
 
-								{% include "vendeur/composants/_suivre_btn.html.twig" %}
+								<div class="row">
+									<div class="col-sm-6">
+										{% include "vendeur/composants/_suivre_btn.html.twig" %}
+									</div>
+									<div class="col-sm-6">
+										{% if app.user == user %}{% else %}
 
-								{% if app.user == user %}
-								<a href="{{ path('user_edit_profil') }}" class="btn btn-dark rounded-btn btn-block">
-									<i class="fa fa-cog"></i> Mettre à jour mon profil
-								</a>
-								{% else %}
+										<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
+											class="btn btn-dark shadow-sm rounded-btn btn-block">
+											Contacter
+										</a>
 
-								<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
-									class="btn btn-dark shadow-sm rounded-btn w-100 mt-3">
-									Contacter
-								</a>
-
-								{% endif %}
+										{% endif %}
+									</div>
+								</div>
 
 							</div>
 
@@ -104,45 +112,6 @@
 
 						</div>
 					</div>
-					
-					<!--<div class="shadow-sm rounded bg-white job-item mb-3">
-						<div class="p-3 job-item-header border-0">
-							<div class="overflow-hidden mr-2">
-								<h6 class="font-weight-light text-dark mb-0 text-truncate">Abonnés</h6>
-							</div>
-						</div>
-						<div class="d-flex align-items-center bg-white p-3 border-0 border-bottom job-item-body">
-							<div class="overlap-rounded-circle">
-								{% for follow in followers(user) %}
-
-								{% if follow.client.avatar %}
-
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ vich_uploader_asset(follow.client, 'imageFile') | imagine_filter('small_avatar') }}"
-									alt="" data-original-title="{{ follow.client.usePseudo == 1 ? follow.client.pseudo : follow.client.nom ~ ' ' ~ follow.client.prenom }}">
-
-								{% else %}
-
-								<img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-									src="{{ asset('img/user.jpg') | imagine_filter('small_avatar') }}" alt=""
-									data-original-title="{{ follow.client.usePseudo == 1 ? follow.client.pseudo : follow.client.nom ~ ' ' ~ follow.client.prenom }}">
-
-								{% endif %}
-
-								{% endfor %}
-							</div>
-						</div>
-						<div class="p-3 job-item-footer border-0">
-							<span class="font-weight-bold text-muted">{{ lastFolowers(user)|length }} Abonné{{
-								lastFolowers(user)|length > 1 ? 's' : '' }}</span>
-
-							{% if followers(user)|length > lastFolowers(user)|length %}
-							<small class="text-gray-500">
-								<i class="fa fa-plus"></i>
-								{{ followers(user)|length - lastFolowers(user)|length }} autres</small>
-							{% endif %}
-						</div>
-					</div>-->
 
 				</aside>
 				<!-- Main Content -->
