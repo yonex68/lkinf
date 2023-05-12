@@ -39,7 +39,7 @@
 	</script>
 </head>
 
-<body data-turbo="false" class="text-light responsive bg-blue">
+<body data-turbo="false" class="text-light body-gradient" style="background: #3533cd!important;">
 
 	<main class="main-gradient">
 		<div class="container">
@@ -87,19 +87,19 @@
 
 							{% if app.request.attributes.get('_route') == 'app_register' %}
 
-							<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}"
-									class="text-blue">connectez-vous</a></p>
+							<p class="text-light">Avez-vous déjà un compte ? <a href="{{ path('app_login') }}"
+									class="text-light">connectez-vous</a></p>
 
 							{% elseif app.request.attributes.get('_route') == 'app_login' %}
 
-							<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-blue">créer un
+							<p class="text-light">Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-light">créer un
 									compte</a></p>
 
 							{% else %}
 
-							<a href="{{ path('app_login') }}" class="text-blue">Connexion</a>&nbsp;
+							<a href="{{ path('app_login') }}" class="text-light">Connexion</a>&nbsp;
 
-							<a href="{{ path('app_register') }}" class="text-blue">Créer un compte</a>
+							<a href="{{ path('app_register') }}" class="text-light">Créer un compte</a>
 
 							{% endif %}
 							</span>
@@ -109,16 +109,16 @@
 
 					<ul class="nav justify-content-center p-0 m-0">
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('page_conditions') }}">Conditons générales</a>
+							<a class="nav-link text-light" href="{{ path('page_conditions') }}">Conditons générales</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('page_conditions') }}">Mentions légales</a>
+							<a class="nav-link text-light" href="{{ path('page_conditions') }}">Mentions légales</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('page_conditions') }}">Politique de confidentialité</a>
+							<a class="nav-link text-light" href="{{ path('page_conditions') }}">Politique de confidentialité</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-blue" href="">Besoin d'aide?</a>
+							<a class="nav-link text-light text-light" href="">Besoin d'aide?</a>
 						</li>
 					</ul>
 
