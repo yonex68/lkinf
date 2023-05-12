@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<meta charset="utf-8">
@@ -10,7 +10,7 @@
 	<title>
 		{% block title %}{{ appName }} des services pour tout vos besoins{% endblock %}
 	</title>
-	<link rel="alternate" hreflang="fr-fr" href="{% block alternatiflink %}https://links-infinity.com{% endblock %}" />
+	<link rel="alternate" hreflang="fr-fr" href="https://links-infinity.com/">
 	<!-- Favicon Icon -->
 	<link rel="icon" type="{{ asset('img/Logo.png') }}" href="images/fav.svg">
 	<!-- Bootstrap core CSS -->
@@ -41,13 +41,17 @@
 
 <body data-turbo="false" class="text-light responsive bg-blue">
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-5 shadow-right">
+	<main class="main-gradient">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-5 shadow-right">
 
-				<div class="osahan-login pr-sm-4">
+					<div class="osahan-login pr-sm-4">
 						<a href="{{ path('accueil') }}">
-							<h1 class="text-uppercase font-weight-bold text-light h5 text-left pt-4">{{ appName }}</h1>
+							<h1 class="text-uppercase font-weight-bold text-light h5 text-left pt-4">
+								<img src="{{ asset('img/small-logo.svg') }}" width="40" alt="Glog {{ appName }}"> 
+								<span>{{ appName }}</span>
+							</h1>
 						</a>
 						<div class="text-left mb-4">
 							<h5 class="text-light pt-3 font-weight-bold">{% block titre %}Inscription{% endblock %}</h5>
@@ -56,7 +60,8 @@
 
 						{% for type, messages in app.flashes %}
 						{% for message in messages %}
-						<div class="alert alert-{{ type }} alertflash alert-dismissible fade show mb-3 border border-{{ type }}"
+						<div
+							class="alert alert-{{ type }} alertflash alert-dismissible fade show mb-3 border border-{{ type }}"
 							role="alert" style="text-align: left!important;">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
 							<strong class="my-0 text-{{ type }}">
@@ -118,13 +123,19 @@
 					</ul>
 
 					<div class="text-center">
-						<a href="{{ path('accueil') }}" class="text-light small p-0"><i class="mdi mdi-arrow-left"></i> Retournez vers accueil</a>
+						<a href="{{ path('accueil') }}" class="text-light small p-0"><i class="mdi mdi-arrow-left"></i>
+							Retournez vers accueil</a>
 					</div>
 
+				</div>
+				<div class="col-sm-7 text-left d-none d-sm-block">
+					<div class="bloc-logo">
+						<img src="{{ asset('img/auth-logo.png') }}" class="" alt="{{ appName }} logo">
+					</div>
+				</div>
 			</div>
-			<div class="col-sm-7"></div>
 		</div>
-	</div>
+	</main>
 
 	<!--       footer-->
 	<!-- Bootstrap core JavaScript -->

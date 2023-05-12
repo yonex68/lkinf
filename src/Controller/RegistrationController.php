@@ -97,13 +97,13 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            $this->addFlash('info', 'Nous devons vérifier votre adresse e-mail "' . $this->getUser()->getEmail() . '"' . ' avant que vous puissiez accéder à votre portail, Vérifiez votre adresse e-mail puis cliquez sur: Confirmer mon e-mail');
-
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
+
+            $this->addFlash('info', 'Nous devons vérifier votre adresse e-mail "' . $this->getUser()->getEmail() . '"' . ' avant que vous puissiez accéder à votre portail, Vérifiez votre adresse e-mail puis cliquez sur: Confirmer mon e-mail');
             
         }
 

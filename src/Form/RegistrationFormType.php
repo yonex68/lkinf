@@ -55,7 +55,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('adresse', TextType::class, [
+            /*->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'help' => 'Exemple (N° Ruelle/Avenue)',
                 'attr' => ['placeholder' => 'Ville', 'autocomplete' => "address-line1"],
@@ -78,7 +78,7 @@ class RegistrationFormType extends AbstractType
                 'help' => 'Etat de residence actuelle',
                 'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
                 'required' => false,
-            ])
+            ])*/
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'attr' => ['placeholder' => 'Exemple@domail.com'],
@@ -117,12 +117,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('longitude', HiddenType::class, [
+            /*->add('longitude', HiddenType::class, [
                 'required' => false,
             ])
             ->add('latitude', HiddenType::class, [
                 'required' => false,
-            ]);
+            ])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

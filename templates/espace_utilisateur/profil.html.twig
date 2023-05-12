@@ -64,17 +64,17 @@
 
 					{% else %}
 
-					{% if app.user.avatar %}
+						{% if app.user.avatar %}
 
-					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('identite_size') }}"
-						class="img-fluid rounded"
-						alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
-					{% else %}
+						<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('identite_size') }}"
+							class="img-fluid rounded"
+							alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+						{% else %}
 
-					<img class="img-fluid rounded" src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}"
-						alt='' />
+						<img class="img-fluid rounded" src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}"
+							alt='' />
 
-					{% endif %}
+						{% endif %}
 
 					{% endif %}
 				</div>

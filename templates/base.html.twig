@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=>
+<html lang="fr">
 
 <head>
 	<meta charset="utf-8">
@@ -7,6 +7,7 @@
 	<title>
 		{% block title %}{{ appName }} trouvez un studio, ingénieur de son, vidéaste,{% endblock %}
 	</title>
+	<link rel="alternate" hreflang="fr-fr" href="https://links-infinity.com/">
 
 	{% block meta %}
 	<meta name="author" content="{{ appName }}">
@@ -15,8 +16,7 @@
 		content="Trouvez le prestataire qui répondra à vos besoins, qui vous aidera dans vos projets musicaux ; des ingénieurs de sons, danseurs…, proche de chez vous">
 	{% endblock %}
 
-	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />
-	<link rel="alternate" hreflang="fr-fr" href="{% block alternatiflink %}https://links-infinity.com{% endblock %}" />
+	<meta name="google-site-verification" content="8R1IqiWtRxl4xmw78_KdRUQU231e7SSQg-e5lhhe9Vk" />" />
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="{{ asset('img/Logo.png') }}" href="images/fav.svg">
