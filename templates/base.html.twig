@@ -43,12 +43,19 @@
 	{% endblock %}
 
 	<!-- Cke editor -->
-	<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+	<script defer src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
 	<style>
 		.slick-track {
 			margin-left: 0 !important;
 			margin-right: auto !important;
+		}
+		.flash{
+			position: fixed;
+			bottom: 10px;
+			width: auto;
+			right: 5px;
+			z-index: 100!important;
 		}
 	</style>
 
@@ -86,17 +93,18 @@
 	<script src="{{ asset('themes/base/vendor/lightgallery-master/dist/js/lightgallery-all.min.js') }}"></script>
 	<!-- select2 Js -->
 	<script src="{{ asset('themes/base/vendor/select2/js/select2.min.js') }}"></script>
-	<!-- Custom -->
-	{% block javascripts %}
-	{{ encore_entry_script_tags('app') }}
-	{{ encore_entry_script_tags('jscustom') }}
-	{{ encore_entry_script_tags('dropdown') }}
-	{{ encore_entry_script_tags('favoris') }}
-	{{ encore_entry_script_tags('btnloader') }}
-	{% endblock %}
 
 	<!-- axios -->
 	<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+	
+	<!-- Custom -->
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+		{{ encore_entry_script_tags('jscustom') }}
+		{{ encore_entry_script_tags('dropdown') }}
+		{{ encore_entry_script_tags('favoris') }}
+		{{ encore_entry_script_tags('btnloader') }}
+	{% endblock %}
 
 	<script>
 		// Add the following code if you want the name of the file appear on select

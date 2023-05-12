@@ -29,109 +29,100 @@
 	<link href="{{ asset('themes/base/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	{% block stylesheets %}
-		{{ encore_entry_link_tags('app') }}
-		{{ encore_entry_link_tags('style') }}
-		{{ encore_entry_link_tags('custom') }}
-		{{ encore_entry_link_tags('responsive') }}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('style') }}
+	{{ encore_entry_link_tags('custom') }}
+	{{ encore_entry_link_tags('responsive') }}
 	{% endblock %}
 	<!-- map box -->
 	<script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.14/web.js">
 	</script>
 </head>
 
-<body data-turbo="false" class="text-light responsive"
-	style="background-image: url('{{ asset('img/auth-danceur.jpg') }}');">
+<body data-turbo="false" class="text-light responsive bg-blue">
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-5 mx-auto">
+			<div class="col-sm-5 shadow-right">
 
-				<div class="card auth-bloc shadow-sm">
-					<div class="card-header p-0">
-						<div class="row">
-							<div class="col-5 pr-0 align-items-center">
-								<a href="{{ path('accueil') }}">
-									<h1 class="text-uppercase text-light">{{ appName }}</h1>
-								</a>
-							</div>
-							<div class="col-7 text-right align-items-center">
-								<a href="{{ path('accueil') }}" class="text-light small p-0"><i class="mdi mdi-arrow-left"></i> Retournez vers accueil</a>
-							</div>
+				<div class="osahan-login pr-sm-4">
+						<a href="{{ path('accueil') }}">
+							<h1 class="text-uppercase font-weight-bold text-light h5 text-left pt-4">{{ appName }}</h1>
+						</a>
+						<div class="text-left mb-4">
+							<h5 class="text-light pt-3 font-weight-bold">{% block titre %}Inscription{% endblock %}</h5>
+							</p>
 						</div>
-					</div>
 
-					<div class="card-body">
-						<div class="osahan-login pt-3">
-							<div class="text-center mb-4">
-								<h5 class="text-light pt-3">{% block titre %}Inscription{% endblock %}</h5>
-								<p class="text-light"> {% block text %}{% endblock %}
-								</p>
-							</div>
-
-							{% for type, messages in app.flashes %}
-								{% for message in messages %}
-									<div class="alert alert-{{ type }} alertflash alert-dismissible fade show mb-3 border border-{{ type }}" role="alert" style="text-align: left!important;">
-										<button type="button" class="close" data-dismiss="alert">&times;</button>
-										<strong class="my-0 text-{{ type }}">
-												{% if type == 'danger' %}
-												<i class="fa fa-exclamation-triangle"></i> Echec!
-												{% elseif type == 'warning' %}
-												<i class="fa fa-exclamation-triangle"></i> Attention!
-											{% elseif type =='info' %}
-												<i class="fa fa-check"></i> En cours de validation!
-											{% elseif type =='success' %}
-												<i class="fa fa-check"></i> Succès!
-											{% endif %}
-											</strong> -
-											<p>{{ message }}</p>
-									</div>
-								{% endfor %}
-							{% endfor %}
-
-							{% block body %}{% endblock %}
-
-							{% block footer %}
-							<div class="pt-3 text-muted text-center m-0">
-
-									{% if app.request.attributes.get('_route') == 'app_register' %}
-
-									<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}" class="text-blue">connectez-vous</a></p>
-
-									{% elseif app.request.attributes.get('_route') == 'app_login' %}
-
-									<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-blue">créer un compte</a></p>
-
-									{% else %}
-
-									<a href="{{ path('app_login') }}" class="text-blue">Connexion</a>&nbsp;
-
-									<a href="{{ path('app_register') }}" class="text-blue">Créer un compte</a>
-
-									{% endif %}
-								</span>
-							</div>
-							{% endblock %}
+						{% for type, messages in app.flashes %}
+						{% for message in messages %}
+						<div class="alert alert-{{ type }} alertflash alert-dismissible fade show mb-3 border border-{{ type }}"
+							role="alert" style="text-align: left!important;">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong class="my-0 text-{{ type }}">
+								{% if type == 'danger' %}
+								<i class="fa fa-exclamation-triangle"></i> Echec!
+								{% elseif type == 'warning' %}
+								<i class="fa fa-exclamation-triangle"></i> Attention!
+								{% elseif type =='info' %}
+								<i class="fa fa-check"></i> En cours de validation!
+								{% elseif type =='success' %}
+								<i class="fa fa-check"></i> Succès!
+								{% endif %}
+							</strong> -
+							<p>{{ message }}</p>
 						</div>
+						{% endfor %}
+						{% endfor %}
+
+						{% block body %}{% endblock %}
+
+						{% block footer %}
+						<div class="pt-3 text-muted text-center m-0">
+
+							{% if app.request.attributes.get('_route') == 'app_register' %}
+
+							<p>Avez-vous déjà un compte ? <a href="{{ path('app_login') }}"
+									class="text-blue">connectez-vous</a></p>
+
+							{% elseif app.request.attributes.get('_route') == 'app_login' %}
+
+							<p>Vous n'avez aucun compte ? <a href="{{ path('app_register') }}" class="text-blue">créer un
+									compte</a></p>
+
+							{% else %}
+
+							<a href="{{ path('app_login') }}" class="text-blue">Connexion</a>&nbsp;
+
+							<a href="{{ path('app_register') }}" class="text-blue">Créer un compte</a>
+
+							{% endif %}
+							</span>
+						</div>
+						{% endblock %}
 					</div>
-					<div class="card-footer">
-						<ul class="nav justify-content-center p-0 m-0">
-							<li class="nav-item">
-								<a class="nav-link" href="{{ path('page_conditions') }}">Conditons générales</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{ path('page_conditions') }}">Mentions légales</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{ path('page_conditions') }}">Politique de confidentialité</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-blue" href="">Besoin d'aide?</a>
-							</li>
-						</ul>
+
+					<ul class="nav justify-content-center p-0 m-0">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('page_conditions') }}">Conditons générales</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('page_conditions') }}">Mentions légales</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('page_conditions') }}">Politique de confidentialité</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-blue" href="">Besoin d'aide?</a>
+						</li>
+					</ul>
+
+					<div class="text-center">
+						<a href="{{ path('accueil') }}" class="text-light small p-0"><i class="mdi mdi-arrow-left"></i> Retournez vers accueil</a>
 					</div>
-				</div>
 
 			</div>
+			<div class="col-sm-7"></div>
 		</div>
 	</div>
 
@@ -140,10 +131,10 @@
 	<script src="{{ asset('themes/base/vendor/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('themes/base/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 	{% block javascripts %}
-		{{ encore_entry_script_tags('app') }}
-		{{ encore_entry_script_tags('jscustom') }}
-		{{ encore_entry_script_tags('dropdown') }}
-		{{ encore_entry_script_tags('btnloader') }}
+	{{ encore_entry_script_tags('app') }}
+	{{ encore_entry_script_tags('jscustom') }}
+	{{ encore_entry_script_tags('dropdown') }}
+	{{ encore_entry_script_tags('btnloader') }}
 	{% endblock %}
 
 	<!-- Google tag (gtag.js) -->

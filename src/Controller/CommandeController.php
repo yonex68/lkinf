@@ -102,9 +102,13 @@ class CommandeController extends AbstractController
         $user = $this->getUser();
 
         $commande = $commandeRepository->find($id);
-        $tauxHoraire = $commande->getTauxHoraire() ? $commande->getTauxHoraire()->format('%H') : 1;
+        $tauxHoraire = $commande->getTauxHoraire() ? $commande->getTauxHoraire()->format('%H') : null;
         $somme = $commande->getMontant();
-        $montantTotal = $somme * $tauxHoraire;
+        $montantTotal = $somme;
+
+        if ($commande->getTauxHoraire()) {
+            $montantTotal = $somme * $tauxHoraire;
+        }
 
         $redirect = $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
 
@@ -618,13 +622,19 @@ class CommandeController extends AbstractController
     public function reservation(Request $request, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, MicroserviceRepository $microserviceRepository, $slug, PaymentService $paymentService, Commande $commande): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
-        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
-        /** Si taux erreur == 0 taux erreur == 1 */
-        if($tauxHoraire == 0) 
-            $tauxHoraire = 1;
+        $montantTotal = $commande->getMontant();
+        $tauxHoraire = false;
 
-        $somme = $commande->getMontant();
-        $montantTotal = $somme * $tauxHoraire;
+        if ($commande->getTauxHoraire()) {
+
+            $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+
+            /** Si taux erreur == 0 taux erreur == 1 */
+            if ($tauxHoraire == 0)
+                $tauxHoraire = 1;
+
+            $montantTotal = $commande->getMontant() * $tauxHoraire;
+        }
 
         $directory = $this->redirectToRoute('microservices');
 
@@ -713,12 +723,17 @@ class CommandeController extends AbstractController
     public function savereservation(MicroserviceRepository $microserviceRepository, EntityManagerInterface $entityManager, $slug, PrixRepository $prixRepository, $payment_intent, Commande $commande, MailerService $mailer): Response
     {
         $microservice = $microserviceRepository->findOneBy(['slug' => $slug]);
-        $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        $tauxHoraire = 1;
 
-        if ($commande->isPayed() == false OR $commande->isPayed() == null) {
+        if ($commande->getTauxHoraire()) {
+            $tauxHoraire = $commande->getTauxHoraire()->format('%H');
+        }
+
+        if ($commande->isPayed() == false or $commande->isPayed() == null) {
+
             $commande->setPaymentIntent($payment_intent);
             $commande->setMontant($commande->getMontant() * $tauxHoraire);
-            $commande->setStatut('En attente');
+            $commande->setStatut('Valider');
             $commande->setPayed(true);
             $entityManager->flush();
 

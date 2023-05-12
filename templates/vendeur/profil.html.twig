@@ -131,17 +131,11 @@
 
 							<div class="col-12">
 								<div class="card">
-									<div class="card-body text-center bg-white border rounded shadow-sm">
-										<p class="text-muted lead text-center">Aucun service actif.</p>
-										<div class="py-4">
+									<div class="card-body text-center bg-white">
+										<div class="py-2">
+										<p class="text-center">Aucun services disponible.</p>
 											<i class="fa fa-search fa-3x text-muted"></i>
 										</div>
-										{% if user.id == user.id %}
-										<p>Créez-en un nouveau ou activez-les depuis la page Mes services.</p>
-										<a href="{{ path('vendeur_microservices_new') }}" class="btn btn-success">
-											Nouveau service
-										</a>
-										{% endif %}
 									</div>
 								</div>
 							</div>

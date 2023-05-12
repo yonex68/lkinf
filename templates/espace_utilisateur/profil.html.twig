@@ -24,6 +24,91 @@
 		</h4>
 	</div>
 	<div class="card-body">
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<strong>Nom</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.nom }}</strong>
+				</div>
+				<div class="form-group">
+					<strong>Prénom</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.prenom }}</strong>
+				</div>
+				<div class="form-group">
+					<strong>Nom public</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~
+						app.user.prenom }}</strong>
+				</div>
+				<div class="form-group">
+					<strong>Email</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.email }}</strong>
+				</div>
+				<div class="form-group">
+					<strong>#ID</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.id }}</strong>
+				</div>
+				<div class="form-group">
+					<strong>Adresse</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.ville }} - {{ app.user.adresse }} {{ app.user.pays }}</strong>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<strong>Photo de profil</strong>
+				<div class="py-2">
+
+					{% if app.user.reseauAvatar %}
+
+					<img src="{{ app.user.reseauAvatar }}" class="img-fluid rounded"
+						alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}"
+						width="200" height="200">
+
+					{% else %}
+
+					{% if app.user.avatar %}
+
+					<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('identite_size') }}"
+						class="img-fluid rounded"
+						alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
+					{% else %}
+
+					<img class="img-fluid rounded" src="{{ asset('img/user.jpg') | imagine_filter('identite_size') }}"
+						alt='' />
+
+					{% endif %}
+
+					{% endif %}
+				</div>
+				{% if is_granted('ROLE_VENDEUR') %}
+				<p>
+					Montrez-vous ! Les vendeurs avec une photo les représentant vraiment font plus de ventes que la
+					moyenne.
+				</p>
+				{% endif %}
+
+				<div class="form-group">
+					<strong>Genre</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.genre }}</strong>
+				</div>
+
+				<div class="form-group">
+					<strong>Code postal</strong> <br>
+					<strong class="text-muted mb-0">{{ app.user.codePostal }}</strong>
+				</div>
+			</div>
+		</div>
+
+		<div class="">
+			<strong class="mb-0">Biographie</strong>
+			{% if is_granted('ROLE_VENDEUR') %}
+			<p>
+				Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.
+				Attention : ce n’est pas votre service, et aucun lien externe, identifiant de réseau social, adresse
+				e-mail
+				ou numéro de téléphone n’est permis.
+			</p>
+			{% endif %}
+			<p>{{ app.user.apropos }}</p>
+		</div>
 		<div>
 
 			{% if is_granted('ROLE_VENDEUR') %}
@@ -35,92 +120,41 @@
 			</p>
 			{% endif %}
 
-			<div class="row">
-				<div class="col-sm-6">
-					<strong>Photo de profil</strong>
-					{% if is_granted('ROLE_VENDEUR') %}
-					<p>
-						Montrez-vous ! Les vendeurs avec une photo les représentant vraiment font plus de ventes que la
-						moyenne.
-					</p>
-					{% endif %}
-					<div class="py-2">
+			{% if is_granted('ROLE_VENDEUR') %}
 
-						{% if app.user.reseauAvatar %}
-
-						<img src="{{ app.user.reseauAvatar }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}" width="80">
-
-						{% else %}
-
-							{% if app.user.avatar %}
-
-							<img src="{{ vich_uploader_asset(app.user, 'imageFile') | imagine_filter('medium_avatar') }}" class="img-fluid rounded-circle" alt="{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}">
-							{% else %}
-
-							<img class="img-fluid rounded-circle" src="{{ asset('img/user.jpg') | imagine_filter('medium_avatar') }}" alt='' />
-
-							{% endif %}
-
-						{% endif %}
-					</div>
-					<div class="form-group">
-						<strong>Nom public</strong> <br>
-						<strong class="text-muted mb-0">{{ app.user.usePseudo == 1 ? app.user.pseudo : app.user.nom ~ ' ' ~ app.user.prenom }}</strong>
-					</div>
-				</div>
-
-				{% if is_granted('ROLE_VENDEUR') %}
-
-				<div class="col-sm-6">
-					<strong>Photo de couverture</strong>
-					<p>
-						Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
-						démarquer.
-					</p>
-					<div class="py-2">
-						{% if app.user.couverture %}
-
-						<img class="img-fluid rounded"
-							src="{{ vich_uploader_asset(app.user, 'couvertureFile') | imagine_filter('rectangle_avatar') }}"
-							alt='' />
-
-						{% else %}
-
-						<p>Aucune image de couverture..</p>
-
-						{% endif %}
-					</div>
-				</div>
-
-				{% endif %}
-			</div>
-			<div class="form-group">
-				<strong>Email</strong> <br>
-				<strong class="text-muted mb-0">{{ app.user.email }}</strong>
-			</div>
-			<div class="form-group">
-				<strong class="mb-0">Biographie</strong>
-				{% if is_granted('ROLE_VENDEUR') %}
+			<div>
+				<strong>Photo de couverture</strong>
 				<p>
-					Présentez-vous en une phrase ou plus afin que vos clients en sachent un peu plus sur qui vous êtes.
-					Attention : ce n’est pas votre service, et aucun lien externe, identifiant de réseau social, adresse
-					e-mail
-					ou numéro de téléphone n’est permis.
+					Ce n’est pas obligatoire, mais c’est joli. Personnalisez votre photo de couverture pour vous
+					démarquer.
 				</p>
-				{% endif %}
-				<p>{{ app.user.apropos }}</p>
+				<div class="py-4">
+					{% if app.user.couverture %}
+
+					<img class="img-fluid rounded"
+						src="{{ vich_uploader_asset(app.user, 'couvertureFile') | imagine_filter('rectangle_avatar') }}"
+						alt='' />
+
+					{% else %}
+
+					<p>Aucune image de couverture..</p>
+
+					{% endif %}
+				</div>
 			</div>
+
+			{% endif %}
 
 			<div class="form-group text-left">
 
 				{% if is_granted('ROLE_VENDEUR') %}
-					<a href="{{ path('user_coordonnees') }}" class="btn btn-success">
-						Mettre à jour
-					</a>
+				<a href="{{ path('user_coordonnees') }}" class="btn btn-success">
+					Mettre à jour
+				</a>
 				{% else %}
-					<a href="{{ path('user_edit_profil') }}" class="btn btn-success">
-						Mettre à jour
-					</a>
+				<a href="{{ path('user_edit_profil') }}" class="btn btn-success">
+					Mettre à jour
+				</a>
 				{% endif %}
 			</div>
 

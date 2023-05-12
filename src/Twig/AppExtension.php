@@ -188,7 +188,7 @@ class AppExtension extends AbstractExtension
     }
 
     public function getVendeurEmploisTemps($vendeur){
-        return $this->emploisTempsRepository->findBy(['vendeur' => $vendeur], ['ordre' => 'ASC']);
+        return $this->emploisTempsRepository->findBy(['vendeur' => $vendeur], ['id' => 'ASC']);
     }
 
     public function getAlertesNonLu(){

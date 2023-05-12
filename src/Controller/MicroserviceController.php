@@ -7,6 +7,7 @@ use App\Entity\Microservice;
 use App\Entity\SearchService;
 use App\Entity\ServiceOption;
 use App\Entity\ServiceSignale;
+use App\Form\Commande2Type;
 use App\Form\CommandeType;
 use App\Form\SearchServiceType;
 use App\Form\ServiceSignaleType;
@@ -101,6 +102,9 @@ class MicroserviceController extends AbstractController
         $similaires = $microserviceRepository->findBy(['vendeur' => $this->getUser()], ['created' => 'DESC'], 12);
         /** @var ServiceOption $option */
         $options = $microservice->getServiceOptions();
+        $categories = ['Ingenieur son', 'Studio'];
+        $isHiden = null;
+        $tauxHoraire = '';
 
         $erreurmessage = '';
 
@@ -122,39 +126,55 @@ class MicroserviceController extends AbstractController
             $this->addFlash('success', 'Le contenu a bien été enregistrer');
         }
 
+        if (in_array($microservice->getCategorie(), $categories)) {
+            
+            $commandeFormType = CommandeType::class; 
+        }else {
+            $commandeFormType = Commande2Type::class;
+            $isHiden = true;
+        }
+
         $commande = new Commande();
-        $commandeForm = $this->createForm(CommandeType::class, $commande);
+        $commandeForm = $this->createForm($commandeFormType, $commande);
         $commandeForm->handleRequest($request);
 
         if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
 
-            $reservationDate = $commandeForm->get('reservationDate')->getData();
-            $reservationStart = $commandeForm->get('reservationStartAt')->getData();
-            $reservationEnd = $commandeForm->get('reservationEndAt')->getData();
-            $tauxHoraire = date_diff($reservationEnd, $reservationStart);
-            
-            /** @var Commande $reservation Verification de l"existatnce de la resvation */
-            $reservation = $commandeRepository->findOneBy([
-                'reservationDate' => $reservationDate,
-                'vendeur' => $microservice->getVendeur()
-            ]);
+            /** Traitement pour cette catégorie */
+            if (in_array($microservice->getCategorie(), $categories)) {
 
-            if ($reservation) {
+                $reservationDate = $commandeForm->get('reservationDate')->getData();
+                $reservationStart = $commandeForm->get('reservationStartAt')->getData();
+                $reservationEnd = $commandeForm->get('reservationEndAt')->getData();
+                $tauxHoraire = date_diff($reservationEnd, $reservationStart);
 
-                $heureDebutReservee = date_format($reservation->getReservationStartAt(), 'H');
-                $heureFinReservee = date_format($reservation->getReservationEndAt(), 'H');
-                $newReservationStart = date_format($reservationStart, 'H');
-                $newReservationEnd = date_format($reservationEnd, 'H');
+                /** @var Commande $reservation Verification de l"existatnce de la resvation */
+                $reservation = $commandeRepository->findOneBy([
+                    'reservationDate' => $reservationDate,
+                    'vendeur' => $microservice->getVendeur()
+                ]);
 
-                if ($newReservationStart == $heureDebutReservee) {
+                if ($reservation) {
 
-                    $dateconv = strtotime($reservationDate);
-                    $date = date('d/m/Y', $dateconv);
+                    $heureDebutReservee = date_format($reservation->getReservationStartAt(), 'H');
+                    $heureFinReservee = date_format($reservation->getReservationEndAt(), 'H');
+                    $newReservationStart = date_format($reservationStart, 'H');
+                    $newReservationEnd = date_format($reservationEnd, 'H');
 
-                    /** Injection de l'erreur */
-                    $erreurmessage = "Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h';
+                    if ($newReservationStart == $heureDebutReservee) {
 
-                    //dd("Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h');
+                        $dateconv = strtotime($reservationDate);
+                        $date = date('d/m/Y', $dateconv);
+
+                        /** Injection de l'erreur */
+                        $erreurmessage = "Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h';
+
+                        //dd("Ce prestataire a déjà une reservation ce $date à partir de $heureDebutReservee" . 'h');
+                    }
+                }
+
+                if ($microservice->getCategorie() == 'Ingenieur son' && $tauxHoraire < 2) {
+                    $erreurmessage = "Le taux horaire minimal pour un ingenieur de son est de 2heure, de $reservationStart  à $reservationEnd fait $tauxHoraire h";
                 }
             }
 
@@ -167,11 +187,14 @@ class MicroserviceController extends AbstractController
                 //$commande->setPaymentIntent();
                 $commande->setClient($this->getUser());
                 $commande->setVendeur($microservice->getVendeur());
-                $commande->setTauxHoraire($tauxHoraire);
+
+                if (in_array($microservice->getCategorie(), $categories))
+                    $commande->setTauxHoraire($tauxHoraire);
+
                 $commande->setDestinataire($microservice->getVendeur());
                 $commande->setConfirmationClient(false);
                 $commande->setLu(false);
-                $commande->setStatut('Non payer');
+                $commande->setStatut('Non payée');
                 $commande->setOffre('Reservation');
                 $commande->setValidate(false);
                 $commande->setDeliver(false);
@@ -181,7 +204,7 @@ class MicroserviceController extends AbstractController
 
                 return $this->redirectToRoute('commander_microservice_reservation', [
                     'slug' => $microservice->getSlug(),
-                    'commande' => $commande->getId()
+                    'commande' => $commande->getId(),
                 ]);
             }
         }
@@ -193,6 +216,7 @@ class MicroserviceController extends AbstractController
             'commandeForm' => $commandeForm->createView(),
             'prix' => $microservice->getPrix(),
             'options' => $options,
+            'isHiden' => $isHiden,
             'erreurmessage' => $erreurmessage,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
             'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),

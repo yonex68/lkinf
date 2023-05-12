@@ -20,23 +20,20 @@ class EmploisTemps
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $jour = null;
-
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureOuverture = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureCloture = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $ordre = null;
-
     #[ORM\ManyToOne(inversedBy: 'emploisTemps')]
     private ?User $vendeur = null;
 
     #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'emploitemps')]
     private Collection $microservices;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $jours = [];
 
     public function __construct()
     {
@@ -47,19 +44,6 @@ class EmploisTemps
     {
         return $this->id;
     }
-
-    public function getJour(): ?string
-    {
-        return $this->jour;
-    }
-
-    public function setJour(string $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
-
     public function getHeureOuverture(): ?\DateTimeInterface
     {
         return $this->heureOuverture;
@@ -96,18 +80,6 @@ class EmploisTemps
         return $this;
     }
 
-    public function getOrdre(): ?int
-    {
-        return $this->ordre;
-    }
-
-    public function setOrdre(int $ordre): self
-    {
-        $this->ordre = $ordre;
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->getJour();
@@ -136,6 +108,18 @@ class EmploisTemps
         if ($this->microservices->removeElement($microservice)) {
             $microservice->removeEmploitemp($this);
         }
+
+        return $this;
+    }
+
+    public function getJours(): array
+    {
+        return $this->jours;
+    }
+
+    public function setJours(array $jours): self
+    {
+        $this->jours = $jours;
 
         return $this;
     }

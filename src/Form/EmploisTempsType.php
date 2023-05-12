@@ -15,8 +15,10 @@ class EmploisTempsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('jour', ChoiceType::class, [
-                'label' => 'Jour',
+            ->add('jours', ChoiceType::class, [
+                'label' => 'Jours',
+                'multiple' => true,
+                'expanded' => true,
                 'choices' => [
                     'Lundi' => 'Lundi',
                     'Mardi' => 'Mardi',

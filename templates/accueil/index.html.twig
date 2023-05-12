@@ -77,25 +77,25 @@
 				<div class="col-md-6">
 					<h2>Comment ça marche?</h2>
 					<p>
-						Trouvez le prestataire qui répondra à vos besoins, parcourez de nombreuses catégories et trouvez des
-						prestations dématérialisées pour
-						tous vos besoins. Faites votre choix parmi de nombreux prestataires qui mettent leur talent à votre
-						disposition.
+						Trouvez le professionnel qui répondra à vos besoins. Parcourez de nombreuses catégories, nos filtres
+						vous permettent de planifier vos projets à
+						n'importe quel moment et n'importe où. Faites votre choix parmi de nombreux prestataires qui mettent
+						leur talent à votre disposition.
 					</p>
 					<div class="row">
 						<div class="col-sm-12">
 							<ul>
 								<li>
 									<span><i class="fa fa-check-circle text-blue"></i>
-									Choisissez un service
+										Choisissez un service
 								</li>
 								<li>
 									<span><i class="fa fa-check-circle text-blue"></i>
-									Réservez une date
+										Réservez une date
 								</li>
 								<li>
 									<span><i class="fa fa-check-circle text-blue"></i>
-									Réalisez votre projet
+										Réalisez votre projet
 								</li>
 							</ul>
 						</div>
@@ -124,15 +124,17 @@
 
 				<div class="col">
 					<div class="freelancer">
-						{% if vendeur.couverture %}
-						<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
-							class="img-fluid"
-							alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
-						{% else %}
+						<a href="{{ path('vendeur_profil', {nameUrl: vendeur.nameUrl}) }}">
+							{% if vendeur.couverture %}
+							<img src="{{ vich_uploader_asset(vendeur, 'couvertureFile') | imagine_filter('midle_size') }}"
+								class="img-fluid"
+								alt="{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.nom ~ ' ' ~ vendeur.prenom }}">
+							{% else %}
 
-						<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
+							<img src="{{ asset('themes/base/images/senatopcustudio.jpg') | imagine_filter('midle_size') }}">
 
-						{% endif %}
+							{% endif %}
+						</a>
 						<div class="freelancer-footer">
 
 							{% if vendeur.avatar %}
@@ -174,8 +176,6 @@
 {% block javascripts %}
 
 {{ parent() }}
-
-<script src="{{ asset('js/favoris.js') }}"></script>
 
 {% include "partials/_location_script.html.twig" %}
 

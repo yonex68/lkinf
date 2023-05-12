@@ -23,16 +23,15 @@ class VendeurEmploisTempsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $jour = $form->get('jour')->getData();
+            /*$jour = $form->get('jour')->getData();
             $ordre = $this->getOrdre($jour);
             $findPlanning = $emploisTempsRepository->findOneBy(['jour' => $jour, 'vendeur' => $user]);
 
             if ($findPlanning) {
                 $emploisTemp = $findPlanning;
-            }
+            }*/
 
             $emploisTemp->setVendeur($user);
-            $emploisTemp->setOrdre($ordre);
             $emploisTempsRepository->save($emploisTemp, true);
             
             $this->addFlash('success', 'Le contenu a bien été ajouté');
@@ -51,11 +50,6 @@ class VendeurEmploisTempsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $jour = $form->get('jour')->getData();
-            $ordre = $this->getOrdre($jour);
-
-            $emploisTemp->setOrdre($ordre);
             $emploisTempsRepository->save($emploisTemp, true);
             $this->addFlash('success', 'Le contenu a bien été mise à jour');
             return $this->redirectToRoute('app_vendeur_emplois_temps_index', [], Response::HTTP_SEE_OTHER);

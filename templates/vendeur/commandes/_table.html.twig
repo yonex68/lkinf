@@ -69,10 +69,21 @@
             </td>
             <td>
                {% if commande.microservice %}
-               
-               <span class="badge badge-pill badge-{% if commande.statut == 'En attente' %}warning{% elseif commande.statut == 'Valider' %}success{% elseif commande.statut == 'Non payer' %}info{% endif %}">
-                  {{ commande.statut }}
-               </span>
+
+                  {% if commande.payed == true %}
+
+                  <span class="badge badge-pill badge-success">
+                     {{ commande.payed == true ? 'Payée' : 'Non payée' }}
+                  </span>
+
+                  {% else %}
+                  
+                  <span class="badge badge-pill badge-{% if commande.statut == 'En attente' %}warning{% elseif commande.statut == 'Valider' %}success{% elseif commande.statut == 'Non payée' %}info{% endif %}">
+                     {{ commande.statut }}
+                  </span>
+                  
+                  {% endif %}
+
                {% else %}
                <span class="badge badge-pill badge-success">Validé</span>
                {% endif %}

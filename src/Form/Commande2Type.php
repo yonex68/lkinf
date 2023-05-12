@@ -4,32 +4,24 @@ namespace App\Form;
 
 use App\Entity\Commande;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class Commande2Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('offre')
-            ->add('montant')
-            ->add('validate')
-            ->add('deliver')
-            ->add('cancel')
-            ->add('deliverAt')
-            ->add('cancelAt')
-            ->add('validateAt')
-            ->add('statut')
-            ->add('confirmationClient')
-            ->add('lu')
-            ->add('created')
-            ->add('updated')
-            ->add('microservice')
-            ->add('client')
-            ->add('vendeur')
-            ->add('destinataire')
-        ;
+            ->add('montant', HiddenType::class)
+            ->add('reservationDate', HiddenType::class)
+            ->add('reservationStartAt', HiddenType::class, [
+                'required' => false
+            ])
+            ->add('reservationEndAt', HiddenType::class, [
+                'required' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

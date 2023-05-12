@@ -128,6 +128,16 @@ class EditProfilType extends AbstractType
             ->add('latitude', HiddenType::class, [
                 'required' => false,
             ])
+            ->add('codePostal', TextType::class, [
+                'label' => 'Code postal',
+                'attr' => ['placeholder' => 'Code postal'],
+                //'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut pas être vide',
+                    ]),
+                ],
+            ])
         ;
     }
 

@@ -12,7 +12,7 @@
 
 						{% if usercommande.vendeur.id == app.user.id %}
 
-						<div class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
+						<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
 							<div class="dropdown-list-image mr-3">
 
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}">
@@ -40,11 +40,11 @@
 									</a>
 								</div>
 							</div>
-						</div>
+						</a>
 
 						{% else %}
 
-						<div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
+						<a href="{{ path('commande_details', {id: usercommande.id}) }}" class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ usercommande == commande ? 'bg-blue' : '' }}">
 							<div class="dropdown-list-image mr-3">
 
 								<a href="{{ path('commande_details', {id: usercommande.id}) }}">
@@ -72,7 +72,7 @@
 									</a>
 								</div>
 							</div>
-						</div>
+						</a>
 
 						{% endif %}
 

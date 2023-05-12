@@ -100,6 +100,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
                   ->setCompte('Client')
                   ->setRoles(['ROLE_CLIENT'])
                   ->setGoogleId($googleUser->getId())
+                  ->setIsVerified(true)
                   ->setPassword(
                      $this->userPasswordHasher->hashPassword(
                         $user,

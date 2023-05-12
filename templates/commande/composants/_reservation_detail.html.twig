@@ -5,6 +5,7 @@
          {{ commande.reservationDate|date("d/m/Y") }}
       </p>
    </div>
+   {% if tauxHoraire %}
    <div class="d-flex align-items-top mb-2">
       <p class="mb-0 text-muted">Heure debut</p>
       <p class="text-muted mb-0 mt-0 ml-auto">
@@ -23,6 +24,7 @@
          {{ tauxHoraire }}h
       </p>
    </div>
+   {% endif %}
    <div class="d-flex align-items-top mb-2">
       <p class="mb-0 text-muted">Montant</p>
       <p class="text-muted mb-0 mt-0 ml-auto">
@@ -30,9 +32,12 @@
       </p>
    </div>
    <div class="d-flex align-items-top mb-2">
-      <p class="mb-0 text-dark">
-         <span>TOTAL <br> (Taux horaire inclus)</span>
-      </p>
+         <p class="mb-0 text-dark">
+            <span>TOTAL 
+            {% if tauxHoraire %}
+               <br> (Taux horaire inclus)</span>
+            {% endif %}
+         </p>
       <strong class="text-dark mb-0 mt-0 ml-auto">{{ montant }} {{ currency }}</strong>
    </div>
    <div class="d-flex align-items-top mb-2">

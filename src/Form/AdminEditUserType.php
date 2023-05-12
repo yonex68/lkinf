@@ -162,24 +162,13 @@ class AdminEditUserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('etat', TextType::class, [
-                'label' => 'Etat',
-                'help' => 'Etat de residence actuelle',
-                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "address-level1"],
-                'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ ne peut pas être vide',
-                    ]),
-                ],
-            ])
             ->add('telephone', TextType::class, [
                 'help' => 'Facultatif',
                 'label' => 'Téléphone',
                 'required' => false,
                 'attr' => ['placeholder' => 'Téléphone'],
             ])
-            ->add('Compte', ChoiceType::class, [
+            ->add('roles', ChoiceType::class, [
                 'label' => 'Rôles',
                 'choices'  => [
                     'Administrateur' =>  'ROLE_ADMIN',

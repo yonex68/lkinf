@@ -1085,7 +1085,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     public function __toString()
     {
-        return $this->getEmail();
+        if ($this->getEmail()) {
+            return $this->getEmail();
+        }
+        return $this->getId();
     }
 
     /**

@@ -117,10 +117,10 @@
 					<i class="fa fa-check-circle float-right"></i>
 				</a>
 
+				{% endif %}
+
 				<a class="dropdown-item py-2 {{ app.request.attributes.get('_route') == 'edit_password' ? 'active' : '' }}"
 					href="{{ path('edit_password') }}"><i class="fa fa-key"></i>&nbsp;&nbsp;&nbsp;Mes accès</a>
-
-				{% endif %}
 			</div>
 		</div>
 	</div>

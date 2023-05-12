@@ -104,6 +104,7 @@ class InstagramAuthenticator extends OAuth2Authenticator implements Authenticati
                         ->setCompte('Client')
                         ->setRoles(['ROLE_CLIENT'])
                         ->setPseudo($instagrameUser->getNickname())
+                        ->setIsVerified(true)
                         //->setEmail($instagrameUser->getEmail())
                         //->setNom($instagrameUser->getName())
                         //->setPseudo($instagrameUser->getNickname())

@@ -99,6 +99,7 @@ class FacebookAuthenticator extends OAuth2Authenticator implements Authenticatio
                         ->setCompte('Client')
                         ->setRoles(['ROLE_CLIENT'])
                         ->setFacebookId($facebookUser->getId())
+                        ->setIsVerified(true)
                         ->setPassword(
                             $this->userPasswordHasher->hashPassword(
                                 $user,

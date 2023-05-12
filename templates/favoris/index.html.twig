@@ -32,8 +32,8 @@
 								<div class="row">
 									<div class="col-9">
 										<a href="{{ path('microservice_details', {slug: favori.microservice.slug}) }}" class="text-dark">
-											<h4 class="h6 mb-1">{{ favori.microservice.name|u.truncate(20, '...') }}</h4>
-										</a>
+											<strong class="mb-1">{{ favori.microservice.name|u.truncate(40, '...') }}</strong>
+										</a> <br>
 										<a href="{{ path('microservices_categories', {slug: favori.microservice.categorie.slug}) }}?categories%5B%5D={{ favori.microservice.categorie.id }}"
 											class="badge badge-blue badge-pill">
 											#{{ favori.microservice.categorie.name }}

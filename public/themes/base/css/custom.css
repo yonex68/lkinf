@@ -544,9 +544,6 @@ body.responsive {
    background: linear-gradient(45DEG, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
    border: #405DE6;
 }
-.osahan-login h5{
-   font-size: 1em;
-}
 .p-3.osahan-post-header{
    padding: 5px!important;
 }
@@ -571,11 +568,6 @@ body.responsive {
    font-size: 1.3em!important;
    text-transform: capitalize!important;
    font-weight: 400!important;
-}
-.osahan-login a,
-.osahan-login label,
-.osahan-login p{
-   font-size: 14px;
 }
 .search {
    position: absolute;
@@ -678,4 +670,44 @@ body.responsive {
 
 .addresses ul li:hover {
    background-color: #f5f5f5;
+}
+
+.osahan-login .btn{
+   border-radius: 30px!important;
+}
+.osahan-login .form-control, .osahan-login .btn{
+   height: calc(2.5em + 0.75rem + 2px)!important;
+}
+.osahan-login .form-control{
+   border-radius: 8px!important;
+   background: transparent!important;
+   height: calc(2.5em + 0.75rem + 2px)!important;
+   color: white!important;
+   padding-left: 10px;
+}
+.osahan-login .form-group label{
+   background: #333;
+   border-radius: 5px;
+   padding: 0px 3px 2px 3px;
+   display: inline;
+   position: relative;
+   font-size: .9em;
+   left: 10px;
+   z-index: 3;
+   bottom: -10px;
+}
+
+.osahan-login .radio label{
+   background: inherit;
+   border-radius: inherit;
+   padding: inherit;
+   display: inherit;
+   position: inherit;
+   left: 0px;
+   z-index: 3;
+   bottom: inherit;
+}
+.shadow-right{
+    box-shadow: 0 0 15px rgba(0,0,0,.15);
+    clip-path: inset(0px -15px 0px 0px);
 }

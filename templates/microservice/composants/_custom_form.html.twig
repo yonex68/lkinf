@@ -20,9 +20,6 @@
             </div>
          </div>
       </a>
-      <div class="pb-3">
-         {% include "microservice/composants/_vendeur_planning.html.twig" %}
-      </div>
 
       <div>
          <table class="table table-bordered">
@@ -62,39 +59,41 @@
                {{ form_row(commandeForm.reservationDate) }}
             </div>
 
-            <h6 class="pb-2 h6">Horaire</h6>
-            {% if erreurmessage %}
+            <div class="{{ isHiden == true ? 'bloc-masquer' : '' }}">
+               <h6 class="pb-2 h6">Horaire</h6>
+               {% if erreurmessage %}
                <div class="alert alert-danger">
                   <i class="fa fa-exclamation-triangle"></i> {{ erreurmessage }}
                </div>
-            {% endif %}
-            <div class="row">
-               <div class="col-6 col-sm-6">
-                  <div class="form-group">
-                     <div class="input-group mb-3 input-group-sm border">
-                        <div class="input-group-prepend border-0">
-                           <span class="input-group-text border-0">De </span>
+               {% endif %}
+               <div class="row">
+                  <div class="col-6 col-sm-6">
+                     <div class="form-group">
+                        <div class="input-group mb-3 input-group-sm border">
+                           <div class="input-group-prepend border-0">
+                              <span class="input-group-text border-0">De </span>
+                           </div>
+                           {{ form_widget(commandeForm.reservationStartAt) }}
                         </div>
-                        {{ form_widget(commandeForm.reservationStartAt) }}
+                        {{ form_errors(commandeForm.reservationStartAt) }}
                      </div>
-                     {{ form_errors(commandeForm.reservationStartAt) }}
                   </div>
-               </div>
-               <div class="col-6 col-sm-6">
-                  <div class="form-group">
-                     <div class="input-group mb-3 input-group-sm border">
-                        <div class="input-group-prepend border-0">
-                           <span class="input-group-text border-0">A </span>
+                  <div class="col-6 col-sm-6">
+                     <div class="form-group">
+                        <div class="input-group mb-3 input-group-sm border">
+                           <div class="input-group-prepend border-0">
+                              <span class="input-group-text border-0">A </span>
+                           </div>
+                           {{ form_widget(commandeForm.reservationEndAt) }}
                         </div>
-                        {{ form_widget(commandeForm.reservationEndAt) }}
+                        {{ form_errors(commandeForm.reservationEndAt) }}
                      </div>
-                     {{ form_errors(commandeForm.reservationEndAt) }}
                   </div>
                </div>
             </div>
 
             {% if microservice.serviceOptions|length > 0 %}
-            
+
             <div class="row">
                <div class="col-sm-12">
                   <h6 class="mb-3">Options</h6>
@@ -126,13 +125,14 @@
             {{ form_widget(commandeForm.montant,
             {attr: {'value': microservice.prix is defined ? microservice.prix : 0 }}
             ) }}
-      
+
             {{ form_rest(commandeForm) }}
 
             <div class="row">
                <div class="col-sm-12">
                   <button class="btn btn-success btn-lg btn-block pt-2 pb-1">
-                     <span class="float-left">RESERVER</span> <output name="total" class="h6 float-right">{{ microservice.prix }} {{ currency }} </output>
+                     <span class="float-left">RESERVER</span> <output name="total" class="h6 float-right">{{
+                        microservice.prix }} {{ currency }} </output>
                   </button>
                </div>
             </div>

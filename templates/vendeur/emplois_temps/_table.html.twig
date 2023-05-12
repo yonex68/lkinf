@@ -1,16 +1,19 @@
-<table class="table table-borderless table-striped">
+<table class="table table-borderless">
    <tbody>
       <thead>
          <tr class="text-uppercase text-dark">
             <th>Jours</th>
             <th>Heure d'ouverture</th>
             <th>Heure de cloture</th>
+            <th class="text-right">Actions</th>
          </tr>
       </thead>
       {% for emplois_temp in emploistemps(app.user) %}
       <tr class="text-muted">
          <th>
-            <span>{{ emplois_temp.jour }}</span>
+            {% for jour in emplois_temp.jours %}
+               <span class="badge badge-light border text-dark">{{ jour }}</span> <br>
+            {% endfor %}
          </th>
          <td>
             {{ emplois_temp.heureOuverture ? emplois_temp.heureOuverture|date('H:i') : '' }}
@@ -20,7 +23,7 @@
          </td>
          <td class="text-right">
             <a href="{{ path('app_vendeur_emplois_temps_edit', {'id': emplois_temp.id}) }}"
-               class="btn btn-dark">Modifier</a>
+               class="btn btn-dark"><i class="fa fa-edit"></i></a>
             {% include "vendeur/emplois_temps/_delete_form.html.twig" %}
          </td>
       </tr>

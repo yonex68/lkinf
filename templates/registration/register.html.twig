@@ -18,12 +18,6 @@
 
 {% block body %}
 
-<div class="text-center mt-3 pb-3">
-
-	{% include "security/_reseaux.html.twig" %}
-
-</div>
-
 {% for flashError in app.flashes('verify_email_error') %}
 <div class="alert alert-danger" role="alert">
 	<!-- flashError -->
@@ -37,7 +31,6 @@
 		<div class="form-group">
 			<label class="mb-1">Nom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute text-blue"></i>
 				{{ form_widget(registrationForm.nom) }}
 			</div>
 			{{ form_errors(registrationForm.nom) }}
@@ -47,7 +40,6 @@
 		<div class="form-group">
 			<label class="mb-1">Prénom</label>
 			<div class="position-relative icon-form-control">
-				<i class="mdi mdi-account position-absolute text-blue"></i>
 				{{ form_widget(registrationForm.prenom) }}
 			</div>
 			{{ form_errors(registrationForm.prenom) }}
@@ -55,7 +47,7 @@
 	</div>
 </div>
 
-<div class="form-group">
+<div class="form-group radio">
 	<label class="mb-1">Je souhaite?</label>
 	{{ form_widget(registrationForm.compte) }}
 	{{ form_errors(registrationForm.compte) }}
@@ -65,7 +57,6 @@
 	<div class="form-group">
 		<label class="mb-1">Lieu de la prestation de service</label>
 		<div class="position-relative icon-form-control">
-			<i class="fa fa-map-marker position-absolute text-blue"></i>
 			{{ form_widget(registrationForm.adresse) }}
 		</div>
 		{{ form_errors(registrationForm.adresse) }}
@@ -88,7 +79,6 @@
 <div class="form-group">
 	<label class="mb-1">Email</label>
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-email-outline position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.email) }}
 	</div>
 	{{ form_errors(registrationForm.email) }}
@@ -97,7 +87,6 @@
 <div class="form-group mb-0">
 	{% include "security/_password.html.twig" %}
 	<div class="position-relative icon-form-control">
-		<i class="mdi mdi-key-variant position-absolute text-blue"></i>
 		{{ form_widget(registrationForm.plainPassword) }}
 	</div>
 </div>
@@ -106,15 +95,21 @@
 	{{ form_widget(registrationForm.agreeTerms) }}
 	<label for="registration_form_agreeTerms" style="display: inline;margin-left:30px;vertical-align: top;">
 		J'accepte les
-		<a href="" class="text-blue">termes</a>
+		<a href="{{ path('page_conditions') }}" class="text-blue">termes</a>
 		et
-		<a href="" class="text-blue">conditions d'utilisation</a>
+		<a href="{{ path('page_conditions') }}" class="text-blue">conditions d'utilisation</a>
 	</label>
 </div>
 
 <button type="submit" formnovalidate class="btn btn-success btn-block text-uppercase">S'inscrire</button>
 
 {{ form_end(registrationForm) }}
+
+<div class="text-center mt-3 pb-3">
+
+	{% include "security/_reseaux.html.twig" %}
+
+</div>
 
 {% endblock %}
 
