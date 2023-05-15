@@ -153,7 +153,7 @@
                      <td>{{ user.genre }}</td>
                      <td>
                      <span class="badge bg-{{ user.isVerified == 1 ? 'success' : 'warning' }} rounded-pill text-capitalize">{{
-                           user.isVerified == 1 ? 'Actif (ve)' : 'Inactif (ve)' }}</span></td>
+                           user.isVerified == 1 ? 'Actif' : 'Inactif' }}</span></td>
                      <td class="text-end">
                         <a href="{{ path('app_admin_users_show', {'nameUrl': user.nameUrl}) }}"
                            class="btn btn-light border">Profil</a>

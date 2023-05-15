@@ -55,7 +55,6 @@ class AdminEditUserType extends AbstractType
                 'label' => 'Pseudonyme',
                 'attr' => ['placeholder' => 'Pseudonyme'],
                 'required' => false,
-                'help' => "Un pseudonyme est un nom d'emprunt adopté par une ou plusieurs personnes pour exercer une activité sous un autre nom que celui de son identité officielle.",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide',
@@ -84,7 +83,7 @@ class AdminEditUserType extends AbstractType
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
-                'imagine_pattern'   =>  'small_size',
+                'imagine_pattern'   =>  'rectangle_avatar',
                 'attr'   =>  ['class' => 'form-control-file'],
             ])
             ->add('lieuPrestation', TextType::class, [
@@ -100,16 +99,6 @@ class AdminEditUserType extends AbstractType
                 'label'     =>  'Home studio',
                 'required' => false,
                 'help'     =>  "Cocher uniquement s'il s'agit d'un Home studio",
-            ])
-            ->add('couvertureFile', VichImageType::class, [
-                'label' => '(Png, jpg et jpeg)',
-                'required'  =>  false,
-                'allow_delete' =>  false,
-                'download_label'     =>  false,
-                'image_uri'     =>  false,
-                'download_uri'     =>  false,
-                'imagine_pattern'   =>  'rectangle_avatar',
-                'attr'   =>  ['class' => 'form-control-file'],
             ])
             ->add('categorie', EntityType::class, [
                 'label'     =>  'Catégorie de prestataire',
