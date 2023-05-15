@@ -4,86 +4,89 @@
 	{% for userconversation in conversations %}
 
 	<div
-		class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}"
+		class="p-1 align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}"
 		id="conversation-{{ userconversation.id }}">
 
 		{% if userconversation.user1.id == app.user.id %}
 
-		<div class="dropdown-list-image mr-3">
+		<a href="{{ path('conversations_show', {'id': userconversation.id}) }}" class="media">
 
-			<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% if userconversation.user2.reseauAvatar %}
 
-				{% if userconversation.user2.avatar %}
+			<img src="{{ userconversation.user2.reseauAvatar }}"
+				alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
-				<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}"
-					class="rounded-circle border"
-					alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
+			{% else %}
 
-				{% else %}
+			{% if userconversation.user2.avatar %}
 
-				<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+			<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}"
+				class="rounded-circle border"
+				alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
-				{% endif %}
+			{% else %}
 
-			</a>
+			<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
 
-		</div>
-		<div class="font-weight-bold mr-1 overflow-hidden">
-			<div class="text-truncate">
+			{% endif %}
 
-				<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% endif %}
+
+			<span class="media-body ml-2">
+				<span class="text-truncate">
 
 					{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom
 					~ ' ' ~ userconversation.user2.prenom }}
 
-				</a>
+				</span> <br>
+				<span class="small text-truncate overflow-hidden text-black-50">
 
-			</div>
-			<div class="small text-truncate overflow-hidden text-black-50">
+					{{ include('conversations/composants/_last_message.html.twig') }}
 
-				{{ include('conversations/composants/_last_message.html.twig') }}
+				</span>
+			</span>
 
-			</div>
-		</div>
+		</a>
 
 		{% elseif userconversation.user2.id == app.user.id %}
 
-		<div class="dropdown-list-image mr-3">
+		<a href="{{ path('conversations_show', {'id': userconversation.id}) }}" class="media">
 
-			<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% if userconversation.user1.reseauAvatar %}
 
-				{% if userconversation.user1.avatar %}
+			<img src="{{ userconversation.user1.reseauAvatar }}"
+				alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
-				<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}"
-					class="rounded-circle border"
-					alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
+			{% else %}
 
-				{% else %}
+			{% if userconversation.user1.avatar %}
 
-				<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+			<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}"
+				class="rounded-circle border"
+				alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
-				{% endif %}
+			{% else %}
 
-			</a>
+			<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
 
-		</div>
-		<div class="font-weight-bold mr-1 overflow-hidden">
-			<div class="text-truncate">
+			{% endif %}
 
-				<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% endif %}
+
+			<span class="media-body ml-2">
+				<span>
 
 					{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ '
 					' ~ userconversation.user1.prenom }}
 
-				</a>
+				</span> <br>
+				<span class="small text-truncate overflow-hidden text-black-50">
 
-			</div>
-			<div class="small text-truncate overflow-hidden text-black-50">
+					{{ include('conversations/composants/_last_message.html.twig') }}
 
-				{{ include('conversations/composants/_last_message.html.twig') }}
-
-			</div>
-		</div>
+				</span>
+			</span>
+		</a>
 
 		{% endif %}
 
@@ -102,86 +105,90 @@
 	{% for userconversation in conversations %}
 
 	<div
-		class="p-1 d-flex align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}"
+		class="p-1 align-items-center border-bottom osahan-post-header overflow-hidden {{ userconversation == conversation ? 'bg-blue' : '' }}"
 		id="conversation-{{ userconversation.id }}">
 
 		{% if userconversation.user1.id == app.user.id %}
 
-		<div class="dropdown-list-image mr-3">
+		<a href="{{ path('conversations_show', {'id': userconversation.id}) }}" class="media">
 
-			<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% if userconversation.user2.reseauAvatar %}
 
-				{% if userconversation.user2.avatar %}
+			<img src="{{ userconversation.user2.reseauAvatar }}"
+				alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
-				<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}"
-					class="rounded-circle border"
-					alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
+			{% else %}
 
-				{% else %}
+			{% if userconversation.user2.avatar %}
 
-				<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+			<img src="{{ vich_uploader_asset(userconversation.user2) | imagine_filter('small_avatar') }}"
+				class="rounded-circle border"
+				alt="{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ ' ' ~ userconversation.user2.prenom }}">
 
-				{% endif %}
+			{% else %}
 
-			</a>
+			<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
 
-		</div>
-		<div class="font-weight-bold mr-1 overflow-hidden">
-			<div class="text-truncate">
+			{% endif %}
 
-				<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% endif %}
+
+			<span class="media-body ml-2">
+				<span class="text-truncate">
 
 					{{ userconversation.user2.usePseudo == 1 ? userconversation.user2.pseudo : userconversation.user2.nom ~ '
 					' ~ userconversation.user2.prenom }}
 
-				</a>
+				</span>
+				<span class="small text-truncate overflow-hidden text-black-50">
 
-			</div>
-			<div class="small text-truncate overflow-hidden text-black-50">
+					{{ include('conversations/composants/_last_message.html.twig') }}
 
-				{{ include('conversations/composants/_last_message.html.twig') }}
+				</span>
+			</span>
 
-			</div>
-		</div>
+		</a>
 
 		{% elseif userconversation.user2.id == app.user.id %}
 
-		<div class="dropdown-list-image mr-3">
+		<a href="{{ path('conversations_show', {'id': userconversation.id}) }}" class="media">
 
-			<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% if userconversation.user1.reseauAvatar %}
 
-				{% if userconversation.user1.avatar %}
+			<img src="{{ userconversation.user1.reseauAvatar }}"
+				alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
-				<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}"
-					class="rounded-circle border"
-					alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
+			{% else %}
 
-				{% else %}
+			{% if userconversation.user1.avatar %}
 
-				<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
+			<img src="{{ vich_uploader_asset(userconversation.user1) | imagine_filter('small_avatar') }}"
+				class="rounded-circle border"
+				alt="{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ ' ' ~ userconversation.user1.prenom }}">
 
-				{% endif %}
+			{% else %}
 
-			</a>
+			<img src="{{ asset('img/user.jpg') }}" width="40" height="40" class="rounded-circle border">
 
-		</div>
-		<div class="font-weight-bold mr-1 overflow-hidden">
-			<div class="text-truncate">
+			{% endif %}
 
-				<a href="{{ path('conversations_show', {'id': userconversation.id}) }}">
+			{% endif %}
+
+			<span class="media-body ml-2">
+				<span class="text-truncate">
 
 					{{ userconversation.user1.usePseudo == 1 ? userconversation.user1.pseudo : userconversation.user1.nom ~ '
 					' ~ userconversation.user1.prenom }}
 
-				</a>
+				</span>
+				<span class="small text-truncate overflow-hidden text-black-50">
 
-			</div>
-			<div class="small text-truncate overflow-hidden text-black-50">
+					{{ include('conversations/composants/_last_message.html.twig') }}
 
-				{{ include('conversations/composants/_last_message.html.twig') }}
+				</span>
+			</span>
 
-			</div>
-		</div>
+		</a>
 
 		{% endif %}
 

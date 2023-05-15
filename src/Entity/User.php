@@ -158,7 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $couverture = null;
 
-    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: EmploisTemps::class)]
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: EmploisTemps::class, cascade: ["persist"])]
     private Collection $emploisTemps;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ServiceSignale::class)]

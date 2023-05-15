@@ -126,15 +126,9 @@
 		{{ encore_entry_script_tags('dropdown') }}
 		{{ encore_entry_script_tags('favoris') }}
 		{{ encore_entry_script_tags('btnloader') }}
+		{{ encore_entry_script_tags('service') }}
+		{{ encore_entry_script_tags('file') }}
 	{% endblock %}
-
-	<script>
-		// Add the following code if you want the name of the file appear on select
-		$(".custom-file-input").on("change", function () {
-			var fileName = $(this).val().split("\\").pop();
-			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-		});
-	</script>
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBWPH2ZDRB"></script>

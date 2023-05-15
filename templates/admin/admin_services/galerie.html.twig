@@ -76,15 +76,7 @@
 
                                 <img class="img-fluid"
                                     src="{{ vich_uploader_asset(media, 'imageFile') | imagine_filter('small_size') }}"
-                                    alt="{{ media.name }}"> <br>
-
-                                <form method="post" class="d-inline"
-                                    action="{{ path('app_admin_services_medias_delete', {'id': media.id}) }}"
-                                    onsubmit="return confirm('Voulez-vous vraiment supprimer cette image?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                    <button class="btn btn-outline-danger my-2 btn-sm"><i class="fa fa-trash"></i>
-                                        Supprimer</button>
-                                </form>
+                                    alt="{{ media.name }}">
 
                             </div>
 
@@ -95,48 +87,30 @@
                     {% endif %}
 
                     <!-- Si le nombre maximal d'image pour un service est 2 -->
-                    {% if microservice.medias|length <= 10 %} 
-                    {{ form_start(mediaForm) }} 
-                    
-                    <div>
-                        {{ form_row(mediaForm.imageFile) }}
-                    </div>
-
-                    <div class="">
-                        <button type="submit" class="btn btn-dark mb-4">Télécharger</button>
-                    </div>
-
-                    {{ form_end(mediaForm) }}
-
-                    {% endif %}
-
-                </div>
-
-            {% if microservice.medias|length > 0 %}
-            <!-- Form collection -->
-            <hr>
-            <div class="p-3">
-                <h4 class="">
-                    Editer la galérie
-                </h4>
-                <div class="row">
-                    <div class="col-sm-8">
-                        {{ form_start(form) }}
-
-                        {{ form_row(form.medias) }}
-
-                        <div class="py-3">
-                            <div class="">
-                                <button class="btn btn-primary">{{ button_label|default('Enregistrer et
-                                    suivant') }}</button>
+                    {{ form_start(form) }}
+                    {{ form_widget(form._token) }}
+                    {{ form_errors(form) }}
+                        <div id="medias" class="row" data-prototype="{{ include("vendeur/microservices/form/_medias.html.twig", {form:
+                            form.medias.vars.prototype})|e("html_attr") }}"
+                            data-index="{{ form.medias|length > 0 ? form.medias|last.vars.name + 1 : 0 }}">
+                            {% for media in form.medias %}
+                            <div class="col-sm-6">
+                                {{ include("vendeur/microservices/form/_medias.html.twig", {form: media}) }}
                             </div>
+                            {% endfor %}
                         </div>
+                        <br>
+                        <button type="button" class="btn btn-light btn-new" data-collection="#medias">
+                            <i class="fa fa-plus"></i> Ajouter une image
+                        </button>
 
-                        {{ form_end(form) }}
-                    </div>
+                        <div class="form-group text-left mt-5">
+                            <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer et poursuivre') }}</button>
+                        </div>
+                    {{ form_end(form, {render_rest: false}) }}
+
                 </div>
             </div>
-            {% endif %}
         </div>
 
     </div>

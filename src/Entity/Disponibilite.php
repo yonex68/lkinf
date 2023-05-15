@@ -18,36 +18,21 @@ class Disponibilite
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $jour = null;
-
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureOuverture = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureCloture = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $ordre = null;
-
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     private ?Microservice $service = null;
+
+    #[ORM\Column(type: 'array', nullable: true)]
+    private $jours = [];
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getJour(): ?string
-    {
-        return $this->jour;
-    }
-
-    public function setJour(string $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
     }
 
     public function getHeureOuverture(): ?\DateTimeInterface
@@ -74,18 +59,6 @@ class Disponibilite
         return $this;
     }
 
-    public function getOrdre(): ?int
-    {
-        return $this->ordre;
-    }
-
-    public function setOrdre(int $ordre): self
-    {
-        $this->ordre = $ordre;
-
-        return $this;
-    }
-
     public function getService(): ?Microservice
     {
         return $this->service;
@@ -100,6 +73,18 @@ class Disponibilite
 
     public function __toString()
     {
-        return $this->getJour();
+        return $this->getId();
+    }
+
+    public function getJours()
+    {
+        return $this->jours;
+    }
+
+    public function setJours(?array $jours): self
+    {
+        $this->jours = $jours;
+
+        return $this;
     }
 }

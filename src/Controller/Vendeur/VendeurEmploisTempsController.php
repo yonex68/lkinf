@@ -3,8 +3,12 @@
 namespace App\Controller\Vendeur;
 
 use App\Entity\EmploisTemps;
+use App\Entity\User;
 use App\Form\EmploisTempsType;
+use App\Form\UserTempsType;
 use App\Repository\EmploisTempsRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,25 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class VendeurEmploisTempsController extends AbstractController
 {
     #[Route('/', name: 'app_vendeur_emplois_temps_index', methods: ['GET', 'POST'])]
-    public function index(EmploisTempsRepository $emploisTempsRepository, Request $request): Response
+    public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
         $user = $this->getUser();
-        $emploisTemp = new EmploisTemps();
-        $form = $this->createForm(EmploisTempsType::class, $emploisTemp);
+        $form = $this->createForm(UserTempsType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            /*$jour = $form->get('jour')->getData();
-            $ordre = $this->getOrdre($jour);
-            $findPlanning = $emploisTempsRepository->findOneBy(['jour' => $jour, 'vendeur' => $user]);
-
-            if ($findPlanning) {
-                $emploisTemp = $findPlanning;
-            }*/
-
-            $emploisTemp->setVendeur($user);
-            $emploisTempsRepository->save($emploisTemp, true);
+            $entityManager->flush($user);
             
             $this->addFlash('success', 'Le contenu a bien été ajouté');
             return $this->redirectToRoute('app_vendeur_emplois_temps_index', [], Response::HTTP_SEE_OTHER);

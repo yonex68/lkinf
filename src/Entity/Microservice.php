@@ -70,23 +70,23 @@ class Microservice
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Media::class)]
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Media::class, cascade: ["persist"])]
     private Collection $medias;
 
-    #[ORM\ManyToMany(targetEntity: Realisation::class, inversedBy: 'microservices')]
-    private Collection $realisations;
-
-    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: ServiceSignale::class)]
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: ServiceSignale::class, cascade: ["persist"])]
     private Collection $serviceSignales;
 
-    #[ORM\ManyToMany(targetEntity: EmploisTemps::class, inversedBy: 'microservices')]
+    #[ORM\ManyToMany(targetEntity: EmploisTemps::class, inversedBy: 'microservices', cascade: ["persist"])]
     private Collection $emploitemps;
 
     #[ORM\Column]
     private ?bool $offline = null;
 
-    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Disponibilite::class)]
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Disponibilite::class, cascade: ["persist"])]
     private Collection $disponibilites;
+
+    #[ORM\OneToMany(mappedBy: 'microservice', targetEntity: Realisation::class, cascade: ["persist"])]
+    private Collection $realisations;
 
     public function __construct()
     {
@@ -95,10 +95,10 @@ class Microservice
         $this->favoris = new ArrayCollection();
         $this->serviceOptions = new ArrayCollection();
         $this->medias = new ArrayCollection();
-        $this->realisations = new ArrayCollection();
         $this->serviceSignales = new ArrayCollection();
         $this->emploitemps = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
+        $this->realisations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -429,30 +429,6 @@ class Microservice
     }
 
     /**
-     * @return Collection<int, Realisation>
-     */
-    public function getRealisations(): Collection
-    {
-        return $this->realisations;
-    }
-
-    public function addRealisation(Realisation $realisation): self
-    {
-        if (!$this->realisations->contains($realisation)) {
-            $this->realisations->add($realisation);
-        }
-
-        return $this;
-    }
-
-    public function removeRealisation(Realisation $realisation): self
-    {
-        $this->realisations->removeElement($realisation);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ServiceSignale>
      */
     public function getServiceSignales(): Collection
@@ -542,6 +518,36 @@ class Microservice
             // set the owning side to null (unless already changed)
             if ($disponibilite->getService() === $this) {
                 $disponibilite->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Realisation>
+     */
+    public function getRealisations(): Collection
+    {
+        return $this->realisations;
+    }
+
+    public function addRealisation(Realisation $realisation): self
+    {
+        if (!$this->realisations->contains($realisation)) {
+            $this->realisations->add($realisation);
+            $realisation->setMicroservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealisation(Realisation $realisation): self
+    {
+        if ($this->realisations->removeElement($realisation)) {
+            // set the owning side to null (unless already changed)
+            if ($realisation->getMicroservice() === $this) {
+                $realisation->setMicroservice(null);
             }
         }
 

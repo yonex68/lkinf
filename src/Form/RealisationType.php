@@ -7,10 +7,13 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 class RealisationType extends AbstractType
 {
@@ -53,21 +56,15 @@ class RealisationType extends AbstractType
                     ])
                 ]
             ])
-            ->add('file', TextType::class, [
-                'label' => 'Coordonnées du fichier',
-                'help' => 'Exemple: ID Youtube, Vimeo, instagram....',
-                'required' => false
-            ])
-            ->add('link', TextType::class, [
+            ->add('link', UrlType::class, [
                 'label' => 'Lien vers la réalisation',
                 'help' => 'Copiez vos liens YouTube, Vimeo,... pour referencer vos réalisations',
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champ est requis',
-                    ])
+                    new NotBlank(),
+                    new Url()
                 ]
             ])
-            ->add('description', CKEditorType::class, [
+            ->add('description', TextareaType::class, [
                 'required' => false,
             ])
         ;

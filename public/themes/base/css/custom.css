@@ -634,9 +634,13 @@ body.responsive {
    border: 1px solid #080679 !important;
 }
 
-.bg-blue a,
+.bg-blue a, .bg-blue span,
 .osahan-post-header:hover a,
-.bg-blue a:hover {
+.osahan-post-header:hover span,
+.osahan-post-header:hover small,
+.bg-blue a:hover, 
+.bg-blue small:hover, 
+.bg-blue span:hover {
    color: #fff !important;
 }
 
@@ -731,4 +735,16 @@ body.responsive {
 }
 .bloc-logo img{
    width: 115%;
+}
+.input-group .form-control{
+   height: auto!important;
+   border-right: none!important;
+}
+.input-group-text{
+   background: transparent!important;
+}
+.osahan-post-header .media img{
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
 }

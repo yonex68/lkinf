@@ -26,7 +26,7 @@ class CategorieType extends AbstractType
                     'Ingénieur de son' => 'Ingenieur son',
                     'Studio' => 'Studio',
                     'Videaste' => 'Vidéaste',
-                    'Figurant Danseur' => 'Figurant / danseur',
+                    'Figurant Danseur' => 'Figurants / danseurs',
                     'Photographe' => 'Photographe',
                 ],
                 'constraints' => [

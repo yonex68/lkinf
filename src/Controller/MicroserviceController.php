@@ -123,7 +123,7 @@ class MicroserviceController extends AbstractController
                 'slug' => $microservice->getSlug()
             ], Response::HTTP_SEE_OTHER);
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
         }
 
         if (in_array($microservice->getCategorie(), $categories)) {
@@ -219,7 +219,7 @@ class MicroserviceController extends AbstractController
             'isHiden' => $isHiden,
             'erreurmessage' => $erreurmessage,
             'avisPositifs' => $avisRepository->findOneBy(['microservice' => $microservice, 'type' => 'Positif']),
-            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
+            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['created' => 'ASC']),
         ]);
     }
 }

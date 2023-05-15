@@ -83,8 +83,8 @@ class MicroserviceRepository extends ServiceEntityRepository
         }
         if (!empty($search->jour)) {
             $query = $query
-                ->andWhere('d.jour = :jour')
-                ->setParameter('jour', $search->jour);
+                ->andWhere('d.jours LIKE :jours')
+                ->setParameter('jours', "%{$search->jour}%");
         }
         if (!empty($search->heureOuverture)) {
             $query = $query

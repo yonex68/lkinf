@@ -48,7 +48,6 @@ class EditProfilType extends AbstractType
                 'label' => 'Pseudonyme',
                 'attr' => ['placeholder' => 'Pseudonyme'],
                 'required' => false,
-                'help' => "Un pseudonyme est un nom d'emprunt adopté par une ou plusieurs personnes pour exercer une activité sous un autre nom que celui de son identité officielle.",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide',

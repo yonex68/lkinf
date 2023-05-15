@@ -18,15 +18,13 @@ class MediaType extends AbstractType
     {
         $builder
             ->add('imageFile', VichImageType::class, [
-                'help' => "Joindre jusqu'à 10 images (une par une)",
                 'allow_delete' =>  false,
-                'label' =>  'Image (Png, jpg et jpeg)',
+                'label' =>  'Format (Png, jpg et jpeg)',
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'large_avatar',
                 'attr' => ['class' => ''],
-                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide'

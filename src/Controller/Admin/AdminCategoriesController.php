@@ -50,7 +50,7 @@ class AdminCategoriesController extends AbstractController
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('app_admin_categories_index', [], Response::HTTP_SEE_OTHER);
         }

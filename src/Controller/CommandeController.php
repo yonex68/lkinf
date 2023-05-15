@@ -412,10 +412,8 @@ class CommandeController extends AbstractController
             $montant = $microservice->getPrixBeatmaking();
         } elseif ($offre == 'Composition') {
             $montant = $microservice->getPrixComposition();
-        } else {
-            foreach ($microservice->getServiceOptions() as $option) {
-                $montant += $option->getMontant();
-            }
+        }else {
+            # code...
         }
 
         $commande = new Commande();
@@ -733,6 +731,7 @@ class CommandeController extends AbstractController
 
             $commande->setPaymentIntent($payment_intent);
             $commande->setMontant($commande->getMontant() * $tauxHoraire);
+            $commande->setClient($this->getUser());
             $commande->setStatut('Valider');
             $commande->setPayed(true);
             $entityManager->flush();

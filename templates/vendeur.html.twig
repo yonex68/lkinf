@@ -68,10 +68,10 @@
 								{% if app.user.endRegister == null %}
 
 								<div class="alert alert-warning">
-									<p><i class="fa fa-exclamation-triangle"></i> Veuillez completter votre profil avant de vendre vos prestations sur {{ appName }} il s'agit de:</p>
+									<p><i class="fa fa-exclamation-triangle"></i> Veuillez completer votre profil avant de vendre vos prestations sur {{ appName }} il s'agit de:</p>
 									<ol class="pl-3">
 										{% if app.user.categorie == null %}
-										<li>Vos coordonnées et</li>
+										<li>Vos coordonnées</li>
 										{% endif %}
 										{% if app.user.statut == null %}
 										<li>Vos informations supplémentaires</li>
@@ -119,15 +119,9 @@
 		{{ encore_entry_script_tags('dropdown') }}
 		{{ encore_entry_script_tags('favoris') }}
 		{{ encore_entry_script_tags('btnloader') }}
+		{{ encore_entry_script_tags('service') }}
+		{{ encore_entry_script_tags('file') }}
 	{% endblock %}
-
-	<script>
-		// Add the following code if you want the name of the file appear on select
-		$(".custom-file-input").on("change", function () {
-			var fileName = $(this).val().split("\\").pop();
-			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-		});
-	</script>
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBWPH2ZDRB"></script>

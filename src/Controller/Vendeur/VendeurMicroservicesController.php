@@ -40,7 +40,8 @@ class VendeurMicroservicesController extends AbstractController
 
     #[Route('/', name: 'vendeur_microservices_index', methods: ['GET'])]
     public function index(MicroserviceRepository $microserviceRepository, PaginatorInterface $paginator, Request $request): Response
-    {
+    {   
+        /** @var User */
         $user = $this->getUser();
 
         if (empty($user->getAdresse())) {
@@ -75,7 +76,7 @@ class VendeurMicroservicesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $slug = $microservice->getName() . '-' . $microservice->getId();
+            $slug = $form->get('name')->getData();
 
             $microservice->setSlug(strtolower($this->sluger->slug($slug)));
             $microservice->setVendeur($this->getUser());
@@ -87,6 +88,9 @@ class VendeurMicroservicesController extends AbstractController
             $microservice->setPromo(false);
             $microservice->setOffline(false);
             $entityManager->persist($microservice);
+            $entityManager->flush();
+
+            $microservice->setSlug($microservice->getSlug() . '-' . $microservice->getId());
             $entityManager->flush();
 
             // Liste des clients qui le suivent
@@ -111,7 +115,7 @@ class VendeurMicroservicesController extends AbstractController
                 }
             }*/
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('vendeur_microservices_description', [
                 'id' => $microservice->getId()
@@ -141,7 +145,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('vendeur_microservices_description', [
                 'id' => $microservice->getId()
@@ -177,7 +181,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('vendeur_microservices_options', [
                 'id' => $microservice->getId()
@@ -203,7 +207,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
 
             return $this->redirectToRoute('vendeur_microservices_galerie', [
                 'id' => $microservice->getId()
@@ -224,10 +228,6 @@ class VendeurMicroservicesController extends AbstractController
         $form = $this->createForm(MicroserviceGalerieType::class, $microservice);
         $form->handleRequest($request);
 
-        $media = new Media();
-        $mediaForm = $this->createForm(MediaType::class, $media);
-        $mediaForm->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             
             $entityManager->persist($microservice);
@@ -240,22 +240,9 @@ class VendeurMicroservicesController extends AbstractController
             ], Response::HTTP_SEE_OTHER);
         }
 
-        if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
-            $media->setMicroservice($microservice);
-            $entityManager->persist($media);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le contenu a bien été cré');
-
-            return $this->redirectToRoute('vendeur_microservices_galerie', [
-                'id' => $microservice->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
         return $this->render('vendeur/microservices/galerie.html.twig', [
             'microservice' => $microservice,
             'form' => $form->createView(),
-            'mediaForm' => $mediaForm->createView(),
         ]);
     }
 
@@ -272,37 +259,9 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
 
             return $this->redirectToRoute('vendeur_microservices_publication', [
-                'id' => $microservice->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
-        $disponibilite = new Disponibilite();
-        $disponibiliteForm = $this->createForm(DisponibiliteType::class, $disponibilite);
-        $disponibiliteForm->handleRequest($request);
-
-        if ($disponibiliteForm->isSubmitted() && $disponibiliteForm->isValid()) {
-
-            $jour = $disponibiliteForm->get('jour')->getData();
-            $ordre = $this->getOrdre($jour);
-            $findDisponibilite = $disponibiliteRepository->findOneBy([
-                'jour' => $jour, 'service' => $microservice
-            ]);
-
-            if ($findDisponibilite) {
-                $disponibilite = $findDisponibilite;
-            }
-            
-            $disponibilite->setService($microservice);
-            $disponibilite->setOrdre($ordre);
-            $entityManager->persist($disponibilite);
-            $entityManager->flush();
-
-            $this->addFlash('success', "La disponibilité pour ce service a bien été mise à jour sur ce service");
-
-            return $this->redirectToRoute('vendeur_microservices_disponibilite', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -310,8 +269,6 @@ class VendeurMicroservicesController extends AbstractController
         return $this->render('vendeur/microservices/disponibilite.html.twig', [
             'microservice' => $microservice,
             'form' => $form->createView(),
-            'disponibiliteForm' => $disponibiliteForm->createView(),
-            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);
     }
 
@@ -329,7 +286,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('vendeur_microservices_index', [
                 'id' => $microservice->getId()

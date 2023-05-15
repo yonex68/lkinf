@@ -13,6 +13,7 @@
 
 {% block body %}
 
+{% if app.user.isVerified == true %}
 <h5 class="h6 bg-dark rounded text-light p-3 mb-3">Tableau de bord</h5>
 
 {% if is_granted('ROLE_VENDEUR') %}
@@ -235,6 +236,7 @@
       </div>
    </div>
 </div>
+{% endif %}
 {% endif %}
 
 {% endblock %}

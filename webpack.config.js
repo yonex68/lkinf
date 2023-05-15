@@ -25,6 +25,8 @@ Encore
     .addEntry('dropdown', './public/js/dropdown.js')
     .addEntry('favoris', './public/js/favoris.js')
     .addEntry('btnloader', './public/js/btnloader.js')
+    .addEntry('service', './public/js/service.js')
+    .addEntry('file', './public/js/file.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

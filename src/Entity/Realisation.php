@@ -38,16 +38,11 @@ class Realisation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
 
-    #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'realisations')]
-    private Collection $microservices;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $file = null;
 
-    public function __construct()
-    {
-        $this->microservices = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'realisations')]
+    private ?Microservice $microservice = null;
 
     public function getId(): ?int
     {
@@ -126,33 +121,6 @@ class Realisation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Microservice>
-     */
-    public function getMicroservices(): Collection
-    {
-        return $this->microservices;
-    }
-
-    public function addMicroservice(Microservice $microservice): self
-    {
-        if (!$this->microservices->contains($microservice)) {
-            $this->microservices->add($microservice);
-            $microservice->addRealisation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMicroservice(Microservice $microservice): self
-    {
-        if ($this->microservices->removeElement($microservice)) {
-            $microservice->removeRealisation($this);
-        }
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->getName();
@@ -166,6 +134,18 @@ class Realisation
     public function setFile(?string $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getMicroservice(): ?Microservice
+    {
+        return $this->microservice;
+    }
+
+    public function setMicroservice(?Microservice $microservice): self
+    {
+        $this->microservice = $microservice;
 
         return $this;
     }

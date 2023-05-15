@@ -8,7 +8,7 @@
 	<div class="view_slider recommended">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12 {{ microservices|length == 0 ? 'text-center' : '' }}">
 					<h3 class="h5">
 						Services à proximité
 					</h3>
@@ -17,18 +17,28 @@
 					</p>
 					{% endif %}
 
+					{% if microservices|length > 0 %}
+
 					<div class="view recent-slider recommended-slider">
+
 						{% for microservice in microservices %}
+
 						{{ include('microservice/composants/_bloc.html.twig') }}
-						{% else %}
-						<div class="w-100">
-							<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">
-								Nous arrivons très prochainement près de chez vous ! renseigné votre mail afin d'être prévenu.
-								<strong>{{ ville }}</strong>
-							</p>
-						</div>
+
 						{% endfor %}
+
 					</div>
+
+					{% else %}
+
+					<div class="col-sm-8 mx-auto">
+									<p class="{{ microservices|length == 0 ? 'text-center' : '' }}">
+										Nous arrivons très prochainement près de chez vous.
+										<strong>{{ ville }}</strong>
+									</p>
+								</div>
+
+					{% endif %}
 
 				</div>
 			</div>
@@ -38,8 +48,8 @@
 <!--       recent -->
 
 <div class="market-wrapper pb-5">
-	<div class="container">
-		<h3 class="text-left h5">Catégories</h3>
+	<div class="container {{ microservices|length == 0 ? 'text-center' : '' }}">
+		<h3 class="h5">Catégories</h3>
 		<ul class="categories-list mb-0">
 			{% for categorie in categories %}
 			<li class="my-3">
@@ -75,7 +85,7 @@
 						alt="{{ appName }} : trouvez un studio, ingénieur de son, vidéas,">
 				</div>
 				<div class="col-md-6">
-					<h2>Comment ça marche?</h2>
+					<h2 class="h5">Comment ça marche?</h2>
 					<p>
 						Trouvez le professionnel qui répondra à vos besoins. Parcourez de nombreuses catégories, nos filtres
 						vous permettent de planifier vos projets à
@@ -108,7 +118,7 @@
 
 <section class="py-4">
 	<div class="freelance-projects pb-5">
-		<div class="container">
+		<div class="container {{ vendeurs|length == 0 ? 'text-center' : '' }}">
 			<h3 class="h5">
 				Professionnels à proximité
 			</h3>
@@ -162,7 +172,7 @@
 
 			<div>
 				<p class="{{ vendeurs|length == 0 ? 'text-center' : '' }}">
-					Aucun profésinnels disponible dans cette zone
+					Aucun profésinnels disponible dans cette zone <strong>{{ ville }}</strong>
 				</p>
 			</div>
 

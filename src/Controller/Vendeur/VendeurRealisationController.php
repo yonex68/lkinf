@@ -41,10 +41,10 @@ class VendeurRealisationController extends AbstractController
 
             $realisation->setVendeur($this->getUser());
             $realisationRepository->save($realisation, true);
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
             return $this->redirectToRoute('app_vendeur_realisation_index', [], Response::HTTP_SEE_OTHER);
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
         }
         
         return $this->renderForm('vendeur/realisations/new.html.twig', [

@@ -18,76 +18,30 @@
             </p>
         </div>
 
-        <div class="row my-3">
-            {% for disponibilite in disponibilites %}
-            <div class="col-sm-6">
-                <div class="media rounded shadow-sm p-2 pt-3 mb-3">
-                    <span class="realisation-icon">
-                        <i class="fa fa-calendar fa-2x"></i>
-                    </span>
-                    <div class="media-body pl-2">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-
-                                <strong>{{ disponibilite.jour }}</strong>
-                                <p>De {{disponibilite.heureOuverture|date('H:i') }} à
-                                    {{disponibilite.heureCloture|date('H:i') }}</p>
-                            </div>
-                            <div class="col-4 text-right">
-                                <form method="post" class="d-inline"
-                                    action="{{ path('vendeur_services_disponibilite_delete', {'id': disponibilite.id}) }}"
-                                    onsubmit="return confirm('Voulez-vous vraiment cette disponibilité?');">
-                                    <input type="hidden" name="_token"
-                                        value="{{ csrf_token('delete' ~ disponibilite.id) }}">
-                                    <button class="btn btn-outline-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form._token) }}
+            {{ form_errors(form) }}
+            <div id="disponibilites" class="row" data-prototype="{{ include("vendeur/microservices/form/_disponibilites.html.twig", {form:
+                form.disponibilites.vars.prototype})|e("html_attr") }}"
+                data-index="{{ form.disponibilites|length > 0 ? form.disponibilites|last.vars.name + 1 : 0 }}">
+                {% for disponibilite in form.disponibilites %}
+                <div class="col-sm-6">
+                    {{ include("vendeur/microservices/form/_disponibilites.html.twig", {form: disponibilite}) }}
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+            <br>
+            <button type="button" class="btn btn-light btn-new" data-collection="#disponibilites">
+                <i class="fa fa-plus"></i> Ajouter une disponibilité
+            </button>
 
-        {{ form_start(disponibiliteForm) }}
-        {{ form_row(disponibiliteForm.jour) }}
-        <div class="row">
-            <div class="col-6">
-                {{ form_row(disponibiliteForm.heureOuverture) }}
+            <div class="form-group text-left mt-5">
+                <button type="submit" class="btn btn-dark">{{ button_label|default('Enregistrer et poursuivre') }}</button>
             </div>
-            <div class="col-6">
-                {{ form_row(disponibiliteForm.heureCloture) }}
-            </div>
+            {{ form_end(form, {render_rest: false}) }}
         </div>
-        <div class="form-group">
-            <button class="btn btn-dark">{{ button_label|default('Enregistrer') }}</button>
-        </div>
-        {{ form_end(disponibiliteForm) }}
 
     </div>
 </div>
-
-{% if disponibilites|length > 0 %}
-<div class="card mt-4">
-    <div class="card-header bg-white border-0">
-        <h6>Mettre à jour la disponibilité pour ce service</h6>
-    </div>
-    <div class="card-body">
-        <!-- Formulaire de  -->
-        {{ form_start(form) }}
-
-        {{ form_widget(form) }}
-
-        <div class="form-group text-left">
-            <button class="btn btn-dark">{{ button_label|default('Enregistrer et suivant') }}</button>
-        </div>
-
-        {{ form_end(form) }}
-    </div>
-</div>
-{% endif %}
-
 {% endblock %}

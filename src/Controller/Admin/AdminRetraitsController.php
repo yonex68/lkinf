@@ -77,7 +77,7 @@ class AdminRetraitsController extends AbstractController
                 $retrait
             );
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
 
             return $this->redirectToRoute('app_admin_retraits_index', [], Response::HTTP_SEE_OTHER);
         }

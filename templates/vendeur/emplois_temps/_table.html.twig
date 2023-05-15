@@ -5,7 +5,6 @@
             <th>Jours</th>
             <th>Heure d'ouverture</th>
             <th>Heure de cloture</th>
-            <th class="text-right">Actions</th>
          </tr>
       </thead>
       {% for emplois_temp in emploistemps(app.user) %}
@@ -20,11 +19,6 @@
          </td>
          <td>
             {{ emplois_temp.heureCloture ? emplois_temp.heureCloture|date('H:i') : '' }}
-         </td>
-         <td class="text-right">
-            <a href="{{ path('app_vendeur_emplois_temps_edit', {'id': emplois_temp.id}) }}"
-               class="btn btn-dark"><i class="fa fa-edit"></i></a>
-            {% include "vendeur/emplois_temps/_delete_form.html.twig" %}
          </td>
       </tr>
       {% else %}

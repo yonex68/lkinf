@@ -79,7 +79,7 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('app_admin_services_description', [
                 'id' => $microservice->getId()
@@ -107,7 +107,7 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('app_admin_services_description', [
                 'id' => $microservice->getId()
@@ -141,7 +141,7 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('app_admin_services_options', [
                 'id' => $microservice->getId()
@@ -165,7 +165,7 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
 
             return $this->redirectToRoute('app_admin_services_galerie', [
                 'id' => $microservice->getId()
@@ -184,10 +184,6 @@ class AdminServicesController extends AbstractController
         $form = $this->createForm(MicroserviceGalerieType::class, $microservice);
         $form->handleRequest($request);
 
-        $media = new Media();
-        $mediaForm = $this->createForm(MediaType::class, $media);
-        $mediaForm->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($microservice);
@@ -200,22 +196,9 @@ class AdminServicesController extends AbstractController
             ], Response::HTTP_SEE_OTHER);
         }
 
-        if ($mediaForm->isSubmitted() && $mediaForm->isValid()) {
-            $media->setMicroservice($microservice);
-            $entityManager->persist($media);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le contenu a bien été cré');
-
-            return $this->redirectToRoute('app_admin_services_galerie', [
-                'id' => $microservice->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
         return $this->render('admin/admin_services/galerie.html.twig', [
             'microservice' => $microservice,
             'form' => $form->createView(),
-            'mediaForm' => $mediaForm->createView(),
         ]);
     }
 
@@ -230,37 +213,9 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été enregistrer');
+            $this->addFlash('success', 'le contenu a bien été enregistré');
 
             return $this->redirectToRoute('app_admin_services_publication', [
-                'id' => $microservice->getId()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
-        $disponibilite = new Disponibilite();
-        $disponibiliteForm = $this->createForm(DisponibiliteType::class, $disponibilite);
-        $disponibiliteForm->handleRequest($request);
-
-        if ($disponibiliteForm->isSubmitted() && $disponibiliteForm->isValid()) {
-
-            $jour = $disponibiliteForm->get('jour')->getData();
-            $ordre = $this->getOrdre($jour);
-            $findDisponibilite = $disponibiliteRepository->findOneBy([
-                'jour' => $jour, 'service' => $microservice
-            ]);
-
-            if ($findDisponibilite) {
-                $disponibilite = $findDisponibilite;
-            }
-            
-            $disponibilite->setService($microservice);
-            $disponibilite->setOrdre($ordre);
-            $entityManager->persist($disponibilite);
-            $entityManager->flush();
-
-            $this->addFlash('success', "La disponibilité pour ce service a bien été mise à jour sur ce service");
-
-            return $this->redirectToRoute('app_admin_services_disponibilite', [
                 'id' => $microservice->getId()
             ], Response::HTTP_SEE_OTHER);
         }
@@ -268,8 +223,6 @@ class AdminServicesController extends AbstractController
         return $this->render('admin/admin_services/disponibilite.html.twig', [
             'microservice' => $microservice,
             'form' => $form->createView(),
-            'disponibiliteForm' => $disponibiliteForm->createView(),
-            'disponibilites' => $disponibiliteRepository->findBy(['service' => $microservice], ['ordre' => 'ASC']),
         ]);
     }
 
@@ -285,7 +238,7 @@ class AdminServicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Le contenu a bien été cré');
+            $this->addFlash('success', 'Le contenu a bien été créé');
 
             return $this->redirectToRoute('app_admin_services_index', [
                 'id' => $microservice->getId()

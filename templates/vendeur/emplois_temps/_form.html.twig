@@ -1,16 +1,21 @@
 {{ form_start(form) }}
-<div class="row d-flex align-items-center">
-    <div class="col-12">
-        {{ form_row(form.jours) }}
-    </div>
-    <div class="col-6 col-sm-4">
-        {{ form_row(form.heureOuverture) }}
-    </div>
-    <div class="col-6 col-sm-4">
-        {{ form_row(form.heureCloture) }}
-    </div>
-    <div class="col-sm-8 col-12">
-        <button class="btn btn-dark btn-block mt-2">{{ button_label|default('Enregistrer') }}</button>
-    </div>
-</div>
-{{ form_end(form) }}
+            {{ form_widget(form._token) }}
+            {{ form_errors(form) }}
+            <div id="emploisTemps" class="row" data-prototype="{{ include("vendeur/emplois_temps/_emploisTemps.html.twig", {form:
+                form.emploisTemps.vars.prototype})|e("html_attr") }}"
+                data-index="{{ form.emploisTemps|length > 0 ? form.emploisTemps|last.vars.name + 1 : 0 }}">
+                {% for time in form.emploisTemps %}
+                <div class="col-sm-6">
+                    {{ include("vendeur/emplois_temps/_emploisTemps.html.twig", {form: time}) }}
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+            <button type="button" class="btn btn-light btn-new" data-collection="#emploisTemps">
+                <i class="fa fa-plus"></i> Ajouter un planning
+            </button>
+
+            <div class="form-group text-left mt-5">
+                <button type="submit" class="btn btn-dark">{{ button_label|default('Enregistrer et poursuivre') }}</button>
+            </div>
+            {{ form_end(form, {render_rest: false}) }}

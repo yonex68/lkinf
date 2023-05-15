@@ -21,9 +21,8 @@ class DescriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prix', NumberType::class, [
-                'label' => 'Taux horaire',
-                'attr' => ['class' => 'border-0'],
+            ->add('prix', MoneyType::class, [
+                'label' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut pas être vide'

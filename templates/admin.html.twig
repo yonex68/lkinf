@@ -170,7 +170,8 @@
 	<script src="{{ asset('js/btnloader.js') }}"></script>
 
    {% block javascripts %}
-   {{ encore_entry_script_tags('app') }}
+      {{ encore_entry_script_tags('app') }}
+		{{ encore_entry_script_tags('service') }}
    {% endblock %}
 
 </body>

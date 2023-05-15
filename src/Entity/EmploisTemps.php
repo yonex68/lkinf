@@ -32,8 +32,8 @@ class EmploisTemps
     #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'emploitemps')]
     private Collection $microservices;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $jours = [];
+    #[ORM\Column(type: 'array', nullable: true)]
+    private $jours = [];
 
     public function __construct()
     {
@@ -80,11 +80,6 @@ class EmploisTemps
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getJour();
-    }
-
     /**
      * @return Collection<int, Microservice>
      */
@@ -112,12 +107,12 @@ class EmploisTemps
         return $this;
     }
 
-    public function getJours(): array
+    public function getJours()
     {
         return $this->jours;
     }
 
-    public function setJours(array $jours): self
+    public function setJours(?array $jours): self
     {
         $this->jours = $jours;
 

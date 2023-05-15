@@ -17,118 +17,67 @@
 
         <!-- Right Sidebar -->
         <div class="email-rightbar">
-            <div class="card">
+            <div class="card rounded">
                 <div class="card-body">
-
                     {{ form_start(form) }}
+                    {{ form_widget(form._token) }}
+                    {{ form_errors(form) }}
 
                     <div class="form-group {{ microservice.categorie.slug == 'ingenieur-son' ? 'bloc-masquer' : '' }}">
                         <h6 class="font-weight-bold">Options</h6>
                         <p class="text-muted">
-                            Afin de compléter et personnaliser votre service, vous pouvez ajouter des options en
-                            relation
-                            directe avec ce dernier. Pas de service de traduction avec des options de montage vidéo
-                            ! Leur nombre et
-                            prix maximal dépend de votre offre {{ appName }} Plus.
+                            Afin de compléter et personnaliser votre service, vous pouvez ajouter des options en relation directe avec ce dernier. Leur nombre et prix maximal dépend de votre offre {{ appName }}.
                         </p>
-                        <p>
-                            Vos options doivent être claires et achetables par tous les clients. Si ce n'est pas
-                            déjà fait, pensez à les
-                            décrire dans votre description. Le délai d'une option s'ajoute au délai de votre service
-                            basique.
-                        </p>
-                        <div class="{{ microservice.categorie.slug == 'ingenieur-son' ? 'bloc-masquer' : '' }}">
-                            <div class="" id="options"
-                                data-prototype="{{ form_row(form.serviceOptions.vars.prototype)|e('html_attr') }}">
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group bloc-masquer">
+                        <div id="serviceOptions" class="row" data-prototype="{{ include("vendeur/microservices/form/_serviceOptions.html.twig", {form:
+                            form.serviceOptions.vars.prototype})|e("html_attr") }}"
+                            data-index="{{ form.serviceOptions|length > 0 ? form.serviceOptions|last.vars.name + 1 : 0 }}">
+                            {% for option in form.serviceOptions %}
+                            <div class="col-sm-6">
+                                {{ include("vendeur/microservices/form/_serviceOptions.html.twig", {form: option}) }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-light btn-new" data-collection="#serviceOptions">
+                            <i class="fa fa-plus"></i> Ajouter une option
+                        </button>
+
+                    </div>
+                    <div class="form-group">
                         <h6 class="font-weight-bold">Réalisations</h6>
                         <p class="text-muted">
-                            Afin de compléter et personnaliser votre service, vous pouvez ajouter vos réalisations
-                            en relation
-                            directe avec ce dernier.
+                            Ajouter vos réalisations en relation directe avec ce dernier. (Ex: lien YouTube, Instagram; projets).
                         </p>
-                        {{ form_row(form.realisations) }}
+
+                        <div id="realisations" class="row" data-prototype="{{ include("vendeur/microservices/form/_realisations.html.twig", {form:
+                            form.realisations.vars.prototype})|e("html_attr") }}"
+                            data-index="{{ form.realisations|length > 0 ? form.realisations|last.vars.name + 1 : 0 }}">
+                            {% for realisation in form.realisations %}
+                            <div class="col-sm-6">
+                                {{ include("vendeur/microservices/form/_realisations.html.twig", {form: realisation}) }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-light btn-new" data-collection="#realisations">
+                            <i class="fa fa-plus"></i> Ajouter une réalisation
+                        </button>
+
                     </div>
                     <div class="form-group">
                         {{ form_row(form.promo) }}
                     </div>
-                    <div class="form-group">
-                        <div class="">
-                            <button class="btn btn-primary">{{ button_label|default('Enregistrer les modifications')
-                                }}</button>
-                        </div>
+                    <div class="form-group text-left">
+                        <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer et poursuivre') }}</button>
                     </div>
 
-                    {{ form_end(form) }}
-
+                    {{ form_end(form, {render_rest: false}) }}
                 </div>
-            </div> <!-- panel -->
+            </div>
 
         </div> <!-- end Col -->
     </div>
 </div><!-- End row -->
-
-{% endblock %}
-
-{% block javascripts %}
-
-{{ parent() }}
-
-<script>
-    let collection,
-        boutonAjout,
-        span;
-    window.onload = () => {
-        collection = document.querySelector("#options");
-        span = collection.querySelector("span");
-
-        boutonAjout = document.createElement("button");
-        boutonAjout.className = "ajout-options btn btn-dark border mb-5";
-        boutonAjout.innerText = "Ajouter une option";
-
-        let nouveauBouton = span.append(boutonAjout);
-
-        collection.dataset.index = collection.querySelectorAll("input").length;
-
-        boutonAjout.addEventListener("click", function () {
-            addButton(collection, nouveauBouton);
-        });
-    }
-
-    function addButton(collection, nouveauBouton) {
-        let prototype = collection.dataset.prototype;
-
-        let index = collection.dataset.index;
-
-        prototype = prototype.replace(/__name__/g, index);
-
-        let content = document.createElement("html");
-        content.innerHTML = prototype;
-        let newForm = content.querySelector("div");
-
-        let boutonSuppr = document.createElement("button");
-        boutonSuppr.type = "button";
-        boutonSuppr.className = "btn btn-danger my-3";
-        boutonSuppr.id = "delete-media-" + index;
-        boutonSuppr.innerText = "Supprimer";
-
-        newForm.append(boutonSuppr);
-
-        collection.dataset.index++;
-
-        let boutonAjout = collection.querySelector(".ajout-options");
-
-        span.insertBefore(newForm, boutonAjout);
-
-        boutonSuppr.addEventListener("click", function () {
-            this.previousElementSibling.parentElement.remove();
-        })
-    }
-</script>
 
 {% endblock %}

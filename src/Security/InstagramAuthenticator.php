@@ -66,10 +66,10 @@ class InstagramAuthenticator extends OAuth2Authenticator implements Authenticati
                     $nameUrl = strtolower($this->sluger->slug($instagrameUser->getNickname()));
 
                     $existingUser
-                        //->setEmail($instagrameUser->getEmail())
+                        ->setEmail($instagrameUser->getNickname() . '@gmail.com')
                         ->setNom($instagrameUser->getNickname())
                         ->setPseudo($instagrameUser->getNickname())
-                        //->setPrenom($instagrameUser->getFirstName())
+                        ->setPrenom($instagrameUser->getNickname())
                         ->setNameUrl($nameUrl)
                         ->setInstagramId($id)
                         //->setReseauAvatar($instagrameUser->getPictureUrl())
@@ -99,6 +99,7 @@ class InstagramAuthenticator extends OAuth2Authenticator implements Authenticati
                     $user = new User();
                     $user
                         ->setNom($instagrameUser->getNickname())
+                        ->setPrenom($instagrameUser->getNickname())
                         ->setNameUrl($nameUrl)
                         ->setInstagramId($id)
                         ->setCompte('Client')
