@@ -181,6 +181,7 @@
 	</div>
 </section>
 
+{% if packs|length > 0 %}
 <section>
    <div class="container py-5">
       {% for pack in packs %}
@@ -188,6 +189,7 @@
       {% endfor %}
    </div>
 </section>
+{% endif %}
 
 {% endblock %}
 
