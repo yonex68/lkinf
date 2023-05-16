@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([[778],{3981:()=>{$(document).ready((function(){$("#btnFetch").click((function(){$(this).prop("disabled",!0),$(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Traitement...')}))}))}},e=>{var n;n=3981,e(e.s=n)}]);
