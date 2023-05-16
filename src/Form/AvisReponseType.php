@@ -16,6 +16,7 @@ class AvisReponseType extends AbstractType
         $builder
             ->add('contenu', TextareaType::class, [
                 'label' => 'Votre réponse',
+                'attr' => ['placeholder' => 'Ecrivez votre réponse...'],
                 'constraints' => [
                     new NotBlank()
                 ]
