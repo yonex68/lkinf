@@ -181,6 +181,14 @@
 	</div>
 </section>
 
+<section>
+   <div class="container py-5">
+      {% for pack in packs %}
+         {% include "pack/composants/_block.html.twig" %}
+      {% endfor %}
+   </div>
+</section>
+
 {% endblock %}
 
 {% block javascripts %}

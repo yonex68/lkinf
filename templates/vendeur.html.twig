@@ -29,10 +29,10 @@
 	<link href="{{ asset('themes/base/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	{% block stylesheets %}
-		{{ encore_entry_link_tags('app') }}
-		{{ encore_entry_link_tags('style') }}
-		{{ encore_entry_link_tags('custom') }}
-		{{ encore_entry_link_tags('responsive') }}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('style') }}
+	{{ encore_entry_link_tags('custom') }}
+	{{ encore_entry_link_tags('responsive') }}
 	{% endblock %}
 
 	<!-- map box -->
@@ -48,11 +48,14 @@
 
 	<section class="py-5">
 		<div class="container">
+
+			{% if app.user.isVerified == true %}
+
 			<div class="row">
 				<div class="col-md-{% block colleft %}4{% endblock %} d-none d-sm-block">
 					<div class="sidebar-fix">
 						{% block sidebar %}
-							{% include "partials/vendeur/_sidebar.html.twig" %}
+						{% include "partials/vendeur/_sidebar.html.twig" %}
 						{% endblock %}
 					</div>
 				</div>
@@ -60,29 +63,30 @@
 
 					<div class="bg-{% block bg %}shadow-sm{% endblock %} rounded sidebar-page-right">
 						<div>
-						
+
 							{{ include('partials/_flash_message.html.twig') }}
-							
+
 							{% if is_granted('ROLE_VENDEUR') %}
 
-								{% if app.user.endRegister == null %}
+							{% if app.user.endRegister == null %}
 
-								<div class="alert alert-warning">
-									<p><i class="fa fa-exclamation-triangle"></i> Veuillez completer votre profil avant de vendre vos prestations sur {{ appName }} il s'agit de:</p>
-									<ol class="pl-3">
-										{% if app.user.categorie == null %}
-										<li>Vos coordonnées</li>
-										{% endif %}
-										{% if app.user.statut == null %}
-										<li>Vos informations supplémentaires</li>
-										{% endif %}
-										{% if app.user.rib == null %}
-										<li>Méthode de paiement</li>
-										{% endif %}
-									</ol>
-								</div>
+							<div class="alert alert-warning">
+								<p><i class="fa fa-exclamation-triangle"></i> Veuillez completer votre profil avant de vendre
+									vos prestations sur {{ appName }} il s'agit de:</p>
+								<ol class="pl-3">
+									{% if app.user.categorie == null %}
+									<li>Vos coordonnées</li>
+									{% endif %}
+									{% if app.user.statut == null %}
+									<li>Vos informations supplémentaires</li>
+									{% endif %}
+									{% if app.user.rib == null %}
+									<li>Méthode de paiement</li>
+									{% endif %}
+								</ol>
+							</div>
 
-								{% endif %}
+							{% endif %}
 
 							{% endif %}
 
@@ -92,6 +96,13 @@
 					</div>
 				</div>
 			</div>
+
+			{% else %}
+
+				{% include "vendeur/composants/_compte_non_valide.html.twig" %}
+
+			{% endif %}
+
 		</div>
 	</section>
 
@@ -114,23 +125,23 @@
 	<!-- select2 Js -->
 	<script src="{{ asset('themes/base/vendor/select2/js/select2.min.js') }}"></script>
 	{% block javascripts %}
-		{{ encore_entry_script_tags('app') }}
-		{{ encore_entry_script_tags('jscustom') }}
-		{{ encore_entry_script_tags('dropdown') }}
-		{{ encore_entry_script_tags('favoris') }}
-		{{ encore_entry_script_tags('btnloader') }}
-		{{ encore_entry_script_tags('service') }}
-		{{ encore_entry_script_tags('file') }}
+	{{ encore_entry_script_tags('app') }}
+	{{ encore_entry_script_tags('jscustom') }}
+	{{ encore_entry_script_tags('dropdown') }}
+	{{ encore_entry_script_tags('favoris') }}
+	{{ encore_entry_script_tags('btnloader') }}
+	{{ encore_entry_script_tags('service') }}
+	{{ encore_entry_script_tags('file') }}
 	{% endblock %}
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBWPH2ZDRB"></script>
 	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
-	gtag('config', 'G-TBWPH2ZDRB');
+		gtag('config', 'G-TBWPH2ZDRB');
 	</script>
 
 </body>

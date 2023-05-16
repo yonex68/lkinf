@@ -2,7 +2,11 @@
 
 namespace App\Twig;
 
+use App\Entity\Avis;
+use App\Entity\Microservice;
+use App\Entity\User;
 use App\Repository\AbonnementRepository;
+use App\Repository\AvisReponseRepository;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
@@ -47,8 +51,10 @@ class AppExtension extends AbstractExtension
 
     private $favorisRepository;
 
+    private $reponseavisRepository;
+
     public function __construct(CategorieRepository $categorieRepositorye, AbonnementRepository $abonnementRepository, PortefeuilleRepository $portefeuilleRepository, AvisRepository $avisRepository, ConversationRepository $conversationRepository, CommandeRepository $commandeRepository, SuivisRepository $suivisRepository, MicroserviceRepository $microserviceRepository, EmploisTempsRepository $emploisTempsRepository, ServiceSignaleRepository $serviceSignaleRepository
-    , RemboursementRepository $remboursementRepository, RetraitRepository $retraitRepository, FavorisRepository $favorisRepository){
+    , RemboursementRepository $remboursementRepository, RetraitRepository $retraitRepository, FavorisRepository $favorisRepository, AvisReponseRepository $reponseavisRepository){
 
         $this->abonnementRepository = $abonnementRepository;
         $this->categorieRepositorye = $categorieRepositorye;
@@ -63,6 +69,7 @@ class AppExtension extends AbstractExtension
         $this->remboursementRepository = $remboursementRepository;
         $this->retraitRepository = $retraitRepository;
         $this->favorisRepository = $favorisRepository;
+        $this->reponseavisRepository = $reponseavisRepository;
 
     }
 
@@ -78,7 +85,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('getCommandeNonLu', [$this, 'getCommandeNonLu']),
             new TwigFunction('followers', [$this, 'getVendeurFollowers']),
             new TwigFunction('lastFolowers', [$this, 'getVendeurlastFolowers']),
-            new TwigFunction('serviceAvis', [$this, 'getServicesAvisPositif']),
+            new TwigFunction('serviceAvis', [$this, 'getServicesAvis']),
             new TwigFunction('serviceCommandes', [$this, 'getServicesCommandes']),
             new TwigFunction('lastedServices', [$this, 'getLastServices']),
             new TwigFunction('ventes', [$this, 'getVendeurTotalVente']),
@@ -96,11 +103,21 @@ class AppExtension extends AbstractExtension
             new TwigFunction('clientSuivis', [$this, 'getClientSuivis']),
             new TwigFunction('clientFavoris', [$this, 'getClientFavoris']),
             new TwigFunction('clientRemboursements', [$this, 'getClientRemboursements']),
+            new TwigFunction('useravisoncommande', [$this, 'getUserAvisOnCommande']),
+            new TwigFunction('vendeuravisreponse', [$this, 'getVendeurReponseOnAvis']),
         ];
     }
 
     public function getCategories(){
         return $this->categorieRepositorye->findBy([], ['position' => 'ASC']);
+    }
+
+    public function getVendeurReponseOnAvis(User $vendeur, Avis $avis){
+        return $this->reponseavisRepository->findBy(['vendeur' => $vendeur, 'avis' => $avis]);
+    }
+
+    public function getUserAvisOnCommande($id){
+        return $this->commandeRepository->find($id);
     }
 
     public function getClientSuivis($client){
@@ -164,7 +181,7 @@ class AppExtension extends AbstractExtension
     }
     
     public function getVendeurCommandesEncours($user) {
-        return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Valider']);
+        return $this->commandeRepository->findBy(['vendeur' => $user, 'statut' => 'Valider', 'deliver' => 0]);
     }
     
     public function getClientTotalAchats($user) {
@@ -172,11 +189,11 @@ class AppExtension extends AbstractExtension
     }
     
     public function getClientCommandesEncours($user) {
-        return $this->commandeRepository->findBy(['client' => $user, 'statut' => 'Valider']);
+        return $this->commandeRepository->findBy(['client' => $user, 'statut' => 'Valider', 'deliver' => 0]);
     }
 
-    public function getServicesAvisPositif($service){
-        return count($this->avisRepository->findBy(['microservice' => $service, 'type' => 'Positif']));
+    public function getServicesAvis($service){
+        return count($this->avisRepository->findBy(['microservice' => $service]));
     }
 
     public function getServicesCommandes($service){

@@ -17,14 +17,14 @@ class EditMediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageFile', VichImageType::class, [
-                'allow_delete' =>  false,
+            ->add('imageFile', DropzoneType::class, [
                 'label' =>  'Format (Png, jpg et jpeg)',
+                /*'allow_delete' =>  false,
                 'download_label'     =>  false,
                 'image_uri'     =>  false,
                 'download_uri'     =>  false,
                 'imagine_pattern'   =>  'large_avatar',
-                'attr' => ['class' => ''],
+                'attr' => ['class' => ''],*/
                 'required' => false
             ]);
     }

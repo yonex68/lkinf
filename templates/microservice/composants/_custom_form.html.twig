@@ -40,7 +40,7 @@
                <tr>
                   <td>
                      {% for jour in disponibilite.jours %}
-                        <span class="badge badge-secondary badge-pill">{{ jour }}</span>
+                        <span class="badge badge-dark font-weight-light badge-pill">{{ jour }}</span>
                      {% endfor %}
                   </td>
                   <td> <i class="fa fa-clock-o"></i> {{ disponibilite.heureOuverture|date('H:i') }}</td>

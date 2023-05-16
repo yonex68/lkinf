@@ -98,8 +98,8 @@ class EditProfilType extends AbstractType
             ])
             ->add('pays', TextType::class, [
                 'label' => 'Pays',
-                'help' => 'Ville de residence actuelle',
-                'attr' => ['placeholder' => 'Ville de residence', 'autocomplete' => "country"],
+                'help' => 'Pays de residence actuelle',
+                'attr' => ['placeholder' => 'Pays de residence actuelle', 'autocomplete' => "country"],
                 'required' => false,
             ])
             ->add('telephone', TextType::class, [

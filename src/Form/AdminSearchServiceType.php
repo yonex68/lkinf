@@ -12,8 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class AdminSearchServiceType extends AbstractType
 {
@@ -34,14 +32,14 @@ class AdminSearchServiceType extends AbstractType
                'placeholder'   =>  'Ville.(Exemple: Londre)', 'class' =>  'w-100 shadow-none'
             ]
          ])
-         ->add('minPrice', NumberType::class, [
+         ->add('minPrice', IntegerType::class, [
             'label' => false,
             'required' => false,
             'attr' => [
                'placeholder' => 'Minimum',
             ]
          ])
-         ->add('maxPrice', NumberType::class, [
+         ->add('maxPrice', IntegerType::class, [
             'label' => false,
             'required' => false,
             'attr' => [

@@ -60,14 +60,14 @@ class SearchServiceType extends AbstractType
                'placeholder'   =>  'Ville/Lieu de prestation', 'class' =>  'w-100 shadow-none'
             ]
          ])
-         ->add('minPrice', NumberType::class, [
+         ->add('minPrice', IntegerType::class, [
             'label' => 'Min',
             'required' => false,
             'attr' => [
                'placeholder' => 'Minimum',
             ]
          ])
-         ->add('maxPrice', NumberType::class, [
+         ->add('maxPrice', IntegerType::class, [
             'label' => 'Max',
             'required' => false,
             'attr' => [

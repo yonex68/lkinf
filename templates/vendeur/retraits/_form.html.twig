@@ -12,6 +12,9 @@
     {{ form_row(form.modePaiement) }}
 </div>
 
+<h6 class="h6">Informations Paypal</h6>
+{{ form_row(form.adressePaypal) }}
+
 <h6 class="h6">Informations Bancaire</h6>
 <div class="row">
     <div class="col-sm-6">
@@ -21,11 +24,6 @@
         {{ form_row(form.numeroCarte) }}
     </div>
 </div>
-
-{{ form_row(form.dateExpiration) }}
-
-<h6 class="h6">Informations Paypal</h6>
-{{ form_row(form.adressePaypal) }}
 
 <button class="btn btn-dark">{{ button_label|default('Envoyer') }}</button>
 

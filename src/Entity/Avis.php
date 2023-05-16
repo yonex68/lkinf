@@ -37,9 +37,13 @@ class Avis
     #[ORM\OneToMany(mappedBy: 'avis', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'avis', targetEntity: AvisReponse::class)]
+    private Collection $avisReponses;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->avisReponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,5 +144,35 @@ class Avis
     public function __toString()
     {
         return $this->getContenu();
+    }
+
+    /**
+     * @return Collection<int, AvisReponse>
+     */
+    public function getAvisReponses(): Collection
+    {
+        return $this->avisReponses;
+    }
+
+    public function addAvisReponse(AvisReponse $avisReponse): self
+    {
+        if (!$this->avisReponses->contains($avisReponse)) {
+            $this->avisReponses->add($avisReponse);
+            $avisReponse->setAvis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvisReponse(AvisReponse $avisReponse): self
+    {
+        if ($this->avisReponses->removeElement($avisReponse)) {
+            // set the owning side to null (unless already changed)
+            if ($avisReponse->getAvis() === $this) {
+                $avisReponse->setAvis(null);
+            }
+        }
+
+        return $this;
     }
 }

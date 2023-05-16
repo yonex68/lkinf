@@ -10,16 +10,7 @@
          compte par <strong>{{ appName }}</strong>.
       </p>
 
-      <p>
-         Besoin d'aide ? Consultez la <a href="{{ path('page_faqs') }}">FAQ</a>.
-         <a href="{{ path('page_politiques') }}">Conditions générales</a>
-      </p>
-
-      <p>
-         Cordialement, <br>
-         L'équipe {{ appName }}
-      </p>
-
-      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
+      {% include "mails/_lien_cgu.html.twig" %}
+      
    </div>
 </div>

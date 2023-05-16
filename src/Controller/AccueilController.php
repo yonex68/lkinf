@@ -6,6 +6,7 @@ use App\Entity\SearchService;
 use App\Form\HomeServiceType;
 use App\Repository\CategorieRepository;
 use App\Repository\MicroserviceRepository;
+use App\Repository\OffreRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'accueil', methods: ['POST', 'GET'])]
-    public function index(MicroserviceRepository $microserviceRepository, UserRepository $userRepository, CategorieRepository $categorieRepository, Request $request): Response
+    public function index(MicroserviceRepository $microserviceRepository, UserRepository $userRepository, CategorieRepository $categorieRepository, Request $request, OffreRepository $offreRepository): Response
     {
         $user = $this->getUser();
         $services = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 8);
@@ -60,6 +61,7 @@ class AccueilController extends AbstractController
             'vendeurs' => $vendeurs,
             'form' => $form->createView(),
             'ville' => $ville,
+            'packs' => $offreRepository->findBy(['online' => 1], ['created' => 'DESC']),
             'categories' => $categorieRepository->findBy([], ['position' => 'ASC'], 6)
         ]);
     }

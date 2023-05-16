@@ -79,7 +79,11 @@ class MicroserviceRepository extends ServiceEntityRepository
         if (!empty($search->q)) {
             $query = $query
                 ->andWhere('m.name LIKE :q')
-                ->setParameter('q', "%{$search->q}%");
+                ->orWhere('c.name LIKE :catname')
+                ->setParameters([
+                    'q' => "%{$search->q}%",
+                    'catname' => "%{$search->q}%"
+                ]);
         }
         if (!empty($search->jour)) {
             $query = $query

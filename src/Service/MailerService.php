@@ -5,17 +5,20 @@ namespace App\Service;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 
-class MailerService {
+class MailerService
+{
 
-	public function __construct(private MailerInterface $mailer){
-
+	public function __construct(private MailerInterface $mailer)
+	{
 	}
 
-	public function sendMailBecomeSaller($from, $to, $subjet, $template, $user, $message){
+	public function sendMailBecomeSaller($from, $to, $subjet, $template, $user, $message)
+	{
 
 		$email = (new TemplatedEmail())
-			->from($from)
+			->from(new Address($from, 'Links Infinity'))
 			->to($to)
 			->subject($subjet)
 			->htmlTemplate($template)
@@ -23,17 +26,17 @@ class MailerService {
 				'user' => $user,
 				'useremail'  =>  $from,
 				'message'   =>  $message
-			])
-		;
+			]);
 
 		return $this->mailer->send($email);
 	}
 
-	public function sendMail($from, $to, $subjet, $username, $message, $microservice){
+	public function sendMail($from, $to, $subjet, $username, $message, $microservice)
+	{
 
 
 		$email = (new TemplatedEmail())
-			->from($from)
+			->from(new Address($from, 'Links Infinity'))
 			->to($to)
 			->subject($subjet)
 			->htmlTemplate('mails/_default.html.twig')
@@ -42,20 +45,20 @@ class MailerService {
 				'useremail'  =>  $from,
 				'message'   =>  $message,
 				'microservice'   =>  $microservice
-			])
-		;
+			]);
 
 		return $this->mailer->send($email);
 	}
 
-	public function sendCommandMail($from, $to, $subjet, $template = null, $client, $vendeur, $commande){
+	public function sendCommandMail($from, $to, $subjet, $template = null, $client, $vendeur, $commande)
+	{
 
 		if (!isset($template)) {
 			$template = 'mails/_default.html.twig';
 		}
-		
+
 		$email = (new TemplatedEmail())
-			->from($from)
+			->from(new Address($from, 'Links Infinity'))
 			->to($to)
 			->subject($subjet)
 			->htmlTemplate($template)
@@ -63,46 +66,44 @@ class MailerService {
 				'client' => $client,
 				'vendeur' => $vendeur,
 				'commande'   =>  $commande
-			])
-		;
+			]);
 
 		return $this->mailer->send($email);
 	}
 
-	public function sendDemandeMail($from, $to, $subjet, $template = null, $vendeur, $retrait){
+	public function sendDemandeMail($from, $to, $subjet, $template = null, $vendeur, $retrait)
+	{
 
 		if (!isset($template)) {
 			$template = 'mails/_default.html.twig';
 		}
-		
+
 		$email = (new TemplatedEmail())
-			->from($from)
+			->from(new Address($from, 'Links Infinity'))
 			->to($to)
 			->subject($subjet)
 			->htmlTemplate($template)
 			->context([
 				'vendeur' => $vendeur,
 				'demande'   =>  $retrait
-			])
-		;
+			]);
 
 		return $this->mailer->send($email);
 	}
 
-	public function sendPackMail($from, $to, $subjet, $template = null, $client, $commande){
-		
+	public function sendPackMail($from, $to, $subjet, $template = null, $client, $commande)
+	{
+
 		$email = (new TemplatedEmail())
-			->from($from)
+			->from(new Address($from, 'Links Infinity'))
 			->to($to)
 			->subject($subjet)
 			->htmlTemplate($template)
 			->context([
 				'client' => $client,
 				'commande'   =>  $commande
-			])
-		;
+			]);
 
 		return $this->mailer->send($email);
 	}
-
 }

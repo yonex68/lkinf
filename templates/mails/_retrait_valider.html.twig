@@ -11,16 +11,7 @@
          Sur <strong>{{ demande.modePaiement }}</strong>, la somme devrait être rapidement visible sur votre compte. Pour un retrait SEPA, cela peut prendre jusqu'à 3 jours ouvrés (c'est-à-dire hors week-end et jours fériés) avant d'apparaître sur celui-ci.
       </p>
 
-      <p>
-         Besoin d'aide ? Consultez la <a href="{{ path('page_faqs') }}">FAQ</a>.
-         <a href="{{ path('page_politiques') }}">Conditions générales</a>
-      </p>
+      {% include "mails/_lien_cgu.html.twig" %}
 
-      <p>
-         Cordialement, <br>
-         L'équipe {{ appName }}
-      </p>
-
-      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
    </div>
 </div>

@@ -218,6 +218,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripeAccountId = null;
 
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: AvisReponse::class)]
+    private Collection $avisReponses;
+
     public function __construct()
     {
         $this->microservices = new ArrayCollection();
@@ -236,6 +239,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->serviceSignales = new ArrayCollection();
         $this->remboursements = new ArrayCollection();
         $this->vendeursremboursements = new ArrayCollection();
+        $this->avisReponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1339,6 +1343,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setStripeAccountId(?string $stripeAccountId): self
     {
         $this->stripeAccountId = $stripeAccountId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AvisReponse>
+     */
+    public function getAvisReponses(): Collection
+    {
+        return $this->avisReponses;
+    }
+
+    public function addAvisReponse(AvisReponse $avisReponse): self
+    {
+        if (!$this->avisReponses->contains($avisReponse)) {
+            $this->avisReponses->add($avisReponse);
+            $avisReponse->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvisReponse(AvisReponse $avisReponse): self
+    {
+        if ($this->avisReponses->removeElement($avisReponse)) {
+            // set the owning side to null (unless already changed)
+            if ($avisReponse->getVendeur() === $this) {
+                $avisReponse->setVendeur(null);
+            }
+        }
 
         return $this;
     }

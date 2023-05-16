@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/pages')]
+#[Route('/')]
 class PagesController extends AbstractController
 {
     #[Route('/faqs', name: 'page_faqs')]

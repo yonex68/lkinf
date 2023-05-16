@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
+use App\Entity\AvisReponse;
 use App\Entity\Commande;
 use App\Entity\CommandeMessage;
 use App\Entity\Message;
 use App\Entity\Portefeuille;
 use App\Entity\Rapport;
 use App\Entity\Remboursement;
+use App\Form\AvisReponseType;
 use App\Form\AvisType;
 use App\Form\CommandeMessageType;
 use App\Form\RapportType;
@@ -181,6 +183,18 @@ class CommandeController extends AbstractController
             ], Response::HTTP_SEE_OTHER);
         }
 
+        $avisReponse = new AvisReponse();
+        $avisReponseForm = $this->createForm(AvisReponseType::class, $avisReponse);
+        $avisReponseForm->handleRequest($request);
+
+        if ($avisReponseForm->isSubmitted() && $avisReponseForm->isValid()) {
+
+            $avisReponse->setVendeur($commande->getVendeur());
+            $avisReponse->setAvis($commande->getAvis());
+            $entityManager->persist($avisReponse);
+            $entityManager->flush();
+        }
+
         // Test de message
         $message = new CommandeMessage();
         $form = $this->createForm(CommandeMessageType::class, $message);
@@ -269,6 +283,7 @@ class CommandeController extends AbstractController
             'commande' => $commande,
             'avisForm' => $avisForm->createView(),
             'rapportForm' => $rapportForm->createView(),
+            'avisReponseForm' => $avisReponseForm->createView(),
             'usercommandes' => $usercommandes,
             'userserviceAvis' => $avisRepository->findOneBy([
                 'client' => $user,
@@ -492,6 +507,17 @@ class CommandeController extends AbstractController
             $mailer->sendCommandMail(
                 'contact@links-infinity.com',
                 $commande->getClient()->getEmail(),
+                'Commande validée',
+                'mails/client/_commande_valider.html.twig',
+                $commande->getClient(),
+                $commande->getVendeur(),
+                $commande
+            );
+
+            /** Envoie du mail au vendeur */
+            $mailer->sendCommandMail(
+                'contact@links-infinity.com',
+                $commande->getVendeur()->getEmail(),
                 'Commande validée',
                 'mails/_commande_valider.html.twig',
                 $commande->getClient(),

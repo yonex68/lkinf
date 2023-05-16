@@ -7,12 +7,12 @@
             client.nom ~ ' ' ~ client.prenom }}</strong>,</p>
 
       <p>
-         Votre commande du service <strong>{{ commande.microservice.name }}</strong>, a bien été validée par le vendeur <strong>{{ vendeur.usePseudo == 1 ? vendeur.pseudo : vendeur.usePseudo == 1 ? vendeur.pseudo :
-            vendeur.nom ~ ' ' ~ vendeur.prenom }}</strong>, vous allez recevoir un paiement de 
+         Vous avez validé la commande <strong>{{ commande.microservice.name }}</strong>, du client <strong>{{ client.usePseudo == 1 ? client.pseudo : client.usePseudo == 1 ? client.pseudo :
+            client.nom ~ ' ' ~ client.prenom }}</strong>, vous allez recevoir un paiement de {{ commande.montant ~ currency }} à la fin de votre prestation
       </p>
 
       <div><br>
-         <a href="{{ path('commande_details', {id: commande.id}) }}#valider" style="background: #080679;
+         <a href="{{ absolute_url(path('commande_details', {id: commande.id})) }}#valider" style="background: #080679;
      background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%);
      background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9));
      background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%);
@@ -21,21 +21,7 @@
      border-color: #080679;color:#fff;padding: 15px;border-radius: 5px;margin: 10px 0;text-decoration: none;"> Suivre la commande</a>
       </div><br>
 
+      {% include "mails/_lien_cgu.html.twig" %}
 
-      <p>
-         Attention : faites-nous parvenir votre rapport de fin de prestation de service afin de recevoir vos fonds, <strong>{{ commande.montant ~ currency }}</strong>.
-      </p>
-
-      <p>
-         Besoin d'aide ? Consultez la <a href="{{ path('page_faqs') }}">FAQ</a>.
-         <a href="{{ path('page_politiques') }}">Conditions générales</a>
-      </p>
-
-      <p>
-         Cordialement, <br>
-         L'équipe {{ appName }}
-      </p>
-
-      <p style="text-align: center;">©{{ appName }} - Tous droits réservés</p>
    </div>
 </div>

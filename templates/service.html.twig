@@ -48,6 +48,9 @@
 
 	<section class="py-5">
 		<div class="container">
+
+			{% if app.user.isVerified == true %}
+
 			<div class="row">
 				<div class="col-md-{% block colleft %}4{% endblock %}">
 					<div class="sidebar-fix">
@@ -99,6 +102,12 @@
 						conseils sur la création de service.</p>
 				</div>
 			</div>
+			
+			{% else %}
+
+				{% include "vendeur/composants/_compte_non_valide.html.twig" %}
+
+			{% endif %}
 		</div>
 	</section>
 
