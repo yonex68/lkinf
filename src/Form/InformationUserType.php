@@ -18,7 +18,7 @@ class InformationUserType extends AbstractType
     {
         $builder
             ->add('lieuPrestation', TextType::class, [
-                'label' => 'Lieu de prestation',
+                'label' => 'Lieu de la prestation',
                 'help' => 'Exemple: studio privé',
                 'required' => false,
                 'attr' => ['class' => '', 'placeholder' => 'Lieu de prestation'],

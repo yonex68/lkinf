@@ -233,7 +233,7 @@ class VendeurMicroservicesController extends AbstractController
             $entityManager->persist($microservice);
             $entityManager->flush();
 
-            $this->addFlash('success', "La galérie a bien mise à jour");
+            $this->addFlash('success', "La galérie a bien été mise à jour");
 
             return $this->redirectToRoute('vendeur_microservices_disponibilite', [
                 'id' => $microservice->getId()

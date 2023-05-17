@@ -38,7 +38,7 @@ class MicroservicePublierType extends AbstractType
                 ],
             ])
             ->add('question4', CheckboxType::class, [
-                'label' => "Et ne jamais leur proposer de discuter ou de me payer en dehors de Links Infinity",
+                'label' => "Ne pas proposer ou effectuer des transactions en dehors de Links Infinity",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis!',
