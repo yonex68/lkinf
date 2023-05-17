@@ -91,10 +91,10 @@
 							<div class="p-3">
 
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-6 pb-3">
 										{% include "vendeur/composants/_suivre_btn.html.twig" %}
 									</div>
-									<div class="col-sm-6">
+									<div class="col-sm-6 pb-3">
 										{% if app.user == user %}{% else %}
 
 										<a href="{{ path('conversations_new', {vendeurNameUrl: user.nameUrl}) }}"
