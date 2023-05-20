@@ -27,6 +27,7 @@ class EmploisTemps
     private ?\DateTimeInterface $heureCloture = null;
 
     #[ORM\ManyToOne(inversedBy: 'emploisTemps')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $vendeur = null;
 
     #[ORM\ManyToMany(targetEntity: Microservice::class, mappedBy: 'emploitemps')]

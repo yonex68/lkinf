@@ -138,6 +138,12 @@
                         <span class="badge bg-light border text-dark rounded-pill text-uppercase">
                            {{ user.compte }}
                         </span>
+
+                        {% if user.compte == 'Vendeur' %}
+                        <span class="badge bg-info border rounded-pill text-uppercase">
+                           {{ user.microservices|length }} Service{{ user.microservices|length > 1 ? 's' : '' }}
+                        </span>
+                        {% endif %}
                         
                         {% if user.categorie %}
                            <p class="text-muted"><i class="fa fa-tags"></i> {{ user.categorie.name }}</p>

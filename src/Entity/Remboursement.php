@@ -34,6 +34,7 @@ class Remboursement
     private ?string $reponse = null;
 
     #[ORM\ManyToOne(inversedBy: 'remboursements')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Commande $commande = null;
 
     #[ORM\ManyToOne(inversedBy: 'vendeursremboursements')]

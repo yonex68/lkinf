@@ -54,10 +54,10 @@ class SearchServiceType extends AbstractType
             'required' => false,
          ])
          ->add('ville', TextType::class, [
-            'label' =>  'Ville/Lieu de prestation',
+            'label' =>  'Ville/Lieu de la prestation',
             'required'  =>  false,
             'attr'  =>  [
-               'placeholder'   =>  'Ville/Lieu de prestation', 'class' =>  'w-100 shadow-none'
+               'placeholder'   =>  'Ville/Lieu de la prestation', 'class' =>  'w-100 shadow-none'
             ]
          ])
          ->add('minPrice', IntegerType::class, [

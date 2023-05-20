@@ -2,7 +2,7 @@
 	{% for message in messages %}
 		<div class="alert alert-{{ type }} flash alert-dismissible fade show mb-3 border border-{{ type }}" role="alert" style="text-align: left!important;">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong class="my-0 text-{{ type }}">
+			<strong class="my-0 text-{{ type }} mr-3">
                 {% if type == 'danger' %}
 					<i class="fa fa-exclamation-triangle"></i> Echec!
                 {% elseif type == 'warning' %}
@@ -13,7 +13,7 @@
 					<i class="fa fa-check"></i> Succès!
 				{% endif %}
             </strong>
-				<p class="d-inline">{{ message }}</p>
+				<span class="d-inline">{{ message }}</span>
 		</div>
 	{% endfor %}
 {% endfor %}

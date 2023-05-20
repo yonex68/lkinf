@@ -48,6 +48,7 @@ class Offre
     private ?string $description = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'offres')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $categorie;
 
     #[ORM\OneToMany(mappedBy: 'pack', targetEntity: Commande::class)]

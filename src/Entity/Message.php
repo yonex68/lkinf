@@ -36,14 +36,14 @@ class Message
     private $conversation;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */
     private $auteur;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */
@@ -53,9 +53,11 @@ class Message
     private $lu;
 
     #[ORM\OneToMany(mappedBy: 'lastMessage', targetEntity: Conversation::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $conversations;
 
     #[ORM\ManyToOne(targetEntity: Commande::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $commande;
 
     public function __construct()

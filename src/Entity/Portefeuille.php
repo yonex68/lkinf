@@ -24,6 +24,7 @@ class Portefeuille
     private $soldeEnCours;
 
     #[ORM\OneToOne(inversedBy: 'portefeuille', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $vendeur;
 
     public function getId(): ?int

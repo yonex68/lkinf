@@ -21,7 +21,7 @@ class InformationUserType extends AbstractType
                 'label' => 'Lieu de la prestation',
                 'help' => 'Exemple: studio privé',
                 'required' => false,
-                'attr' => ['class' => '', 'placeholder' => 'Lieu de prestation'],
+                'attr' => ['class' => '', 'placeholder' => 'Lieu de la prestation'],
             ])
             ->add('homeStudio', CheckboxType::class, [
                 'label'     =>  'Home studio',

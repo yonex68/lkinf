@@ -27,13 +27,15 @@ class Commande
     private $montant;
 
     #[ORM\ManyToOne(targetEntity: Microservice::class, inversedBy: 'commandes')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $microservice;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commandes')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $client;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'commandes')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private $vendeur;
 
     #[ORM\Column(type: 'boolean')]
@@ -94,6 +96,7 @@ class Commande
     private ?string $disponibilite = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Offre $pack = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]

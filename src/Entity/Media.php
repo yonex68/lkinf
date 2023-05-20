@@ -42,6 +42,7 @@ class Media
     private $imageName;
 
     #[ORM\ManyToOne(inversedBy: 'medias')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Microservice $microservice = null;
 
     public function getId(): ?int

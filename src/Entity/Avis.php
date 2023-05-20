@@ -26,15 +26,19 @@ class Avis
     private $type;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $vendeur;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'avis')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $client;
 
     #[ORM\ManyToOne(targetEntity: Microservice::class, inversedBy: 'avis')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $microservice;
 
     #[ORM\OneToMany(mappedBy: 'avis', targetEntity: Commande::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $commandes;
 
     #[ORM\OneToMany(mappedBy: 'avis', targetEntity: AvisReponse::class)]

@@ -20,9 +20,11 @@ class Abonnement
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Stripe::class, inversedBy: 'abonnements')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $stripe;
 
     #[ORM\OneToOne(inversedBy: 'abonnement', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $user;
 
     #[ORM\Column(type: 'boolean')]

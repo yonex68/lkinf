@@ -35,7 +35,7 @@ class CommandeMessage
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Commande::class, inversedBy: 'commandeMessages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */

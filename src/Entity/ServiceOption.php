@@ -29,6 +29,7 @@ class ServiceOption
     private ?float $montant = null;
 
     #[ORM\ManyToMany(targetEntity: Microservice::class, inversedBy: 'serviceOptions')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $microservice;
 
     #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'serviceOptions')]

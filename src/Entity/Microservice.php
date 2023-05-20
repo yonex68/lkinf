@@ -29,6 +29,7 @@ class Microservice
     private $description;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'microservices')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $vendeur;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -62,6 +63,7 @@ class Microservice
     private ?bool $promo = null;
 
     #[ORM\ManyToOne(inversedBy: 'microservices')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Categorie $categorie = null;
 
     #[ORM\Column(nullable: true)]

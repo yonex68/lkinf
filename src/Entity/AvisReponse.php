@@ -19,12 +19,14 @@ class AvisReponse
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'avisReponses')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Avis $avis = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $contenu = null;
 
     #[ORM\ManyToOne(inversedBy: 'avisReponses')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $vendeur = null;
 
     public function getId(): ?int

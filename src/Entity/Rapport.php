@@ -41,6 +41,7 @@ class Rapport
     private ?string $contenu = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Commande $commande = null;
 
     public function getId(): ?int

@@ -26,7 +26,8 @@ class DescriptionType extends AbstractType
                     new GreaterThan([
                         'value' => 0,
                     ])
-                ]
+                ],
+                'attr' => ['class' => 'border-0']
             ])
             ->add('description', CKEditorType::class, [
                 'label' => false,

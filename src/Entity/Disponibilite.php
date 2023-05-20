@@ -25,6 +25,7 @@ class Disponibilite
     private ?\DateTimeInterface $heureCloture = null;
 
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Microservice $service = null;
 
     #[ORM\Column(type: 'array', nullable: true)]

@@ -140,7 +140,7 @@
 
 				{% if is_granted('ROLE_VENDEUR') %}
 				<a href="{{ path('user_coordonnees') }}" class="btn btn-success">
-					Mettre à jour
+					{{ app.user.endRegister == 1 ? 'Mettre à jour' : 'Completer mon profil' }}
 				</a>
 				{% else %}
 				<a href="{{ path('user_edit_profil') }}" class="btn btn-success">

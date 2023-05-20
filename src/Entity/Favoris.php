@@ -18,9 +18,11 @@ class Favoris
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'favoris')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $client;
 
     #[ORM\ManyToOne(targetEntity: Microservice::class, inversedBy: 'favoris')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $microservice;
 
     public function getId(): ?int

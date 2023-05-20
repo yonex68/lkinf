@@ -87,13 +87,13 @@ class UserType extends AbstractType
             'attr'   =>  ['class' => 'form-control-file'],
         ])
         ->add('lieuPrestation', TextType::class, [
-            'label' => 'Lieu de prestation',
+            'label' => 'Lieu de la prestation',
             'constraints' => [
                 new NotBlank([
                     'message' => 'Ce champ est requis',
                 ]),
             ],
-            'attr' => ['class' => 'font-weight-bold text-muted', 'placeholder' => 'Lieu de prestation'],
+            'attr' => ['class' => 'font-weight-bold text-muted', 'placeholder' => 'Lieu de la prestation'],
         ])
         ->add('homeStudio', CheckboxType::class, [
             'label'     =>  'Home studio',

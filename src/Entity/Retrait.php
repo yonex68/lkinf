@@ -19,6 +19,7 @@ class Retrait
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'retraits')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $vendeur = null;
 
     #[ORM\Column]

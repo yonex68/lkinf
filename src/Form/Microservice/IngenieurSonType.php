@@ -8,7 +8,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -20,7 +20,7 @@ class IngenieurSonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prix', NumberType::class, [
+            ->add('prix', IntegerType::class, [
                 'label' => false,
                 'constraints' => [
                     new NotBlank([
@@ -30,43 +30,43 @@ class IngenieurSonType extends AbstractType
                         'value' => 0,
                     ])
                 ],
-                'attr' => ['class' => 'border-0 text-right']
+                'attr' => ['class' => 'border-0']
             ])
-            ->add('prixMastering', NumberType::class, [
+            ->add('prixMastering', IntegerType::class, [
                 'label' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-right']
+                'attr' => ['class' => 'border-0']
             ])
-            ->add('prixMixage', NumberType::class, [
+            ->add('prixMixage', IntegerType::class, [
                 'label' => "Mixage",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-right']
+                'attr' => ['class' => 'border-0']
             ])
-            ->add('prixBeatmaking', NumberType::class, [
+            ->add('prixBeatmaking', IntegerType::class, [
                 'label' => 'Beatmaking',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-right']
+                'attr' => ['class' => 'border-0']
             ])
-            ->add('prixComposition', NumberType::class, [
+            ->add('prixComposition', IntegerType::class, [
                 'label' => 'Composition',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ est requis',
                     ]),
                 ],
-                'attr' => ['class' => 'border-0 text-right']
+                'attr' => ['class' => 'border-0']
             ])
             ->add('description', CKEditorType::class, [
                 'label' => false,

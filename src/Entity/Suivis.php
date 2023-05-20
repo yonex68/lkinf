@@ -18,9 +18,11 @@ class Suivis
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $client;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'suivis')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $vendeur;
 
     public function getId(): ?int

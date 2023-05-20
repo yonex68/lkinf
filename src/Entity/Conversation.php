@@ -24,17 +24,18 @@ class Conversation
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Microservice::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $microservice;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'conversations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */
     private $user1;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'conversations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */
@@ -48,6 +49,7 @@ class Conversation
     private $lastMessage;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'senderconversations')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     /**
      * @Groups("message")
      */

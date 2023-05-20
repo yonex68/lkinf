@@ -33,6 +33,7 @@ class Realisation
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'realisations')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $vendeur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -42,6 +43,7 @@ class Realisation
     private ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'realisations')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Microservice $microservice = null;
 
     public function getId(): ?int
