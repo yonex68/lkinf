@@ -1,10 +1,16 @@
 <nav class="navbar d-none d-sm-block navbar-expand-lg navbar-light {% if app.request.attributes.get('_route') == 'accueil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices' %}navtop-home{% elseif app.request.attributes.get('_route') == 'vendeur_profil' %}navtop-home{% elseif app.request.attributes.get('_route') == 'microservices_categories' %}navtop-home{% else %}shadow-sm{% endif %}  topbar static-top bg-tranparent osahan-nav-top py-1">
 	<div class="container">
-		<!-- Sidebar Toggle (Topbar) -->
+		<!-- Sidebar Toggle (Topbar) --
 		<a class="navbar-brand" href="{{ path('accueil') }}">
 			<h6 class="text-blue font-weight-bold text-logo text-uppercase pt-2">
-				<img src="{{ asset('img/small-logo.svg') }}" width="40px" height="40px" alt="Glog {{ appName }}" class="border rounded-circle"> {{ appName }}
+				<img src="{{ asset('img/header-logo.png') }}" width="40px" height="40px" alt="Glog {{ appName }}" class="border rounded-circle"> {{ appName }}
 			</h6>
+		</a>
+		<!-- Topbar Search -->
+
+		<!-- Sidebar Toggle (Topbar) -->
+		<a class="navbar-brand" href="{{ path('accueil') }}">
+			<img src="{{ asset('img/header-logo.png') }}" width="40px" height="40px" alt="Glog {{ appName }}" class="border rounded-circle">
 		</a>
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline bg-light border rounded border-blue mr-auto my-2 my-md-0 mw-100 navbar-search"
@@ -202,9 +208,11 @@
 		</ul>
 
 		<ul class="navbar-nav align-items-center mx-auto">
-			<li class="nav-item">
+			<li class="nav-item text-center">
 				<a href="{{ path('accueil') }}" class="nav-link">
-					<h6 class="text-blue text-uppercase pt-2 text-logo">{{ appName }}</h6>
+					<!--<h6 class="text-blue text-uppercase pt-2 text-logo">{{ appName }}</h6>-->
+
+					<img src="{{ asset('img/header-logo.png') }}" width="40px" height="40px" alt="Glog {{ appName }}" class="border rounded-circle">
 				</a>
 			</li>
 		</ul>

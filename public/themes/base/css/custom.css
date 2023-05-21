@@ -46,12 +46,15 @@ input[type="checkbox"] {
    color: #0D1117;
    font-size: 1em;
 }
-.commande-form input[type=date],
 .commande-form input[type=time]{
  height: 50px!important;
  text-align: right!important;
  border-left: transparent;
  border: none!important;
+ border-radius: 10px;
+}
+.commande-form input[type=date]{
+ height: 50px!important;
  border-radius: 10px;
 }
 .commande-form .input-group{
@@ -88,11 +91,8 @@ input[type="checkbox"] {
    font-weight: 400;
 }
 .fc .fc-daygrid-day-bg .fc-highlight{
-   background: -webkit-linear-gradient(legacy-direction(to right), #080679 0%, #a9a9a9 100%) !important;
-   background: -webkit-gradient(linear, left top, right top, from(#080679), to(#a9a9a9)) !important;
-   background: -webkit-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
-   background: -o-linear-gradient(left, #080679 0%, #a9a9a9 100%) !important;
-   background: linear-gradient(to right, #080679 0%, #a9a9a9 100%) !important;
+   background: #080679!important;
+   color: white!important;
 }
 .btn-icon {
    width: 30px !important;

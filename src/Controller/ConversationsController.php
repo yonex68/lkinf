@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\User;
+use App\Form\ChatMessageType;
 use App\Form\MessageType;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
@@ -36,6 +38,7 @@ class ConversationsController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
 
+        /** @var User */
         $user = $this->getUser();
 
         //*verification des participants
@@ -62,7 +65,7 @@ class ConversationsController extends AbstractController
 
         // Test de message
         $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(ChatMessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

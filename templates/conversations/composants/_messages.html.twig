@@ -1,6 +1,6 @@
 {% for message in messages %}
 
-<div class="media w-75 alert bg-white border message-box {{ message.auteur == app.user ? 'ml-auto' : '' }}">
+<div class="media w-75 p-2 mb-3 bg-white message-box {{ message.auteur == app.user ? 'ml-auto' : '' }}">
 	{% if message.auteur.avatar %}
 	<img src="{{ vich_uploader_asset(message.auteur) | imagine_filter('small_avatar') }}"
 		alt="{{ message.auteur.prenom ?? '' }}" class="rounded-circle border">
@@ -18,7 +18,15 @@
 				{{ message.created|ago(locale='fr') }}
 			</span>
 		</div>
-		<p class="font-italic">{{ message.contenu }}</p>
+		<p class="font-italic font-weight-light">{{ message.contenu }}</p>
+
+		{% if message.file %}
+			<div class="py-2">
+				<p class="pb-0 mb-0 text-dark"><i class="fa fa-download"></i> Fichier joint</p>
+				<a href="{{ vich_uploader_asset(message, 'messageFile') }}" target="_blank">{{ message.file }}</a>
+			</div>
+		{% endif %}
+
 	</div>
 </div>
 

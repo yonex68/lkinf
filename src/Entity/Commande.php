@@ -520,12 +520,12 @@ class Commande
         return $this;
     }
 
-    public function getReservationStartAt(): ?\DateTimeInterface
+    public function getReservationStartAt(): ?\DateTimeImmutable
     {
         return $this->reservationStartAt;
     }
 
-    public function setReservationStartAt(?\DateTimeInterface $reservationStartAt): self
+    public function setReservationStartAt(?\DateTimeImmutable $reservationStartAt): self
     {
         $this->reservationStartAt = $reservationStartAt;
 

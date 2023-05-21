@@ -35,6 +35,9 @@
 		{{ encore_entry_link_tags('responsive') }}
 	{% endblock %}
 
+	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
 	<!-- map box -->
 	<script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.14/web.js">
 	</script>
@@ -147,6 +150,14 @@
 	gtag('js', new Date());
 
 	gtag('config', 'G-TBWPH2ZDRB');
+	</script>
+
+	<script>
+		// Add the following code if you want the name of the file appear on select
+		$(".custom-file-input").on("change", function () {
+			var fileName = $(this).val().split("\\").pop();
+			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
 	</script>
 
 </body>

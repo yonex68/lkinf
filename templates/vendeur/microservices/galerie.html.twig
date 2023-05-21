@@ -32,7 +32,7 @@
 
         <h6 class="font-weight-bold py-4">Medias</h6>
         
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {class: '', 'id': ''}}) }}
         {{ form_widget(form._token) }}
         {{ form_errors(form) }}
             <div id="medias" class="row" data-prototype="{{ include("vendeur/microservices/form/_medias.html.twig", {form:
@@ -55,4 +55,13 @@
             {{ form_end(form, {render_rest: false}) }}
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        // Dropzone has been added as a global variable.
+        const dropzone = new Dropzone("dropzone", { url: "/file/post" });
+    </script>
 {% endblock %}

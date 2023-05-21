@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\Created;
+use App\Entity\Traits\Timestamp;
 use App\Repository\CommandeMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CommandeMessageRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+/**
+ * @Vich\Uploadable
+ */
 class CommandeMessage
 {
-    use Created;
+    use Timestamp;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -43,6 +50,15 @@ class CommandeMessage
 
     #[ORM\Column(type: 'boolean')]
     private $lu;
+
+    /**
+     * @Vich\UploadableField(mapping="messages_files", fileNameProperty="file")
+     * @var File|null
+    **/
+    private $messageFile;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $file = null;
 
     public function getId(): ?int
     {
@@ -95,5 +111,36 @@ class CommandeMessage
         $this->lu = $lu;
 
         return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $messageFile
+     */
+    public function setMessageFile(?File $messageFile = null): void
+    {
+        $this->messageFile = $messageFile;
+
+        if (null !== $messageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdated(new \DateTimeImmutable());
+        }
+    }
+
+    public function getMessageFile(): ?File
+    {
+        return $this->messageFile;
     }
 }
