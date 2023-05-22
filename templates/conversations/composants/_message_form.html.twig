@@ -12,8 +12,8 @@
 	<div class="text-right">
 		{{ form_widget(form.contenu, {'attr': {'rows': 2, 'class': 'shadow-none border-0 d-block mb-3'}}) }}
 
-		<label for="{{ app.request.attributes.get('_route') == 'commande_details' ? 'commande_message_messageFile_file' : 'chat_message_messageFile_file' }}" title="Joindre un fichier" class="btn btn-light mb-0">
-			<i class="fa fa-link"></i>
+		<label for="{{ app.request.attributes.get('_route') == 'commande_details' ? 'commande_message_messageFile_file' : 'chat_message_messageFile_file' }}" title="Joindre un fichier" class="btn btn-light mb-0 label">
+			<i class="fa fa-link"></i> Joindre un fichier
 		</label>
 		<button type="submit" class="btn btn-success">
 			<i class="mdi mdi-send"></i>

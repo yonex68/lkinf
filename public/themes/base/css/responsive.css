@@ -9,7 +9,10 @@
 }
 
 @media(max-width: 600px) {
-
+   .message-box{
+      width: 90%!important;
+      overflow-wrap: break-word;
+   }
    .bg-image {
       background-position-y: 0;
    }

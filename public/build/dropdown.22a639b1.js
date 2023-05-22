@@ -1,1 +1,0 @@
-(self.webpackChunk=self.webpackChunk||[]).push([[493],{7670:()=>{$(document).ready((function(){$(".dropdown").hover((function(){var e=$(this).children(".dropdown-menu");e.is(":visible")&&e.parent().toggleClass("open")}))}))}},e=>{var n;n=7670,e(e.s=n)}]);

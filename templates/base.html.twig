@@ -112,13 +112,14 @@
 		$(".custom-file-input").on("change", function () {
 			console.log("change fire");
 			
-			var fileName = $(this).val().split("\\").pop();
+			let fileName = $(this).val().split("\\").pop();
 			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 
-			var i = $(this).prev('label').clone();
-			var file = $('.custom-file-input')[0].files[0].name;
-			console.log(file);
-			$(this).prev('label').text(file);
+			let i = $(this).prev('label').clone();
+			let file = $(".custom-file-input")[0].files[0].name;
+			let label = $(".label");
+			//console.log(file);
+			label.text(file);
 		});
 	</script>
 
@@ -151,19 +152,6 @@
 			});
 		})
 	</script>
-	
-	<script>
-	 const btn = document.getElementsByClassName("fc-highlight");
-
-		btn.addEventListener('click', function onClick(event) {
-		// change background color
-		alert(btn)
-		event.target.style.backgroundColor = 'red';
-
-		// optionally change text color
-		// event.target.style.color = 'white';
-		});
-</script>
 
 </body>
 
