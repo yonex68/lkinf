@@ -22,7 +22,8 @@ class CommandeType extends AbstractType
             'attr' => [
                 'class' => "js-datepicker",
             ],
-            'widget' => 'single_text','constraints' => [
+            'widget' => 'single_text',
+            'constraints' => [
                 new NotBlank()
             ],
         ])

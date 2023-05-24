@@ -254,6 +254,24 @@ class MicroserviceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findBloc2Bylocation($id, $userville): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('v', 'm')
+            ->leftjoin('m.vendeur', 'v')
+            ->orderBy('m.created', 'DESC')
+            ->where('m.online = 1')
+            ->andWhere('v.ville LIKE :ville')
+            ->andWhere('m.offline = 0')
+            ->andWhere('m.id > :id')
+            ->setParameters([
+                'id' => $id,
+                'ville' => "%{$userville}%",
+            ])
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult();
+    }
 
     public function findLasted(): array
     {
@@ -264,6 +282,20 @@ class MicroserviceRepository extends ServiceEntityRepository
             ->andWhere('m.online = 1')
             ->andWhere('m.offline = 0')
             ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSecondLine($id): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.id > :id')
+            ->andWhere('m.offline = :offline')
+            ->setParameters([
+                'id' => $id,
+                'offline' => 0
+            ])
+            ->setMaxResults(8)
             ->getQuery()
             ->getResult();
     }

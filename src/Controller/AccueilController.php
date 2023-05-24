@@ -21,6 +21,12 @@ class AccueilController extends AbstractController
     {
         $user = $this->getUser();
         $services = $microserviceRepository->findBy(['online' => 1], ['created' => 'DESC'], 8);
+        $servicesBloc2 = null;
+
+        if (count($services) == 8) {
+            $servicesBloc2 = $microserviceRepository->findSecondLine($services[7]->getId());
+        }
+
         $prestataires = $userRepository->findBy(['compte' => 'vendeur'], ['created' => 'DESC'], 6);
         $ville = isset($_COOKIE['LINKS-VILLE']) ? $_COOKIE['LINKS-VILLE'] : '';
 
@@ -47,9 +53,18 @@ class AccueilController extends AbstractController
             setcookie('LINKS-VILLE', $ville, time()+31556926 , "/", "",  0);
 
             $services = $microserviceRepository->findBylocation($ville);
+            
+            if (count($services) == 8) {
+                $servicesBloc2 = $microserviceRepository->findBloc2Bylocation($services[7]->getId(), $ville);
+            }
             $prestataires = $userRepository->findBy(['compte' => 'Vendeur', 'ville' => $ville]);
         }elseif(!empty($ville)){
             $services = $microserviceRepository->findBylocation($ville);
+            
+            if (count($services) == 8) {
+                $servicesBloc2 = $microserviceRepository->findSecondLine($services[7]->getId());
+            }
+
             $prestataires = $userRepository->findByVille($ville);
         }
 
@@ -59,6 +74,7 @@ class AccueilController extends AbstractController
         return $this->render('accueil/index.html.twig', [
             'microservices' => $microservices,
             'vendeurs' => $vendeurs,
+            'servicesBloc2' => $servicesBloc2,
             'form' => $form->createView(),
             'ville' => $ville,
             'packs' => $offreRepository->findBy(['online' => 1], ['created' => 'DESC']),
